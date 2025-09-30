@@ -13,43 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/daftaruser', function () {
-    return view('FRONTEND.daftaruser');
-});
+Route::get('/', function () { return view('welcome');});
 
-Route::get('/editprofile', function () {
-    return view('FRONTEND.editprofile');
-});
-Route::get('/riwayat komunitas', function () {
-    return view('FRONTEND.riwayatkomunitas');
-});
-Route::get('/riwayatclub', function () {
-    return view('FRONTEND.riwayatclub');
-});
-Route::get('/riwayatpayment', function () {
-    return view('FRONTEND.riwayatpayment');
-});
-Route::get('/loginpengelolavenue', function () {
-    return view('FRONTEND.loginpengelolavenue');
-});
-Route::get('/regispengelola', function () {
-    return view('FRONTEND.regispengelola');
-});
-Route::get('/isidata', function () {
-    return view('FRONTEND.isidata');
-});
-Route::get('/loginuser', function () {
-    return view('FRONTEND.loginuser');
-});
-Route::get('/registeremail', function () {
-    return view('FRONTEND.registeremail');
-});
-Route::get('/loginemail', function () {
-    return view('FRONTEND.loginemail');
-});
-Route::get('/resetpassword', function () {
-    return view('FRONTEND.resetpassword'); 
-});
+// FRONTEND
+Route::get('/daftaruser', function () { return view('FRONTEND.daftaruser');});
+Route::get('/editprofile', function () { return view('FRONTEND.editprofile');});
+Route::get('/riwayat komunitas', function () {return view('FRONTEND.riwayatkomunitas');});
+Route::get('/riwayatclub', function () {return view('FRONTEND.riwayatclub');});
+Route::get('/riwayatpayment', function () {return view('FRONTEND.riwayatpayment');});
+Route::get('/loginpengelolavenue', function () { return view('FRONTEND.loginpengelolavenue');});
+Route::get('/regispengelola', function () {return view('FRONTEND.regispengelola');});
+Route::get('/isidata', function () {return view('FRONTEND.isidata');});
+Route::get('/loginuser', function () {return view('FRONTEND.loginuser');});
+Route::get('/registeremail', function () {return view('FRONTEND.registeremail');});
+Route::get('/loginemail', function () { return view('FRONTEND.loginemail');});
+Route::get('/resetpassword', function () {return view('FRONTEND.resetpassword'); });
