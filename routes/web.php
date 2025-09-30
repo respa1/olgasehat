@@ -17,39 +17,39 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/daftaruser', function () {
-    return view('daftaruser');
+    return view('FRONTEND.daftaruser');
 });
 
 Route::get('/editprofile', function () {
-    return view('editprofile');
+    return view('FRONTEND.editprofile');
 });
 Route::get('/riwayat komunitas', function () {
-    return view('riwayatkomunitas');
+    return view('FRONTEND.riwayatkomunitas');
 });
 Route::get('/riwayatclub', function () {
-    return view('riwayatclub');
+    return view('FRONTEND.riwayatclub');
 });
 Route::get('/riwayatpayment', function () {
-    return view('riwayatpayment');
+    return view('FRONTEND.riwayatpayment');
 });
 Route::get('/loginpengelolavenue', function () {
-    return view('loginpengelolavenue');
+    return view('FRONTEND.loginpengelolavenue');
 });
 Route::get('/regispengelola', function () {
-    return view('regispengelola');
+    return view('FRONTEND.regispengelola');
 });
 Route::get('/isidata', function () {
-    return view('isidata');
+    return view('FRONTEND.isidata');
 });
 Route::get('/loginuser', function () {
-    return view('loginuser');
+    return view('FRONTEND.loginuser');
 });
 Route::get('/registeremail', function () {
-    return view('registeremail');
+    return view('FRONTEND.registeremail');
 });
 Route::get('/loginemail', function () {
-    return view('loginemail');
+    return view('FRONTEND.loginemail');
 });
 Route::get('/resetpassword', function () {
-    return view('resetpassword');
+    return view('FRONTEND.resetpassword');
 });
