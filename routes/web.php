@@ -51,5 +51,5 @@ Route::get('/loginemail', function () {
     return view('FRONTEND.loginemail');
 });
 Route::get('/resetpassword', function () {
-    return view('FRONTEND.resetpassword');
+    return view('FRONTEND.resetpassword'); 
 });
