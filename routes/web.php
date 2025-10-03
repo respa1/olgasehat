@@ -20,6 +20,8 @@ use App\Http\Controllers\CategoryController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// halaman utama
+Route::get('/', fn() => view('frontend.home'));
 
 // Authentication Routes
 Route::controller(LoginController::class)->group(function () {
@@ -28,13 +30,38 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/logout', 'logout')->name('logout');
 });
 
+// Public Frontend Routes
+// frontend publik
+Route::get('/blog-news', fn() => view('frontend.blog_news'));
+Route::get('/blog-news-detail', fn() => view('frontend.blog_news_detail'));
+Route::get('/club', fn() => view('frontend.club'));
+Route::get('/club-detail', fn() => view('frontend.club_detail'));
+Route::get('/community', fn() => view('frontend.community'));
+Route::get('/community-detail', fn() => view('frontend.community_detail'));
+Route::get('/confirm', fn() => view('frontend.confirm'));
+Route::get('/daftar-pemilik', fn() => view('frontend.daftar_pemilik'));
+Route::get('/daftar-pemilik-detail', fn() => view('frontend.daftar_pemilik_detail'));
+Route::get('/login-pemilik', fn() => view('frontend.login_pemilik'));
+Route::get('/payment', fn() => view('frontend.payment'));
+Route::get('/success', fn() => view('frontend.success'));
+Route::get('/venue', fn() => view('frontend.venue'));
+Route::get('/venue-detail', fn() => view('frontend.venue_detail'));
+
+// public frontend user
+Route::get('/daftaruser', function () { return view('frontend.daftaruser');});
+Route::get('/loginpengelolavenue', function () { return view('frontend.loginpengelolavenue');});
+Route::get('/regispengelola', function () {return view('frontend.regispengelola');});
+Route::get('/isidata', function () {return view('frontend.isidata');});
+Route::get('/loginuser', function () {return view('frontend.loginuser');});
+Route::get('/registeremail', function () {return view('frontend.registeremail');});
+Route::get('/loginemail', function () { return view('frontend.loginemail');});
+Route::get('/resetpassword', function () {return view('frontend.resetpassword'); });
+
 // Protected Backoffice Routes
 Route::middleware(['auth'])->group(function (){
     Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
 
-//frontend publik
 
-// frontend user
 Route::get('/daftaruser', function () { return view('frontend.daftaruser');});
 Route::get('/editprofile', function () { return view('frontend.editprofile');});
 Route::get('/riwayat komunitas', function () {return view('frontend.riwayatkomunitas');});
@@ -64,7 +91,6 @@ Route::get('/tampilkandata/{id}',[BeritaController::class, 'tampilkandata'])->na
 Route::post('/updatedata/{id}',[BeritaController::class, 'updatedata'])->name('updatedata');
 Route::get('/deletenews/{id}',[BeritaController::class, 'deletenews'])->name('deletenews');
 Route::get('/exportpdf',[BeritaController::class, 'exportpdf'])->name('exportpdf');
-
 // ## RIVIEW ## //
 Route::get('/review', [ReviewController::class, 'index'])->name('review.index');
 Route::get('/tambah_review', [ReviewController::class, 'create'])->name('review.create');
@@ -79,7 +105,6 @@ Route::post('/category', [CategoryController::class, 'store'])->name('category.s
 Route::get('/category/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
 Route::put('/category/{id}', [CategoryController::class, 'update'])->name('category.update');
 Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
-
 // ## PROGRAM ## //
 Route::get('/programs',[ProgramController::class, 'programs'])->name('programs');
 Route::get('/tambahprogram',[ProgramController::class, 'tambahprogram'])->name('tambahprogram');
@@ -96,3 +121,7 @@ Route::post('/updateacc/{id}', [LoginController::class, 'updateacc'])->name('upd
 Route::delete('/deleteacc/{id}', [LoginController::class, 'deleteacc'])->name('deleteacc');
 
 });
+
+//ownervenue
+
+//ownerhealth
