@@ -1,0 +1,6 @@
+- [ ] Rename club.html to club.blade.php
+- [ ] Edit club.blade.php to replace asset paths with {{ asset('...') }} and update links to use {{ url('...') }}
+- [ ] Add routes for main pages (home, club, venue, community, blog-news, payment, success, etc.) in routes/web.php
+- [ ] Rename home.html to home.blade.php and edit similarly
+- [ ] Rename and edit remaining HTML files (venue.html, community.html, blog&news.html, payment.html, success.html, etc.) to blade.php
+- [ ] Test the routes by running the Laravel app
