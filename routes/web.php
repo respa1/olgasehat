@@ -1,6 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\CategoryController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +21,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () { return view('welcome');});
+// Authentication Routes
+Route::controller(LoginController::class)->group(function () {
+    Route::get('/login', 'login')->name('login');
+    Route::post('/loginproses', 'loginproses')->name('login.proses');
+    Route::post('/logout', 'logout')->name('logout');
+});
+
+// Protected Backoffice Routes
+Route::middleware(['auth'])->group(function (){
+    Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
 
 // FRONTEND
 Route::get('/daftaruser', function () { return view('FRONTEND.daftaruser');});
@@ -28,3 +45,54 @@ Route::get('/loginuser', function () {return view('FRONTEND.loginuser');});
 Route::get('/registeremail', function () {return view('FRONTEND.registeremail');});
 Route::get('/loginemail', function () { return view('FRONTEND.loginemail');});
 Route::get('/resetpassword', function () {return view('FRONTEND.resetpassword'); });
+
+// BACKEND
+
+// ## ADMIN ## //
+Route::get('/admin', [AdminController::class, 'admin'])->name('admin');
+Route::get('/galeri', [GaleriController::class, 'galeri'])->name('galeri');
+Route::get('/tambahgaleri',[GaleriController::class, 'tambahgaleri'])->name('tambahgaleri');
+Route::post('/insertgaleri',[GaleriController::class, 'insertgaleri'])->name('insertgaleri');
+Route::get('/tampilkangaleri/{id}',[GaleriController::class, 'tampilkangaleri'])->name('tampilkangaleri');
+Route::post('/updategaleri/{id}',[GaleriController::class, 'updategaleri'])->name('updategaleri');
+Route::get('/deletegaleri/{id}',[GaleriController::class, 'deletegaleri'])->name('deletegaleri');
+// ## NEWS ## //
+Route::get('/newss',[BeritaController::class, 'newss'])->name('newss');
+Route::get('/tambahdata',[BeritaController::class, 'tambahdata'])->name('tambahdata');
+Route::post('/insertdata',[BeritaController::class, 'insertdata'])->name('insertdata');
+Route::get('/tampilkandata/{id}',[BeritaController::class, 'tampilkandata'])->name('tampilkandata');
+Route::post('/updatedata/{id}',[BeritaController::class, 'updatedata'])->name('updatedata');
+Route::get('/deletenews/{id}',[BeritaController::class, 'deletenews'])->name('deletenews');
+Route::get('/exportpdf',[BeritaController::class, 'exportpdf'])->name('exportpdf');
+
+// ## RIVIEW ## //
+Route::get('/review', [ReviewController::class, 'index'])->name('review.index');
+Route::get('/tambah_review', [ReviewController::class, 'create'])->name('review.create');
+Route::post('/simpan_review', [ReviewController::class, 'store'])->name('review.store');
+Route::get('/edit_review/{id}', [ReviewController::class, 'edit'])->name('review.edit');
+Route::put('/update_review/{id}', [ReviewController::class, 'update'])->name('review.update');
+Route::delete('/review/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
+// ## CATEGORY ## //
+Route::get('/category', [CategoryController::class, 'category'])->name('category.index');
+Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
+Route::get('/category/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+Route::put('/category/{id}', [CategoryController::class, 'update'])->name('category.update');
+Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+
+// ## PROGRAM ## //
+Route::get('/programs',[ProgramController::class, 'programs'])->name('programs');
+Route::get('/tambahprogram',[ProgramController::class, 'tambahprogram'])->name('tambahprogram');
+Route::post('/insertprogram',[ProgramController::class, 'insertprogram'])->name('insertprogram');
+Route::get('/tampilkanprogram/{id}',[ProgramController::class, 'tampilkanprogram'])->name('tampilkanprogram');
+Route::post('/updateprogram/{id}',[ProgramController::class, 'updateprogram'])->name('updateprogram');
+Route::get('/deleteprogram/{id}',[ProgramController::class, 'deleteprogram'])->name('deleteprogram');
+// ## ACCOUNT ## //
+Route::get('/akun', [LoginController::class, 'akun'])->name('akun');
+Route::get('/add', [LoginController::class, 'add'])->name('add');
+Route::post('/insertacc',[LoginController::class, 'insertacc'])->name('insertacc');
+Route::get('/tampilkanacc/{id}', [LoginController::class, 'tampilkanacc'])->name('tampilkanacc');
+Route::post('/updateacc/{id}', [LoginController::class, 'updateacc'])->name('updateacc');
+Route::delete('/deleteacc/{id}', [LoginController::class, 'deleteacc'])->name('deleteacc');
+
+});
