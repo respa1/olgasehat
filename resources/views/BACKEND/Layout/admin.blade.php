@@ -119,7 +119,7 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-building"></i>
               <p>
-                Pemilik Fasilitas
+                Verifikasi Mitra
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -127,36 +127,42 @@
               <li class="nav-item">
                 <a href="/venue" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Venue</p>
+                  <p>Pemilik Lapangan</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/tempat-sehat" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Tempat Sehat</p>
+                  <p>Pemilik Kesehatan</p>
                 </a>
               </li>
             </ul>
           </li>
 
-          <!-- Aktivitas -->
+          <!-- Keuangan -->
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-building"></i>
+              <i class="nav-icon fas fa-wallet"></i>
               <p>
-                Aktivitas
+                Keuangan
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/venue" class="nav-link">
+                <a href="/riwayat-fasilitas" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Fasilitas</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/riwayat-komunitas" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Komunitas</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/tempat-sehat" class="nav-link">
+                <a href="/riwayat-klub" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Klub</p>
                 </a>
