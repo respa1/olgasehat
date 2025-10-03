@@ -49,20 +49,6 @@ Route::get('/venue-detail', fn() => view('frontend.venue_detail'));
 
 // public frontend user
 Route::get('/daftaruser', function () { return view('frontend.daftaruser');});
-Route::get('/loginpengelolavenue', function () { return view('frontend.loginpengelolavenue');});
-Route::get('/regispengelola', function () {return view('frontend.regispengelola');});
-Route::get('/isidata', function () {return view('frontend.isidata');});
-Route::get('/loginuser', function () {return view('frontend.loginuser');});
-Route::get('/registeremail', function () {return view('frontend.registeremail');});
-Route::get('/loginemail', function () { return view('frontend.loginemail');});
-Route::get('/resetpassword', function () {return view('frontend.resetpassword'); });
-
-// Protected Backoffice Routes
-Route::middleware(['auth'])->group(function (){
-    Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
-
-
-Route::get('/daftaruser', function () { return view('frontend.daftaruser');});
 Route::get('/editprofile', function () { return view('frontend.editprofile');});
 Route::get('/riwayat komunitas', function () {return view('frontend.riwayatkomunitas');});
 Route::get('/riwayatclub', function () {return view('frontend.riwayatclub');});
@@ -74,6 +60,10 @@ Route::get('/loginuser', function () {return view('frontend.loginuser');});
 Route::get('/registeremail', function () {return view('frontend.registeremail');});
 Route::get('/loginemail', function () { return view('frontend.loginemail');});
 Route::get('/resetpassword', function () {return view('frontend.resetpassword'); });
+
+// Protected Backoffice Routes
+Route::middleware(['auth'])->group(function (){
+    Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
 
 //backend
 Route::get('/admin', [AdminController::class, 'admin'])->name('admin');
