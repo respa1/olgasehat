@@ -22,7 +22,7 @@
       <img src="assets/logo.png" alt="Olga Sehat Logo" class="mx-auto">
     </div>
   </div>
-
+ 
   <h2 class="font-bold text-xl mb-2 text-gray-800 text-center md:text-left">
     Welcome, Guest!
   </h2>
