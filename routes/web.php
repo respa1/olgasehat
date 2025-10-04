@@ -53,13 +53,15 @@ Route::get('/editprofile', function () { return view('frontend.editprofile');});
 Route::get('/riwayat komunitas', function () {return view('frontend.riwayatkomunitas');});
 Route::get('/riwayatclub', function () {return view('frontend.riwayatclub');});
 Route::get('/riwayatpayment', function () {return view('frontend.riwayatpayment');});
-Route::get('/loginpengelolavenue', function () { return view('frontend.loginpengelolavenue');});
-Route::get('/regispengelola', function () {return view('frontend.regispengelola');});
-Route::get('/isidata', function () {return view('frontend.isidata');});
-Route::get('/loginuser', function () {return view('frontend.loginuser');});
 Route::get('/registeremail', function () {return view('frontend.registeremail');});
 Route::get('/loginemail', function () { return view('frontend.loginemail');});
 Route::get('/resetpassword', function () {return view('frontend.resetpassword'); });
+
+// login pengelola
+Route::get('/loginpengelolavenue', function () { return view('pemiliklapangan.loginpengelolavenue');});
+Route::get('/regispengelola', function () {return view('pemiliklapangan.regispengelola');});
+Route::get('/isidata', function () {return view('pemiliklapangan.isidata');});
+Route::get('/loginuser', function () {return view('frontend.loginuser');});
 
 // Protected Backoffice Routes
 Route::middleware(['auth'])->group(function (){
