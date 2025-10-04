@@ -37,11 +37,11 @@
         <img src="{{ asset('frontend/assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="w-100 h-10" />
       </a>
       <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
-        <a href="venue.html" class="hover:text-blue-700">Sewa Lapangan</a>
-        <a href="tempat_sehat.html" class="hover:text-blue-700">Tempat Sehat</a>
-        <a href="community.html" class="hover:text-blue-700">Community</a>
-        <a href="club.html" class="hover:text-blue-700">Club</a>
-        <a href="blog&news.html" class="hover:text-blue-700">Blog & News</a>
+         <a href="/" class="hover:text-blue-700">Sewa Lapangan</a>
+      <a href="/tempatsehat" class="hover:text-blue-700">Tempat Sehat</a>
+      <a href="/community" class="hover:text-blue-700">Komunitas</a>
+      <a href="/club" class="hover:text-blue-700">Klub</a>
+      <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
       </nav>
       <div class="hidden md:flex items-center space-x-4">
         <button aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">

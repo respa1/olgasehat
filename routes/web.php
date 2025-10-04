@@ -32,7 +32,7 @@ Route::controller(LoginController::class)->group(function () {
 
 // Public Frontend Routes
 // frontend publik
-Route::get('/blog-news', fn() => view('frontend.blog_news'));
+Route::get('/blog-news', fn() => view('frontend.blog-news'));
 Route::get('/blog-news-detail', fn() => view('frontend.blog_news_detail'));
 Route::get('/club', fn() => view('frontend.club'));
 Route::get('/club-detail', fn() => view('frontend.club_detail'));
