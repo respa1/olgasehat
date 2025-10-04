@@ -46,11 +46,34 @@
 
     <!-- Aksi Desktop -->
     <div class="hidden md:flex items-center space-x-4 relative">
-      <!-- Cart -->
-      <button aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
-        <i class="fas fa-shopping-cart fa-lg"></i>
-        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
-      </button>
+     <!-- Tombol Cart (Desktop & Mobile) -->
+<button id="cartBtn" aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
+  <i class="fas fa-shopping-cart fa-lg"></i>
+  <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
+</button>
+
+<!-- Overlay -->
+<div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+
+<!-- Cart Sidebar -->
+<div id="cartSidebar" 
+     class="fixed top-0 right-0 w-80 max-w-full h-full bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+  <!-- Header -->
+  <div class="flex justify-between items-center px-4 py-3 border-b">
+    <h2 class="font-semibold text-lg">JADWAL DIPILIH</h2>
+    <button id="closeCart" class="text-gray-500 hover:text-gray-700">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <!-- Isi Cart -->
+  <div class="p-4 text-gray-600">
+    Belum ada jadwal di keranjang.
+  </div>
+</div>
+
+
+
 
       <!-- Register Dropdown -->
       <div class="relative">
@@ -78,18 +101,54 @@
       </div>
     </div>
 
-    <!-- Tombol Hamburger -->
-    <button id="mobileMenuBtn" 
-            class="md:hidden text-gray-700 hover:text-blue-700 focus:outline-none z-[60] relative">
-      <i class="fas fa-bars fa-lg"></i>
+   
+
+<!-- Header Mobile (Cart + Hamburger dalam satu flex) -->
+<div class="flex md:hidden items-center space-x-4 ml-auto">
+  <!-- Tombol Cart (Desktop & Mobile) -->
+<button id="cartBtn" aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
+  <i class="fas fa-shopping-cart fa-lg"></i>
+  <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
+</button>
+
+<!-- Overlay -->
+<div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+
+<!-- Cart Sidebar -->
+<div id="cartSidebar" 
+     class="fixed top-0 right-0 w-80 max-w-full h-full bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+  <!-- Header -->
+  <div class="flex justify-between items-center px-4 py-3 border-b">
+    <h2 class="font-semibold text-lg">JADWAL DIPILIH</h2>
+    <button id="closeCart" class="text-gray-500 hover:text-gray-700">
+      <i class="fas fa-times"></i>
     </button>
   </div>
 
- <!-- Menu Mobile -->
+  <!-- Isi Cart -->
+  <div class="p-4 text-gray-600">
+    Belum ada jadwal di keranjang.
+  </div>
+</div>
+
+
+
+
+  <!-- Tombol Hamburger -->
+  <button id="mobileMenuBtn"
+          class="text-gray-700 hover:text-blue-700 focus:outline-none"
+          aria-label="Open menu">
+    <i class="fas fa-bars fa-lg"></i>
+  </button>
+</div>
+
+
+<!-- Menu Navigasi Mobile -->
 <nav id="mobileMenu"
      class="hidden flex-col md:hidden bg-white border-t border-gray-200 shadow-md 
             transition-all duration-300 ease-in-out absolute top-full left-0 w-full z-[50]">
 
+  <!-- Link Navigasi -->
   <a href="/" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Sewa Lapangan</a>
   <a href="/tempatsehat" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Tempat Sehat</a>
   <a href="/community" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Komunitas</a>
@@ -99,7 +158,9 @@
   <!-- Register Dropdown (Mobile) -->
   <div class="border-t">
     <button id="mobileRegisterBtn" 
-            class="w-full text-left px-6 py-3 font-semibold text-gray-700 hover:bg-blue-50 hover:text-blue-700 focus:outline-none flex justify-between items-center">
+            class="w-full text-left px-6 py-3 font-semibold text-gray-700 
+                   hover:bg-blue-50 hover:text-blue-700 focus:outline-none 
+                   flex justify-between items-center">
       Register
       <i class="fas fa-chevron-down ml-2"></i>
     </button>
@@ -110,19 +171,22 @@
   </div>
 
   <!-- Login Dropdown (Mobile) -->
-<div class="border-t">
-  <button id="mobileLoginBtn" 
-          class="w-full text-left px-6 py-3 font-semibold bg-blue-700 text-white rounded-md hover:bg-blue-800 focus:outline-none flex justify-between items-center">
-    Login
-    <i class="fas fa-chevron-down ml-2"></i>
-  </button>
-  <div id="mobileLoginDropdown" class="hidden flex-col bg-white shadow-md rounded-b-md">
-    <a href="#" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Login User</a>
-    <a href="#" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Login Pengelola Venue</a>
+  <div class="border-t">
+    <button id="mobileLoginBtn" 
+            class="w-full text-left px-6 py-3 font-semibold bg-blue-700 text-white rounded-md 
+                   hover:bg-blue-800 focus:outline-none flex justify-between items-center">
+      Login
+      <i class="fas fa-chevron-down ml-2"></i>
+    </button>
+    <div id="mobileLoginDropdown" class="hidden flex-col bg-white shadow-md rounded-b-md">
+      <a href="#" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Login User</a>
+      <a href="#" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Login Pengelola Venue</a>
+    </div>
   </div>
-</div>
-
 </nav>
+
+
+
 </header>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -181,7 +245,7 @@
   });
 </script>
   <!-- Hero Section -->
-  <section class="relative bg-cover bg-center h-[400px]" style="background-image: url('{{ asset('frontend/assets/ten-indonesia-august-02-2022-600nw-2455954305.webp') }}');">
+  <section class="relative bg-cover bg-center h-[400px]" style="background-image: url('{{ asset('frontend/assets/banten-indonesia-august-02-2022-600nw-2455954305.webp') }}');">
     <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center">
       <div class="container mx-auto px-6 text-white max-w-3xl">
         <h1 class="text-3xl md:text-4xl font-bold mb-4">
@@ -496,6 +560,29 @@
     }
   });
 </script>
+<script>
+  const cartBtn = document.getElementById("cartBtn");
+  const cartSidebar = document.getElementById("cartSidebar");
+  const cartOverlay = document.getElementById("cartOverlay");
+  const closeCart = document.getElementById("closeCart");
 
+  // buka cart
+  cartBtn.addEventListener("click", () => {
+    cartSidebar.classList.remove("translate-x-full");
+    cartOverlay.classList.remove("hidden");
+  });
+
+  // tutup cart
+  closeCart.addEventListener("click", () => {
+    cartSidebar.classList.add("translate-x-full");
+    cartOverlay.classList.add("hidden");
+  });
+
+  // tutup cart saat klik overlay
+  cartOverlay.addEventListener("click", () => {
+    cartSidebar.classList.add("translate-x-full");
+    cartOverlay.classList.add("hidden");
+  });
+</script>
 </body>
 </html>
