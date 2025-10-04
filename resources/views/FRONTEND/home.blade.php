@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Olga Sehat - Landing Page</title>
-  <link rel="icon" href="assets/olgasehat-icon.png" type="image/png" />
+  <link rel="icon" href="{{ asset('frontend/assets/olgasehat-icon.png') }}" type="image/png" />
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -34,7 +34,7 @@
   <header class="fixed top-0 left-0 right-0 z-50 shadow-md bg-white">
     <div class="container mx-auto flex items-center justify-between py-4 px-6">
       <a href="home.html" class="flex items-center space-x-2">
-        <img src="assets/olgasehat-icon.png" alt="Olga Sehat Logo" class="w-100 h-10" />
+        <img src="{{ asset('frontend/assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="w-100 h-10" />
       </a>
       <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
         <a href="venue.html" class="hover:text-blue-700">Sewa Lapangan</a>
@@ -120,7 +120,7 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="relative bg-cover bg-center h-[400px]" style="background-image: url('assets/banten-indonesia-august-02-2022-600nw-2455954305.webp');">
+  <section class="relative bg-cover bg-center h-[400px]" style="background-image: url('{{ asset('frontend/assets/ten-indonesia-august-02-2022-600nw-2455954305.webp') }}');">
     <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center">
       <div class="container mx-auto px-6 text-white max-w-3xl">
         <h1 class="text-3xl md:text-4xl font-bold mb-4">
@@ -163,16 +163,16 @@
       </div>
     </div>
     <div class="md:w-1/2 grid grid-cols-2 gap-6" id="imageContainerPemilik">
-      <img src="assets/MU Sport Center.jpeg" alt="MU Sport Center" class="rounded-lg object-cover h-52 w-full" />
-      <img src="assets/Imbo Sport Center.webp" alt="Imbo Sport Center" class="rounded-lg object-cover h-52 w-full" />
-      <img src="assets/DC Arena Bali.jpeg" alt="DC Arena Bali" class="rounded-lg object-cover h-52 w-full" />
-      <img src="assets/Arena Sport.jpg" alt="Arena Sport" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/MU Sport Center.jpeg') }}" alt="MU Sport Center" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/Imbo Sport Center.webp') }}" alt="Imbo Sport Center" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/DC Arena Bali.jpeg') }}" alt="DC Arena Bali" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/Arena Sport.jpg') }}" alt="Arena Sport" class="rounded-lg object-cover h-52 w-full" />
     </div>
     <div class="md:w-1/2 grid grid-cols-2 gap-6 hidden" id="imageContainerPenyewa">
-      <img src="assets/" alt="MU Sport Center" class="rounded-lg object-cover h-52 w-full" />
-      <img src="assets/Imbo Sport Center.webp" alt="Imbo Sport Center" class="rounded-lg object-cover h-52 w-full" />
-      <img src="assets/DC Arena Bali.jpeg" alt="DC Arena Bali" class="rounded-lg object-cover h-52 w-full" />
-      <img src="assets/Arena Sport.jpg" alt="Arena Sport" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/MU Sport Center.jpeg') }}" alt="MU Sport Center" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/Imbo Sport Center.webp') }}" alt="Imbo Sport Center" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/DC Arena Bali.jpeg') }}" alt="DC Arena Bali" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/Arena Sport.jpg') }}" alt="Arena Sport" class="rounded-lg object-cover h-52 w-full" />
     </div>
   </section>
 
@@ -233,16 +233,16 @@
         <button class="bg-gray-300 text-gray-600 text-sm font-semibold rounded-full px-4 py-2">OPERATOR KOMPETISI</button>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-5xl mx-auto">
-        <img src="assets/komunitas.png" alt="Komunitas 1" class="rounded-lg object-cover h-56 w-full" />
-        <img src="assets/komunitas1.png" alt="Komunitas 2" class="rounded-lg object-cover h-56 w-full" />
-        <img src="assets/komunitas2.png" alt="Komunitas 3" class="rounded-lg object-cover h-56 w-full" />
+        <img src="{{ asset('frontend/assets/komunitas.png') }}" alt="Komunitas 1" class="rounded-lg object-cover h-56 w-full" />
+        <img src="{{ asset('frontend/assets/komunitas1.png') }}" alt="Komunitas 2" class="rounded-lg object-cover h-56 w-full" />
+        <img src="{{ asset('frontend/assets/komunitas2.png') }}" alt="Komunitas 3" class="rounded-lg object-cover h-56 w-full" />
       </div>
       <a href="#" class="text-blue-700 font-semibold mt-8 inline-block hover:underline text-lg">Lihat Komunitas</a>
     </div>
   </section>
 
   <!-- Mengapa Memilih Olga Sehat Section -->
-  <section class="relative bg-cover bg-center h-[450px] mt-16" style="background-image: url('assets/banten-indonesia-august-02-2022-600nw-2455954305.webp');">
+  <section class="relative bg-cover bg-center h-[450px] mt-16" style="background-image: url('{{ asset('frontend/assets/banten-indonesia-august-02-2022-600nw-2455954305.webp') }}');">
     <div class="absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-center items-center text-white px-6">
       <h2 class="text-4xl font-bold mb-12 text-center max-w-3xl text-white">
         Mengapa Memilih Olga Sehat?
@@ -272,7 +272,7 @@
   <section class="container mx-auto px-6 py-12">
     <div class="max-w-5xl mx-auto flex flex-col md:flex-row rounded-lg overflow-hidden shadow-lg">
       <!-- Left side with blue background and heading -->
-      <div class="md:w-1/2 bg-[url('assets/blue-banner.png')] bg-cover bg-center flex items-center justify-center p-12">
+      <div class="md:w-1/2 bg-[url('{{ asset('frontend/assets/blue-banner.png') }}')] bg-cover bg-center flex items-center justify-center p-12">
         <h2 class="text-white text-3xl font-bold text-center">Apa Kata Mereka?</h2>
       </div>
       <!-- Right side with testimonial content -->
@@ -280,7 +280,7 @@
         <div id="testimonial-container" class="relative min-h-[200px]">
           <div class="testimonial-item absolute inset-0 transition-opacity duration-500 opacity-100">
             <div class="flex items-center space-x-6 mb-6">
-              <img src="assets/Goes Natha bos .jpg" alt="Ir. Bagus Nathaniel Mahendra" class="w-20 h-20 rounded-full object-cover" />
+              <img src="{{ asset('frontend/assets/Goes Natha bos .jpg') }}" alt="Ir. Bagus Nathaniel Mahendra" class="w-20 h-20 rounded-full object-cover" />
               <div>
                 <p class="font-semibold text-lg text-gray-900">Ir. Bagus Nathaniel Mahendra, M.Eng.</p>
                 <p class="text-sm text-gray-500">Backbone Indonesia</p>
@@ -293,7 +293,7 @@
           </div>
           <div class="testimonial-item absolute inset-0 transition-opacity duration-500 opacity-0 pointer-events-none">
             <div class="flex items-center space-x-6 mb-6">
-              <img src="assets/ir_bagus.jpg" alt="Testimonial 2" class="w-20 h-20 rounded-full object-cover" />
+              <img src="{{ asset('frontend/assets/ir_bagus.jpg') }}" alt="Testimonial 2" class="w-20 h-20 rounded-full object-cover" />
               <div>
                 <p class="font-semibold text-lg text-gray-900">Testimonial User 2</p>
                 <p class="text-sm text-gray-500">Company 2</p>
@@ -306,7 +306,7 @@
           </div>
           <div class="testimonial-item absolute inset-0 transition-opacity duration-500 opacity-0 pointer-events-none">
             <div class="flex items-center space-x-6 mb-6">
-              <img src="assets/ir_bagus.jpg" alt="Testimonial 3" class="w-20 h-20 rounded-full object-cover" />
+              <img src="{{ asset('frontend/assets/ir_bagus.jpg') }}" alt="Testimonial 3" class="w-20 h-20 rounded-full object-cover" />
               <div>
                 <p class="font-semibold text-lg text-gray-900">Testimonial User 3</p>
                 <p class="text-sm text-gray-500">Company 3</p>
@@ -407,6 +407,6 @@
     </div>
   </footer>
 
-  <script src="assets/olgasehat.js"></script>
+  <script src="{{ asset('frontend/assets/olgasehat.js') }}"></script>
 </body>
 </html>
