@@ -114,6 +114,10 @@ Route::delete('/deleteacc/{id}', [LoginController::class, 'deleteacc'])->name('d
 
 });
 
+Route::get('/pemiliklapangan/dashboard', function () {
+    return view('pemiliklapangan.Dashboard.dashboard');
+});
+
 //ownervenue
 
 //ownerhealth
