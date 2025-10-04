@@ -167,7 +167,7 @@
           <!-- Voucher Campaign -->
           <li class="nav-item">
             <a href="/pemiliklapangan/voucher" class="nav-link">
-              <i class="nav-icon fas fa-ticket"></i>
+              <i class="nav-icon fas fa-credit-card"></i>
               <p>Voucher Campaign</p>
             </a>
           </li>

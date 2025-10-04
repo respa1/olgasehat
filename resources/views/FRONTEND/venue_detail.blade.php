@@ -345,7 +345,7 @@
   </div>
    </a>
 
-   <script src="assets/olgasehat.js"></script>
+   <script src="{{ asset('frontend/assets/olgasehat.js') }}"></script>
   <script>
     // Toggle rules "Read more"
     const toggleBtn = document.getElementById('toggleRulesBtn');
@@ -401,5 +401,6 @@
       selectedSlot = cancelBtn;
     });
   </script>
+  
 </body>
 </html>
