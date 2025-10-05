@@ -181,9 +181,9 @@
   });
 </script>
   <!-- Hero Section -->
-  <section class="relative bg-cover bg-center h-[400px]" style="background-image: url('{{ asset('frontend/assets/ten-indonesia-august-02-2022-600nw-2455954305.webp') }}');">
+  <section class="relative bg-cover bg-center h-[400px]" style="background-image: url('{{ asset('frontend/assets/banten-indonesia-august-02-2022-600nw-2455954305.webp') }}');">
     <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center">
-      <div class="container mx-auto px-6 text-white max-w-3xl">
+      <div class="container mx-auto px-6 text-white text-left">
         <h1 class="text-3xl md:text-4xl font-bold mb-4">
           Kini <span class="font-extrabold">Olga Sehat</span> Hadir<br />
           Untuk Gaya Hidup Sehat
@@ -202,7 +202,7 @@
     <div class="md:w-1/2 mb-8 md:mb-0">
       <div class="inline-flex space-x-2 mb-6" role="tablist" aria-label="Toggle Kelola Fasilitas">
         <button id="btnPemilik" role="tab" aria-selected="true" aria-controls="contentPemilik" tabindex="0" class="bg-blue-700 text-white text-sm font-semibold rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600">
-          PEMILIK FASILITAS
+          PEMILIK LAPANGAN
         </button>
         <button id="btnPenyewa" role="tab" aria-selected="false" aria-controls="contentPenyewa" tabindex="-1" class="bg-gray-300 text-gray-600 text-sm font-semibold rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400">
           PENYEWA
@@ -234,6 +234,46 @@
       <img src="{{ asset('frontend/assets/Imbo Sport Center.webp') }}" alt="Imbo Sport Center" class="rounded-lg object-cover h-52 w-full" />
       <img src="{{ asset('frontend/assets/DC Arena Bali.jpeg') }}" alt="DC Arena Bali" class="rounded-lg object-cover h-52 w-full" />
       <img src="{{ asset('frontend/assets/Arena Sport.jpg') }}" alt="Arena Sport" class="rounded-lg object-cover h-52 w-full" />
+    </div>
+  </section>
+
+  <!-- Kelola Fasilitas Section -->
+  <section class="container mx-auto px-6 py-16 flex flex-col md:flex-row items-center md:items-start md:space-x-12">
+    <div class="md:w-1/2 grid grid-cols-2 gap-6" id="imageContainerPemilik">
+      <img src="{{ asset('frontend/assets/MU Sport Center.jpeg') }}" alt="MU Sport Center" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/Imbo Sport Center.webp') }}" alt="Imbo Sport Center" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/DC Arena Bali.jpeg') }}" alt="DC Arena Bali" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/Arena Sport.jpg') }}" alt="Arena Sport" class="rounded-lg object-cover h-52 w-full" />
+    </div>
+    <div class="md:w-1/2 grid grid-cols-2 gap-6 hidden" id="imageContainerPenyewa">
+      <img src="{{ asset('frontend/assets/MU Sport Center.jpeg') }}" alt="MU Sport Center" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/Imbo Sport Center.webp') }}" alt="Imbo Sport Center" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/DC Arena Bali.jpeg') }}" alt="DC Arena Bali" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/Arena Sport.jpg') }}" alt="Arena Sport" class="rounded-lg object-cover h-52 w-full" />
+    </div>
+    <div class="md:w-1/2 mb-8 md:mb-0">
+      <div class="inline-flex space-x-2 mb-6" role="tablist" aria-label="Toggle Kelola Fasilitas">
+        <button id="btnPemilik" role="tab" aria-selected="true" aria-controls="contentPemilik" tabindex="0" class="bg-blue-700 text-white text-sm font-semibold rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600">
+          PEMILIK KESEHATAN
+        </button>
+        <button id="btnPenyewa" role="tab" aria-selected="false" aria-controls="contentPenyewa" tabindex="-1" class="bg-gray-300 text-gray-600 text-sm font-semibold rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400">
+          PENYEWA
+        </button>
+      </div>
+      <div id="contentPemilik" role="tabpanel" aria-labelledby="btnPemilik" tabindex="0">
+        <h2 class="text-4xl font-bold mb-6 text-gray-800">Kelola fasilitas lebih praktis dan menguntungkan.</h2>
+        <p class="text-gray-700 mb-6 max-w-md text-lg leading-relaxed">
+          Waktunya buat venue anda lebih dari sekadar venue. Semuanya dimulai dengan pengelolaan yang simpel, fleksibel, dan profitable lewat OLGA SEHAT Venue Management.
+        </p>
+        <a href="#" class="text-blue-700 font-semibold hover:underline text-lg">Lihat Selengkapnya</a>
+      </div>
+      <div id="contentPenyewa" role="tabpanel" aria-labelledby="btnPenyewa" tabindex="0" class="hidden">
+        <h2 class="text-4xl font-bold mb-6 text-gray-800">Sewa lapangan dengan mudah dan cepat.</h2>
+        <p class="text-gray-700 mb-6 max-w-md text-lg leading-relaxed">
+          Ada rencana berolahraga minggu ini tapi belum tahu mau main di mana? Atau tidak sempat jauh-jauh datang ke venue hanya untuk booking lapangan?
+        </p>
+        <a href="#" class="text-blue-700 font-semibold hover:underline text-lg">Lihat Selengkapnya</a>
+      </div>
     </div>
   </section>
 
@@ -287,11 +327,11 @@
     <div class="container mx-auto px-6 text-center">
       <h2 class="text-4xl font-bold mb-4 text-gray-800">Cari Komunitas terbaik untuk tim Anda!</h2>
       <p class="text-gray-700 mb-8 max-w-3xl mx-auto text-lg leading-relaxed">
-        Ikuti berbagai pilihan kompetisi dari AYO Indonesia dan operator kompetisi lainnya. Rasakan keseruan silaturahmi di lapangan bersama ribuan tim amatir lainnya sekarang juga!
+        Ikuti berbagai pilihan kompetisi dari Olga Sehat dan operator kompetisi lainnya. Rasakan keseruan silaturahmi di lapangan bersama ribuan tim amatir lainnya sekarang juga!
       </p>
       <div class="inline-flex space-x-4 mb-8">
-        <button class="bg-blue-700 text-white text-sm font-semibold rounded-full px-4 py-2">PESERTA</button>
-        <button class="bg-gray-300 text-gray-600 text-sm font-semibold rounded-full px-4 py-2">OPERATOR KOMPETISI</button>
+        <button class="bg-blue-700 text-white text-sm font-semibold rounded-full px-4 py-2">KOMUNITAS</button>
+        <button class="bg-gray-300 text-gray-600 text-sm font-semibold rounded-full px-4 py-2">KLUB</button>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-5xl mx-auto">
         <img src="{{ asset('frontend/assets/komunitas.png') }}" alt="Komunitas 1" class="rounded-lg object-cover h-56 w-full" />
