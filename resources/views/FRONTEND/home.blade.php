@@ -31,13 +31,13 @@
   <div class="container mx-auto flex items-center justify-between py-4 px-6">
     
     <!-- Logo -->
-    <a href="/" class="flex items-center space-x-2">
+    <a href="/home" class="flex items-center space-x-2">
       <img src="{{ asset('frontend/assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="h-10 w-auto" />
     </a>
 
     <!-- Menu Desktop -->
     <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
-      <a href="/" class="hover:text-blue-700">Sewa Lapangan</a>
+      <a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a>
       <a href="/tempatsehat" class="hover:text-blue-700">Tempat Sehat</a>
       <a href="/community" class="hover:text-blue-700">Komunitas</a>
       <a href="/club" class="hover:text-blue-700">Klub</a>
