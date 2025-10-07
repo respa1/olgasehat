@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Olga Sehat - Detail Venue</title>
-  <link rel="icon" href="assets/olgasehat-icon.png" type="image/png" />
+  <link rel="icon" href="{{ asset('assets/olgasehat-icon.png') }}" type="image/png" />
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -34,7 +34,7 @@
   <header class="fixed top-0 left-0 right-0 z-50 shadow-md bg-white">
     <div class="container mx-auto flex items-center justify-between py-4 px-6">
       <a href="#" class="flex items-center space-x-2">
-        <img src="assets/olgasehat-icon.png" alt="Olga Sehat Logo" class="w-100 h-10" />
+        <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="w-100 h-10" />
       </a>
       <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
         <a href="venue.html" class="hover:text-blue-700">Sewa Lapangan</a>
@@ -127,18 +127,18 @@
         <!-- Images -->
         <div class="grid grid-cols-3 gap-4">
           <img
-            src="assets/MU Sport Center.jpeg"
+            src="{{ asset('assets/MU Sport Center.jpeg') }}"
             alt="MU Sport Center Main"
             class="col-span-2 rounded-lg object-cover h-72 w-full"
           />
           <div class="grid grid-rows-3 gap-4">
             <img
-              src="assets/DC Arena Bali.jpeg"
+              src="{{ asset('assets/DC Arena Bali.jpeg') }}"
               alt="MU Sport Center 1"
               class="rounded-lg object-cover h-24 w-full"
             />
             <img
-              src="assets/Imbo Sport Center.webp"
+              src="{{ asset('assets/Imbo Sport Center.webp') }}"
               alt="MU Sport Center 2"
               class="rounded-lg object-cover h-24 w-full"
             />
@@ -147,7 +147,7 @@
               aria-label="Lihat semua foto"
             >
               <img
-                src="assets/Arena Sport.jpg"
+                src="{{ asset('assets/Arena Sport.jpg') }}"
                 alt="MU Sport Center 3"
                 class="object-cover h-24 w-full brightness-75"
               />
@@ -345,7 +345,7 @@
   </div>
    </a>
 
-   <script src="{{ asset('frontend/assets/olgasehat.js') }}"></script>
+   <script src="{{ asset('assets/olgasehat.js') }}"></script>
   <script>
     // Toggle rules "Read more"
     const toggleBtn = document.getElementById('toggleRulesBtn');
