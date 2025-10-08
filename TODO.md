@@ -1,12 +1,21 @@
-# TODO: Link Assets in Home Page using Laravel asset() helper
+# TODO: Connect All Assets in Frontend Views
 
-- [ ] Update favicon link to {{ asset('frontend/assets/olgasehat-icon.png') }}
-- [ ] Update logo img src to {{ asset('frontend/assets/olgasehat-icon.png') }}
-- [ ] Update hero section background to {{ asset('frontend/assets/banten-indonesia-august-02-2022-600nw-2455954305.webp') }}
-- [ ] Update all img src in Kelola Fasilitas section to {{ asset('frontend/assets/') }}
-- [ ] Update img src in Cari Komunitas section to {{ asset('frontend/assets/') }}
-- [ ] Update background in Mengapa Memilih Olga Sehat section to {{ asset('frontend/assets/') }}
-- [ ] Update bg-[url in Testimonial section to {{ asset('frontend/assets/') }}
-- [ ] Update img src in testimonial to {{ asset('frontend/assets/') }}
-- [ ] Update script src to {{ asset('frontend/assets/olgasehat.js') }}
-- [ ] Fix empty img src in imageContainerPenyewa
+## Overview
+Ensure all frontend views in `resources/views/frontend/` include the necessary CSS and JS assets from `public/frontend/assets/`.
+
+- CSS: `{{ asset('frontend/assets/style.css') }}`
+- JS: `{{ asset('frontend/assets/olgasehat.js') }}`
+
+Also, fix any incorrect asset paths to use `{{ asset() }}`.
+
+## Views to Update
+- [ ] home.blade.php
+- [ ] venue_detail.blade.php
+- [ ] venue.blade.php
+- [ ] community.blade.php
+- [ ] community_detail.blade.php
+- [ ] club.blade.php
+- [ ] club_detail.blade.php
+- [ ] blog-news.blade.php
+- [ ] blog&news_detail.blade.php
+- [ ] confirm.blade.php

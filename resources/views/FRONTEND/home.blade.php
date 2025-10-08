@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Olga Sehat - Landing Page</title>
   <link rel="icon" href="{{ asset('frontend/assets/olgasehat-icon.png') }}" type="image/png" />
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -22,107 +22,232 @@
       }
     }
   </script>
-  <!-- Font Awesome CDN for icons -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-  />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
 </head>
 <body class="bg-white text-gray-800 font-sans">
+<!-- HEADER -->
+<header class="fixed top-0 left-0 right-0 z-50 shadow-md bg-white relative">
+  <div class="container mx-auto flex items-center justify-between py-4 px-6">
+    
+    <!-- Logo -->
+    <a href="/home" class="flex items-center space-x-2">
+      <img src="{{ asset('frontend/assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="h-10 w-auto" />
+    </a>
 
-  <!-- Header -->
-  <header class="fixed top-0 left-0 right-0 z-50 shadow-md bg-white">
-    <div class="container mx-auto flex items-center justify-between py-4 px-6">
-      <a href="home.html" class="flex items-center space-x-2">
-        <img src="{{ asset('frontend/assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="w-100 h-10" />
-      </a>
-      <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
-         <a href="/" class="hover:text-blue-700">Sewa Lapangan</a>
+    <!-- Menu Desktop -->
+    <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
+      <a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a>
       <a href="/tempatsehat" class="hover:text-blue-700">Tempat Sehat</a>
       <a href="/community" class="hover:text-blue-700">Komunitas</a>
       <a href="/club" class="hover:text-blue-700">Klub</a>
       <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
-      </nav>
-      <div class="hidden md:flex items-center space-x-4">
-        <button aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
-          <i class="fas fa-shopping-cart fa-lg"></i>
-          <span
-            class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5"
-            >0</span
-          >
-        </button>
-        <a href="#" class="text-gray-700 hover:text-blue-700">Masuk</a>
-        <a
-          href="#"
-          class="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition"
-          >Daftar</a
-        >
+    </nav>
+
+    <!-- Aksi Desktop -->
+    <div class="hidden md:flex items-center space-x-4 relative">
+     <!-- Tombol Cart (Desktop & Mobile) -->
+<button id="cartBtn" aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
+  <i class="fas fa-shopping-cart fa-lg"></i>
+  <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
+</button>
+
+<!-- Overlay -->
+<div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+
+<!-- Cart Sidebar -->
+<div id="cartSidebar" 
+     class="fixed top-0 right-0 w-80 max-w-full h-full bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+  <!-- Header -->
+  <div class="flex justify-between items-center px-4 py-3 border-b">
+    <h2 class="font-semibold text-lg">JADWAL DIPILIH</h2>
+    <button id="closeCart" class="text-gray-500 hover:text-gray-700">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <!-- Isi Cart -->
+  <div class="p-4 text-gray-600">
+    Belum ada jadwal di keranjang.
+  </div>
+</div>
+
+
+
+
+      <!-- Register Dropdown -->
+      <div class="relative">
+        <button id="registerBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none">Register</button>
+        <div id="registerDropdown"
+          class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50
+                 transform scale-95 opacity-0 transition-all duration-200 ease-out">
+          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Akun User</a>
+          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Akun Pengelola Venue</a>
+        </div>
       </div>
-      <div class="flex md:hidden items-center space-x-4">
-        <button aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
-          <i class="fas fa-shopping-cart fa-lg"></i>
-          <span
-            class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5"
-            >0</span
-          >
+
+      <!-- Login Dropdown -->
+      <div class="relative">
+        <button id="loginBtn"
+          class="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition focus:outline-none">
+          Login
         </button>
-        <!-- Mobile menu button -->
-        <button
-          id="mobileMenuBtn"
-          class="text-gray-700 hover:text-blue-700 focus:outline-none"
-          aria-label="Open menu"
-        >
-          <i class="fas fa-bars fa-lg"></i>
-        </button>
+        <div id="loginDropdown"
+          class="hidden absolute right-0 mt-2 w-56 bg-white border rounded-md shadow-lg z-50
+                 transform scale-95 opacity-0 transition-all duration-200 ease-out">
+          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login User</a>
+          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login Pengelola Venue</a>
+        </div>
       </div>
     </div>
-    <!-- Mobile menu -->
-    <nav
-      id="mobileMenu"
-      class="hidden md:hidden bg-white border-t border-gray-200 shadow-md"
-    >
-      <a
-        href="venue.html"
-        class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
-        >Sewa Lapangan</a
-      >
-      <a
-        href="tempat_sehat.html"
-        class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
-        >Tempat Sehat</a
-      >
-      <a
-        href="community.html"
-        class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
-        >Community</a
-      >
-      <a
-        href="club.html"
-        class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
-        >Club</a
-      >
-      <a
-        href="blog&news.html"
-        class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
-        >Blog & News</a
-      >
-      <a
-        href="#"
-        class="block w-full text-center px-6 py-3 mb-2 border border-gray-300 rounded-md bg-white text-gray-700 font-semibold hover:bg-gray-100"
-        >Masuk</a
-      >
-      <a
-        href="#"
-        class="block w-full text-center px-6 py-3 rounded-md bg-blue-700 text-white font-semibold hover:bg-red-900"
-        >Daftar</a
-      >
-    </nav>
-  </header>
 
+   
+
+<!-- Header Mobile (Cart + Hamburger dalam satu flex) -->
+<div class="flex md:hidden items-center space-x-4 ml-auto">
+  <!-- Tombol Cart (Desktop & Mobile) -->
+<button id="cartBtn" aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
+  <i class="fas fa-shopping-cart fa-lg"></i>
+  <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
+</button>
+
+<!-- Overlay -->
+<div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+
+<!-- Cart Sidebar -->
+<div id="cartSidebar" 
+     class="fixed top-0 right-0 w-80 max-w-full h-full bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+  <!-- Header -->
+  <div class="flex justify-between items-center px-4 py-3 border-b">
+    <h2 class="font-semibold text-lg">JADWAL DIPILIH</h2>
+    <button id="closeCart" class="text-gray-500 hover:text-gray-700">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <!-- Isi Cart -->
+  <div class="p-4 text-gray-600">
+    Belum ada jadwal di keranjang.
+  </div>
+</div>
+
+
+
+
+  <!-- Tombol Hamburger -->
+  <button id="mobileMenuBtn"
+          class="text-gray-700 hover:text-blue-700 focus:outline-none"
+          aria-label="Open menu">
+    <i class="fas fa-bars fa-lg"></i>
+  </button>
+</div>
+
+
+<!-- Menu Navigasi Mobile -->
+<nav id="mobileMenu"
+     class="hidden flex-col md:hidden bg-white border-t border-gray-200 shadow-md 
+            transition-all duration-300 ease-in-out absolute top-full left-0 w-full z-[50]">
+
+  <!-- Link Navigasi -->
+  <a href="/" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Sewa Lapangan</a>
+  <a href="/tempatsehat" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Tempat Sehat</a>
+  <a href="/community" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Komunitas</a>
+  <a href="/club" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Klub</a>
+  <a href="/blog-news" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Blog & News</a>
+
+  <!-- Register Dropdown (Mobile) -->
+  <div class="border-t">
+    <button id="mobileRegisterBtn" 
+            class="w-full text-left px-6 py-3 font-semibold text-gray-700 
+                   hover:bg-blue-50 hover:text-blue-700 focus:outline-none 
+                   flex justify-between items-center">
+      Register
+      <i class="fas fa-chevron-down ml-2"></i>
+    </button>
+    <div id="mobileRegisterDropdown" class="hidden flex-col bg-gray-50">
+      <a href="#" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Akun User</a>
+      <a href="#" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Akun Pengelola Venue</a>
+    </div>
+  </div>
+
+  <!-- Login Dropdown (Mobile) -->
+  <div class="border-t">
+    <button id="mobileLoginBtn" 
+            class="w-full text-left px-6 py-3 font-semibold bg-blue-700 text-white rounded-md 
+                   hover:bg-blue-800 focus:outline-none flex justify-between items-center">
+      Login
+      <i class="fas fa-chevron-down ml-2"></i>
+    </button>
+    <div id="mobileLoginDropdown" class="hidden flex-col bg-white shadow-md rounded-b-md">
+      <a href="#" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Login User</a>
+      <a href="#" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Login Pengelola Venue</a>
+    </div>
+  </div>
+</nav>
+
+
+
+</header>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Dropdown helper
+    function toggleDropdown(dropdown) {
+      if (dropdown.classList.contains("hidden")) {
+        dropdown.classList.remove("hidden");
+        setTimeout(() => {
+          dropdown.classList.remove("opacity-0", "scale-95");
+          dropdown.classList.add("opacity-100", "scale-100");
+        }, 10);
+      } else {
+        dropdown.classList.remove("opacity-100", "scale-100");
+        dropdown.classList.add("opacity-0", "scale-95");
+        setTimeout(() => dropdown.classList.add("hidden"), 200);
+      }
+    }
+
+    const registerBtn = document.getElementById("registerBtn");
+    const registerDropdown = document.getElementById("registerDropdown");
+    const loginBtn = document.getElementById("loginBtn");
+    const loginDropdown = document.getElementById("loginDropdown");
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    // Register Dropdown
+    registerBtn?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleDropdown(registerDropdown);
+    });
+
+    // Login Dropdown
+    loginBtn?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleDropdown(loginDropdown);
+    });
+
+    // Mobile Menu Toggle
+    mobileMenuBtn?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      mobileMenu.classList.toggle("hidden");
+    });
+
+    // Klik di luar menutup dropdown/menu
+    window.addEventListener("click", (e) => {
+      if (!registerBtn.contains(e.target) && !registerDropdown.contains(e.target)) {
+        registerDropdown.classList.add("hidden", "opacity-0", "scale-95");
+      }
+      if (!loginBtn.contains(e.target) && !loginDropdown.contains(e.target)) {
+        loginDropdown.classList.add("hidden", "opacity-0", "scale-95");
+      }
+      if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        mobileMenu.classList.add("hidden");
+      }
+    });
+  });
+</script>
   <!-- Hero Section -->
-  <section class="relative bg-cover bg-center h-[400px]" style="background-image: url('{{ asset('frontend/assets/ten-indonesia-august-02-2022-600nw-2455954305.webp') }}');">
+  <section class="relative bg-cover bg-center h-[400px]" style="background-image: url('{{ asset('frontend/assets/banten-indonesia-august-02-2022-600nw-2455954305.webp') }}');">
     <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center">
-      <div class="container mx-auto px-6 text-white max-w-3xl">
+      <div class="container mx-auto px-6 text-white text-left">
         <h1 class="text-3xl md:text-4xl font-bold mb-4">
           Kini <span class="font-extrabold">Olga Sehat</span> Hadir<br />
           Untuk Gaya Hidup Sehat
@@ -141,7 +266,7 @@
     <div class="md:w-1/2 mb-8 md:mb-0">
       <div class="inline-flex space-x-2 mb-6" role="tablist" aria-label="Toggle Kelola Fasilitas">
         <button id="btnPemilik" role="tab" aria-selected="true" aria-controls="contentPemilik" tabindex="0" class="bg-blue-700 text-white text-sm font-semibold rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600">
-          PEMILIK FASILITAS
+          PEMILIK LAPANGAN
         </button>
         <button id="btnPenyewa" role="tab" aria-selected="false" aria-controls="contentPenyewa" tabindex="-1" class="bg-gray-300 text-gray-600 text-sm font-semibold rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400">
           PENYEWA
@@ -173,6 +298,46 @@
       <img src="{{ asset('frontend/assets/Imbo Sport Center.webp') }}" alt="Imbo Sport Center" class="rounded-lg object-cover h-52 w-full" />
       <img src="{{ asset('frontend/assets/DC Arena Bali.jpeg') }}" alt="DC Arena Bali" class="rounded-lg object-cover h-52 w-full" />
       <img src="{{ asset('frontend/assets/Arena Sport.jpg') }}" alt="Arena Sport" class="rounded-lg object-cover h-52 w-full" />
+    </div>
+  </section>
+
+  <!-- Kelola Fasilitas Section -->
+  <section class="container mx-auto px-6 py-16 flex flex-col md:flex-row items-center md:items-start md:space-x-12">
+    <div class="md:w-1/2 grid grid-cols-2 gap-6" id="imageContainerPemilik">
+      <img src="{{ asset('frontend/assets/MU Sport Center.jpeg') }}" alt="MU Sport Center" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/Imbo Sport Center.webp') }}" alt="Imbo Sport Center" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/DC Arena Bali.jpeg') }}" alt="DC Arena Bali" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/Arena Sport.jpg') }}" alt="Arena Sport" class="rounded-lg object-cover h-52 w-full" />
+    </div>
+    <div class="md:w-1/2 grid grid-cols-2 gap-6 hidden" id="imageContainerPenyewa">
+      <img src="{{ asset('frontend/assets/MU Sport Center.jpeg') }}" alt="MU Sport Center" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/Imbo Sport Center.webp') }}" alt="Imbo Sport Center" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/DC Arena Bali.jpeg') }}" alt="DC Arena Bali" class="rounded-lg object-cover h-52 w-full" />
+      <img src="{{ asset('frontend/assets/Arena Sport.jpg') }}" alt="Arena Sport" class="rounded-lg object-cover h-52 w-full" />
+    </div>
+    <div class="md:w-1/2 mb-8 md:mb-0">
+      <div class="inline-flex space-x-2 mb-6" role="tablist" aria-label="Toggle Kelola Fasilitas">
+        <button id="btnPemilik" role="tab" aria-selected="true" aria-controls="contentPemilik" tabindex="0" class="bg-blue-700 text-white text-sm font-semibold rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600">
+          PEMILIK KESEHATAN
+        </button>
+        <button id="btnPenyewa" role="tab" aria-selected="false" aria-controls="contentPenyewa" tabindex="-1" class="bg-gray-300 text-gray-600 text-sm font-semibold rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400">
+          PENYEWA
+        </button>
+      </div>
+      <div id="contentPemilik" role="tabpanel" aria-labelledby="btnPemilik" tabindex="0">
+        <h2 class="text-4xl font-bold mb-6 text-gray-800">Kelola fasilitas lebih praktis dan menguntungkan.</h2>
+        <p class="text-gray-700 mb-6 max-w-md text-lg leading-relaxed">
+          Waktunya buat venue anda lebih dari sekadar venue. Semuanya dimulai dengan pengelolaan yang simpel, fleksibel, dan profitable lewat OLGA SEHAT Venue Management.
+        </p>
+        <a href="#" class="text-blue-700 font-semibold hover:underline text-lg">Lihat Selengkapnya</a>
+      </div>
+      <div id="contentPenyewa" role="tabpanel" aria-labelledby="btnPenyewa" tabindex="0" class="hidden">
+        <h2 class="text-4xl font-bold mb-6 text-gray-800">Sewa lapangan dengan mudah dan cepat.</h2>
+        <p class="text-gray-700 mb-6 max-w-md text-lg leading-relaxed">
+          Ada rencana berolahraga minggu ini tapi belum tahu mau main di mana? Atau tidak sempat jauh-jauh datang ke venue hanya untuk booking lapangan?
+        </p>
+        <a href="#" class="text-blue-700 font-semibold hover:underline text-lg">Lihat Selengkapnya</a>
+      </div>
     </div>
   </section>
 
@@ -226,11 +391,11 @@
     <div class="container mx-auto px-6 text-center">
       <h2 class="text-4xl font-bold mb-4 text-gray-800">Cari Komunitas terbaik untuk tim Anda!</h2>
       <p class="text-gray-700 mb-8 max-w-3xl mx-auto text-lg leading-relaxed">
-        Ikuti berbagai pilihan kompetisi dari AYO Indonesia dan operator kompetisi lainnya. Rasakan keseruan silaturahmi di lapangan bersama ribuan tim amatir lainnya sekarang juga!
+        Ikuti berbagai pilihan kompetisi dari Olga Sehat dan operator kompetisi lainnya. Rasakan keseruan silaturahmi di lapangan bersama ribuan tim amatir lainnya sekarang juga!
       </p>
       <div class="inline-flex space-x-4 mb-8">
-        <button class="bg-blue-700 text-white text-sm font-semibold rounded-full px-4 py-2">PESERTA</button>
-        <button class="bg-gray-300 text-gray-600 text-sm font-semibold rounded-full px-4 py-2">OPERATOR KOMPETISI</button>
+        <button class="bg-blue-700 text-white text-sm font-semibold rounded-full px-4 py-2">KOMUNITAS</button>
+        <button class="bg-gray-300 text-gray-600 text-sm font-semibold rounded-full px-4 py-2">KLUB</button>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-5xl mx-auto">
         <img src="{{ asset('frontend/assets/komunitas.png') }}" alt="Komunitas 1" class="rounded-lg object-cover h-56 w-full" />
@@ -407,6 +572,57 @@
     </div>
   </footer>
 
-  <script src="{{ asset('frontend/assets/olgasehat.js') }}"></script>
+  <script>
+  const mobileRegisterBtn = document.getElementById("mobileRegisterBtn");
+  const mobileRegisterDropdown = document.getElementById("mobileRegisterDropdown");
+  const mobileLoginBtn = document.getElementById("mobileLoginBtn");
+  const mobileLoginDropdown = document.getElementById("mobileLoginDropdown");
+
+  // Register toggle
+  mobileRegisterBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    mobileRegisterDropdown.classList.toggle("hidden");
+  });
+
+  // Login toggle
+  mobileLoginBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    mobileLoginDropdown.classList.toggle("hidden");
+  });
+
+  // Tutup dropdown ketika klik di luar
+  window.addEventListener("click", (e) => {
+    if (!mobileRegisterBtn.contains(e.target) && !mobileRegisterDropdown.contains(e.target)) {
+      mobileRegisterDropdown.classList.add("hidden");
+    }
+    if (!mobileLoginBtn.contains(e.target) && !mobileLoginDropdown.contains(e.target)) {
+      mobileLoginDropdown.classList.add("hidden");
+    }
+  });
+</script>
+<script>
+  const cartBtn = document.getElementById("cartBtn");
+  const cartSidebar = document.getElementById("cartSidebar");
+  const cartOverlay = document.getElementById("cartOverlay");
+  const closeCart = document.getElementById("closeCart");
+
+  // buka cart
+  cartBtn.addEventListener("click", () => {
+    cartSidebar.classList.remove("translate-x-full");
+    cartOverlay.classList.remove("hidden");
+  });
+
+  // tutup cart
+  closeCart.addEventListener("click", () => {
+    cartSidebar.classList.add("translate-x-full");
+    cartOverlay.classList.add("hidden");
+  });
+
+  // tutup cart saat klik overlay
+  cartOverlay.addEventListener("click", () => {
+    cartSidebar.classList.add("translate-x-full");
+    cartOverlay.classList.add("hidden");
+  });
+</script>
 </body>
 </html>

@@ -76,7 +76,7 @@
             <div class="col-md-9">
                 <div class="card shadow-sm border-0">
                     <div class="card-body text-center">
-                        <img src="https://undraw.co/illustrations" alt="Welcome" 
+                        <img src="{{ asset('assets/ilus.png') }}" alt="Welcome" 
                              class="mb-4" style="max-width: 280px;">
                         <h3 class="fw-bold">Selamat Datang, Pratama</h3>
                         <p class="text-muted">
