@@ -33,15 +33,15 @@
   <!-- Header -->
   <header class="fixed top-0 left-0 right-0 z-50 shadow-md bg-white">
     <div class="container mx-auto flex items-center justify-between py-4 px-6">
-      <a href="#" class="flex items-center space-x-2">
+      <a href="/" class="flex items-center space-x-2">
         <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="w-100 h-10" />
       </a>
       <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
-        <a href="venue.html" class="hover:text-blue-700">Sewa Lapangan</a>
-        <a href="tempat_sehat.html" class="hover:text-blue-700">Tempat Sehat</a>
-        <a href="community.html" class="hover:text-blue-700">Komunitas</a>
-        <a href="club.html" class="hover:text-blue-700">Klub</a>
-        <a href="blog&news.html" class="hover:text-blue-700">Blog & News</a>
+        <a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a>
+        <a href="#" class="hover:text-blue-700">Tempat Sehat</a>
+        <a href="/community" class="hover:text-blue-700">Komunitas</a>
+        <a href="/club" class="hover:text-blue-700">Klub</a>
+        <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
       </nav>
       <div class="hidden md:flex items-center space-x-4">
         <button aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
@@ -82,27 +82,27 @@
       class="hidden md:hidden bg-white border-t border-gray-200 shadow-md"
     >
       <a
-        href="venue.html"
+        href="/venue"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Sewa Lapangan</a
       >
       <a
-        href="tempat_sehat.html"
+        href="#"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Tempat Sehat</a
       >
       <a
-        href="community.html"
+        href="/community"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Komunitas</a
       >
       <a
-        href="club.html"
+        href="/club"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Klub</a
       >
       <a
-        href="blog&news.html"
+        href="/blog-news"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Blog & News</a
       >
@@ -329,7 +329,7 @@
       </div>
     </div>
     <div class="p-4 border-t border-gray-200 flex-shrink-0">
-      <a href="confirm.html" class="block w-full bg-blue-700 text-white py-3 rounded-md font-semibold text-center hover:bg-green-600 transition">
+      <a href="/confirm" class="block w-full bg-blue-700 text-white py-3 rounded-md font-semibold text-center hover:bg-green-600 transition">
         LANJUT PEMBAYARAN
       </a>
     </div>
@@ -337,7 +337,7 @@
   </main>
 
   <!-- Fixed Bottom Button -->
-   <a href="confirm.html">
+   <a href="/confirm">
     <div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-300 p-4 shadow-lg">
     <button class="w-full bg-blue-700 text-white py-3 rounded-md font-semibold hover:bg-green-600 transition">
       LANJUT PEMBAYARAN

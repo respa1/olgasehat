@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Olga Sehat - Booking Venue Olahraga</title>
-  <link rel="icon" href="assets/olgasehat-icon.png" type="image/png" />
+  <link rel="icon" href="{{ asset('assets/olgasehat-icon.png') }}" type="image/png" />
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -33,12 +33,12 @@
   <!-- Header -->
   <header class="fixed top-0 left-0 right-0 z-50 shadow-md bg-white">
     <div class="container mx-auto flex items-center justify-between py-4 px-6">
-      <a href="#" class="flex items-center space-x-2">
-        <img src="assets/olgasehat-icon.png" alt="Olga Sehat Logo" class="w-100 h-10" />
+      <a href="/" class="flex items-center space-x-2">
+        <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="w-100 h-10" />
       </a>
       <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
-         <a href="/" class="hover:text-blue-700">Sewa Lapangan</a>
-      <a href="/tempatsehat" class="hover:text-blue-700">Tempat Sehat</a>
+         <a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a>
+      <a href="#" class="hover:text-blue-700">Tempat Sehat</a>
       <a href="/community" class="hover:text-blue-700">Komunitas</a>
       <a href="/club" class="hover:text-blue-700">Klub</a>
       <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
@@ -82,27 +82,27 @@
       class="hidden md:hidden bg-white border-t border-gray-200 shadow-md"
     >
       <a
-        href="venue.html"
+        href="/venue"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Sewa Lapangan</a
       >
       <a
-        href="tempat_sehat.html"
+        href="#"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Tempat Sehat</a
       >
       <a
-        href="community.html"
+        href="/community"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Komunitas</a
       >
       <a
-        href="club.html"
+        href="/club"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Klub</a
       >
       <a
-        href="blog&news.html"
+        href="/blog-news"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Blog & News</a
       >
@@ -145,7 +145,7 @@
         </div>
       </div>
       <img
-        src="assets/tenis.jpg"
+        src="{{ asset('assets/tenis.jpg') }}"
         alt="Tennis Player"
         class="w-full rounded-lg mb-6 object-cover max-h-[400px]"
       />
@@ -229,7 +229,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
       <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
         <img
-          src="assets/basketball-player.jpg"
+          src="{{ asset('assets/basketball-player.jpg') }}"
           alt="Basketball Player"
           class="w-full h-48 object-cover"
         />
@@ -250,7 +250,7 @@
 
       <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
         <img
-          src="assets/tennis-player.jpg"
+          src="{{ asset('assets/tennis-player.jpg') }}"
           alt="Tennis Player"
           class="w-full h-48 object-cover"
         />
@@ -271,7 +271,7 @@
 
       <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
         <img
-          src="assets/mini-soccer.jpg"
+          src="{{ asset('assets/mini-soccer.jpg') }}"
           alt="Mini Soccer Field"
           class="w-full h-48 object-cover"
         />

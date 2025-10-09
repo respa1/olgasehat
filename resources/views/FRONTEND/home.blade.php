@@ -31,14 +31,14 @@
   <div class="container mx-auto flex items-center justify-between py-4 px-6">
     
     <!-- Logo -->
-    <a href="/home" class="flex items-center space-x-2">
+    <a href="/" class="flex items-center space-x-2">
       <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="h-10 w-auto" />
     </a>
 
     <!-- Menu Desktop -->
     <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
       <a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a>
-      <a href="/tempatsehat" class="hover:text-blue-700">Tempat Sehat</a>
+      <a href="#" class="hover:text-blue-700">Tempat Sehat</a>
       <a href="/community" class="hover:text-blue-700">Komunitas</a>
       <a href="/club" class="hover:text-blue-700">Klub</a>
       <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
@@ -77,8 +77,8 @@
         <div id="registerDropdown"
           class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50
                  transform scale-95 opacity-0 transition-all duration-200 ease-out">
-          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Akun User</a>
-          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Akun Pengelola Venue</a>
+          <a href="/daftaruser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Akun User</a>
+          <a href="/regispengelola" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Akun Pengelola Venue</a>
         </div>
       </div>
 
@@ -91,8 +91,8 @@
         <div id="loginDropdown"
           class="hidden absolute right-0 mt-2 w-56 bg-white border rounded-md shadow-lg z-50
                  transform scale-95 opacity-0 transition-all duration-200 ease-out">
-          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login User</a>
-          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login Pengelola Venue</a>
+          <a href="/loginuser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login User</a>
+          <a href="/loginpengelolavenue" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login Pengelola Venue</a>
         </div>
       </div>
     </div>
@@ -142,8 +142,8 @@
             transition-all duration-300 ease-in-out absolute top-full left-0 w-full z-[50]">
 
   <!-- Link Navigasi -->
-  <a href="/" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Sewa Lapangan</a>
-  <a href="/tempatsehat" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Tempat Sehat</a>
+  <a href="/venue" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Sewa Lapangan</a>
+  <a href="#" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Tempat Sehat</a>
   <a href="/community" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Komunitas</a>
   <a href="/club" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Klub</a>
   <a href="/blog-news" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Blog & News</a>
@@ -158,8 +158,8 @@
       <i class="fas fa-chevron-down ml-2"></i>
     </button>
     <div id="mobileRegisterDropdown" class="hidden flex-col bg-gray-50">
-      <a href="#" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Akun User</a>
-      <a href="#" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Akun Pengelola Venue</a>
+      <a href="/daftaruser" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Akun User</a>
+      <a href="/regispengelola" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Akun Pengelola Venue</a>
     </div>
   </div>
 
@@ -172,8 +172,8 @@
       <i class="fas fa-chevron-down ml-2"></i>
     </button>
     <div id="mobileLoginDropdown" class="hidden flex-col bg-white shadow-md rounded-b-md">
-      <a href="#" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Login User</a>
-      <a href="#" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Login Pengelola Venue</a>
+      <a href="/loginuser" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Login User</a>
+      <a href="/loginpengelolavenue" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Login Pengelola Venue</a>
     </div>
   </div>
 </nav>

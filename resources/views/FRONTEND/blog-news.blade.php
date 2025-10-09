@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Olga Sehat - Booking Venue Olahraga</title>
-  <link rel="icon" href="assets/olgasehat-icon.png" type="image/png" />
+  <link rel="icon" href="{{ asset('assets/olgasehat-icon.png') }}" type="image/png" />
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -33,8 +33,8 @@
   <!-- Header -->
   <header class="shadow-md">
     <div class="container mx-auto flex items-center justify-between py-4 px-6">
-      <a href="#" class="flex items-center space-x-2">
-        <img src="assets/olgasehat-icon.png" alt="Olga Sehat Logo" class="w-100 h-10" />
+      <a href="/" class="flex items-center space-x-2">
+        <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="w-100 h-10" />
       </a>
       <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
          <a href="/" class="hover:text-blue-700">Sewa Lapangan</a>

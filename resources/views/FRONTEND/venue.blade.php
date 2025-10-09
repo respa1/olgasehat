@@ -33,15 +33,15 @@
   <!-- Header -->
   <header class="shadow-md">
     <div class="container mx-auto flex items-center justify-between py-4 px-6">
-      <a href="home.html" class="flex items-center space-x-2">
+      <a href="/" class="flex items-center space-x-2">
         <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="w-100 h-10" />
       </a>
       <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
-        <a href="venue.html" class="hover:text-blue-700">Sewa Lapangan</a>
-        <a href="tempat_sehat.html" class="hover:text-blue-700">Tempat Sehat</a>
-        <a href="community.html" class="hover:text-blue-700">Komunitas</a>
-        <a href="club.html" class="hover:text-blue-700">Klub</a>
-        <a href="blog&news.html" class="hover:text-blue-700">Blog & News</a>
+        <a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a>
+        <a href="#" class="hover:text-blue-700">Tempat Sehat</a>
+        <a href="/community" class="hover:text-blue-700">Komunitas</a>
+        <a href="/club" class="hover:text-blue-700">Klub</a>
+        <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
       </nav>
       <div class="hidden md:flex items-center space-x-4">
         <button aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
@@ -82,27 +82,27 @@
       class="hidden md:hidden bg-white border-t border-gray-200 shadow-md"
     >
       <a
-        href="venue.html"
+        href="/venue"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Sewa Lapangan</a
       >
       <a
-        href="tempat_sehat.html"
+        href="#"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Tempat Sehat</a
       >
       <a
-        href="community.html"
+        href="/community"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Komunitas</a
       >
       <a
-        href="club.html"
+        href="/club"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Klub</a
       >
       <a
-        href="blog&news.html"
+        href="/blog-news"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Blog & News</a
       >
@@ -178,7 +178,7 @@
       aria-label="Daftar venue olahraga"
     >
       <!-- Venue Card 1 -->
-      <a href="venue_detail.html" class="block">
+      <a href="/venue-detail" class="block">
         <article
           class="border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition"
         >
@@ -222,7 +222,7 @@
       </a>
 
       <!-- Venue Card 2 -->
-      <a href="venue_detail.html" class="block">
+      <a href="/venue-detail" class="block">
         <article
           class="border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition"
         >
@@ -266,7 +266,7 @@
       </a>
 
       <!-- Venue Card 3 -->
-      <a href="venue_detail.html" class="block">
+      <a href="/venue-detail" class="block">
         <article
           class="border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition"
         >
@@ -310,7 +310,7 @@
       </a>
 
       <!-- Venue Card 4 -->
-      <a href="venue_detail.html" class="block">
+      <a href="/venue-detail" class="block">
         <article
           class="border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition"
         >
@@ -418,7 +418,7 @@
         class="md:w-3/4 flex space-x-6 overflow-x-auto scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-gray-200"
       >
         <!-- Promo 1 -->
-         <a href="venue_detail.html">
+         <a href="/venue-detail">
           <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
             <div class="relative">
               <img alt="Promo Special DNA Arena Cinere image with red roof and colorful wall paintings" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/MU Sport Center.jpeg') }}" width="280"/>

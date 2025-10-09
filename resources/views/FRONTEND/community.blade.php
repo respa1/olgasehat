@@ -33,7 +33,7 @@
   <!-- Header -->
   <header class="shadow-md">
     <div class="container mx-auto flex items-center justify-between py-4 px-6">
-      <a href="home.html" class="flex items-center space-x-2">
+      <a href="/" class="flex items-center space-x-2">
         <img src="assets/olgasehat-icon.png" alt="Olga Sehat Logo" class="w-100 h-10" />
       </a>
       <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
@@ -82,27 +82,27 @@
       class="hidden md:hidden bg-white border-t border-gray-200 shadow-md"
     >
       <a
-        href="venue.html"
+        href="/venue"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Sewa Lapangan</a
       >
       <a
-        href="tempat_sehat.html"
+        href="/tempat_sehat"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Tempat Sehat</a
       >
       <a
-        href="community.html"
+        href="/community"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Komunitas</a
       >
       <a
-        href="club.html"
+        href="/club"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Klub</a
       >
       <a
-        href="blog&news.html"
+        href="/blog&news"
         class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700"
         >Blog & News</a
       >

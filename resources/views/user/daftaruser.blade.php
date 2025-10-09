@@ -17,14 +17,14 @@
   <div class="container mx-auto flex items-center justify-between py-3 px-6">
     
     <!-- Logo -->
-    <a href="#" class="flex items-center space-x-2">
-      <img src="assets/logo.png" alt="Olga Sehat Logo" class="h-10 w-auto" />
+    <a href="/" class="flex items-center space-x-2">
+      <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="h-10 w-auto" />
     </a>
 
     <!-- Navigation (desktop) -->
     <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
-      <a href="/" class="hover:text-blue-700">Sewa Lapangan</a>
-      <a href="/tempatsehat" class="hover:text-blue-700">Tempat Sehat</a>
+      <a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a>
+      <a href="#" class="hover:text-blue-700">Tempat Sehat</a>
       <a href="/community" class="hover:text-blue-700">Komunitas</a>
       <a href="/club" class="hover:text-blue-700">Klub</a>
       <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
@@ -63,11 +63,11 @@
 
   <!-- Mobile menu -->
   <nav id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-200 shadow-md">
-    <a href="venue.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Sewa Lapangan</a>
-    <a href="tempat_sehat.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Tempat Sehat</a>
-    <a href="community.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Komunitas</a>
-    <a href="club.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Klub</a>
-    <a href="blog&news.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Blog & News</a>
+    <a href="/venue" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Sewa Lapangan</a>
+    <a href="#" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Tempat Sehat</a>
+    <a href="/community" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Komunitas</a>
+    <a href="/club" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Klub</a>
+    <a href="/blog-news" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Blog & News</a>
     
     <!-- Register & Login di mobile -->
 <div class="border-t border-gray-200 px-6 py-4 space-y-3">
@@ -100,9 +100,9 @@
   <main class="bg-white rounded-lg shadow-md max-w-4xl w-full grid grid-cols-1 md:grid-cols-2">
     <!-- Left image -->
     <div class="hidden md:block">
-      <img 
-        src="assets/sports-tools.jpg" 
-        alt="Peralatan olahraga di atas rumput" 
+      <img
+        src="{{ asset('assets/sports-tools.jpg') }}"
+        alt="Peralatan olahraga di atas rumput"
         class="object-cover w-full h-full rounded-l-lg"
         onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=Image+Unavailable';"
       />
