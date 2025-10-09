@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Olga Sehat - Booking Venue Olahraga</title>
-  <link rel="icon" href="assets/olgasehat-icon.png" type="image/png" />
+  <link rel="icon" href="{{ asset('assets/olgasehat-icon.png') }}" type="image/png" />
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -34,7 +34,7 @@
   <header class="shadow-md">
     <div class="container mx-auto flex items-center justify-between py-4 px-6">
       <a href="home.html" class="flex items-center space-x-2">
-        <img src="assets/olgasehat-icon.png" alt="Olga Sehat Logo" class="w-100 h-10" />
+        <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="w-100 h-10" />
       </a>
       <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
         <a href="venue.html" class="hover:text-blue-700">Sewa Lapangan</a>
@@ -120,10 +120,10 @@
   </header>
 
   <!-- Blue Banner -->
-  <section class="bg-[url('assets/blue-banner.png')] bg-no-repeat text-white py-12 relative overflow-hidden h-[225px] flex items-center" style="background-size: 1910px 225px;">
+  <section class="bg-[url('{{ asset('assets/blue-banner.png') }}')] bg-no-repeat text-white py-12 relative overflow-hidden h-[225px] flex items-center" style="background-size: 1910px 225px;">
     <div class="container mx-auto px-6 text-center">
       <h1 class="text-3xl md:text-4xl font-bold tracking-wide">
-        BOOKING VENUE OLAHRAGA TERBAIK
+        BOOKING VENUE OLAHRAGA TERDEKAT
       </h1>
     </div>
     <!-- Decorative lines or shapes can be added here if needed -->
@@ -183,7 +183,7 @@
           class="border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition"
         >
           <img
-            src="assets/MU Sport Center.jpeg"
+            src="{{ asset('assets/MU Sport Center.jpeg') }}"
             alt="MU Sport Center"
             class="w-full h-40 object-cover"
           />
@@ -226,12 +226,12 @@
         <article
           class="border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition"
         >
-          <img
-            src="assets/Imbo Sport Center.webp"
-            alt="Imbo Sport Center"
+          <div class="p-4">
+            <img
+            src="{{ asset('assets/Imbo Sport Center.webp') }}"
+            alt="MU Sport Center"
             class="w-full h-40 object-cover"
           />
-          <div class="p-4">
             <p class="text-xs text-gray-500 mb-1">Venue</p>
             <h3 class="font-semibold text-lg mb-1">Imbo Sport Center</h3>
             <p class="text-sm text-gray-500 mb-1">Kota Denpasar</p>
@@ -271,7 +271,7 @@
           class="border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition"
         >
           <img
-            src="assets/DC Arena Bali.jpeg"
+            src="{{ asset('assets/DC Arena Bali.jpeg') }}"
             alt="DC Arena Bali"
             class="w-full h-40 object-cover"
           />
@@ -315,7 +315,7 @@
           class="border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition"
         >
           <img
-            src="assets/Arena Sport.jpg"
+            src="{{ asset('assets/Arena Sport.jpg') }}"
             alt="Arena Sport"
             class="w-full h-40 object-cover"
           />
@@ -378,11 +378,11 @@
   <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 relative">
     <div class="overflow-hidden rounded-lg">
       <div class="flex transition-transform duration-500 ease-in-out" id="carousel" style="transform: translateX(0%)">
-        <img alt="Mahakarya Udaya Sport Club & Lifestyle banner with green grass and sport equipment" class="w-full flex-shrink-0 object-cover rounded-lg" height="300" src="assets/OIP (1).webp" style="max-height: 300px" width="900"/>
-        <img alt="Second carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="300" src="assets/OIP (1).webp" style="max-height: 300px" width="900"/>
-        <img alt="Third carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="300" src="assets/OIP (1).webp" style="max-height: 300px" width="900"/>
-        <img alt="Fourth carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="300" src="assets/OIP (1).webp" style="max-height: 300px" width="900"/>
-        <img alt="Fifth carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="300" src="assets/OIP (1).webp" style="max-height: 300px" width="900"/>
+        <img alt="Mahakarya Udaya Sport Club & Lifestyle banner with green grass and sport equipment" class="w-full flex-shrink-0 object-cover rounded-lg" height="300" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 300px" width="900"/>
+        <img alt="Second carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="300" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 300px" width="900"/>
+        <img alt="Third carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="300" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 300px" width="900"/>
+        <img alt="Fourth carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="300" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 300px" width="900"/>
+        <img alt="Fifth carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="300" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 300px" width="900"/>
       </div>
     </div>
     <!-- Carousel controls -->
@@ -421,7 +421,7 @@
          <a href="venue_detail.html">
           <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
             <div class="relative">
-              <img alt="Promo Special DNA Arena Cinere image with red roof and colorful wall paintings" class="w-full h-40 object-cover" height="160" src="assets/MU Sport Center.jpeg" width="280"/>
+              <img alt="Promo Special DNA Arena Cinere image with red roof and colorful wall paintings" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/MU Sport Center.jpeg') }}" width="280"/>
               <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
             </div>
             <div class="p-4">
@@ -435,7 +435,7 @@
           <!-- Promo 2 -->
           <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
             <div class="relative">
-              <img alt="Basketball court with players playing promo image" class="w-full h-40 object-cover" height="160" src="/assets/Imbo Sport Center.webp" width="280"/>
+              <img alt="Basketball court with players playing promo image" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/Imbo Sport Center.webp') }}" width="280"/>
               <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
             </div>
             <div class="p-4">
@@ -448,7 +448,7 @@
           <!-- Promo 3 -->
           <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
             <div class="relative">
-              <img alt="Outdoor field with lights promo image" class="w-full h-40 object-cover" height="160" src="assets/DC Arena Bali.jpeg" width="280"/>
+              <img alt="Outdoor field with lights promo image" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/DC Arena Bali.jpeg') }}" width="280"/>
               <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
             </div>
             <div class="p-4">
@@ -461,7 +461,7 @@
           <!-- Promo 4 -->
           <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
             <div class="relative">
-              <img alt="Sports field promo image" class="w-full h-40 object-cover" height="160" src="assets/Arena Sport.jpg" width="280"/>
+              <img alt="Sports field promo image" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/Arena Sport.jpg') }}" width="280"/>
               <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
             </div>
             <div class="p-4">
@@ -618,6 +618,6 @@
     </div>
   </aside>
 
-    <script src="assets/olgasehat.js"></script>
+    <script src="{{ asset('assets/olgasehat.js') }}"></script>
 </body>
 </html>

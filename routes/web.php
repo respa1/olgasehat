@@ -47,21 +47,21 @@ Route::get('/success', fn() => view('frontend.success'));
 Route::get('/venue', fn() => view('frontend.venue'));
 Route::get('/venue-detail', fn() => view('frontend.venue_detail'));
 
-// public frontend user
-Route::get('/daftaruser', function () { return view('frontend.daftaruser');});
-Route::get('/editprofile', function () { return view('frontend.editprofile');});
-Route::get('/riwayat komunitas', function () {return view('frontend.riwayatkomunitas');});
-Route::get('/riwayatclub', function () {return view('frontend.riwayatclub');});
-Route::get('/riwayatpayment', function () {return view('frontend.riwayatpayment');});
-Route::get('/registeremail', function () {return view('frontend.registeremail');});
-Route::get('/loginemail', function () { return view('frontend.loginemail');});
-Route::get('/resetpassword', function () {return view('frontend.resetpassword'); });
+// frontend user
+Route::get('/daftaruser', function () { return view('user.daftaruser');});
+Route::get('/editprofile', function () { return view('user.editprofile');});
+Route::get('/riwayat komunitas', function () {return view('user.riwayatkomunitas');});
+Route::get('/riwayatclub', function () {return view('user.riwayatclub');});
+Route::get('/riwayatpayment', function () {return view('user.riwayatpayment');});
+Route::get('/registeremail', function () {return view('user.registeremail');});
+Route::get('/loginemail', function () { return view('user.loginemail');});
+Route::get('/resetpassword', function () {return view('user.resetpassword'); });
 
 // login pengelola
 Route::get('/loginpengelolavenue', function () { return view('pemiliklapangan.loginpengelolavenue');});
 Route::get('/regispengelola', function () {return view('pemiliklapangan.regispengelola');});
 Route::get('/isidata', function () {return view('pemiliklapangan.isidata');});
-Route::get('/loginuser', function () {return view('frontend.loginuser');});
+Route::get('/loginuser', function () {return view('user.loginuser');});
 
 // Protected Backoffice Routes
 Route::middleware(['auth'])->group(function (){
