@@ -41,15 +41,15 @@
   <input type="email" 
          placeholder="Alamat Email" 
          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a3a7f] outline-none" />
-  
-  <button type="submit" 
+  <a href="/isidata"><button type="submit" 
           class="w-full bg-[#1a3a7f] hover:bg-[#142b5c] text-white font-semibold py-3 rounded-lg transition">
     Submit
   </button>
+</a>
 
   <!-- Teks tambahan -->
   <p class="text-sm text-gray-600 text-center">
-    Sudah punya akun? <a href="#" class="text-[#1a3a7f] font-semibold hover:underline">Klik di sini</a>
+    Sudah punya akun? <a href="/regispengelola" class="text-[#1a3a7f] font-semibold hover:underline">Klik di sini</a>
   </p>
 </form>
 

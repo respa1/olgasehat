@@ -543,7 +543,7 @@
         <span class="font-semibold">#BisnisMakinMudah</span>
         dalam mengelola venue olahraga
       </p>
-      <a class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-3 rounded-md mt-4" href="#">Daftar Sekarang</a>
+      <a class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-3 rounded-md mt-4" href="/loginpengelolavenue">Daftar Sekarang</a>
     </div>
   </section>
 

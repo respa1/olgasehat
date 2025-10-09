@@ -28,7 +28,7 @@
     <h2 class="text-lg font-bold text-gray-800 text-center">Login Pengelola</h2>
     <p class="text-sm text-gray-600 text-center mt-1">
       Belum Punya Akun? 
-      <a href="#" class="text-[#1a3a7f] font-semibold hover:underline">Buat di sini</a>
+      <a href="/loginpengelolavenue" class="text-[#1a3a7f] font-semibold hover:underline">Buat di sini</a>
     </p>
 
     <!-- Form -->
@@ -62,7 +62,7 @@
     <!-- Footer text -->
     <p class="text-xs text-gray-600 text-center mt-4">
       Ingin login sebagai user di web utama OlgaSehat? 
-      <a href="#" class="text-[#1a3a7f] hover:underline">Klik di sini</a>
+      <a href="/regispengelolavenue" class="text-[#1a3a7f] hover:underline">Klik di sini</a>
     </p>
   </div>
 
