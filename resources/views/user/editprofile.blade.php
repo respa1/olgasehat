@@ -80,7 +80,10 @@
     <a href="tempat_sehat.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Komunitas</a>
     <a href="community.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Aktifitas</a>
     <a href="club.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Transaksi</a>
-    <a href="blog&news.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Logout</a>
+    <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">
+      @csrf
+      <button type="submit" class="w-full text-left">Logout</button>
+    </form>
         </div>
       </div>
     </div>
@@ -124,8 +127,8 @@
         <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="4" /><path d="M5.5 21a6.5 6.5 0 0113 0" /></svg>
       </div>
       <div class="text-center">
-        <p class="font-semibold text-gray-800 select-text">rsteam</p>
-        <p class="text-gray-500 select-text">@rteam166</p>
+        <p class="font-semibold text-gray-800 select-text">{{ Auth::user()->name }}</p>
+        <p class="text-gray-500 select-text">{{Auth::user()->email }}</p>
       </div>
       <div class="w-full max-w-xs bg-white border border-gray-300 rounded-md p-4 text-center">
         <p class="font-medium mb-2 text-sm">Update Profile Picture</p>

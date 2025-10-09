@@ -120,33 +120,41 @@
     <span class="font-bold text-blue-600">OlgaSehat</span> – olahraga jadi lebih seru!
   </p>
 
-  <!-- Input Email atau Username -->
-  <input 
-    type="text" 
-    placeholder="Email atau Username" 
-    class="w-full mb-4 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-  />
+  <form action="{{ route('loginproses') }}" method="POST" class="space-y-4">
+    @csrf
+    <!-- Input Email -->
+    <input
+      type="email"
+      name="email"
+      placeholder="Email"
+      class="w-full mb-4 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+      required
+    />
 
-  <!-- Input Password -->
-  <input 
-    type="password" 
-    placeholder="Password" 
-    class="w-full mb-2 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-  />
+    <!-- Input Password -->
+    <input
+      type="password"
+      name="password"
+      placeholder="Password"
+      class="w-full mb-2 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+      required
+    />
 
-  <!-- Link Lupa Password -->
-  <p class="text-right text-sm text-gray-500 mb-6">
-    Lupa Password? 
-    <a href="/resetpassword" class="text-blue-600 hover:underline font-medium">Klik di sini</a>
-  </p>
+    <!-- Link Lupa Password -->
+    <p class="text-right text-sm text-gray-500 mb-6">
+      Lupa Password?
+      <a href="/resetpassword" class="text-blue-600 hover:underline font-medium">Klik di sini</a>
+    </p>
 
-  <!-- Tombol Register -->
-  <button
-    class="w-full mb-6 bg-indigo-900 hover:bg-indigo-800 text-white font-semibold py-3 rounded-lg shadow-md transition"
-    aria-label="Register Dengan Email atau Username"
-  >
-    Register
-  </button>
+    <!-- Tombol Login -->
+    <button
+      type="submit"
+      class="w-full mb-6 bg-indigo-900 hover:bg-indigo-800 text-white font-semibold py-3 rounded-lg shadow-md transition"
+      aria-label="Login Dengan Email"
+    >
+      Login
+    </button>
+  </form>
 
   <!-- Footer -->
   <p class="text-xs text-gray-500 text-center leading-tight">

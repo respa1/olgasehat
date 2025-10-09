@@ -28,6 +28,33 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/login', 'login')->name('login');
     Route::post('/loginproses', 'loginproses')->name('loginproses');
     Route::post('/logout', 'logout')->name('logout');
+    Route::post('/userlogout', 'userLogout')->name('user.logout');
+});
+
+// Protected Backoffice Routes
+Route::middleware(['auth'])->group(function (){
+    Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
+
+    // User profile edit routes protected by role:user middleware
+    Route::middleware(['role:user'])->group(function () {
+        Route::get('/editprofile', [LoginController::class, 'editProfile'])->name('editprofile');
+        Route::post('/editprofile', [LoginController::class, 'updateProfile'])->name('updateprofile');
+    });
+});
+
+// Authentication Routes
+Route::controller(LoginController::class)->group(function () {
+    Route::get('/login', 'login')->name('login');
+    Route::post('/loginproses', 'loginproses')->name('loginproses');
+    Route::post('/logout', 'logout')->name('logout');
+
+    // User registration
+    Route::get('/registeruser', 'registerUserForm')->name('registeruser.form');
+    Route::post('/registeruser', 'registerUser')->name('registeruser.submit');
+
+    // Pemilik Lapangan registration
+    Route::get('/registerpemilik', 'registerPemilikForm')->name('registerpemilik.form');
+    Route::post('/registerpemilik', 'registerPemilik')->name('registerpemilik.submit');
 });
 
 // Public Frontend Routes
@@ -48,8 +75,13 @@ Route::get('/venue', fn() => view('frontend.venue'));
 Route::get('/venue-detail', fn() => view('frontend.venue_detail'));
 
 // frontend user
-Route::get('/daftaruser', function () { return view('user.daftaruser');});
-Route::get('/editprofile', function () { return view('user.editprofile');});
+Route::get('/daftaruser', [LoginController::class, 'registerUserForm'])->name('user.register.form');
+Route::post('/daftaruser', [LoginController::class, 'registerUser'])->name('user.register.submit');
+
+Route::middleware(['auth', 'role:user'])->group(function () {
+    Route::get('/editprofile', [LoginController::class, 'editProfile'])->name('user.editprofile');
+    Route::post('/editprofile', [LoginController::class, 'updateProfile'])->name('user.updateprofile');
+});
 Route::get('/riwayat komunitas', function () {return view('user.riwayatkomunitas');});
 Route::get('/riwayatclub', function () {return view('user.riwayatclub');});
 Route::get('/riwayatpayment', function () {return view('user.riwayatpayment');});

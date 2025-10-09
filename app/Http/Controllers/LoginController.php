@@ -23,7 +23,22 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate(); // penting untuk keamanan
-            return redirect('/dashboard');
+
+            $user = Auth::user();
+
+            // Redirect based on role
+            if ($user->role === 'superadmin') {
+                return redirect('/dashboard');
+            } elseif ($user->role === 'user') {
+                return redirect('/editprofile');
+            } elseif ($user->role === 'pemiliklapangan') {
+                return redirect('/pemiliklapangan/dashboard');
+            } else {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Unauthorized role.',
+                ]);
+            }
         }
 
         return back()->withErrors([
@@ -31,9 +46,97 @@ class LoginController extends Controller
         ]);
     }
 
+    // Registration form for User role
+    public function registerUserForm()
+    {
+        return view('user.daftaruser');
+    }
+
+    // Handle User registration
+    public function registerUser(Request $request)
+    {
+        $validated = $request->validate([
+            'name'     => 'required|max:255',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        User::create([
+            'name'     => $validated['name'],
+            'email'    => $validated['email'],
+            'password' => bcrypt($validated['password']),
+            'role'     => 'user',
+        ]);
+
+        return redirect('/loginemail?email=' . urlencode($validated['email']))->with('success', 'Registrasi berhasil. Silakan login.');
+    }
+
+    // Registration form for Pemilik Lapangan role
+    public function registerPemilikForm()
+    {
+        return view('pemiliklapangan.regispengelola');
+    }
+
+    // Handle Pemilik Lapangan registration
+    public function registerPemilik(Request $request)
+    {
+        $validated = $request->validate([
+            'name'     => 'required|max:255',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        User::create([
+            'name'     => $validated['name'],
+            'email'    => $validated['email'],
+            'password' => bcrypt($validated['password']),
+            'role'     => 'pemiliklapangan',
+        ]);
+
+        return redirect('/loginpengelolavenue')->with('success', 'Registrasi berhasil. Silakan login.');
+    }
+
     public function logout(){
         Auth::logout();
         return redirect('login');
+    }
+
+    public function userLogout(){
+        Auth::logout();
+        return redirect('/')->with('success', 'Akun anda telah logout');
+    }
+
+    // Show edit profile form for user role
+    public function editProfile()
+    {
+        $user = Auth::user();
+        return view('user.editprofile', compact('user'));
+    }
+
+    // Handle profile update for user role
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'username' => 'nullable|max:255',
+            'birth_month' => 'nullable|max:20',
+            'birth_year' => 'nullable|digits:4',
+            'birth_day' => 'nullable|digits_between:1,2',
+            'phone' => 'nullable|max:20',
+        ]);
+
+        $user->update([
+            'name' => $validated['name'],
+            'username' => $validated['username'] ?? $user->username,
+            'birth_month' => $validated['birth_month'] ?? $user->birth_month,
+            'birth_year' => $validated['birth_year'] ?? $user->birth_year,
+            'birth_day' => $validated['birth_day'] ?? $user->birth_day,
+            'phone' => $validated['phone'] ?? $user->phone,
+        ]);
+
+        return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
     }
 
     public function akun(Request $request)
