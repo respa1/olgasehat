@@ -28,6 +28,7 @@ class MitraController extends Controller
             'email' => $request->email_bisnis,
             'password' => \Illuminate\Support\Facades\Hash::make($request->password),
             'role' => 'pemiliklapangan',
+            'status' => 'pending',
         ]);
 
         Mitra::create([
@@ -51,7 +52,8 @@ class MitraController extends Controller
     public function verify($id)
     {
         $mitra = Mitra::findOrFail($id);
-        $mitra->update(['status' => 'verified']);
+        $mitra->update(['status' => 'approved']);
+        $mitra->user->update(['status' => 'approved']);
 
         return redirect()->back()->with('success', 'Mitra berhasil diverifikasi.');
     }

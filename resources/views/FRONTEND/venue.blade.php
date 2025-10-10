@@ -132,20 +132,16 @@
   <!-- Search Filters -->
   <section class="container mx-auto px-6 py-8">
     <form class="flex flex-wrap gap-4 justify-center md:justify-start items-center">
-      <input
-        type="text"
-        placeholder="Cari nama venue"
-        class="flex-grow min-w-[180px] border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
-      />
-      <select
-        class="border border-gray-300 rounded-md px-4 py-2 min-w-[140px] focus:outline-none focus:ring-2 focus:ring-blue-600"
-      >
-        <option disabled selected>Pilih Kota</option>
-        <option>Denpasar</option>
-        <option>Jakarta</option>
-        <option>Surabaya</option>
-        <option>Bandung</option>
-      </select>
+      <div class="relative flex-grow min-w-[300px]">
+        <input
+          type="text"
+          id="unifiedSearch"
+          placeholder="Cari venue terdekat (e.g., MU Sport Center, Denpasar)"
+          class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+        />
+        <div id="suggestionsDropdown" class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto hidden z-10 mt-1">
+        </div>
+      </div>
       <select
         class="border border-gray-300 rounded-md px-4 py-2 min-w-[180px] focus:outline-none focus:ring-2 focus:ring-blue-600"
       >
@@ -619,5 +615,77 @@
   </aside>
 
     <script src="{{ asset('assets/olgasehat.js') }}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('unifiedSearch');
+        const dropdown = document.getElementById('suggestionsDropdown');
+        const dummyVenues = [
+          {name: "MU Sport Center", address: "Jl. Sunset Road No. 123, Kuta, Denpasar, Bali", distance: 1.2},
+          {name: "Imbo Sport Center", address: "Jl. Bypass Ngurah Rai No. 45, Jimbaran, Denpasar Selatan", distance: 3.5},
+          {name: "DC Arena Bali", address: "Jl. Raya Kuta No. 78, Kuta, Badung, Bali", distance: 5.1},
+          {name: "Arena Sport", address: "Jl. Teuku Umar Barat No. 200, Denpasar Utara", distance: 7.8},
+          {name: "Bali Futsal Center", address: "Jl. Gunung Agung No. 15, Renon, Denpasar Timur", distance: 10.2},
+          {name: "Sport Hub Denpasar", address: "Jl. Diponegoro No. 300, Denpasar Pusat", distance: 15.4}
+        ];
+
+        function showSuggestions(query) {
+          if (!query.trim()) {
+            dropdown.innerHTML = '';
+            dropdown.classList.add('hidden');
+            return;
+          }
+
+          const filtered = dummyVenues
+            .filter(venue => venue.name.toLowerCase().includes(query.toLowerCase()) || venue.address.toLowerCase().includes(query.toLowerCase()))
+            .sort((a, b) => a.distance - b.distance)
+            .slice(0, 5);
+
+          if (filtered.length === 0) {
+            dropdown.innerHTML = '<li class="px-4 py-2 text-gray-500">Tidak ada hasil</li>';
+          } else {
+            dropdown.innerHTML = filtered.map(venue => `
+              <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer border-b last:border-b-0" onclick="selectVenue('${venue.name} - ${venue.address} (${venue.distance} km)')">
+                <div class="font-semibold">${venue.name}</div>
+                <div class="text-sm text-gray-600">${venue.address}</div>
+                <div class="text-xs text-gray-400">${venue.distance} km</div>
+              </li>
+            `).join('');
+          }
+
+          dropdown.classList.remove('hidden');
+        }
+
+        window.selectVenue = function(value) {
+          searchInput.value = value;
+          dropdown.classList.add('hidden');
+        };
+
+        searchInput.addEventListener('input', (e) => {
+          showSuggestions(e.target.value);
+        });
+
+        searchInput.addEventListener('focus', () => {
+          if (searchInput.value.trim()) {
+            showSuggestions(searchInput.value);
+          }
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.add('hidden');
+          }
+        });
+
+        // Form submit handler (placeholder)
+        const form = searchInput.closest('form');
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const searchTerm = searchInput.value;
+          if (searchTerm) {
+            alert(`Searching for: ${searchTerm}`); // Replace with actual search logic later
+          }
+        });
+      });
+    </script>
 </body>
 </html>

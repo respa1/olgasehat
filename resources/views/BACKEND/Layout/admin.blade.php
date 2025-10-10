@@ -141,33 +141,10 @@
 
           <!-- Keuangan -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/review" class="nav-link">
               <i class="nav-icon fas fa-wallet"></i>
-              <p>
-                Keuangan
-                <i class="right fas fa-angle-left"></i>
-              </p>
+              <p>Keuangan</p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/riwayat-fasilitas" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Fasilitas</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/riwayat-komunitas" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Komunitas</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/riwayat-klub" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Klub</p>
-                </a>
-              </li>
-            </ul>
           </li>
 
           <!-- Blog & News -->

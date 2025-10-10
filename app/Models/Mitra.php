@@ -12,10 +12,16 @@ class Mitra extends Model
     protected $table = 'mitras';
 
     protected $fillable = [
+        'user_id',
         'nama_anda',
         'nama_bisnis',
         'email_bisnis',
         'tipe_venue',
         'status',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

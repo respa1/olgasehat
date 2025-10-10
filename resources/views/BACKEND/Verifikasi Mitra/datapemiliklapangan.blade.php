@@ -16,7 +16,6 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0">Verifikasi Mitra Pemilik Lapangan</h1>
-                    <p class="text-muted">Kelola verifikasi aplikasi mitra dari pemilik lapangan yang ingin bergabung dengan platform Olga Sehat.</p>
                 </div>
             </div>
         </div>
