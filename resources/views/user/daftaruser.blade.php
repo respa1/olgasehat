@@ -9,6 +9,8 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
   />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
@@ -127,12 +129,6 @@
         </div>
       @endif
 
-      @if (session('success'))
-        <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
-          {{ session('success') }}
-        </div>
-      @endif
-
       <form action="{{ route('user.register.submit') }}" method="POST" class="space-y-6">
         @csrf
         <div>
@@ -168,5 +164,16 @@
       </p>
     </div>
   </main>
+
+  @if (session('success'))
+  <script>
+    Swal.fire({
+     title: 'Berhasil!',
+     text: '{{ session('success') }}',
+     icon: 'success',
+     confirmButtonText: 'OK'
+    });
+  </script>
+  @endif
 </body>
 </html>

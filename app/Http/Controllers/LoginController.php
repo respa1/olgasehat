@@ -75,7 +75,7 @@ class LoginController extends Controller
             'role'     => 'user',
         ]);
 
-        return redirect('/loginemail?email=' . urlencode($validated['email']))->with('success', 'Registrasi berhasil. Silakan login.');
+       return redirect()->back()->with('success', 'Akun anda berhasil terdaftar.');
     }
 
     // Registration form for Pemilik Lapangan role
