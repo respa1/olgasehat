@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="utf-8"/>
@@ -28,14 +28,10 @@
   </h2>
   <p class="text-gray-600 text-sm mb-4 leading-relaxed text-center md:text-left">
     Nikmati akses free trial dan jelajahi semua fitur unggulan kami<br/>
-    Software Fasilitas Olahraga No #1 di Indonesia
+    Software Fasilitas Olahraga Di Indonesia
   </p>
 
   <div class="bg-blue-50 p-4 rounded-lg mb-6 text-center md:text-left">
-    <p class="text-gray-700 text-xs mb-2">
-      Kami mengirimkan kode verifikasi email ke<br/>
-      <span class="font-semibold text-blue-600">ayong@gmail.com</span>
-    </p>
     <div class="text-xs">
       <p class="mb-1">
         Email yang anda daftarkan salah? 
@@ -59,21 +55,15 @@
     <!-- Right side form -->
 <div class="bg-white shadow-lg rounded-xl p-6 w-full max-w-sm"> <!-- ubah dari max-w-md ke max-w-sm -->
   <div class="text-center mb-6">
-    <h3 class="font-bold text-lg text-gray-800">30 Days Free Trial</h3>
-    <p class="text-sm text-gray-500">Gelora Smart Venue</p>
+    <h3 class="font-bold text-lg text-gray-800">Mitra yang disediakan PT. indo Apps Solusindo</h3>
+    <p class="text-sm text-gray-500">Olga Sehat Smart Venue</p>
   </div>
-      <form autocomplete="off" novalidate="">
-        <div class="mb-4">
-          <label class="text-xs font-semibold text-gray-700 mb-1 block" for="kode">Kode Verifikasi Email</label>
-          <input class="w-full text-sm rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
-                 id="kode" 
-                 placeholder="Masukkan kode verifikasi" 
-                 type="text"/>
-        </div>
+      <form action="{{ route('mitra.store') }}" method="POST" autocomplete="off" novalidate="">
+        @csrf
         
         <div class="mb-4">
           <label class="text-xs font-semibold text-gray-700 mb-1 block" for="nama-anda">Nama Anda</label>
-          <input class="w-full text-sm rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+          <input name="nama_anda" class="w-full text-sm rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
                  id="nama-anda" 
                  placeholder="Masukkan nama lengkap" 
                  type="text"/>
@@ -81,7 +71,7 @@
         
         <div class="mb-4">
           <label class="text-xs font-semibold text-gray-700 mb-1 block" for="nama-bisnis">Nama Bisnis</label>
-          <input class="w-full text-sm rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+          <input name="nama_bisnis" class="w-full text-sm rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
                  id="nama-bisnis" 
                  placeholder="Masukkan nama bisnis" 
                  type="text"/>
@@ -89,7 +79,7 @@
         
         <div class="mb-4">
           <label class="text-xs font-semibold text-gray-700 mb-1 block" for="tipe-venue">Tipe Venue</label>
-          <select class="w-full text-sm rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+          <select name="tipe_venue" class="w-full text-sm rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
                   id="tipe-venue">
             <option value="">Pilih tipe venue</option>
             <option>Sports Complex</option>
@@ -102,7 +92,7 @@
         
         <div class="mb-4">
           <label class="text-xs font-semibold text-gray-700 mb-1 block" for="kontak-bisnis">Kontak Bisnis</label>
-          <input class="w-full text-sm rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+          <input name="kontak_bisnis" class="w-full text-sm rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
                  id="kontak-bisnis" 
                  placeholder="Masukkan nomor telepon" 
                  type="tel"/>
@@ -110,7 +100,7 @@
         
         <div class="mb-4">
           <label class="text-xs font-semibold text-gray-700 mb-1 block" for="email-bisnis">Email Bisnis</label>
-          <input class="w-full text-sm rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+          <input name="email_bisnis" class="w-full text-sm rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
                  id="email-bisnis" 
                  placeholder="Masukkan email bisnis" 
                  type="email"/>
@@ -119,12 +109,11 @@
         <div class="mb-4">
           <label class="text-xs font-semibold text-gray-700 mb-1 block" for="password">Password</label>
           <div class="relative">
-            <input class="w-full text-sm rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pr-10" 
+            <input name="password" class="w-full text-sm rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pr-10" 
                    id="password" 
                    placeholder="Buat password" 
                    type="password"/>
             <span class="absolute right-3 top-3.5 text-gray-400 cursor-pointer hover:text-gray-600">
-              <i class="fas fa-eye-slash text-sm"></i>
             </span>
           </div>
         </div>
@@ -132,26 +121,26 @@
         <div class="mb-6">
           <label class="text-xs font-semibold text-gray-700 mb-1 block" for="konfirmasi-password">Konfirmasi Password</label>
           <div class="relative">
-            <input class="w-full text-sm rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pr-10" 
+            <input name="password_confirmation" class="w-full text-sm rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pr-10" 
                    id="konfirmasi-password" 
                    placeholder="Konfirmasi password" 
                    type="password"/>
             <span class="absolute right-3 top-3.5 text-gray-400 cursor-pointer hover:text-gray-600">
-              <i class="fas fa-eye-slash text-sm"></i>
             </span>
           </div>
         </div>
         
         <div class="flex items-start mb-6">
-          <input class="mt-1 mr-2 rounded focus:ring-blue-500" 
-                 id="terms" 
-                 type="checkbox"/>
+          <input class="mt-1 mr-2 rounded focus:ring-blue-500"
+                 id="terms"
+                 type="checkbox"
+                 name="terms"
+                 required/>
           <label class="text-xs text-gray-600" for="terms">
-            Saya menyetujui 
+            Saya menyetujui
             <a class="text-blue-600 hover:underline font-medium" href="#">
               Syarat & Ketentuan
-            </a> 
-            30 Days Free Trial
+            </a>
           </label>
         </div>
         
@@ -164,5 +153,35 @@
   </div>
   
   
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil',
+        text: '{{ session('success') }}',
+        confirmButtonText: 'OK'
+    });
+</script>
+@endif
+
+@if($errors->any())
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Terjadi Kesalahan',
+        html: `
+            <ul style="text-align: left;">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        `,
+        confirmButtonText: 'OK'
+    });
+</script>
+@endif
+
 </body>
 </html>

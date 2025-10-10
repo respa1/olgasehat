@@ -125,7 +125,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/venue" class="nav-link">
+                <a href="{{ route('mitra.datapemiliklapangan') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pemilik Lapangan</p>
                 </a>

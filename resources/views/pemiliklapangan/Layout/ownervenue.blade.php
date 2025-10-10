@@ -63,7 +63,7 @@
           <img src="{{ asset('aset/user.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-           <a href="#" class="d-block">Pemilik Lapangan</a>
+           <a href="#" class="d-block">{{ Auth::user()->name }}</a>
         </div>
       </div>
 
@@ -193,11 +193,14 @@
 
           <!-- Sign Out -->
           <li class="nav-item">
-            <a href="/logout" class="nav-link">
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>Sign Out</p>
             </a>
           </li>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+          </form>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

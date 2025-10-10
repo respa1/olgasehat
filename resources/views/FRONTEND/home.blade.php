@@ -53,7 +53,7 @@
 </button>
 
 <!-- Overlay -->
-<div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+<div id="cartOverlay" class="fixed inset-0"></div>
 
 <!-- Cart Sidebar -->
 <div id="cartSidebar" 
@@ -73,7 +73,7 @@
 </div>
       <!-- Register Dropdown -->
       <div class="relative">
-        <button id="registerBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none">Register</button>
+        <button id="registerBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none">Daftar</button>
         <div id="registerDropdown"
           class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50
                  transform scale-95 opacity-0 transition-all duration-200 ease-out">
@@ -86,13 +86,13 @@
       <div class="relative">
         <button id="loginBtn"
           class="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition focus:outline-none">
-          Login
+          Masuk
         </button>
         <div id="loginDropdown"
           class="hidden absolute right-0 mt-2 w-56 bg-white border rounded-md shadow-lg z-50
                  transform scale-95 opacity-0 transition-all duration-200 ease-out">
-          <a href="/loginuser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login User</a>
-          <a href="/loginpengelolavenue" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login Pengelola Venue</a>
+          <a href="/loginuser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Masuk User</a>
+          <a href="/loginpengelolavenue" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Masuk Pengelola Venue</a>
         </div>
       </div>
     </div>
@@ -318,9 +318,10 @@
         </button>
       </div>
       <div id="contentPemilik" role="tabpanel" aria-labelledby="btnPemilik" tabindex="0">
-        <h2 class="text-4xl font-bold mb-6 text-gray-800">Kelola fasilitas lebih praktis dan menguntungkan.</h2>
+        <h2 class="text-4xl font-bold mb-6 text-gray-800">Kelola layanan kesehatan lebih mudah dan menguntungkan.</h2>
         <p class="text-gray-700 mb-6 max-w-md text-lg leading-relaxed">
-          Waktunya buat venue anda lebih dari sekadar venue. Semuanya dimulai dengan pengelolaan yang simpel, fleksibel, dan profitable lewat OLGA SEHAT Venue Management.
+          Waktunya buat tempat sehat Anda jadi lebih dari sekadar fasilitas.
+Semuanya dimulai dengan pengelolaan yang simpele, fleksibel, dan profitable lewat OLGA SEHAT Health Management.
         </p>
         <a href="#" class="text-blue-700 font-semibold hover:underline text-lg">Lihat Selengkapnya</a>
       </div>

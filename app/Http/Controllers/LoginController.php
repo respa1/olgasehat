@@ -32,7 +32,14 @@ class LoginController extends Controller
             } elseif ($user->role === 'user') {
                 return redirect('/editprofile');
             } elseif ($user->role === 'pemiliklapangan') {
-                return redirect('/pemiliklapangan/dashboard');
+                if ($user->status === 'approved') {
+                    return redirect('/pemiliklapangan/dashboard');
+                } else {
+                    Auth::logout();
+                    return back()->withErrors([
+                        'email' => 'Akun Anda belum disetujui oleh Super Admin.',
+                    ]);
+                }
             } else {
                 Auth::logout();
                 return back()->withErrors([
@@ -91,14 +98,21 @@ class LoginController extends Controller
             'email'    => $validated['email'],
             'password' => bcrypt($validated['password']),
             'role'     => 'pemiliklapangan',
+            'status'   => 'pending',
         ]);
 
-        return redirect('/loginpengelolavenue')->with('success', 'Registrasi berhasil. Silakan login.');
+        return redirect('/loginpengelolavenue')->with('success', 'Registrasi berhasil. Akun Anda sedang dalam proses verifikasi oleh Super Admin. Silakan login setelah disetujui.');
     }
 
     public function logout(){
+        $user = Auth::user();
+        $role = $user ? $user->role : null;
         Auth::logout();
-        return redirect('login');
+        if ($role === 'pemiliklapangan') {
+            return redirect('/')->with('success', 'Anda Berhasil Log Out');
+        } else {
+            return redirect('login');
+        }
     }
 
     public function userLogout(){
@@ -142,9 +156,13 @@ class LoginController extends Controller
     public function akun(Request $request)
     {
         if ($request->has('search')) {
-            $data = User::where('name', 'LIKE', '%' . $request->search . '%')
-                        ->orderBy('created_at', 'desc')
-                        ->paginate(5);
+            $data = User::where(function($query) use ($request) {
+                $query->where('name', 'LIKE', '%' . $request->search . '%')
+                      ->orWhere('email', 'LIKE', '%' . $request->search . '%')
+                      ->orWhere('role', 'LIKE', '%' . $request->search . '%');
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
         } else {
             $data = User::orderBy('created_at', 'desc')->paginate(5);
         }

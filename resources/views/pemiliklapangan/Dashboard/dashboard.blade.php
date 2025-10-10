@@ -78,7 +78,7 @@
                     <div class="card-body text-center">
                         <img src="{{ asset('assets/ilus.png') }}" alt="Welcome" 
                              class="mb-4" style="max-width: 280px;">
-                        <h3 class="fw-bold">Selamat Datang, Pratama</h3>
+                        <h3 class="fw-bold">Selamat Datang, {{ Auth::user()->name }}</h3>
                         <p class="text-muted">
                             Terima kasih telah memberikan kepercayaan kepada kami untuk membantu bisnis anda menjadi lebih baik.
                         </p>

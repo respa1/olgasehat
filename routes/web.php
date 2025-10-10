@@ -92,7 +92,8 @@ Route::get('/resetpassword', function () {return view('user.resetpassword'); });
 // login pengelola
 Route::get('/loginpengelolavenue', function () { return view('pemiliklapangan.loginpengelolavenue');});
 Route::get('/regispengelola', function () {return view('pemiliklapangan.regispengelola');});
-Route::get('/isidata', function () {return view('pemiliklapangan.isidata');});
+Route::get('/isidata', [App\Http\Controllers\MitraController::class, 'create'])->name('mitra.create');
+Route::post('/isidata', [App\Http\Controllers\MitraController::class, 'store'])->name('mitra.store');
 Route::get('/loginuser', function () {return view('user.loginuser');});
 
 // Protected Backoffice Routes
@@ -143,6 +144,15 @@ Route::post('/insertacc',[LoginController::class, 'insertacc'])->name('insertacc
 Route::get('/tampilkanacc/{id}', [LoginController::class, 'tampilkanacc'])->name('tampilkanacc');
 Route::post('/updateacc/{id}', [LoginController::class, 'updateacc'])->name('updateacc');
 Route::delete('/deleteacc/{id}', [LoginController::class, 'deleteacc'])->name('deleteacc');
+
+// ## VERIFIKASI MITRA ## //
+Route::middleware(['auth', 'role:superadmin'])->group(function () {
+    Route::get('/verifikasi-mitra', [App\Http\Controllers\MitraController::class, 'index'])->name('mitra.index');
+    Route::put('/verifikasi-mitra/{id}', [App\Http\Controllers\MitraController::class, 'verify'])->name('mitra.verify');
+
+    // New route for datapemiliklapangan view
+    Route::get('/datapemiliklapangan', [App\Http\Controllers\MitraController::class, 'index'])->name('mitra.datapemiliklapangan');
+});
 
 });
 
