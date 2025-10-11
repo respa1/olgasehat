@@ -24,6 +24,8 @@
   </script>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-white text-gray-800 font-sans">
 
@@ -333,23 +335,18 @@
     });
 
     // HOME JS //
-    // SweetAlert 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        @if(session('success'))
-          Swal.fire({
-            icon: 'success',
-            title: 'Berhasil',
-            text: '{{ session('success') }}',
-            confirmButtonText: 'OK'
-          });
-        @endif
+    @if(session('success'))
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil',
+        text: '{{ session('success') }}',
+        confirmButtonText: 'OK'
       });
-    </script>
+    @endif
 
     // VENUE JS //
-    document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('unifiedSearch')) {
+      document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('unifiedSearch');
         const dropdown = document.getElementById('suggestionsDropdown');
         const dummyVenues = [
@@ -419,6 +416,7 @@
           }
         });
       });
+    }
   </script>
 </body>
 </html>
