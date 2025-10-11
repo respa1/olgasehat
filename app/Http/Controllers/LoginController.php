@@ -244,7 +244,8 @@ class LoginController extends Controller
 
     public function dashboard()
 {
-    return view('BACKEND.Dashboard.dashboard'); // sesuaikan dengan nama view yang kamu punya
+    $userCount = User::where('role', 'user')->count();
+    return view('BACKEND.Dashboard.dashboard', compact('userCount')); // sesuaikan dengan nama view yang kamu punya
 }
 
 

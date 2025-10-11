@@ -12,7 +12,8 @@ class AdminController extends Controller
     }
 
     public function dashboard(){
-        return view('BACKEND.Dashboard.dashboard');
+        $userCount = User::where('role', 'user')->count();
+        return view('BACKEND.Dashboard.dashboard', compact('userCount'));
     }
 
     // Show pending Pemilik Lapangan for verification
