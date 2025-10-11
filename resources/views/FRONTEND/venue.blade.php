@@ -277,6 +277,61 @@
     </div>
 </section>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('carousel');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+    const dots = document.querySelectorAll('#dots button');
+    let currentIndex = 0;
+    const totalSlides = 5;
+
+    function updateCarousel() {
+      carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+      dots.forEach((dot, index) => {
+        if (index === currentIndex) {
+          dot.classList.add('bg-gray-600');
+          dot.classList.remove('bg-gray-300');
+        } else {
+          dot.classList.add('bg-gray-300');
+          dot.classList.remove('bg-gray-600');
+        }
+      });
+    }
+
+    prev.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+      }
+    });
+
+    next.addEventListener('click', () => {
+      if (currentIndex < totalSlides - 1) {
+        currentIndex++;
+        updateCarousel();
+      }
+    });
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        currentIndex = index;
+        updateCarousel();
+      });
+    });
+
+    // Auto-slide every 5 seconds (optional)
+    // setInterval(() => {
+    //   if (currentIndex < totalSlides - 1) {
+    //     currentIndex++;
+    //   } else {
+    //     currentIndex = 0;
+    //   }
+    //   updateCarousel();
+    // }, 5000);
+  });
+</script>
+
 {{-- PERUBAHAN: Tambahkan mt-16 dan sesuaikan mx-auto dan px-6 agar sejalan dengan carousel --}}
 <section class="mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-12">
     <div class="flex flex-col md:flex-row md:items-start md:space-x-8">

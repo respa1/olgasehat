@@ -25,8 +25,7 @@
     <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
       <a href="/" class="hover:text-blue-700">Sewa Lapangan</a>
       <a href="/tempatsehat" class="hover:text-blue-700">Tempat Sehat</a>
-      <a href="/community" class="hover:text-blue-700">Komunitas</a>
-      <a href="/club" class="hover:text-blue-700">Klub</a>
+      <a href="/community" class="hover:text-blue-700">Komunitas & Aktivitas</a>
       <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
     </nav>
 
@@ -65,8 +64,7 @@
   <nav id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-200 shadow-md">
     <a href="venue.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Sewa Lapangan</a>
     <a href="tempat_sehat.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Tempat Sehat</a>
-    <a href="community.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Komunitas</a>
-    <a href="club.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Klub</a>
+    <a href="community.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Komunitas & Aktivitas</a><a href="club.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Klub</a>
     <a href="blog&news.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Blog & News</a>
     
     <!-- Register & Login di mobile -->

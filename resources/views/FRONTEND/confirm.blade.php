@@ -156,7 +156,7 @@
         </div>
       </div>
       
-      <a href="payment.html">
+      <a href="/payment">
         <button class="w-full bg-blue-700 text-white py-3 rounded-md font-semibold hover:bg-blue-800 transition">
         KONFIRMASI PEMESANAN
       </button>

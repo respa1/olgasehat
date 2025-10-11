@@ -42,8 +42,7 @@
     <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
       <a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a>
       <a href="#" class="hover:text-blue-700">Tempat Sehat</a>
-      <a href="/community" class="hover:text-blue-700">Komunitas</a>
-      <a href="/club" class="hover:text-blue-700">Klub</a>
+      <a href="/community" class="hover:text-blue-700">Komunitas & Aktivitas</a>
       <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
     </nav>
 
@@ -105,8 +104,7 @@
       <!-- Link Navigasi -->
       <a href="/venue" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Sewa Lapangan</a>
       <a href="#" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Tempat Sehat</a>
-      <a href="/community" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas</a>
-      <a href="/club" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Klub</a>
+      <a href="/community" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas & Aktivitas</a>
       <a href="/blog-news" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Blog & News</a>
 
       <!-- Masuk and Daftar Buttons -->
@@ -185,9 +183,9 @@
 
   <!-- Cart Sidebar -->
   <div id="cartSidebar" 
-       class="fixed top-0 right-0 w-80 max-w-full h-full bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+       class="fixed top-0 right-0 w-80 max-w-full h-full bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50 flex flex-col">
     <!-- Header -->
-    <div class="flex justify-between items-center px-4 py-3 border-b">
+    <div class="flex justify-between items-center px-4 py-3 border-b flex-shrink-0">
       <h2 class="font-semibold text-lg">JADWAL DIPILIH</h2>
       <button id="closeCart" class="text-gray-500 hover:text-gray-700">
         <i class="fas fa-times"></i>
@@ -195,7 +193,7 @@
     </div>
 
     <!-- Isi Cart -->
-    <div class="p-4 text-gray-600">
+    <div class="cart-content flex-grow overflow-y-auto p-4 space-y-4">
       Belum ada jadwal di keranjang.
     </div>
   </div>
