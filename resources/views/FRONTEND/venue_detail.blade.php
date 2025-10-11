@@ -47,7 +47,7 @@
             <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl space-y-6">
                 
                 <div>
-                    <h1 class="text-3xl md:text-4xl font-extrabold mb-1 text-gray-900">MU Sport Center</h1>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-1 text-gray-900">MU Sport Center</h1>
                     <p class="text-lg text-gray-600 mb-3 flex items-center space-x-2">
                         <i class="fas fa-map-marker-alt text-blue-600"></i>
                         <span>Kota Denpasar</span>
