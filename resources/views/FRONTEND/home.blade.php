@@ -138,13 +138,13 @@
       <!-- Card 1 -->
       <div class="bg-white bg-opacity-15 backdrop-blur-sm rounded-xl p-6 md:p-8 flex flex-col items-center space-y-4 border border-white/20 hover:bg-opacity-25 transition">
         <div class="w-14 h-14 bg-blue-700 rounded-full flex items-center justify-center text-white text-2xl font-bold">✓</div>
-        <p class="text-center font-semibold text-base md:text-lg leading-snug">Arena olahraga terbaik</p>
+        <p class="text-center font-semibold text-base md:text-lg leading-snug">Penyedia Layanan Fasilitas Olahraga & Kesehatan</p>
       </div>
 
       <!-- Card 2 -->
       <div class="bg-white bg-opacity-15 backdrop-blur-sm rounded-xl p-6 md:p-8 flex flex-col items-center space-y-4 border border-white/20 hover:bg-opacity-25 transition">
         <div class="w-14 h-14 bg-blue-700 rounded-full flex items-center justify-center text-white text-2xl font-bold">★</div>
-        <p class="text-center font-semibold text-base md:text-lg leading-snug">Dipilih khusus berdasarkan lokasi dan popularitas</p>
+        <p class="text-center font-semibold text-base md:text-lg leading-snug">Dipilih khusus berdasarkan lokasi Terdekat</p>
       </div>
 
       <!-- Card 3 -->

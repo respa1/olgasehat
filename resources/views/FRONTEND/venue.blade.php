@@ -251,118 +251,111 @@
       </button>
     </nav>
 
-<!-- Carousel -->
-  <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 relative">
+<section class="mx-auto px-4 sm:px-6 lg:px-8 mt-12 relative">
     <div class="overflow-hidden rounded-lg">
-      <div class="flex transition-transform duration-500 ease-in-out" id="carousel" style="transform: translateX(0%)">
-        <img alt="Mahakarya Udaya Sport Club & Lifestyle banner with green grass and sport equipment" class="w-full flex-shrink-0 object-cover rounded-lg" height="300" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 300px" width="900"/>
-        <img alt="Second carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="300" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 300px" width="900"/>
-        <img alt="Third carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="300" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 300px" width="900"/>
-        <img alt="Fourth carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="300" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 300px" width="900"/>
-        <img alt="Fifth carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="300" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 300px" width="900"/>
-      </div>
+        <div class="flex transition-transform duration-500 ease-in-out" id="carousel" style="transform: translateX(0%)">
+            {{-- PERUBAHAN: height dan max-height diubah dari 300 menjadi 400 --}}
+            <img alt="Mahakarya Udaya Sport Club & Lifestyle banner with green grass and sport equipment" class="w-full flex-shrink-0 object-cover rounded-lg" height="400" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 400px" width="900"/>
+            <img alt="Second carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="400" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 400px" width="900"/>
+            <img alt="Third carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="400" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 400px" width="900"/>
+            <img alt="Fourth carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="400" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 400px" width="900"/>
+            <img alt="Fifth carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="400" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 400px" width="900"/>
+        </div>
     </div>
-    <!-- Carousel controls -->
-    <button aria-label="Previous slide" class="absolute top-1/2 left-2 -translate-y-1/2 bg-gray-500 bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full" id="prev" style="user-select:none">
-      <i class="fas fa-chevron-left"></i>
+    <button aria-label="Previous slide" class="absolute top-1/2 left-6 -translate-y-1/2 bg-gray-500 bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full" id="prev" style="user-select:none">
+        <i class="fas fa-chevron-left"></i>
     </button>
-    <button aria-label="Next slide" class="absolute top-1/2 right-2 -translate-y-1/2 bg-gray-500 bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full" id="next" style="user-select:none">
-      <i class="fas fa-chevron-right"></i>
+    <button aria-label="Next slide" class="absolute top-1/2 right-6 -translate-y-1/2 bg-gray-500 bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full" id="next" style="user-select:none">
+        <i class="fas fa-chevron-right"></i>
     </button>
-    <!-- Dots -->
     <div class="flex justify-center space-x-2 mt-3 text-gray-600 text-xs select-none" id="dots">
-      <button aria-label="Slide 1" class="w-2 h-2 rounded-full bg-gray-600" data-index="0"></button>
-      <button aria-label="Slide 2" class="w-2 h-2 rounded-full bg-gray-300" data-index="1"></button>
-      <button aria-label="Slide 3" class="w-2 h-2 rounded-full bg-gray-300" data-index="2"></button>
-      <button aria-label="Slide 4" class="w-2 h-2 rounded-full bg-gray-300" data-index="3"></button>
-      <button aria-label="Slide 5" class="w-2 h-2 rounded-full bg-gray-300" data-index="4"></button>
+        <button aria-label="Slide 1" class="w-2 h-2 rounded-full bg-gray-600" data-index="0"></button>
+        <button aria-label="Slide 2" class="w-2 h-2 rounded-full bg-gray-300" data-index="1"></button>
+        <button aria-label="Slide 3" class="w-2 h-2 rounded-full bg-gray-300" data-index="2"></button>
+        <button aria-label="Slide 4" class="w-2 h-2 rounded-full bg-gray-300" data-index="3"></button>
+        <button aria-label="Slide 5" class="w-2 h-2 rounded-full bg-gray-300" data-index="4"></button>
     </div>
-  </section>
+</section>
 
-  <!-- Promo Venue Section -->
-  <section class="container mx-auto px-6 mb-12">
+{{-- PERUBAHAN: Tambahkan mt-16 dan sesuaikan mx-auto dan px-6 agar sejalan dengan carousel --}}
+<section class="mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-12">
     <div class="flex flex-col md:flex-row md:items-start md:space-x-8">
-      <div class="md:w-1/4 mb-6 md:mb-0">
-        <h2 class="text-2xl font-bold text-blue-700 mb-2">Promo Venue</h2>
-        <p class="text-gray-600 mb-4">
-          Booking sekarang, dapatkan penawaran terbaik.
-        </p>
-        <a href="#" class="text-blue-700 hover:underline text-sm font-semibold"
-          >Lihat Lebih banyak</a
+        <div class="md:w-1/4 mb-6 md:mb-0">
+            <h2 class="text-2xl font-bold text-blue-700 mb-2">Promo Venue</h2>
+            <p class="text-gray-600 mb-4">
+                Booking sekarang, dapatkan penawaran terbaik.
+            </p>
+            <a href="#" class="text-blue-700 hover:underline text-sm font-semibold"
+                >Lihat Lebih banyak</a
+            >
+        </div>
+        <div
+            class="md:w-3/4 flex space-x-6 overflow-x-auto scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-gray-200"
         >
-      </div>
-      <div
-        class="md:w-3/4 flex space-x-6 overflow-x-auto scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-gray-200"
-      >
-        <!-- Promo 1 -->
-         <a href="/venue-detail">
-          <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
-            <div class="relative">
-              <img alt="Promo Special DNA Arena Cinere image with red roof and colorful wall paintings" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/MU Sport Center.jpeg') }}" width="280"/>
-              <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
-            </div>
-            <div class="p-4">
-              <h4 class="font-semibold text-sm mb-1">Promo Special MU Sport Center</h4>
-              <p class="text-xs text-gray-500 mb-1">MU Sport Center</p>
-              <p class="text-xs text-gray-400">Periode 01 Jul - 31 Aug</p>
-            </div>
-          </article>
-         </a>
-          
-          <!-- Promo 2 -->
-          <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
-            <div class="relative">
-              <img alt="Basketball court with players playing promo image" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/Imbo Sport Center.webp') }}" width="280"/>
-              <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
-            </div>
-            <div class="p-4">
-              <h4 class="font-semibold text-sm mb-1">PRICELIST 2025</h4>
-              <p class="text-xs text-gray-500 mb-1">Arena Sport</p>
-              <p class="text-xs text-gray-400">Periode 01 Apr - 31 Dec</p>
-            </div>
-          </article>
-          
-          <!-- Promo 3 -->
-          <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
-            <div class="relative">
-              <img alt="Outdoor field with lights promo image" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/DC Arena Bali.jpeg') }}" width="280"/>
-              <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
-            </div>
-            <div class="p-4">
-              <h4 class="font-semibold text-sm mb-1">PRICELIST 20</h4>
-              <p class="text-xs text-gray-500 mb-1">111 Stadion Arena</p>
-              <p class="text-xs text-gray-400">Periode 01 Apr - 31</p>
-            </div>
-          </article>
-          
-          <!-- Promo 4 -->
-          <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
-            <div class="relative">
-              <img alt="Sports field promo image" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/Arena Sport.jpg') }}" width="280"/>
-              <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
-            </div>
-            <div class="p-4">
-              <h4 class="font-semibold text-sm mb-1">Special Weekend Offer</h4>
-              <p class="text-xs text-gray-500 mb-1">Weekend Sports Arena</p>
-              <p class="text-xs text-gray-400">Periode 01 Sep - 30 Sep</p>
-            </div>
-          </article>
-          
-          <!-- Promo 5 -->
-          <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
-            <div class="relative">
-              <img alt="Basketball court promo image" class="w-full h-40 object-cover" height="160" src="https://storage.googleapis.com/a1aa/image/2dc016db-2391-4056-8156-041f6d284417.jpg" width="280"/>
-              <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
-            </div>
-            <div class="p-4">
-              <h4 class="font-semibold text-sm mb-1">Early Bird Discount</h4>
-              <p class="text-xs text-gray-500 mb-1">Morning Sports Complex</p>
-              <p class="text-xs text-gray-400">Periode 01 Oct - 31 Oct</p>
-            </div>
-          </article>
-      </div>
+            <a href="/venue-detail">
+            <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
+                <div class="relative">
+                    <img alt="Promo Special DNA Arena Cinere image with red roof and colorful wall paintings" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/MU Sport Center.jpeg') }}" width="280"/>
+                    <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
+                </div>
+                <div class="p-4">
+                    <h4 class="font-semibold text-sm mb-1">Promo Special MU Sport Center</h4>
+                    <p class="text-xs text-gray-500 mb-1">MU Sport Center</p>
+                    <p class="text-xs text-gray-400">Periode 01 Jul - 31 Aug</p>
+                </div>
+            </article>
+            </a>
+            
+            <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
+                <div class="relative">
+                    <img alt="Basketball court with players playing promo image" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/Imbo Sport Center.webp') }}" width="280"/>
+                    <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
+                </div>
+                <div class="p-4">
+                    <h4 class="font-semibold text-sm mb-1">PRICELIST 2025</h4>
+                    <p class="text-xs text-gray-500 mb-1">Arena Sport</p>
+                    <p class="text-xs text-gray-400">Periode 01 Apr - 31 Dec</p>
+                </div>
+            </article>
+            
+            <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
+                <div class="relative">
+                    <img alt="Outdoor field with lights promo image" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/DC Arena Bali.jpeg') }}" width="280"/>
+                    <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
+                </div>
+                <div class="p-4">
+                    <h4 class="font-semibold text-sm mb-1">PRICELIST 20</h4>
+                    <p class="text-xs text-gray-500 mb-1">111 Stadion Arena</p>
+                    <p class="text-xs text-gray-400">Periode 01 Apr - 31</p>
+                </div>
+            </article>
+            
+            <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
+                <div class="relative">
+                    <img alt="Sports field promo image" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/Arena Sport.jpg') }}" width="280"/>
+                    <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
+                </div>
+                <div class="p-4">
+                    <h4 class="font-semibold text-sm mb-1">Special Weekend Offer</h4>
+                    <p class="text-xs text-gray-500 mb-1">Weekend Sports Arena</p>
+                    <p class="text-xs text-gray-400">Periode 01 Sep - 30 Sep</p>
+                </div>
+            </article>
+            
+            <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
+                <div class="relative">
+                    <img alt="Basketball court promo image" class="w-full h-40 object-cover" height="160" src="https://storage.googleapis.com/a1aa/image/2dc016db-2391-4056-8156-041f6d284417.jpg" width="280"/>
+                    <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
+                </div>
+                <div class="p-4">
+                    <h4 class="font-semibold text-sm mb-1">Early Bird Discount</h4>
+                    <p class="text-xs text-gray-500 mb-1">Morning Sports Complex</p>
+                    <p class="text-xs text-gray-400">Periode 01 Oct - 31 Oct</p>
+                </div>
+            </article>
+        </div>
     </div>
-  </section>
+</section>
 
   
   <!-- FAQ Section -->
@@ -406,22 +399,22 @@
       </details>
     </div>
   </section>
-  <!-- Business Solution Section -->
   <section class="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-    <div class="bg-gray-900 text-white rounded-xl p-8 max-w-4xl mx-auto space-y-4">
-      <p class="text-xs font-normal opacity-70">Khusus Pemilik Bisnis</p>
-      <h2 class="text-3xl font-bold leading-tight">
-        Solusi Kelola<br/>
-        Fasilitas Olahraga<br/>
-        Anda
-      </h2>
-      <p class="text-sm font-normal max-w-md leading-relaxed">
-        Tingkatkan Potensi Pendapatan Lapangan & Nikmati
-        <span class="font-semibold">#BisnisMakinMudah</span>
-        dalam mengelola venue olahraga
-      </p>
-      <a class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-3 rounded-md mt-4" href="/loginpengelolavenue">Daftar Sekarang</a>
-    </div>
-  </section>
+  
+  <div class="bg-gray-900 text-white rounded-xl p-8 mx-auto space-y-4 w-full"> 
+    <p class="text-xs font-normal opacity-70">Khusus Pemilik Bisnis</p>
+    <h2 class="text-3xl font-bold leading-tight">
+      Solusi Kelola<br/>
+      Fasilitas Olahraga<br/>
+      Anda
+    </h2>
+    <p class="text-sm font-normal max-w-md leading-relaxed">
+      Tingkatkan Potensi Pendapatan Lapangan & Nikmati
+      <span class="font-semibold">#BisnisMakinMudah</span>
+      dalam mengelola venue olahraga
+    </p>
+    <a class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-3 rounded-md mt-4" href="/loginpengelolavenue">Daftar Sekarang</a>
+  </div>
+</section>
 
   @endsection
