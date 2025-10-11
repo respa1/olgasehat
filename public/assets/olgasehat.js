@@ -1,118 +1,157 @@
-// Olga Sehat JavaScript
+// HOME JS //
 
-// Carousel functionality
-function initCarousel() {
-  const carousel = document.getElementById('carousel');
-  const prevBtn = document.getElementById('prev');
-  const nextBtn = document.getElementById('next');
-  const dots = document.getElementById('dots')?.children;
-  if (!carousel || !prevBtn || !nextBtn || !dots) return;
-  const totalSlides = carousel.children.length;
-  let carouselIndex = 0;
+// DOM elements for Lapangan (Sports Venue) section
+  const btnPemilikLapangan = document.getElementById('btnPemilikLapangan');
+  const btnPenyewaLapangan = document.getElementById('btnPenyewaLapangan');
+  const contentPemilikLapangan = document.getElementById('contentPemilikLapangan');
+  const contentPenyewaLapangan = document.getElementById('contentPenyewaLapangan');
+  const imageContainerPemilikLapangan = document.getElementById('imageContainerPemilikLapangan');
+  const imageContainerPenyewaLapangan = document.getElementById('imageContainerPenyewaLapangan');
 
-  function updateCarousel(index) {
-    if (index < 0) index = totalSlides - 1;
-    if (index >= totalSlides) index = 0;
-    carouselIndex = index;
-    carousel.style.transform = `translateX(-${index * 100}%)`;
-    for (let i = 0; i < dots.length; i++) {
-      dots[i].classList.toggle('bg-gray-600', i === index);
-      dots[i].classList.toggle('bg-gray-300', i !== index);
-    }
+  // DOM elements for Kesehatan (Health) section - Renamed for uniqueness
+  const btnPemilikKesehatan = document.getElementById('btnPemilikKesehatan');
+  const btnPenyewaKesehatan = document.getElementById('btnPenyewaKesehatan');
+  const contentPemilikKesehatan = document.getElementById('contentPemilikKesehatan');
+  const contentPenyewaKesehatan = document.getElementById('contentPenyewaKesehatan');
+  const imageContainerPemilikKesehatan = document.getElementById('imageContainerPemilikKesehatan');
+  const imageContainerPenyewaKesehatan = document.getElementById('imageContainerPenyewaKesehatan');
+
+
+  // Function to handle tab switching logic
+  function switchTab(btnActive, btnInactive, contentActive, contentInactive, imageActive, imageInactive) {
+    // Activate Button
+    btnActive.classList.add('bg-blue-700', 'text-white');
+    btnActive.classList.remove('bg-gray-300', 'text-gray-600');
+    btnActive.setAttribute('aria-selected', 'true');
+    btnActive.setAttribute('tabindex', '0');
+
+    // Deactivate Button
+    btnInactive.classList.remove('bg-blue-700', 'text-white');
+    btnInactive.classList.add('bg-gray-300', 'text-gray-600');
+    btnInactive.setAttribute('aria-selected', 'false');
+    btnInactive.setAttribute('tabindex', '-1');
+
+    // Show/Hide Content
+    contentActive.classList.remove('hidden');
+    contentInactive.classList.add('hidden');
+
+    // Show/Hide Images
+    imageActive.classList.remove('hidden');
+    imageInactive.classList.add('hidden');
   }
 
-  prevBtn.addEventListener('click', () => {
-    updateCarousel(carouselIndex - 1);
+  // Event Listeners for Lapangan Section
+  btnPemilikLapangan?.addEventListener('click', () => {
+    switchTab(
+      btnPemilikLapangan, btnPenyewaLapangan,
+      contentPemilikLapangan, contentPenyewaLapangan,
+      imageContainerPemilikLapangan, imageContainerPenyewaLapangan
+    );
   });
 
-  nextBtn.addEventListener('click', () => {
-    updateCarousel(carouselIndex + 1);
+  btnPenyewaLapangan?.addEventListener('click', () => {
+    switchTab(
+      btnPenyewaLapangan, btnPemilikLapangan,
+      contentPenyewaLapangan, contentPemilikLapangan,
+      imageContainerPenyewaLapangan, imageContainerPemilikLapangan
+    );
   });
 
-  for (let i = 0; i < dots.length; i++) {
-    dots[i].addEventListener('click', () => {
-      updateCarousel(i);
-    });
-  }
+  // Event Listeners for Kesehatan Section
+  btnPemilikKesehatan?.addEventListener('click', () => {
+    switchTab(
+      btnPemilikKesehatan, btnPenyewaKesehatan,
+      contentPemilikKesehatan, contentPenyewaKesehatan,
+      imageContainerPemilikKesehatan, imageContainerPenyewaKesehatan
+    );
+  });
 
-  // Auto slide carousel
-  setInterval(() => {
-    updateCarousel(carouselIndex + 1);
-  }, 5000);
-}
+  btnPenyewaKesehatan?.addEventListener('click', () => {
+    switchTab(
+      btnPenyewaKesehatan, btnPemilikKesehatan,
+      contentPenyewaKesehatan, contentPemilikKesehatan,
+      imageContainerPenyewaKesehatan, imageContainerPemilikKesehatan
+    );
+  });
 
-// Testimonial slider
-function initTestimonials() {
-  const testimonials = document.querySelectorAll('.testimonial-item');
-  const counter = document.getElementById('testimonial-counter');
+
+  // Testimonial Slider Script
+  const testimonialItems = document.querySelectorAll('.testimonial-item');
+  const testimonialCounter = document.getElementById('testimonial-counter');
   const prevBtn = document.getElementById('prev-btn');
   const nextBtn = document.getElementById('next-btn');
-  if (!testimonials.length || !counter || !prevBtn || !nextBtn) return;
-  let testimonialIndex = 0;
-  const total = testimonials.length;
+  let currentTestimonial = 0;
+  const totalTestimonials = testimonialItems.length;
 
-  function showTestimonial(index) {
-    testimonials.forEach((item, i) => {
+  function updateTestimonial(index) {
+    testimonialItems.forEach((item, i) => {
       if (i === index) {
-        item.style.opacity = '1';
-        item.style.pointerEvents = 'auto';
+        item.classList.remove('opacity-0', 'pointer-events-none');
+        item.classList.add('opacity-100');
       } else {
-        item.style.opacity = '0';
-        item.style.pointerEvents = 'none';
+        item.classList.remove('opacity-100');
+        item.classList.add('opacity-0', 'pointer-events-none');
       }
     });
-    counter.textContent = `${String(index + 1).padStart(2, '0')}/${String(total).padStart(2, '0')}`;
+    testimonialCounter.textContent = `${(index + 1).toString().padStart(2, '0')}/${totalTestimonials.toString().padStart(2, '0')}`;
   }
 
   prevBtn.addEventListener('click', () => {
-    testimonialIndex = (testimonialIndex - 1 + total) % total;
-    showTestimonial(testimonialIndex);
+    currentTestimonial = (currentTestimonial - 1 + totalTestimonials) % totalTestimonials;
+    updateTestimonial(currentTestimonial);
   });
 
   nextBtn.addEventListener('click', () => {
-    testimonialIndex = (testimonialIndex + 1) % total;
-    showTestimonial(testimonialIndex);
+    currentTestimonial = (currentTestimonial + 1) % totalTestimonials;
+    updateTestimonial(currentTestimonial);
   });
 
-  // Initialize
-  showTestimonial(testimonialIndex);
-}
+  // Initial update
+  updateTestimonial(currentTestimonial);
 
-// Mobile menu toggle
-function initMobileMenu() {
-  const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-  const mobileMenu = document.getElementById("mobileMenu");
-  if (mobileMenuBtn && mobileMenu) {
-    mobileMenuBtn.addEventListener("click", () => {
-      mobileMenu.classList.toggle("hidden");
+  // Carousel functionality
+  function initCarousel() {
+    const carousel = document.getElementById('carousel');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const dots = document.getElementById('dots')?.children;
+    if (!carousel || !prevBtn || !nextBtn || !dots) return;
+    const totalSlides = carousel.children.length;
+    let carouselIndex = 0;
+
+    function updateCarousel(index) {
+      if (index < 0) index = totalSlides - 1;
+      if (index >= totalSlides) index = 0;
+      carouselIndex = index;
+      carousel.style.transform = `translateX(-${index * 100}%)`;
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.toggle('bg-gray-600', i === index);
+        dots[i].classList.toggle('bg-gray-300', i !== index);
+      }
+    }
+
+    prevBtn.addEventListener('click', () => {
+      updateCarousel(carouselIndex - 1);
     });
+
+    nextBtn.addEventListener('click', () => {
+      updateCarousel(carouselIndex + 1);
+    });
+
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].addEventListener('click', () => {
+        updateCarousel(i);
+      });
+    }
+
+    // Auto slide carousel
+    setInterval(() => {
+      updateCarousel(carouselIndex + 1);
+    }, 5000);
   }
-}
 
-// Cart sidebar toggle
-function initCartSidebar() {
-  const cartBtns = document.querySelectorAll('button[aria-label="Cart"]');
-  const cartSidebar = document.getElementById('cartSidebar');
-  const closeCartSidebarBtn = document.getElementById('closeCartSidebar');
-  if (!cartSidebar) return;
-
-  cartBtns.forEach(cartBtn => {
-    cartBtn.addEventListener('click', () => {
-      cartSidebar.classList.toggle('translate-x-full');
-    });
-  });
-
-  if (closeCartSidebarBtn) {
-    closeCartSidebarBtn.addEventListener('click', () => {
-      cartSidebar.classList.add('translate-x-full');
-    });
+  // Initialize carousel if elements exist
+  if (document.getElementById('carousel')) {
+    initCarousel();
   }
-}
 
-// Initialize on DOM load
-document.addEventListener('DOMContentLoaded', () => {
-  initCarousel();
-  initTestimonials();
-  initMobileMenu();
-  initCartSidebar();
-});

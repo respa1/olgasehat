@@ -28,7 +28,7 @@
 <body class="bg-white text-gray-800 font-sans">
 
 <!-- HEADER -->
-<header class="fixed top-0 left-0 right-0 z-50 shadow-md bg-white relative">
+<header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 shadow-md bg-white transition-transform duration-300 ease-in-out">
   <div class="container mx-auto flex items-center justify-between py-4 px-6">
     
     <!-- Logo -->
@@ -101,104 +101,82 @@
                 transition-all duration-300 ease-in-out absolute top-full left-0 w-full z-[50]">
 
       <!-- Link Navigasi -->
-      <a href="/venue" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Sewa Lapangan</a>
-      <a href="#" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Tempat Sehat</a>
-      <a href="/community" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Komunitas</a>
-      <a href="/club" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Klub</a>
-      <a href="/blog-news" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Blog & News</a>
+      <a href="/venue" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Sewa Lapangan</a>
+      <a href="#" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Tempat Sehat</a>
+      <a href="/community" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas</a>
+      <a href="/club" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Klub</a>
+      <a href="/blog-news" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Blog & News</a>
 
-      <!-- Register Dropdown (Mobile) -->
-      <div class="border-t">
-        <button id="mobileRegisterBtn" 
-                class="w-full text-left px-6 py-3 font-semibold text-gray-700 
-                       hover:bg-blue-50 hover:text-blue-700 focus:outline-none 
-                       flex justify-between items-center">
-          Daftar
-          <i class="fas fa-chevron-down ml-2"></i>
-        </button>
-        <div id="mobileRegisterDropdown" class="hidden flex-col bg-gray-50">
-          <a href="/daftaruser" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Akun User</a>
-          <a href="/regispengelola" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Akun Pengelola Venue</a>
-        </div>
-      </div>
-
-      <!-- Login Dropdown (Mobile) -->
-      <div class="border-t">
-        <button id="mobileLoginBtn" 
-                class="w-full text-left px-6 py-3 font-semibold bg-blue-700 text-white rounded-md 
-                       hover:bg-blue-800 focus:outline-none flex justify-between items-center">
-          Masuk
-          <i class="fas fa-chevron-down ml-2"></i>
-        </button>
-        <div id="mobileLoginDropdown" class="hidden flex-col bg-white shadow-md rounded-b-md">
-          <a href="/loginuser" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Masuk User</a>
-          <a href="/loginpengelolavenue" class="block px-6 py-3 border-t text-gray-700 hover:bg-gray-100">Masuk Pengelola Venue</a>
-        </div>
+      <!-- Masuk and Daftar Buttons -->
+      <div class="border-t pt-4">
+        <a href="/loginuser" class="block w-full px-6 py-4 text-center text-blue-700 font-semibold border border-blue-700 rounded-md hover:bg-blue-50 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200">Masuk</a>
+        <a href="/daftaruser" class="block w-full px-6 py-4 text-center bg-blue-700 text-white font-semibold rounded-md hover:bg-blue-800 menu-item opacity-0 translate-y-1 transition-all duration-200">Daftar</a>
       </div>
     </nav>
 </header>
 
-  <main class="pt-20">
+  <main class="pt-18">
     @yield('content')
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-white text-gray-700 py-12">
-    <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
-      <div>
-        <h3 class="font-bold text-lg mb-4">Olga Sehat</h3>
-        <p class="text-sm text-gray-600 max-w-xs">
-          Making sports easy to book, fun to play, and safe for everyone.
-        </p>
-      </div>
-      <div>
-        <h3 class="font-semibold mb-4">Perusahaan</h3>
-        <ul class="space-y-2 text-sm">
-          <li><a href="#" class="hover:text-blue-700">Tentang</a></li>
-          <li><a href="#" class="hover:text-blue-700">Kebijakan &amp; Privasi</a></li>
-          <li><a href="#" class="hover:text-blue-700">Syarat &amp; Ketentuan</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3 class="font-semibold mb-4">Ekosistem</h3>
-        <ul class="space-y-2 text-sm">
-          <li><a href="#" class="hover:text-blue-700">Sewa Lapangan</a></li>
-          <li><a href="#" class="hover:text-blue-700">Tempat Sehat</a></li>
-          <li><a href="#" class="hover:text-blue-700">Komunitas</a></li>
-          <li><a href="#" class="hover:text-blue-700">Klub</a></li>
-          <li><a href="#" class="hover:text-blue-700">Blog & News</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3 class="font-semibold mb-4">Support</h3>
-        <ul class="space-y-2 text-sm">
-          <li><a href="#" class="hover:text-blue-700">FAQs</a></li>
-          <li><a href="#" class="hover:text-blue-700">Support Center</a></li>
-          <li><a href="#" class="hover:text-blue-700">Contact Us</a></li>
-        </ul>
-        <div class="flex space-x-4 mt-4">
-          <a
-            href="#"
-            class="w-8 h-8 flex items-center justify-center bg-blue-700 text-white rounded-full hover:bg-blue-800 transition"
-            ><i class="fab fa-facebook-f"></i
-          ></a>
-          <a
-            href="#"
-            class="w-8 h-8 flex items-center justify-center bg-blue-700 text-white rounded-full hover:bg-blue-800 transition"
-            ><i class="fab fa-youtube"></i
-          ></a>
-          <a
-            href="#"
-            class="w-8 h-8 flex items-center justify-center bg-blue-700 text-white rounded-full hover:bg-blue-800 transition"
-            ><i class="fab fa-instagram"></i
-          ></a>
-        </div>
+  <footer class="bg-white text-gray-700 py-16">
+  <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div>
+      {{-- Ganti teks H3 ini dengan gambar logo --}}
+      <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="h-10 w-auto mb-4" /> 
+      
+      <p class="text-base text-gray-600 max-w-xs">
+        Making sports easy to book, fun to play, and safe for everyone.
+      </p>
+    </div>
+    <div>
+      <h3 class="font-semibold text-lg mb-4 text-gray-800">Perusahaan</h3>
+      <ul class="space-y-3 text-base">
+        <li><a href="#" class="hover:text-blue-700">Tentang</a></li>
+        <li><a href="#" class="hover:text-blue-700">Kebijakan &amp; Privasi</a></li>
+        <li><a href="#" class="hover:text-blue-700">Syarat &amp; Ketentuan</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="font-semibold text-lg mb-4 text-gray-800">Ekosistem</h3>
+      <ul class="space-y-3 text-base">
+        <li><a href="#" class="hover:text-blue-700">Sewa Lapangan</a></li>
+        <li><a href="#" class="hover:text-blue-700">Tempat Sehat</a></li>
+        <li><a href="#" class="hover:text-blue-700">Komunitas</a></li>
+        <li><a href="#" class="hover:text-blue-700">Klub</a></li>
+        <li><a href="#" class="hover:text-blue-700">Blog & News</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="font-semibold text-lg mb-4 text-gray-800">Support</h3>
+      <ul class="space-y-3 text-base">
+        <li><a href="#" class="hover:text-blue-700">FAQs</a></li>
+        <li><a href="#" class="hover:text-blue-700">Support Center</a></li>
+        <li><a href="#" class="hover:text-blue-700">Contact Us</a></li>
+      </ul>
+      <div class="flex space-x-4 mt-6">
+        <a
+          href="#"
+          class="w-10 h-10 flex items-center justify-center bg-blue-700 text-white rounded-full hover:bg-blue-800 transition text-lg"
+          ><i class="fab fa-facebook-f"></i
+        ></a>
+        <a
+          href="#"
+          class="w-10 h-10 flex items-center justify-center bg-blue-700 text-white rounded-full hover:bg-blue-800 transition text-lg"
+          ><i class="fab fa-youtube"></i
+        ></a>
+        <a
+          href="#"
+          class="w-10 h-10 flex items-center justify-center bg-blue-700 text-white rounded-full hover:bg-blue-800 transition text-lg"
+          ><i class="fab fa-instagram"></i
+        ></a>
       </div>
     </div>
-    <div class="container mx-auto px-6 text-center mt-8 pt-4 border-t border-gray-300 text-sm text-gray-500">
-      &copy; 2024 Olga Sehat. All rights reserved.
-    </div>
-  </footer>
+  </div>
+  <div class="container mx-auto px-6 text-center mt-10 pt-6 border-t border-gray-300 text-base text-gray-500">
+    &copy; 2024 Olga Sehat. All rights reserved.
+  </div>
+</footer>
 
   <!-- Overlay for Cart -->
   <div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
@@ -220,7 +198,9 @@
     </div>
   </div>
 
+  <script src="{{ asset('assets/olgasehat.js') }}"></script>
   <script>
+    // Header Layout //
     document.addEventListener("DOMContentLoaded", function () {
       // Dropdown helper - updated to ensure only one dropdown shows at a time
       function toggleDropdown(dropdownToToggle, dropdownToClose) {
@@ -261,37 +241,44 @@
         toggleDropdown(loginDropdown, registerDropdown);
       });
 
-      // Mobile Dropdowns
-      const mobileRegisterBtn = document.getElementById("mobileRegisterBtn");
-      const mobileRegisterDropdown = document.getElementById("mobileRegisterDropdown");
-      const mobileLoginBtn = document.getElementById("mobileLoginBtn");
-      const mobileLoginDropdown = document.getElementById("mobileLoginDropdown");
-
-      mobileRegisterBtn?.addEventListener("click", (e) => {
-        e.stopPropagation();
-        mobileRegisterDropdown.classList.toggle("hidden");
-        if (!mobileLoginDropdown.classList.contains("hidden")) {
-          mobileLoginDropdown.classList.add("hidden");
-        }
-      });
-
-      mobileLoginBtn?.addEventListener("click", (e) => {
-        e.stopPropagation();
-        mobileLoginDropdown.classList.toggle("hidden");
-        if (!mobileRegisterDropdown.classList.contains("hidden")) {
-          mobileRegisterDropdown.classList.add("hidden");
-        }
-      });
-
-      // Mobile Menu Toggle
+      // Mobile Menu Toggle with Animation
       const mobileMenuBtn = document.getElementById("mobileMenuBtn");
       const mobileMenu = document.getElementById("mobileMenu");
       mobileMenuBtn?.addEventListener("click", (e) => {
         e.stopPropagation();
-        mobileMenu.classList.toggle("hidden");
+        if (mobileMenu.classList.contains("hidden")) {
+          // Open menu with stagger animation
+          mobileMenu.classList.remove("hidden");
+          const menuItems = mobileMenu.querySelectorAll(".menu-item");
+          menuItems.forEach((item, index) => {
+            item.style.opacity = "0";
+            item.style.transform = "translateY(4px)";
+            setTimeout(() => {
+              item.style.transition = "all 0.2s ease-out";
+              item.style.opacity = "1";
+              item.style.transform = "translateY(0)";
+            }, index * 50);
+          });
+        } else {
+          // Close menu with fade out
+          const menuItems = mobileMenu.querySelectorAll(".menu-item");
+          menuItems.forEach((item) => {
+            item.style.opacity = "0";
+            item.style.transform = "translateY(-4px)";
+          });
+          setTimeout(() => {
+            mobileMenu.classList.add("hidden");
+            // Reset styles after close
+            menuItems.forEach((item) => {
+              item.style.transition = "";
+              item.style.opacity = "";
+              item.style.transform = "";
+            });
+          }, 200);
+        }
       });
 
-      // Close mobile menu and dropdowns on outside click
+      // Close mobile menu on outside click
       window.addEventListener("click", (e) => {
         // Desktop
         if (!registerBtn?.contains(e.target) && !registerDropdown?.contains(e.target)) {
@@ -303,12 +290,6 @@
         // Mobile
         if (!mobileMenu.contains(e.target) && !mobileMenuBtn?.contains(e.target)) {
           mobileMenu.classList.add("hidden");
-        }
-        if (!mobileRegisterBtn?.contains(e.target) && !mobileRegisterDropdown?.contains(e.target)) {
-          mobileRegisterDropdown.classList.add("hidden");
-        }
-        if (!mobileLoginBtn?.contains(e.target) && !mobileLoginDropdown?.contains(e.target)) {
-          mobileLoginDropdown.classList.add("hidden");
         }
       });
 
@@ -334,7 +315,110 @@
         cartSidebar.classList.add("translate-x-full");
         cartOverlay.classList.add("hidden");
       });
+
+      // Header hide/show on scroll
+      let lastScrollTop = 0;
+      window.addEventListener('scroll', function() {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const header = document.getElementById('mainHeader');
+        if (scrollTop > lastScrollTop && scrollTop > 100) {
+          // Scroll down and past 100px
+          header.style.transform = 'translateY(-100%)';
+        } else {
+          // Scroll up
+          header.style.transform = 'translateY(0)';
+        }
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+      });
     });
+
+    // HOME JS //
+    // SweetAlert 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        @if(session('success'))
+          Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '{{ session('success') }}',
+            confirmButtonText: 'OK'
+          });
+        @endif
+      });
+    </script>
+
+    // VENUE JS //
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('unifiedSearch');
+        const dropdown = document.getElementById('suggestionsDropdown');
+        const dummyVenues = [
+          {name: "MU Sport Center", address: "Jl. Sunset Road No. 123, Kuta, Denpasar, Bali", distance: 1.2},
+          {name: "Imbo Sport Center", address: "Jl. Bypass Ngurah Rai No. 45, Jimbaran, Denpasar Selatan", distance: 3.5},
+          {name: "DC Arena Bali", address: "Jl. Raya Kuta No. 78, Kuta, Badung, Bali", distance: 5.1},
+          {name: "Arena Sport", address: "Jl. Teuku Umar Barat No. 200, Denpasar Utara", distance: 7.8},
+          {name: "Bali Futsal Center", address: "Jl. Gunung Agung No. 15, Renon, Denpasar Timur", distance: 10.2},
+          {name: "Sport Hub Denpasar", address: "Jl. Diponegoro No. 300, Denpasar Pusat", distance: 15.4}
+        ];
+
+        function showSuggestions(query) {
+          if (!query.trim()) {
+            dropdown.innerHTML = '';
+            dropdown.classList.add('hidden');
+            return;
+          }
+
+          const filtered = dummyVenues
+            .filter(venue => venue.name.toLowerCase().includes(query.toLowerCase()) || venue.address.toLowerCase().includes(query.toLowerCase()))
+            .sort((a, b) => a.distance - b.distance)
+            .slice(0, 5);
+
+          if (filtered.length === 0) {
+            dropdown.innerHTML = '<li class="px-4 py-2 text-gray-500">Tidak ada hasil</li>';
+          } else {
+            dropdown.innerHTML = filtered.map(venue => `
+              <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer border-b last:border-b-0" onclick="selectVenue('${venue.name} - ${venue.address} (${venue.distance} km)')">
+                <div class="font-semibold">${venue.name}</div>
+                <div class="text-sm text-gray-600">${venue.address}</div>
+                <div class="text-xs text-gray-400">${venue.distance} km</div>
+              </li>
+            `).join('');
+          }
+
+          dropdown.classList.remove('hidden');
+        }
+
+        window.selectVenue = function(value) {
+          searchInput.value = value;
+          dropdown.classList.add('hidden');
+        };
+
+        searchInput.addEventListener('input', (e) => {
+          showSuggestions(e.target.value);
+        });
+
+        searchInput.addEventListener('focus', () => {
+          if (searchInput.value.trim()) {
+            showSuggestions(searchInput.value);
+          }
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.add('hidden');
+          }
+        });
+
+        // Form submit handler (placeholder)
+        const form = searchInput.closest('form');
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const searchTerm = searchInput.value;
+          if (searchTerm) {
+            alert(`Searching for: ${searchTerm}`); // Replace with actual search logic later
+          }
+        });
+      });
   </script>
 </body>
 </html>

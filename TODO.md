@@ -1,28 +1,22 @@
-# TODO: Implement Unified Frontend Layout Based on Home Structure
+# TODO: Mobile UI Adjustments for Olga Sehat Frontend
 
-This TODO tracks progress on creating a shared Blade layout for all FRONTEND views, using the home.blade.php structure as the base for header, footer, and overall styling. Partials will centralize common elements, and views will extend the layout.
+## Current Task: Adjust mobile view - remove logo dropdown, consistent blue buttons, fix home hero spacing
 
-## Steps:
+### Steps:
+1. **[ ]** Edit `resources/views/FRONTEND/layout/frontend.blade.php`:
+   - Remove the logo div in the mobile menu (`<div class="logo-menu ...">`) to eliminate double logo display.
+   - Update the "Daftar" button in mobile menu: Change from `bg-red-600 text-white hover:bg-red-700` to `bg-blue-700 text-white hover:bg-blue-800` for consistent blue theme.
 
-- [x] Create resources/views/FRONTEND/partials/header.blade.php (extract header HTML and related JS from home.blade.php)
-- [x] Footer integrated directly into layout (combined approach per user feedback)
-- [ ] Update resources/views/FRONTEND/layout/frontend.blade.php (add HTML structure, head with CDNs, include partials, @yield('content'), and shared scripts)
-- [ ] Refactor resources/views/FRONTEND/home.blade.php (extend layout, move content to @section('content'), add custom title if needed)
-- [ ] Refactor resources/views/FRONTEND/venue.blade.php (extend layout, preserve venue-specific content/JS)
-- [ ] Refactor resources/views/FRONTEND/venue_detail.blade.php (extend layout, preserve detail content)
-- [ ] Refactor resources/views/FRONTEND/club.blade.php (extend layout, preserve club listing)
-- [ ] Refactor resources/views/FRONTEND/club_detail.blade.php (extend layout, preserve detail content)
-- [ ] Refactor resources/views/FRONTEND/community.blade.php (extend layout, preserve community listing)
-- [ ] Refactor resources/views/FRONTEND/community_detail.blade.php (extend layout, preserve detail content)
-- [ ] Refactor resources/views/FRONTEND/blog-news.blade.php (extend layout, preserve blog listing)
-- [ ] Refactor resources/views/FRONTEND/blog&news_detail.blade.php (extend layout, preserve detail content)
-- [ ] Refactor resources/views/FRONTEND/payment.blade.php (extend layout, preserve payment form/JS)
-- [ ] Refactor resources/views/FRONTEND/success.blade.php (extend layout, preserve success message)
-- [ ] Refactor resources/views/FRONTEND/confirm.blade.php (extend layout, preserve confirmation content)
-- [ ] Testing: Run `php artisan serve`, visit all frontend routes (e.g., /, /venue, /club), verify header/footer consistency, mobile responsiveness, JS interactions (cart, dropdowns, tabs), and no errors in console.
+2. **[ ]** Read `resources/views/FRONTEND/home.blade.php` to analyze the hero section structure and identify spacing issues (e.g., extra margins/paddings).
 
-## Notes:
-- Base layout on home.blade.php: Fixed white header with logo/nav/cart/login, Tailwind CDN, Font Awesome, shared JS for dropdowns/mobile menu/cart.
-- Ensure cart sidebar and overlays are global via header partial.
-- Page-specific JS (e.g., tabs in home, search in venue) stays in content section or @push('scripts').
-- Update this file after each step completion.
+3. **[ ]** Edit `resources/views/FRONTEND/home.blade.php` (or adjust layout's pt-16 if global):
+   - Reduce or optimize top spacing in the hero section to make it closer to the header without overlap.
+
+4. **[ ]** Test the changes:
+   - Run `php artisan serve` and view the home page on mobile (or use browser dev tools).
+   - Verify: No double logo in mobile menu, blue "Daftar" button, improved hero spacing.
+
+### Notes:
+- Changes are mobile-specific using Tailwind's responsive classes (md:hidden, etc.).
+- After each edit, confirm success before proceeding.
+- If issues arise, use browser_action for screenshots.
