@@ -47,188 +47,168 @@
 
   <!-- Venue Cards Grid -->
   <section class="container mx-auto px-6 pb-12">
-    <h2 class="font-semibold text-lg mb-4">
+    <h2 class="font-bold text-xl mb-6 text-gray-800">
       Nikmati <span class="text-blue-700">4 Venue</span> yang tersedia
     </h2>
     <div
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
       aria-label="Daftar venue olahraga"
     >
-      <!-- Venue Card 1 -->
-      <a href="/venue-detail" class="block">
-        <article
-          class="border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition"
-        >
-          <img
-            src="{{ asset('assets/MU Sport Center.jpeg') }}"
-            alt="MU Sport Center"
-            class="w-full h-40 object-cover"
-          />
-          <div class="p-4">
-            <p class="text-xs text-gray-500 mb-1">Venue</p>
-            <h3 class="font-semibold text-lg mb-1">MU Sport Center</h3>
-            <p class="text-sm text-gray-500 mb-1">Kota Denpasar</p>
-            <p class="text-xs text-gray-400 mb-2">Futsal</p>
-            <p class="font-semibold mb-2">
-              Mulai <span class="text-blue-700">Rp250,000</span> /Sesi
-            </p>
-            <div class="flex flex-wrap gap-2">
-              <button
-                class="bg-white border border-gray-300 text-gray-700 text-xs rounded px-2 py-1 hover:bg-green-600 hover:text-white transition"
-              >
-                06.00
-              </button>
-              <button
-                class="bg-gray-300 text-gray-700 text-xs rounded px-2 py-1 hover:bg-green-600 hover:text-white transition"
-              >
-                18.00
-              </button>
-              <button
-                class="bg-white border border-gray-300 text-gray-700 text-xs rounded px-2 py-1 hover:bg-green-600 hover:text-white transition"
-              >
-                20.00
-              </button>
-              <button
-                class="bg-gray-300 text-gray-700 text-xs rounded px-2 py-1 hover:bg-green-600 hover:text-white transition"
-              >
-                22.00
-              </button>
-            </div>
-          </div>
-        </article>
-      </a>
+      <a href="/venue-detail" class="block group">
+            <article
+                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:-translate-y-1 group-hover:shadow-xl transition duration-300"
+            >
+                <img
+                    src="{{ asset('assets/MU Sport Center.jpeg') }}"
+                    alt="MU Sport Center"
+                    class="w-full h-40 object-cover"
+                />
+                
+                <div class="p-4">
+                    <p class="text-xs text-gray-500 font-medium mb-0">Venue | Futsal</p>
+                    <h3 class="font-bold text-lg text-gray-900 mb-1">MU Sport Center</h3>
+                    <p class="text-sm text-gray-600 mb-3 flex items-center">
+                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-1"></i> Kota Denpasar
+                    </p>
+                    
+                    <p class="font-bold text-gray-900 mb-3">
+                        Mulai <span class="text-xl">Rp250,000</span> /Sesi
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-2 pt-2 border-t border-gray-100">
+                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
+                            06.00
+                        </button>
+                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
+                            18.00
+                        </button>
+                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
+                            20.00
+                        </button>
+                         <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
+                            22.00
+                        </button>
+                    </div>
+                </div>
+            </article>
+        </a>
 
-      <!-- Venue Card 2 -->
-      <a href="/venue-detail" class="block">
-        <article
-          class="border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition"
-        >
-          <div class="p-4">
-            <img
-            src="{{ asset('assets/Imbo Sport Center.webp') }}"
-            alt="MU Sport Center"
-            class="w-full h-40 object-cover"
-          />
-            <p class="text-xs text-gray-500 mb-1">Venue</p>
-            <h3 class="font-semibold text-lg mb-1">Imbo Sport Center</h3>
-            <p class="text-sm text-gray-500 mb-1">Kota Denpasar</p>
-            <p class="text-xs text-gray-400 mb-2">Futsal</p>
-            <p class="font-semibold mb-2">
-              Mulai <span class="text-blue-700">Rp230,000</span> /Sesi
-            </p>
-            <div class="flex flex-wrap gap-2">
-              <button
-                class="bg-white border border-gray-300 text-gray-700 text-xs rounded px-2 py-1 hover:bg-green-600 hover:text-white transition"
-              >
-                08.00
-              </button>
-              <button
-                class="bg-gray-300 text-gray-700 text-xs rounded px-2 py-1 hover:bg-green-600 hover:text-white transition"
-              >
-                18.00
-              </button>
-              <button
-                class="bg-white border border-gray-300 text-gray-700 text-xs rounded px-2 py-1 hover:bg-green-600 hover:text-white transition"
-              >
-                20.00
-              </button>
-              <button
-                class="bg-gray-300 text-gray-700 text-xs rounded px-2 py-1 hover:bg-green-600 hover:text-white transition"
-              >
-                22.00
-              </button>
-            </div>
-          </div>
-        </article>
-      </a>
+        <a href="/venue-detail" class="block group">
+            <article
+                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:-translate-y-1 group-hover:shadow-xl transition duration-300"
+            >
+                <img
+                    src="{{ asset('assets/Imbo Sport Center.webp') }}"
+                    alt="Imbo Sport Center"
+                    class="w-full h-40 object-cover"
+                />
+                
+                <div class="p-4">
+                    <p class="text-xs text-gray-500 font-medium mb-0">Venue | Futsal</p>
+                    <h3 class="font-bold text-lg text-gray-900 mb-1">Imbo Sport Center</h3>
+                    <p class="text-sm text-gray-600 mb-3 flex items-center">
+                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-1"></i> Kota Denpasar
+                    </p>
+                    
+                    <p class="font-bold text-gray-900 mb-3">
+                        Mulai <span class="text-xl">Rp230,000</span> /Sesi
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-2 pt-2 border-t border-gray-100">
+                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
+                            08.00
+                        </button>
+                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
+                            18.00
+                        </button>
+                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
+                            20.00
+                        </button>
+                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
+                            22.00
+                        </button>
+                    </div>
+                </div>
+            </article>
+        </a>
 
-      <!-- Venue Card 3 -->
-      <a href="/venue-detail" class="block">
-        <article
-          class="border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition"
-        >
-          <img
-            src="{{ asset('assets/DC Arena Bali.jpeg') }}"
-            alt="DC Arena Bali"
-            class="w-full h-40 object-cover"
-          />
-          <div class="p-4">
-            <p class="text-xs text-gray-500 mb-1">Venue</p>
-            <h3 class="font-semibold text-lg mb-1">DC Arena Bali</h3>
-            <p class="text-sm text-gray-500 mb-1">Kota Denpasar</p>
-            <p class="text-xs text-gray-400 mb-2">Basketball</p>
-            <p class="font-semibold mb-2">
-              Mulai <span class="text-blue-700">Rp180,000</span> /Sesi
-            </p>
-            <div class="flex flex-wrap gap-2">
-              <button
-                class="bg-white border border-gray-300 text-gray-700 text-xs rounded px-2 py-1 hover:bg-green-600 hover:text-white transition"
-              >
-                06.00
-              </button>
-              <button
-                class="bg-white border border-gray-300 text-gray-700 text-xs rounded px-2 py-1 hover:bg-green-600 hover:text-white transition"
-              >
-                08.00
-              </button>
-              <button
-                class="bg-gray-300 text-gray-700 text-xs rounded px-2 py-1 hover:bg-green-600 hover:text-white transition"
-              >
-                18.00
-              </button>
-              <button
-                class="bg-white border border-gray-300 text-gray-700 text-xs rounded px-2 py-1 hover:bg-green-600 hover:text-white transition"
-              >
-                22.00
-              </button>
-            </div>
-          </div>
-        </article>
-      </a>
+        <a href="/venue-detail" class="block group">
+            <article
+                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:-translate-y-1 group-hover:shadow-xl transition duration-300"
+            >
+                <img
+                    src="{{ asset('assets/DC Arena Bali.jpeg') }}"
+                    alt="DC Arena Bali"
+                    class="w-full h-40 object-cover"
+                />
+                
+                <div class="p-4">
+                    <p class="text-xs text-gray-500 font-medium mb-0">Venue | Basketball</p>
+                    <h3 class="font-bold text-lg text-gray-900 mb-1">DC Arena Bali</h3>
+                    <p class="text-sm text-gray-600 mb-3 flex items-center">
+                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-1"></i> Kota Denpasar
+                    </p>
+                    
+                    <p class="font-bold text-gray-900 mb-3">
+                        Mulai <span class="text-xl">Rp180,000</span> /Sesi
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-2 pt-2 border-t border-gray-100">
+                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
+                            06.00
+                        </button>
+                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
+                            08.00
+                        </button>
+                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
+                            18.00
+                        </button>
+                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
+                            22.00
+                        </button>
+                    </div>
+                </div>
+            </article>
+        </a>
 
-      <!-- Venue Card 4 -->
-      <a href="/venue-detail" class="block">
-        <article
-          class="border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition"
-        >
-          <img
-            src="{{ asset('assets/Arena Sport.jpg') }}"
-            alt="Arena Sport"
-            class="w-full h-40 object-cover"
-          />
-          <div class="p-4">
-            <p class="text-xs text-gray-500 mb-1">Venue</p>
-            <h3 class="font-semibold text-lg mb-1">Arena Sport</h3>
-            <p class="text-sm text-gray-500 mb-1">Kota Denpasar</p>
-            <p class="text-xs text-gray-400 mb-2">Mini Soccer</p>
-            <p class="font-semibold mb-2">
-              Mulai <span class="text-blue-700">Rp350,000</span> /Sesi
-            </p>
-            <div class="flex flex-wrap gap-2">
-              <button
-                class="bg-white border border-gray-300 text-gray-700 text-xs rounded px-2 py-1 hover:bg-green-600 hover:text-white transition"
-              >
-                08.00
-              </button>
-              <button
-                class="bg-gray-300 text-gray-700 text-xs rounded px-2 py-1 hover:bg-green-600 hover:text-white transition"
-              >
-                18.00
-              </button>
-              <button
-                class="bg-white border border-gray-300 text-gray-700 text-xs rounded px-2 py-1 hover:bg-green-600 hover:text-white transition"
-              >
-                20.00
-              </button>
-              <button
-                class="bg-gray-300 text-gray-700 text-xs rounded px-2 py-1 hover:bg-green-600 hover:text-white transition"
-              >
-                22.00
-              </button>
-            </div>
-          </div>
-        </article>
-      </a>
+        <a href="/venue-detail" class="block group">
+            <article
+                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:-translate-y-1 group-hover:shadow-xl transition duration-300"
+            >
+                <img
+                    src="{{ asset('assets/Arena Sport.jpg') }}"
+                    alt="Arena Sport"
+                    class="w-full h-40 object-cover"
+                />
+                
+                <div class="p-4">
+                    <p class="text-xs text-gray-500 font-medium mb-0">Venue | Mini Soccer</p>
+                    <h3 class="font-bold text-lg text-gray-900 mb-1">Arena Sport</h3>
+                    <p class="text-sm text-gray-600 mb-3 flex items-center">
+                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-1"></i> Kota Denpasar
+                    </p>
+                    
+                    <p class="font-bold text-gray-900 mb-3">
+                        Mulai <span class="text-xl">Rp350,000</span> /Sesi
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-2 pt-2 border-t border-gray-100">
+                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
+                            08.00
+                        </button>
+                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
+                            18.00
+                        </button>
+                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
+                            20.00
+                        </button>
+                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
+                            22.00
+                        </button>
+                    </div>
+                </div>
+            </article>
+        </a>
     </div>
 
     <!-- Pagination -->

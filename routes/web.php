@@ -61,8 +61,7 @@ Route::controller(LoginController::class)->group(function () {
 // frontend publik
 Route::get('/blog-news', fn() => view('frontend.blog-news'));
 Route::get('/blog-news-detail', fn() => view('frontend.blog_news_detail'));
-Route::get('/club', fn() => view('frontend.club'));
-Route::get('/club-detail', fn() => view('frontend.club_detail'));
+Route::get('/membership-detail', fn() => view('frontend.membership_detail'));
 Route::get('/community', fn() => view('frontend.community'));
 Route::get('/community-detail', fn() => view('frontend.community_detail'));
 Route::get('/confirm', fn() => view('frontend.confirm'));

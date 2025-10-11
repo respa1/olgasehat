@@ -98,15 +98,15 @@
                 </article>
             </a>
             
-            <a href="/community-detail/3" class="block group">
+            <a href="/membership-detail" class="block group">
                 <article class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition relative">
                     <img src="assets/DC Arena Bali.jpeg" alt="Klub" class="w-full h-40 object-cover group-hover:scale-105 transition-transform" />
                     <div class="p-4">
                         <span class="inline-block bg-yellow-600 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2">MEMBERSHIP</span>
-                        <h3 class="font-bold text-md mb-1 text-gray-900">The Running Club Jakarta</h3>
-                        <p class="text-xs text-gray-500 mb-2">Monthly Fee</p>
+                        <h3 class="font-bold text-md mb-1 text-gray-900">The SportMan Club Denpasar</h3>
+                        <p class="text-xs text-gray-500 mb-2">MU Sport Center</p>
                         <p class="text-xs text-gray-700 font-semibold flex items-center">
-                            <i class="fas fa-wallet mr-2"></i> Mulai Rp50.000 /bulan
+                            <i class="fas fa-wallet mr-2"></i> Mulai Rp150.000 /bulan
                         </p>
                     </div>
                 </article>
