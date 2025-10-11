@@ -10,40 +10,43 @@
   </div>
   </section>
 
-  <!-- Search Filters -->
   <section class="container mx-auto px-6 py-8">
-    <form class="flex flex-wrap gap-4 justify-center md:justify-start items-center">
-      <div class="relative flex-grow min-w-[300px]">
-        <input
-          type="text"
-          id="unifiedSearch"
-          placeholder="Cari venue terdekat (e.g., MU Sport Center, Denpasar)"
-          class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
-        />
-        <div id="suggestionsDropdown" class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto hidden z-10 mt-1">
+    <form class="flex flex-wrap gap-4 justify-center md:justify-start items-stretch">
+        
+        <div class="relative flex-grow min-w-full sm:min-w-[300px]">
+            <input
+                type="text"
+                id="unifiedSearch"
+                placeholder="Cari venue terdekat (e.g., MU Sport Center, Denpasar)"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 h-full text-gray-700 placeholder-gray-500 focus:outline-none focus:border-blue-500 transition duration-150"
+            />
+            <div id="suggestionsDropdown" class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-lg shadow-xl max-h-60 overflow-y-auto hidden z-10 mt-1">
+            </div>
         </div>
-      </div>
-      <select
-        class="border border-gray-300 rounded-md px-4 py-2 min-w-[180px] focus:outline-none focus:ring-2 focus:ring-blue-600"
-      >
-        <option disabled selected>Pilih Cabang Olahraga</option>
-        <option>Futsal</option>
-        <option>Basketball</option>
-        <option>Mini Soccer</option>
-        <option>Badminton</option>
-      </select>
-      <input
-        type="date"
-        class="border border-gray-300 rounded-md px-4 py-2 min-w-[160px] focus:outline-none focus:ring-2 focus:ring-blue-600"
-      />
-      <button
-        type="submit"
-        class="bg-blue-700 text-white px-6 py-2 rounded-md hover:bg-blue-800 transition min-w-[120px]"
-      >
-        Cari Venue
-      </button>
+        
+        <select
+            class="border border-gray-300 rounded-lg px-4 py-2.5 min-w-[180px] w-full sm:w-auto text-gray-700 focus:outline-none focus:border-blue-500 transition duration-150"
+        >
+            <option disabled selected class="text-gray-500">Pilih Cabang Olahraga</option>
+            <option>Futsal</option>
+            <option>Basketball</option>
+            <option>Mini Soccer</option>
+            <option>Badminton</option>
+        </select>
+        
+        <input
+            type="date"
+            class="border border-gray-300 rounded-lg px-4 py-2.5 min-w-[160px] w-full sm:w-auto text-gray-700 focus:outline-none focus:border-blue-500 transition duration-150"
+        />
+        
+        <button
+            type="submit"
+            class="bg-blue-700 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-blue-800 transition min-w-full sm:min-w-[120px]"
+        >
+            Cari Venue
+        </button>
     </form>
-  </section>
+</section>
 
   <!-- Venue Cards Grid -->
   <section class="container mx-auto px-6 pb-12">
