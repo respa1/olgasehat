@@ -107,23 +107,32 @@
 
 <section class="bg-gray-50 py-16 md:py-24">
   <div class="container mx-auto px-6 text-center">
-    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800">Cari Komunitas terbaik untuk tim Anda!</h2>
-    {{-- Paragraf: Kita kembalikan ke text-lg untuk sedikit mengecilkan --}}
+    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
+      Temukan Komunitas & Aktivitas Favoritmu!
+    </h2>
     <p class="text-gray-700 mb-10 max-w-4xl mx-auto text-lg leading-relaxed">
-      Ikuti berbagai pilihan kompetisi dari Olga Sehat dan operator kompetisi lainnya. Rasakan keseruan silaturahmi di lapangan bersama ribuan tim amatir lainnya sekarang juga!
+     Buat kegiatan seru bersama Olga Sehat! Komunitas, Membership, atau Event Seru dari berbagai kegiatan olahraga di sekitarmu. 
+     Saatnya jalin silaturahmi dan tambah semangat di lapangan!
     </p>
     <div class="inline-flex space-x-4 mb-10">
-      <button class="bg-blue-700 text-white text-base font-semibold rounded-full px-6 py-3 transition-colors hover:bg-blue-800">KOMUNITAS</button>
-      <button class="bg-gray-200 text-gray-600 text-base font-semibold rounded-full px-6 py-3 transition-colors hover:bg-gray-300">KLUB</button>
+      <button class="bg-blue-700 text-white text-base font-semibold rounded-full px-6 py-3 transition-colors hover:bg-blue-800">
+        BUAT AKTIVITAS BARU
+      </button>
+      <button class="bg-gray-200 text-gray-700 text-base font-semibold rounded-full px-6 py-3 transition-colors hover:bg-gray-300">
+        GABUNG AKTIVITAS
+      </button>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-6xl mx-auto">
       <img src="{{ asset('assets/komunitas.png') }}" alt="Komunitas 1" class="rounded-xl shadow-lg object-cover h-64 w-full" />
       <img src="{{ asset('assets/komunitas1.png') }}" alt="Komunitas 2" class="rounded-xl shadow-lg object-cover h-64 w-full" />
       <img src="{{ asset('assets/komunitas2.png') }}" alt="Komunitas 3" class="rounded-xl shadow-lg object-cover h-64 w-full" />
     </div>
-    <a href="#" class="text-blue-700 font-bold mt-10 inline-block hover:underline text-xl transition-colors">Lihat Komunitas &rarr;</a>
+    <a href="#" class="text-blue-700 font-bold mt-10 inline-block hover:underline text-xl transition-colors">
+      Lihat Semua Komunitas &rarr;
+    </a>
   </div>
 </section>
+
 
 <section class="relative bg-cover bg-center h-auto py-16 md:py-24" style="background-image: url('{{ asset('assets/banten-indonesia-august-02-2022-600nw-2455954305.webp') }}');">
   <div class="absolute inset-0 bg-black bg-opacity-70"></div>
