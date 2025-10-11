@@ -2,158 +2,236 @@
 
 @section('content')
 
-  <!-- Blog & News Header Section -->
-  <section class="bg-[url('assets/blue-banner.png')] bg-no-repeat text-white relative overflow-hidden h-[300px] flex items-center justify-center" style="background-size: 1910px 300px;">
-    <div class="container mx-auto px-6 text-center">
-      <h1 class="text-3xl md:text-4xl font-bold tracking-wide mt-10">
-        ARTIKEL & TIPS SEPUTAR OLAHRAGA
-      </h1>
-      <div class="mt-6 max-w-xl mx-auto">
-        <input
-          type="text"
-          placeholder="Cari artikel..."
-          class="w-full rounded-md py-3 px-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-900"
-        />
-      </div>
-    </div>
-  </section>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-  <!-- Blog & News Content -->
-  <section class="container mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
-    <!-- Trending Posts -->
+<section class="bg-[url('assets/blue-banner.png')] bg-no-repeat text-white relative overflow-hidden h-[300px] flex items-center justify-center" style="background-size: 1910px 300px;">
+    <div class="absolute inset-0 bg-blue-900 bg-opacity-30"></div>
+    
+    <div class="container mx-auto px-6 text-center relative z-10">
+        <h1 class="text-3xl md:text-4xl font-extrabold tracking-wide mt-10">
+            ARTIKEL & TIPS SEPUTAR OLAHRAGA
+        </h1>
+        <div class="mt-6 max-w-xl mx-auto shadow-lg">
+            <div class="relative">
+                <input
+                    type="text"
+                    placeholder="Cari artikel..."
+                    class="w-full rounded-lg py-3 px-4 text-gray-800 text-base focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
+                />
+                <i class="fas fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container mx-auto px-4 sm:px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-10 max-w-7xl">
+    
     <aside class="md:col-span-1 space-y-6">
-      <h2 class="text-sm font-semibold text-gray-700 uppercase border-b border-gray-300 pb-2">
-        TRENDING POST
-      </h2>
-      <ol class="list-decimal list-inside space-y-4 text-sm text-gray-800 font-semibold">
-        <li>
-          <a href="#" class="hover:underline">
-            3 Hal Penting agar Main Bola Tetap Lancar di Bulan Puasa
-          </a>
-          <p class="text-xs text-gray-500">SEPAK BOLA - April 14, 2022</p>
-        </li>
-        <li>
-          <a href="#" class="hover:underline">
-            Cara Meningkatkan Stamina saat Bermain Badminton: Tips dan Latihan yang Efektif
-          </a>
-          <p class="text-xs text-gray-500">BADMINTON - May 18, 2023</p>
-        </li>
-        <li>
-          <a href="#" class="hover:underline">
-            Kenapa Sparring Tennis Penting? Ini Manfaat yang Bisa Didapat!
-          </a>
-          <p class="text-xs text-gray-500">TENNIS - March 28, 2025</p>
-        </li>
-        <li>
-          <a href="#" class="hover:underline">
-            Memahami Standar Keselamatan dan Keamanan Lapangan Mini Soccer
-          </a>
-          <p class="text-xs text-gray-500">MINI SOCCER - July 29, 2024</p>
-        </li>
-        <li>
-          <a href="#" class="hover:underline">
-            Inilah Ukuran Standar Lapangan Mini Soccer yang Harus Diketahui
-          </a>
-          <p class="text-xs text-gray-500">MINI SOCCER - July 29, 2024</p>
-        </li>
-      </ol>
+        <h2 class="text-lg font-bold text-gray-900 uppercase border-b-2 border-blue-500 pb-2">
+            🔥 Trending Post
+        </h2>
+        <ol class="space-y-4">
+            <li class="border-b border-gray-200 pb-3 last:border-b-0 last:pb-0">
+                <a href="#" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
+                    Strategi Hidrasi: Tips Minum Air yang Tepat Sebelum dan Sesudah Latihan
+                </a>
+                <p class="text-xs text-gray-500 mt-1">
+                    <span class="text-green-600 font-medium">KESEHATAN</span> - April 14, 2024
+                </p>
+            </li>
+            <li class="border-b border-gray-200 pb-3 last:border-b-0 last:pb-0">
+                <a href="#" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
+                    Teknik Dasar Dribbling Futsal yang Wajib Dikuasai Pemula
+                </a>
+                <p class="text-xs text-gray-500 mt-1">
+                    <span class="text-blue-600 font-medium">OLAHRAGA</span> - May 18, 2024
+                </p>
+            </li>
+            <li class="border-b border-gray-200 pb-3 last:border-b-0 last:pb-0">
+                <a href="#" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
+                    Pentingnya Asuransi Cedera untuk Atlet Amatir: Apa yang Harus Anda Tahu
+                </a>
+                <p class="text-xs text-gray-500 mt-1">
+                    <span class="text-yellow-600 font-medium">EDUKASI</span> - March 28, 2025
+                </p>
+            </li>
+            <li class="border-b border-gray-200 pb-3 last:border-b-0 last:pb-0">
+                <a href="#" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
+                    Perbedaan Kunci antara Lapangan Mini Soccer dan Lapangan Sepak Bola Standar
+                </a>
+                <p class="text-xs text-gray-500 mt-1">
+                    <span class="text-blue-600 font-medium">OLAHRAGA</span> - July 29, 2024
+                </p>
+            </li>
+            <li>
+                <a href="#" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
+                    Mengapa Pemanasan Dinamis Lebih Baik dari Statis Sebelum Berolahraga?
+                </a>
+                <p class="text-xs text-gray-500 mt-1">
+                    <span class="text-green-600 font-medium">KESEHATAN</span> - July 29, 2024
+                </p>
+            </li>
+        </ol>
     </aside>
 
-    <!-- Blog Cards -->
-    <main class="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-6">
-      <!-- Blog Card 1 -->
-       <a href="blog&news_detail.html">
-        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-        <img
-          src="assets/tenis.jpg"
-          alt="Tennis Player"
-          class="w-full h-48 object-cover"
-        />
-        <div class="p-4">
-          <p class="text-xs text-blue-700 font-semibold uppercase mb-2">Tennis</p>
-          <h3 class="font-bold text-lg mb-2">
-            Kenapa Sparring Tennis Penting? Ini Manfaat yang Bisa Didapat!
-          </h3>
-          <p class="text-gray-600 text-sm mb-4">
-            Bukan hanya soal menang atau kalah, ada manfaat sparring tenis yang bisa membuat...
-          </p>
-          <div class="flex items-center justify-between text-xs text-gray-500">
-            <span>oleh Eren</span>
-            <time datetime="2025-03-28">28 March 2025</time>
-          </div>
-        </div>
-      </article>`
-       </a>
+    <main class="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <a href="/blog-news-detail" class="block">
+            <article class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-[1.02] hover:shadow-xl transition duration-300 group">
+                <div class="relative overflow-hidden">
+                    <img
+                        src="assets/tenis.jpg"
+                        alt="Asuransi Kesehatan"
+                        class="w-full h-48 object-cover group-hover:scale-110 transition duration-500"
+                    />
+                    <p class="absolute top-3 left-3 bg-yellow-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">EDUKASI</p>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-bold text-lg text-gray-900 mb-3 group-hover:text-blue-700 transition leading-snug line-clamp-2">
+                        Pentingnya Asuransi Cedera untuk Atlet Amatir: Apa yang Harus Anda Tahu
+                    </h3>
+                    <p class="text-gray-600 text-sm mb-5 line-clamp-3">
+                        Pelajari bagaimana asuransi dapat melindungi Anda dari biaya tak terduga akibat cedera saat berolahraga.
+                    </p>
+                    <div class="flex items-center justify-between text-xs text-gray-500 border-t pt-3">
+                        <span class="font-semibold text-gray-700">oleh Bima</span>
+                        <time datetime="2025-03-28">28 March 2025</time>
+                    </div>
+                </div>
+            </article>
+        </a>
 
-      <!-- Blog Card 2 -->
-      <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-        <img
-          src="assets/tenis.jpg"
-          alt="Indoor Court"
-          class="w-full h-48 object-cover"
-        />
-        <div class="p-4">
-          <p class="text-xs text-blue-700 font-semibold uppercase mb-2">Badminton</p>
-          <h3 class="font-bold text-lg mb-2">
-            Cara Meningkatkan Stamina saat Bermain Badminton: Tips dan Latihan yang Efektif
-          </h3>
-          <p class="text-gray-600 text-sm mb-4">
-            Tips dan latihan yang efektif untuk meningkatkan stamina saat bermain badminton...
-          </p>
-          <div class="flex items-center justify-between text-xs text-gray-500">
-            <span>oleh Rina</span>
-            <time datetime="2023-05-18">18 May 2023</time>
-          </div>
-        </div>
-      </article>
+        <a href="#" class="block">
+            <article class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-[1.02] hover:shadow-xl transition duration-300 group">
+                <div class="relative overflow-hidden">
+                    <img
+                        src="assets/tenis.jpg"
+                        alt="Botol Minum"
+                        class="w-full h-48 object-cover group-hover:scale-110 transition duration-500"
+                    />
+                    <p class="absolute top-3 left-3 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">KESEHATAN</p>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-bold text-lg text-gray-900 mb-3 group-hover:text-blue-700 transition leading-snug line-clamp-2">
+                        Strategi Hidrasi: Tips Minum Air yang Tepat Sebelum dan Sesudah Latihan
+                    </h3>
+                    <p class="text-gray-600 text-sm mb-5 line-clamp-3">
+                        Jaga performa dan hindari dehidrasi! Ketahui waktu dan jumlah air ideal saat berolahraga.
+                    </p>
+                    <div class="flex items-center justify-between text-xs text-gray-500 border-t pt-3">
+                        <span class="font-semibold text-gray-700">oleh Rina</span>
+                        <time datetime="2024-04-14">14 April 2024</time>
+                    </div>
+                </div>
+            </article>
+        </a>
 
-      <!-- Blog Card 3 -->
-      <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-        <img
-          src="assets/tenis.jpg"
-          alt="Mini Soccer Field"
-          class="w-full h-48 object-cover"
-        />
-        <div class="p-4">
-          <p class="text-xs text-blue-700 font-semibold uppercase mb-2">Mini Soccer</p>
-          <h3 class="font-bold text-lg mb-2">
-            Memahami Standar Keselamatan dan Keamanan Lapangan Mini Soccer
-          </h3>
-          <p class="text-gray-600 text-sm mb-4">
-            Standar keselamatan dan keamanan yang harus diperhatikan di lapangan mini soccer...
-          </p>
-          <div class="flex items-center justify-between text-xs text-gray-500">
-            <span>oleh Dedi</span>
-            <time datetime="2024-07-29">29 July 2024</time>
-          </div>
-        </div>
-      </article>
+        <a href="#" class="block">
+            <article class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-[1.02] hover:shadow-xl transition duration-300 group">
+                <div class="relative overflow-hidden">
+                    <img
+                        src="assets/tenis.jpg"
+                        alt="Pemain Futsal"
+                        class="w-full h-48 object-cover group-hover:scale-110 transition duration-500"
+                    />
+                    <p class="absolute top-3 left-3 bg-blue-700 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">OLAHRAGA</p>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-bold text-lg text-gray-900 mb-3 group-hover:text-blue-700 transition leading-snug line-clamp-2">
+                        Teknik Dasar Dribbling Futsal yang Wajib Dikuasai Pemula
+                    </h3>
+                    <p class="text-gray-600 text-sm mb-5 line-clamp-3">
+                        Kuasai kontrol bola di ruang sempit! Panduan langkah demi langkah untuk meningkatkan kemampuan dribbling futsal Anda.
+                    </p>
+                    <div class="flex items-center justify-between text-xs text-gray-500 border-t pt-3">
+                        <span class="font-semibold text-gray-700">oleh Dedi</span>
+                        <time datetime="2024-05-18">18 May 2024</time>
+                    </div>
+                </div>
+            </article>
+        </a>
 
-      <!-- Blog Card 4 -->
-      <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-        <img
-          src="assets/tenis.jpg"
-          alt="Arena Sport"
-          class="w-full h-48 object-cover"
-        />
-        <div class="p-4">
-          <p class="text-xs text-blue-700 font-semibold uppercase mb-2">Mini Soccer</p>
-          <h3 class="font-bold text-lg mb-2">
-            Inilah Ukuran Standar Lapangan Mini Soccer yang Harus Diketahui
-          </h3>
-          <p class="text-gray-600 text-sm mb-4">
-            Ukuran standar lapangan mini soccer yang wajib diketahui oleh para pemain dan pelatih...
-          </p>
-          <div class="flex items-center justify-between text-xs text-gray-500">
-            <span>oleh Dedi</span>
-            <time datetime="2024-07-29">29 July 2024</time>
-          </div>
-        </div>
-      </article>
+        <a href="#" class="block">
+            <article class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-[1.02] hover:shadow-xl transition duration-300 group">
+                <div class="relative overflow-hidden">
+                    <img
+                        src="assets/tenis.jpg"
+                        alt="Peregangan"
+                        class="w-full h-48 object-cover group-hover:scale-110 transition duration-500"
+                    />
+                    <p class="absolute top-3 left-3 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">KESEHATAN</p>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-bold text-lg text-gray-900 mb-3 group-hover:text-blue-700 transition leading-snug line-clamp-2">
+                        Mengapa Pemanasan Dinamis Lebih Baik dari Statis Sebelum Berolahraga?
+                    </h3>
+                    <p class="text-gray-600 text-sm mb-5 line-clamp-3">
+                        Mempelajari perbedaan antara pemanasan dinamis dan statis, dan mana yang paling efektif mencegah cedera.
+                    </p>
+                    <div class="flex items-center justify-between text-xs text-gray-500 border-t pt-3">
+                        <span class="font-semibold text-gray-700">oleh Lina</span>
+                        <time datetime="2024-07-29">29 July 2024</time>
+                    </div>
+                </div>
+            </article>
+        </a>
+        
+        <a href="#" class="block">
+            <article class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-[1.02] hover:shadow-xl transition duration-300 group">
+                <div class="relative overflow-hidden">
+                    <img
+                        src="assets/tenis.jpg"
+                        alt="Sertifikasi Pelatih"
+                        class="w-full h-48 object-cover group-hover:scale-110 transition duration-500"
+                    />
+                    <p class="absolute top-3 left-3 bg-yellow-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">EDUKASI</p>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-bold text-lg text-gray-900 mb-3 group-hover:text-blue-700 transition leading-snug line-clamp-2">
+                        Mengenal Berbagai Tingkat Sertifikasi Kepelatihan Olahraga Profesional
+                    </h3>
+                    <p class="text-gray-600 text-sm mb-5 line-clamp-3">
+                        Panduan lengkap bagi yang ingin berkarir sebagai pelatih olahraga profesional.
+                    </p>
+                    <div class="flex items-center justify-between text-xs text-gray-500 border-t pt-3">
+                        <span class="font-semibold text-gray-700">oleh Bima</span>
+                        <time datetime="2024-09-01">01 September 2024</time>
+                    </div>
+                </div>
+            </article>
+        </a>
+        
+        <a href="#" class="block">
+            <article class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-[1.02] hover:shadow-xl transition duration-300 group">
+                <div class="relative overflow-hidden">
+                    <img
+                        src="assets/tenis.jpg"
+                        alt="Lapangan Tennis"
+                        class="w-full h-48 object-cover group-hover:scale-110 transition duration-500"
+                    />
+                    <p class="absolute top-3 left-3 bg-blue-700 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">OLAHRAGA</p>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-bold text-lg text-gray-900 mb-3 group-hover:text-blue-700 transition leading-snug line-clamp-2">
+                        Perbedaan Kunci Antara Lapangan Mini Soccer dan Lapangan Sepak Bola Standar
+                    </h3>
+                    <p class="text-gray-600 text-sm mb-5 line-clamp-3">
+                        Menganalisis perbedaan ukuran, material, dan aturan main antara mini soccer dan sepak bola lapangan besar.
+                    </p>
+                    <div class="flex items-center justify-between text-xs text-gray-500 border-t pt-3">
+                        <span class="font-semibold text-gray-700">oleh Dedi</span>
+                        <time datetime="2024-07-29">29 July 2024</time>
+                    </div>
+                </div>
+            </article>
+        </a>
+        
     </main>
-  </section>
+</section>
 
-  <!-- Pagination -->
+---
+
+<!-- Pagination -->
     <nav aria-label="Pagination" class="flex justify-center mt-8 space-x-2">
       <button class="w-8 h-8 rounded-md bg-blue-700 text-white font-semibold">1</button>
       <button class="w-8 h-8 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-200">2</button>
@@ -173,4 +251,4 @@
       </button>
     </nav>
 
-    @endsection
+@endsection

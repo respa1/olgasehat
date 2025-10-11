@@ -60,7 +60,7 @@ Route::controller(LoginController::class)->group(function () {
 // Public Frontend Routes
 // frontend publik
 Route::get('/blog-news', fn() => view('frontend.blog-news'));
-Route::get('/blog-news-detail', fn() => view('frontend.blog_news_detail'));
+Route::get('/blog-news-detail', fn() => view('frontend.blog&news_detail'));
 Route::get('/membership-detail', fn() => view('frontend.membership_detail'));
 Route::get('/community', fn() => view('frontend.community'));
 Route::get('/community-detail', fn() => view('frontend.community_detail'));

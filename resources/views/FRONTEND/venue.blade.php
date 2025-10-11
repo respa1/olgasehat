@@ -316,81 +316,155 @@
 </script>
 
 {{-- PERUBAHAN: Tambahkan mt-16 dan sesuaikan mx-auto dan px-6 agar sejalan dengan carousel --}}
-<section class="mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-12">
-    <div class="flex flex-col md:flex-row md:items-start md:space-x-8">
-        <div class="md:w-1/4 mb-6 md:mb-0">
-            <h2 class="text-2xl font-bold text-blue-700 mb-2">Promo Venue</h2>
-            <p class="text-gray-600 mb-4">
-                Booking sekarang, dapatkan penawaran terbaik.
+<section class="container mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-16">
+    <div class="flex flex-col md:flex-row md:items-start md:space-x-12">
+        
+        <div class="md:w-1/4 mb-8 md:mb-0">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2 border-l-4 border-blue-700 pl-3">
+                Promo Venue
+            </h2>
+            <p class="text-gray-600 mb-4 text-lg">
+                Jangan lewatkan kesempatan! Booking sekarang dan dapatkan penawaran terbaik dari berbagai venue pilihan.
             </p>
-            <a href="#" class="text-blue-700 hover:underline text-sm font-semibold"
-                >Lihat Lebih banyak</a
+            <a 
+                href="#" 
+                class="inline-flex items-center text-blue-700 hover:text-blue-900 text-sm font-bold transition duration-300 group"
             >
+                Lihat Semua Promo 
+                <i class="fas fa-arrow-right ml-2 text-sm transition group-hover:translate-x-1"></i>
+            </a>
         </div>
-        <div
-            class="md:w-3/4 flex space-x-6 overflow-x-auto scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-gray-200"
+        
+        <div 
+            class="md:w-3/4 flex space-x-6 overflow-x-auto pb-4 
+            scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-100"
         >
-            <a href="/venue-detail">
-            <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
-                <div class="relative">
-                    <img alt="Promo Special DNA Arena Cinere image with red roof and colorful wall paintings" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/MU Sport Center.jpeg') }}" width="280"/>
-                    <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
-                </div>
-                <div class="p-4">
-                    <h4 class="font-semibold text-sm mb-1">Promo Special MU Sport Center</h4>
-                    <p class="text-xs text-gray-500 mb-1">MU Sport Center</p>
-                    <p class="text-xs text-gray-400">Periode 01 Jul - 31 Aug</p>
-                </div>
-            </article>
+            
+            <a href="/venue-detail" class="flex-shrink-0 min-w-[280px] md:min-w-[300px] block">
+                <article class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition duration-300 border border-gray-100">
+                    <div class="relative">
+                        <img 
+                            alt="Promo Special MU Sport Center" 
+                            class="w-full h-40 object-cover" 
+                            height="160" 
+                            src="{{ asset('assets/MU Sport Center.jpeg') }}" 
+                            width="300"
+                        />
+                        <span class="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold rounded-full px-3 py-1 shadow-md">
+                            🔥 PROMO SPESIAL
+                        </span>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-base text-gray-900 mb-1 line-clamp-1">Promo Special MU Sport Center</h4>
+                        <p class="text-sm text-blue-700 mb-2 font-medium">MU Sport Center</p>
+                        <div class="flex items-center text-xs text-gray-500 pt-2 border-t border-gray-100">
+                            <i class="far fa-calendar-alt mr-2"></i>
+                            <p>Periode 01 Jul - 31 Aug</p>
+                        </div>
+                    </div>
+                </article>
             </a>
             
-            <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
-                <div class="relative">
-                    <img alt="Basketball court with players playing promo image" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/Imbo Sport Center.webp') }}" width="280"/>
-                    <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
-                </div>
-                <div class="p-4">
-                    <h4 class="font-semibold text-sm mb-1">PRICELIST 2025</h4>
-                    <p class="text-xs text-gray-500 mb-1">Arena Sport</p>
-                    <p class="text-xs text-gray-400">Periode 01 Apr - 31 Dec</p>
-                </div>
-            </article>
+            <a href="/venue-detail" class="flex-shrink-0 min-w-[280px] md:min-w-[300px] block">
+                <article class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition duration-300 border border-gray-100">
+                    <div class="relative">
+                        <img 
+                            alt="PRICELIST 2025" 
+                            class="w-full h-40 object-cover" 
+                            height="160" 
+                            src="{{ asset('assets/Imbo Sport Center.webp') }}" 
+                            width="300"
+                        />
+                        <span class="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold rounded-full px-3 py-1 shadow-md">
+                            🔥 PROMO SPESIAL
+                        </span>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-base text-gray-900 mb-1 line-clamp-1">PRICELIST 2025</h4>
+                        <p class="text-sm text-blue-700 mb-2 font-medium">Arena Sport</p>
+                        <div class="flex items-center text-xs text-gray-500 pt-2 border-t border-gray-100">
+                            <i class="far fa-calendar-alt mr-2"></i>
+                            <p>Periode 01 Apr - 31 Dec</p>
+                        </div>
+                    </div>
+                </article>
+            </a>
             
-            <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
-                <div class="relative">
-                    <img alt="Outdoor field with lights promo image" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/DC Arena Bali.jpeg') }}" width="280"/>
-                    <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
-                </div>
-                <div class="p-4">
-                    <h4 class="font-semibold text-sm mb-1">PRICELIST 20</h4>
-                    <p class="text-xs text-gray-500 mb-1">111 Stadion Arena</p>
-                    <p class="text-xs text-gray-400">Periode 01 Apr - 31</p>
-                </div>
-            </article>
+            <a href="/venue-detail" class="flex-shrink-0 min-w-[280px] md:min-w-[300px] block">
+                <article class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition duration-300 border border-gray-100">
+                    <div class="relative">
+                        <img 
+                            alt="PRICELIST 20" 
+                            class="w-full h-40 object-cover" 
+                            height="160" 
+                            src="{{ asset('assets/DC Arena Bali.jpeg') }}" 
+                            width="300"
+                        />
+                        <span class="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold rounded-full px-3 py-1 shadow-md">
+                            🔥 PROMO SPESIAL
+                        </span>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-base text-gray-900 mb-1 line-clamp-1">PRICELIST 20</h4>
+                        <p class="text-sm text-blue-700 mb-2 font-medium">111 Stadion Arena</p>
+                        <div class="flex items-center text-xs text-gray-500 pt-2 border-t border-gray-100">
+                            <i class="far fa-calendar-alt mr-2"></i>
+                            <p>Periode 01 Apr - 31</p>
+                        </div>
+                    </div>
+                </article>
+            </a>
             
-            <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
-                <div class="relative">
-                    <img alt="Sports field promo image" class="w-full h-40 object-cover" height="160" src="{{ asset('assets/Arena Sport.jpg') }}" width="280"/>
-                    <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
-                </div>
-                <div class="p-4">
-                    <h4 class="font-semibold text-sm mb-1">Special Weekend Offer</h4>
-                    <p class="text-xs text-gray-500 mb-1">Weekend Sports Arena</p>
-                    <p class="text-xs text-gray-400">Periode 01 Sep - 30 Sep</p>
-                </div>
-            </article>
+            <a href="/venue-detail" class="flex-shrink-0 min-w-[280px] md:min-w-[300px] block">
+                <article class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition duration-300 border border-gray-100">
+                    <div class="relative">
+                        <img 
+                            alt="Special Weekend Offer" 
+                            class="w-full h-40 object-cover" 
+                            height="160" 
+                            src="{{ asset('assets/Arena Sport.jpg') }}" 
+                            width="300"
+                        />
+                        <span class="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold rounded-full px-3 py-1 shadow-md">
+                            🔥 PROMO SPESIAL
+                        </span>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-base text-gray-900 mb-1 line-clamp-1">Special Weekend Offer</h4>
+                        <p class="text-sm text-blue-700 mb-2 font-medium">Weekend Sports Arena</p>
+                        <div class="flex items-center text-xs text-gray-500 pt-2 border-t border-gray-100">
+                            <i class="far fa-calendar-alt mr-2"></i>
+                            <p>Periode 01 Sep - 30 Sep</p>
+                        </div>
+                    </div>
+                </article>
+            </a>
             
-            <article class="min-w-[280px] border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
-                <div class="relative">
-                    <img alt="Basketball court promo image" class="w-full h-40 object-cover" height="160" src="https://storage.googleapis.com/a1aa/image/2dc016db-2391-4056-8156-041f6d284417.jpg" width="280"/>
-                    <span class="absolute top-2 right-2 bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1">PROMO</span>
-                </div>
-                <div class="p-4">
-                    <h4 class="font-semibold text-sm mb-1">Early Bird Discount</h4>
-                    <p class="text-xs text-gray-500 mb-1">Morning Sports Complex</p>
-                    <p class="text-xs text-gray-400">Periode 01 Oct - 31 Oct</p>
-                </div>
-            </article>
+            <a href="/venue-detail" class="flex-shrink-0 min-w-[280px] md:min-w-[300px] block">
+                <article class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition duration-300 border border-gray-100">
+                    <div class="relative">
+                        <img 
+                            alt="Early Bird Discount" 
+                            class="w-full h-40 object-cover" 
+                            height="160" 
+                            src="https://storage.googleapis.com/a1aa/image/2dc016db-2391-4056-8156-041f6d284417.jpg" 
+                            width="300"
+                        />
+                        <span class="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold rounded-full px-3 py-1 shadow-md">
+                            🔥 PROMO SPESIAL
+                        </span>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-base text-gray-900 mb-1 line-clamp-1">Early Bird Discount</h4>
+                        <p class="text-sm text-blue-700 mb-2 font-medium">Morning Sports Complex</p>
+                        <div class="flex items-center text-xs text-gray-500 pt-2 border-t border-gray-100">
+                            <i class="far fa-calendar-alt mr-2"></i>
+                            <p>Periode 01 Oct - 31 Oct</p>
+                        </div>
+                    </div>
+                </article>
+            </a>
+            
         </div>
     </div>
 </section>

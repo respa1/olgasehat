@@ -73,8 +73,7 @@
     <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
       <a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a>
       <a href="#" class="hover:text-blue-700">Tempat Sehat</a>
-      <a href="/community" class="hover:text-blue-700">Komunitas</a>
-      <a href="/club" class="hover:text-blue-700">Klub</a>
+      <a href="/community" class="hover:text-blue-700">Komunitas & Aktivitas</a>
       <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
     </nav>
 
@@ -96,8 +95,7 @@
         <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
           <a href="/editprofile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
           <a href="/riwayat" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
-          <a href="/komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Komunitas</a>
-          <a href="/klub" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Klub</a>
+          <a href="/komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Aktivitas</a>
           <a href="/settings" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pengaturan</a>
           
           <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="block border-t border-gray-200 mt-1">
