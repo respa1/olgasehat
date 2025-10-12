@@ -65,7 +65,7 @@
 
     <section class="container mx-auto px-6 py-12" id="daftar-komunitas">
         <h2 class="text-2xl font-bold mb-6 text-gray-800">
-            Nikmati Komunitas <span class="text-green-700">(Akses Gratis)</span>
+            Nikmati Komunitas <span class="text-green-600">(Akses Gratis)</span>
         </h2>
         
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">

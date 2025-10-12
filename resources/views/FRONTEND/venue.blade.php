@@ -27,7 +27,7 @@
         <select
             class="border border-gray-300 rounded-lg px-4 py-2.5 min-w-[180px] w-full sm:w-auto text-gray-700 focus:outline-none focus:border-blue-500 transition duration-150"
         >
-            <option disabled selected class="text-gray-500">Pilih Cabang Olahraga</option>
+            <option disabled selected class="text-gray-500">Pilih Olahraga</option>
             <option>Futsal</option>
             <option>Basketball</option>
             <option>Mini Soccer</option>
