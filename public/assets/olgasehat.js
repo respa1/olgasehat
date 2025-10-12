@@ -19,15 +19,27 @@ const imageContainerPenyewaKesehatan = document.getElementById('imageContainerPe
 
 // Function to handle tab switching logic
 function switchTab(btnActive, btnInactive, contentActive, contentInactive, imageActive, imageInactive) {
-  // Activate Button
-  btnActive.classList.add('bg-blue-700', 'text-white');
-  btnActive.classList.remove('bg-gray-300', 'text-gray-600');
+
+  // --- Activate Button (Menjadi Biru Solid & Teks Putih) ---
+  btnActive.classList.add('bg-blue-700', 'text-white', 'font-bold');
+
+  // Hapus semua class yang terkait dengan status non-aktif
+  btnActive.classList.remove('bg-transparent', 'text-gray-700', 'text-blue-700', 'font-semibold', 'hover:bg-white', 'hover:shadow-sm');
+
   btnActive.setAttribute('aria-selected', 'true');
   btnActive.setAttribute('tabindex', '0');
 
-  // Deactivate Button
-  btnInactive.classList.remove('bg-blue-700', 'text-white');
-  btnInactive.classList.add('bg-gray-300', 'text-gray-600');
+  // --- Deactivate Button (Menjadi Transparan & Teks BIRU) ---
+
+  // Hapus semua class yang terkait dengan status aktif
+  btnInactive.classList.remove('bg-blue-700', 'text-white', 'font-bold');
+
+  // Tambahkan class untuk status non-aktif dengan Teks BIRU
+  btnInactive.classList.add('bg-transparent', 'text-blue-700', 'font-semibold', 'hover:bg-white', 'hover:shadow-sm');
+
+  // Pastikan class lama (text-gray-700) yang ada di HTML non-aktif dihilangkan
+  btnInactive.classList.remove('text-gray-700');
+
   btnInactive.setAttribute('aria-selected', 'false');
   btnInactive.setAttribute('tabindex', '-1');
 
