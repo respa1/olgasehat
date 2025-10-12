@@ -72,13 +72,13 @@
             
             <a href="/community-detail" class="block group">
                 <article class="bg-white rounded-lg shadow-lg overflow-hidden border-2 hover:shadow-xl transition relative">
-                    <img src="assets/Imbo Sport Center.webp" alt="Open Class" class="w-full h-40 object-cover group-hover:scale-105 transition-transform" />
+                    <img src="assets/komunitas.png" alt="Open Class" class="w-full h-40 object-cover group-hover:scale-105 transition-transform" />
                     <div class="p-4">
-                        <span class="inline-block bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2">GRATIS</span>
+                        <span class="inline-block bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2">KOMUNITAS</span>
                         <h3 class="font-bold text-md mb-1 text-gray-900">Kumpulan Pemuda Futsal</h3>
                         <p class="text-xs text-gray-500 mb-2">Coach Bagus </p>
                         <p class="text-xs text-gray-700 font-semibold flex items-center">
-                            <i class="far fa-calendar-alt mr-2"></i> Minggu, 09:00 - 10:00
+                            <i class="fas fa-wallet mr-2"></i> Bergabung Gratis
                         </p>
                     </div>
                 </article>
@@ -88,11 +88,11 @@
                 <article class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition relative">
                     <img src="assets/Arena Sport.jpg" alt="Sparring" class="w-full h-40 object-cover group-hover:scale-105 transition-transform" />
                     <div class="p-4">
-                        <span class="inline-block bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2">GRATIS</span>
+                        <span class="inline-block bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2">KOMUNITAS</span>
                         <h3 class="font-bold text-md mb-1 text-gray-900">Info Cewe Area Denpasar</h3>
                         <p class="text-xs text-gray-500 mb-2">Budi Bawa</p>
                         <p class="text-xs text-gray-700 font-semibold flex items-center">
-                            <i class="far fa-calendar-alt mr-2"></i> Kamis, 20:00 - 22:00
+                            <i class="fas fa-wallet mr-2"></i> Bergabung Gratis
                         </p>
                     </div>
                 </article>
@@ -117,10 +117,10 @@
                     <img src="assets/MU Sport Center.webp" alt="Open Class" class="w-full h-40 object-cover group-hover:scale-105 transition-transform" />
                     <div class="p-4">
                         <span class="inline-block bg-yellow-600 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2">MEMBERSHIP</span>
-                        <h3 class="font-bold text-md mb-1 text-gray-900">Yoga Pagi di Pantai Sanur</h3>
-                        <p class="text-xs text-gray-500 mb-2">Instruktur Ayu</p>
+                        <h3 class="font-bold text-md mb-1 text-gray-900">Bayu Gym Kuta</h3>
+                        <p class="text-xs text-gray-500 mb-2">Instruktur Bli Ode</p>
                         <p class="text-xs text-gray-700 font-semibold flex items-center">
-                            <i class="fas fa-wallet mr-2"></i> Mulai Rp25.000 /sesi
+                            <i class="fas fa-wallet mr-2"></i> Mulai Rp750.000 /bulan
                         </p>
                     </div>
                 </article>

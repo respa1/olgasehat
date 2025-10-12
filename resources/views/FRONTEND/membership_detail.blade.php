@@ -27,8 +27,7 @@
                             <span>Kota Denpasar</span>
                         </div>
                         <div class="flex items-center space-x-1 pl-4">
-                            <i class="fas fa-shield-alt text-blue-600"></i>
-                            <span>Level Putih I</span>
+                            <span class="inline-block bg-yellow-600 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2">MEMBERSHIP</span>
                         </div>
                     </div>
                 </div>

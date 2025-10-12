@@ -26,6 +26,9 @@
                             <i class="fas fa-city text-blue-600"></i>
                             <span>Kota Denpasar</span>
                         </div>
+                        <div class="flex items-center space-x-1 pl-4">
+                            <span class="inline-block bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2">KOMUNITAS</span>
+                        </div>
                     </div>
                 </div>
             </div>

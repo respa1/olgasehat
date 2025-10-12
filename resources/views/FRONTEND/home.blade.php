@@ -161,9 +161,11 @@
                 <i class="fas fa-plus-circle mr-2"></i> BUAT AKTIVITAS BARU
             </button>
             
-            <button class="bg-white text-gray-800 text-base font-bold rounded-full px-8 py-4 border border-gray-300 shadow-md hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-opacity-50">
+            <a href="/community" class="block w-full sm:w-auto">
+            <button class="w-full bg-white text-gray-800 text-base font-bold rounded-full px-8 py-4 border border-gray-300 shadow-md hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-opacity-50">
                 <i class="fas fa-users mr-2"></i> GABUNG AKTIVITAS
             </button>
+            </a>
         </div>
         
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -171,24 +173,31 @@
             <div class="relative group overflow-hidden rounded-2xl shadow-2xl transform transition duration-500 hover:scale-[1.02]">
                 <img src="{{ asset('assets/komunitas.png') }}" alt="Komunitas Futsal Jakarta" 
                      class="object-cover h-64 md:h-72 w-full transition duration-500 group-hover:opacity-85" />
-                <div class="absolute inset-0 bg-black bg-opacity-30 flex items-end p-4">
-                    <h3 class="text-white text-xl font-bold">Futsal Jaksel United</h3>
+                <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-start justify-end p-4">
+                <span class="inline-block bg-green-600 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2">KOMUNITAS</span>
+                    <h3 class="text-white text-xl font-bold">Kumpulan Pemuda Futsal</h3>
                 </div>
             </div>
             
             <div class="relative group overflow-hidden rounded-2xl shadow-2xl transform transition duration-500 hover:scale-[1.02]">
                 <img src="{{ asset('assets/komunitas1.png') }}" alt="Komunitas Basket Surabaya" 
                      class="object-cover h-64 md:h-72 w-full transition duration-500 group-hover:opacity-85" />
-                <div class="absolute inset-0 bg-black bg-opacity-30 flex items-end p-4">
-                    <h3 class="text-white text-xl font-bold">Basket Ballers SBY</h3>
+                <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-start justify-end p-4">
+                <span class="inline-block bg-yellow-600 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2">MEMBERSHIP</span>
+                    <h3 class="text-white text-xl font-bold">The SportMan Club Denpasar</h3>
                 </div>
             </div>
             
             <div class="relative group overflow-hidden rounded-2xl shadow-2xl transform transition duration-500 hover:scale-[1.02]">
                 <img src="{{ asset('assets/komunitas2.png') }}" alt="Komunitas Badminton Bandung" 
                      class="object-cover h-64 md:h-72 w-full transition duration-500 group-hover:opacity-85" />
-                <div class="absolute inset-0 bg-black bg-opacity-30 flex items-end p-4">
-                    <h3 class="text-white text-xl font-bold">Badminton Warriors BDG</h3>
+                <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-start justify-end p-4">
+                <span class="inline-block bg-blue-600 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2">
+                    EVENT OLAHRAGA
+                </span>
+                <h3 class="text-white text-xl font-bold leading-snug">
+                    Badminton Warriors BDG Championship
+                </h3>
                 </div>
             </div>
             
