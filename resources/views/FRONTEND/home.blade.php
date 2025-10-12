@@ -194,7 +194,7 @@
             
         </div>
         
-        <a href="/community" class="inline-flex items-center text-blue-700 font-extrabold mt-16 hover:text-blue-900 text-xl transition-colors group">
+        <a href="/community" class="inline-flex items-center text-blue-700 font-bold mt-16 hover:text-blue-900 text-xl transition-colors group">
             Lihat Semua Aktivitas
             <i class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-1"></i>
         </a>

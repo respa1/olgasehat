@@ -32,6 +32,7 @@
             <option>Basketball</option>
             <option>Mini Soccer</option>
             <option>Badminton</option>
+            <option>Gym</option>
         </select>
         
         <input
