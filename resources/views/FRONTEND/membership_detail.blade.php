@@ -15,16 +15,16 @@
             
             <div class="flex items-start space-x-5 mb-8">
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-900">Open Class Coach Bagus</h1>
+                    <h1 class="text-3xl font-bold text-gray-900">The SportMan Club Denpasar</h1>
                     
                     <div class="flex flex-wrap items-center text-gray-600 text-sm mt-2"> 
                         <div class="flex items-center space-x-1 pr-4 border-r border-gray-300">
                             <i class="fas fa-trophy text-blue-600"></i>
-                            <span>Mini Soccer</span>
+                            <span>Futsal</span>
                         </div>
                         <div class="flex items-center space-x-1 px-4 border-r border-gray-300">
                             <i class="fas fa-city text-blue-600"></i>
-                            <span>Kota Denpasar Utara</span>
+                            <span>Kota Denpasar</span>
                         </div>
                         <div class="flex items-center space-x-1 pl-4">
                             <i class="fas fa-shield-alt text-blue-600"></i>
@@ -36,8 +36,41 @@
 
             <div class="mb-8">
                 <h2 class="text-xl font-semibold mb-3 border-b pb-1">Deskripsi Komunitas</h2>
-                <p class="text-gray-700 leading-relaxed">
-                    have fun : varian sparing 1. miring Rp. 150.000 / Rp. 95.000 2. Lapangan Rp. 245.000 3. Lapangan + Air Rp. 300.000
+                <p class="mb-4">
+                <span class="font-semibold">Hai, bro!</span> Selamat datang di 
+                <span class="font-bold">Membership The SportMan Club Denpasar</span>, layanan eksklusif untuk kamu yang suka futsal, pengen rutin sparing, dan ingin fasilitas premium tanpa ribet.
+                Dengan bergabung di membership ini, kamu dapetin akses prioritas ke lapangan top, jadwal fleksibel, dan berbagai keuntungan buat latihan bareng tim atau solo.
+                </p>
+
+                <p class="mb-4">
+                Lokasi strategis di pusat Denpasar, tempat ini pas banget buat kamu yang cari tempat futsal nyaman dengan fasilitas lengkap.  
+                Kami sediakan beberapa varian membership biar kamu bisa pilih sesuai kebutuhan dan budget:
+                </p>
+
+                <ol class="list-decimal list-inside space-y-2">
+                <li>
+                    <span class="font-semibold">Basic Member:</span> Rp. 150.000/bulan – Akses reguler lapangan di jam tertentu + diskon sparing mingguan.
+                </li>
+                <li>
+                    <span class="font-semibold">Pro Member:</span> Rp. 245.000/bulan – Akses fleksibel + fasilitas lengkap (lampu malam & ruang ganti nyaman).
+                </li>
+                <li>
+                    <span class="font-semibold">Elite Member:</span> Rp. 300.000/bulan – Semua fasilitas + air minum dingin dan prioritas booking.
+                </li>
+                </ol>
+
+                <p class="mt-4">
+                Mulai dari <span class="font-bold text-green-600">Rp. 150.000/bulan</span>, kamu bisa dapetin pengalaman futsal terbaik di Denpasar.  
+                Yuk, daftar sekarang dan rasakan vibe kompetitif yang seru setiap minggu!
+                </p>
+
+                <p class="mt-4">
+                Hubungi kami via WA atau IG 
+                <span class="font-semibold text-blue-400">@futsalmembership.coachbagus</span> buat informasi pendaftaran dan jadwal latihan.
+                </p>
+
+                <p class="mt-2 text-gray-400 text-sm">
+                #FutsalMembershipDenpasar #CoachBagus #SportLifestyle
                 </p>
             </div>
             
@@ -74,7 +107,7 @@
     </div>
 
     <section class="mt-12">
-        <h2 class="text-2xl font-bold mb-6 text-gray-800">Komunitas Terkait Lainnya</h2>
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">Membership Terkait Lainnya</h2>
         </section>
 </main>
 

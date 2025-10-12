@@ -78,18 +78,20 @@
                         Mulai <span class="text-xl">Rp250,000</span> /Sesi
                     </p>
                     
-                    <div class="flex flex-wrap gap-2 pt-2 border-t border-gray-100">
+                    <div class="pt-2 border-t border-gray-100">
+                    <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Tersedia</p>
+                    <div class="flex flex-wrap gap-2">
                         <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                            06.00
+                        08.00
                         </button>
                         <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                            18.00
+                        18.00
                         </button>
                         <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                            20.00
+                        20.00
                         </button>
-                         <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                            22.00
+                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
+                        22.00
                         </button>
                     </div>
                 </div>
@@ -116,19 +118,21 @@
                     <p class="font-bold text-gray-900 mb-3">
                         Mulai <span class="text-xl">Rp230,000</span> /Sesi
                     </p>
-                    
-                    <div class="flex flex-wrap gap-2 pt-2 border-t border-gray-100">
+
+                    <div class="pt-2 border-t border-gray-100">
+                    <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Tersedia</p>
+                    <div class="flex flex-wrap gap-2">
                         <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                            08.00
+                        08.00
                         </button>
                         <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                            18.00
+                        18.00
                         </button>
                         <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                            20.00
+                        20.00
                         </button>
                         <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                            22.00
+                        22.00
                         </button>
                     </div>
                 </div>
@@ -156,18 +160,20 @@
                         Mulai <span class="text-xl">Rp180,000</span> /Sesi
                     </p>
                     
-                    <div class="flex flex-wrap gap-2 pt-2 border-t border-gray-100">
+                    <div class="pt-2 border-t border-gray-100">
+                    <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Tersedia</p>
+                    <div class="flex flex-wrap gap-2">
                         <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                            06.00
-                        </button>
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                            08.00
+                        08.00
                         </button>
                         <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                            18.00
+                        18.00
                         </button>
                         <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                            22.00
+                        20.00
+                        </button>
+                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
+                        22.00
                         </button>
                     </div>
                 </div>
@@ -195,20 +201,23 @@
                         Mulai <span class="text-xl">Rp350,000</span> /Sesi
                     </p>
                     
-                    <div class="flex flex-wrap gap-2 pt-2 border-t border-gray-100">
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                            08.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                            18.00
-                        </button>
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                            20.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                            22.00
-                        </button>
-                    </div>
+                    <div class="pt-2 border-t border-gray-100">
+                        
+                <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Tersedia</p>
+                <div class="flex flex-wrap gap-2">
+                    <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
+                    08.00
+                    </button>
+                    <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
+                    18.00
+                    </button>
+                    <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
+                    20.00
+                    </button>
+                    <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
+                    22.00
+                    </button>
+                </div>
                 </div>
             </article>
         </a>

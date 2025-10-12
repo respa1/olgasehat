@@ -33,7 +33,34 @@
             <div class="mb-8">
                 <h2 class="text-xl font-semibold mb-3 border-b pb-1">Deskripsi Komunitas</h2>
                 <p class="text-gray-700 leading-relaxed">
-                    have fun : varian sparing 1. miring Rp. 150.000 / Rp. 95.000 2. Lapangan Rp. 245.000 3. Lapangan + Air Rp. 300.000
+                Hai, bro! Selamat datang di <span class="font-semibold">Kumpulan Pemuda Futsal Coach Bagus</span>, komunitas olahraga futsal yang solid banget di Kota Denpasar. 
+                Kami sekelompok pemuda energik yang suka main futsal sambil have fun, bangun pertemanan, dan jaga badan fit. 
+                Dipimpin coach-coach handal, ini tempatnya sparing seru, latihan skill, dan turnamen mini – dari pemula sampe pro, semua welcome!
+                </p>
+
+                <p class="text-gray-700 leading-relaxed mt-3">
+                    Lokasi di pusat Denpasar, akses gampang ke lapangan top. Kami solid karena selalu gotong royong: sparing rutin, sharing tips, dan gathering santai. 
+                    Yang bikin beda, <span class="font-semibold">bergabung di komunitas ini 100% gratis!</span> 
+                    Cukup daftar, kamu langsung bisa ikut kegiatan dan gabung bareng member lain. 
+                    Kalau mau pakai fasilitas lapangan, tinggal pilih paket sparing sesuai kebutuhan:
+                </p>
+
+                <ul class="list-decimal list-inside text-gray-700 leading-relaxed mt-3">
+                    <li>
+                        <span class="font-semibold">Sparing Miring (fun cepat):</span> Rp. 150.000 / Rp. 95.000 (diskon member) – Cocok buat latihan ringan tanpa ribet.
+                    </li>
+                    <li>
+                        <span class="font-semibold">Komunitas Solid:</span> Rp. 245.000 – Full fasilitas, lampu malam oke buat sparing kompetitif.
+                    </li>
+                    <li>
+                        <span class="font-semibold">Lapangan + Air Minum:</span> Rp. 300.000 – Lengkap dengan air dingin, biar stay hydrated sepanjang sesi!
+                    </li>
+                </ul>
+
+                <p class="text-gray-700 leading-relaxed mt-3">
+                    Yuk, gabung komunitas solid ini! DM WA atau IG <span class="font-semibold">@kumpulanfutsalcoachbagus</span> buat jadwal dan daftar. 
+                    Bola gelinding, teman bertambah – have fun bareng kami! ⚽😎 
+                    <br>#FutsalSolidDenpasar #CoachBagus
                 </p>
             </div>
             
