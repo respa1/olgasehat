@@ -17,7 +17,7 @@
 
   <!-- Logo -->
   <div class="mb-6 text-center">
-    <img src="assets/logo.png" 
+    <img src="assets/olgasehat-icon.png" 
          alt="Logo" 
          class="mx-auto max-h-20 w-auto" />
   </div>
