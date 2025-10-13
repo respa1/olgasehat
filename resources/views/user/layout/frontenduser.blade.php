@@ -34,16 +34,16 @@
   <div class="container mx-auto flex items-center justify-between py-4 px-6">
 
     <!-- Logo -->
-    <a href="/" class="flex items-center space-x-2">
+    <a href="/homeuser" class="flex items-center space-x-2">
       <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="h-10 w-auto" />
     </a>
 
     <!-- Menu Desktop -->
     <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
-      <a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a>
+      <a href="/venueuser" class="hover:text-blue-700">Sewa Lapangan</a>
       <a href="#" class="hover:text-blue-700">Tempat Sehat</a>
-      <a href="/community" class="hover:text-blue-700">Komunitas & Aktivitas</a>
-      <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
+      <a href="/communityuser" class="hover:text-blue-700">Komunitas & Aktivitas</a>
+      <a href="/bloguser_news" class="hover:text-blue-700">Blog & News</a>
     </nav>
 
     <!-- Aksi Desktop -->

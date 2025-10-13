@@ -89,6 +89,12 @@ Route::get('/registeremail', function () {return view('user.registeremail');});
 Route::get('/loginemail', function () { return view('user.loginemail');});
 Route::get('/resetpassword', function () {return view('user.resetpassword'); });
 Route::get('/homeuser', function () {return view('user.homeuser'); });
+Route::get('/venueuser', function () {return view('user.venueuser'); });
+Route::get('/venueuser_detail', function () {return view('user.venueuser_detail'); });
+Route::get('/communityuser', function () {return view('user.communityuser'); });
+Route::get('/communityuser_detail', function () {return view('user.communityuser_detail'); });
+Route::get('/bloguser_news', function () {return view('user.bloguser_news'); });
+Route::get('/bloguser_detail', function () {return view('user.bloguser_detail'); });
 
 
 // login pengelola

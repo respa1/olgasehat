@@ -12,85 +12,90 @@
 </head>
 
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
-<!-- Header -->
-<header class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
-  <div class="container mx-auto flex items-center justify-between py-3 px-6">
+<!-- HEADER -->
+<header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 shadow-md bg-white transition-transform duration-300 ease-in-out">
+  <div class="container mx-auto flex items-center justify-between py-4 px-6">
     
     <!-- Logo -->
-    <a href="#" class="flex items-center space-x-2">
-      <img src="assets/logo.png" alt="Olga Sehat Logo" class="h-10 w-auto" />
+    <a href="/" class="flex items-center space-x-2">
+      <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="h-10 w-auto" />
     </a>
 
-    <!-- Navigation (desktop) -->
-    <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
-      <a href="/" class="hover:text-blue-700">Sewa Lapangan</a>
-      <a href="/tempatsehat" class="hover:text-blue-700">Tempat Sehat</a>
+    <!-- Menu Desktop -->
+    <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
+      <a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a>
+      <a href="#" class="hover:text-blue-700">Tempat Sehat</a>
       <a href="/community" class="hover:text-blue-700">Komunitas & Aktivitas</a>
       <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
     </nav>
 
-    <!-- Actions (desktop) -->
-    <div class="hidden md:flex items-center space-x-4">
-      <!-- Cart -->
-      <button aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
+    <!-- Aksi Desktop -->
+    <div class="hidden md:flex items-center space-x-4 relative">
+      <!-- Tombol Cart (Desktop) -->
+      <button id="cartBtn" aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
         <i class="fas fa-shopping-cart fa-lg"></i>
         <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
       </button>
-      <!-- Register -->
-      <a href="/daftaruser" class="px-5 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition">
-        Register
-      </a>
-      <!-- Login -->
-      <a href="/loginuser" class="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-        Login
-      </a>
+
+      <!-- Register Dropdown -->
+      <div class="relative">
+        <button id="registerBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none">Daftar</button>
+        <div id="registerDropdown"
+          class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50
+                 transform scale-95 opacity-0 transition-all duration-200 ease-out">
+          <a href="/daftaruser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Akun User</a>
+          <a href="/regispengelola" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Akun Pengelola Venue</a>
+        </div>
+      </div>
+
+      <!-- Login Dropdown -->
+      <div class="relative">
+        <button id="loginBtn"
+          class="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition focus:outline-none">
+          Masuk
+        </button>
+        <div id="loginDropdown"
+          class="hidden absolute right-0 mt-2 w-56 bg-white border rounded-md shadow-lg z-50
+                 transform scale-95 opacity-0 transition-all duration-200 ease-out">
+          <a href="/loginuser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Masuk User</a>
+          <a href="/loginpengelolavenue" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Masuk Pengelola Venue</a>
+        </div>
+      </div>
     </div>
 
-    <!-- Mobile buttons -->
-    <div class="flex md:hidden items-center space-x-4">
-      <!-- Cart (mobile) -->
-      <button aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
+    <!-- Header Mobile -->
+    <div class="flex md:hidden items-center space-x-4 ml-auto">
+      <!-- Tombol Cart (Mobile) -->
+      <button id="cartBtnMobile" aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
         <i class="fas fa-shopping-cart fa-lg"></i>
         <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
       </button>
-      <!-- Mobile menu button -->
-      <button id="mobileMenuBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none" aria-label="Open menu">
+
+      <!-- Tombol Hamburger -->
+      <button id="mobileMenuBtn"
+              class="text-gray-700 hover:text-blue-700 focus:outline-none"
+              aria-label="Open menu">
         <i class="fas fa-bars fa-lg"></i>
       </button>
     </div>
-  </div>
 
-  <!-- Mobile menu -->
-  <nav id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-200 shadow-md">
-    <a href="venue.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Sewa Lapangan</a>
-    <a href="tempat_sehat.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Tempat Sehat</a>
-    <a href="community.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Komunitas & Aktivitas</a><a href="club.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Klub</a>
-    <a href="blog&news.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Blog & News</a>
-    
-    <!-- Register & Login di mobile -->
-<div class="border-t border-gray-200 px-6 py-4 space-y-3">
-  <!-- Register Dropdown -->
-  <div class="relative">
-    <button id="mobileRegisterBtn" class="w-full text-center border border-blue-600 text-blue-600 rounded-lg py-2 hover:bg-blue-50 flex justify-between items-center">
-      Register
-      <i class="fas fa-chevron-down ml-2 text-sm"></i>
-    </button>
-    <div id="mobileRegisterMenu" class="hidden mt-2 bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
-      <a href="/daftaruser" class="block px-4 py-2 text-sm hover:bg-blue-50 hover:text-blue-700">Register User</a>
-      
-    </div>
-  </div>
+    <!-- Menu Navigasi Mobile -->
+    <nav id="mobileMenu"
+         class="hidden flex-col md:hidden bg-white border-t border-gray-200 shadow-md 
+                transition-all duration-300 ease-in-out absolute top-full left-0 w-full z-[50]">
 
- <!-- Register & Login di mobile -->
-    <div class="border-t border-gray-200 px-6 py-4 flex space-x-3">
-      <a href="/daftaruser" class="flex-1 text-center border border-blue-600 text-blue-600 rounded-lg py-2 hover:bg-blue-50">
-        Register
-      </a>
-      <a href="/loginuser" class="flex-1 text-center bg-blue-600 text-white rounded-lg py-2 hover:bg-blue-700">
-        Login
-      </a>
-    </div>
-  </nav>
+      <!-- Link Navigasi -->
+      <a href="/venue" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Sewa Lapangan</a>
+      <a href="#" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Tempat Sehat</a>
+      <a href="/community" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas & Aktivitas</a>
+      <a href="/blog-news" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Blog & News</a>
+
+      <!-- Masuk and Daftar Buttons -->
+      <div class="border-t pt-4">
+        <a href="/loginuser" class="block w-full px-6 py-4 text-center text-blue-700 font-semibold border border-blue-700 rounded-md hover:bg-blue-50 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200">Masuk</a>
+        <a href="/daftaruser" class="block w-full px-6 py-4 text-center bg-blue-700 text-white font-semibold rounded-md hover:bg-blue-800 menu-item opacity-0 translate-y-1 transition-all duration-200">Daftar</a>
+      </div>
+    </nav>
 </header>
 
 
