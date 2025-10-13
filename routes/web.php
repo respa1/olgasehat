@@ -88,6 +88,8 @@ Route::get('/riwayatpayment', function () {return view('user.riwayatpayment');})
 Route::get('/registeremail', function () {return view('user.registeremail');});
 Route::get('/loginemail', function () { return view('user.loginemail');});
 Route::get('/resetpassword', function () {return view('user.resetpassword'); });
+Route::get('/homeuser', function () {return view('user.homeuser'); });
+
 
 // login pengelola
 Route::get('/loginpengelolavenue', function () { return view('pemiliklapangan.loginpengelolavenue');});
