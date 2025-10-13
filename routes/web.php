@@ -83,7 +83,13 @@ Route::get('/regispengelola', fn() => view('pemiliklapangan.regispengelola'));
 Route::get('/isidata', [App\Http\Controllers\MitraController::class, 'create'])->name('mitra.create');
 Route::post('/isidata', [App\Http\Controllers\MitraController::class, 'store'])->name('mitra.store');
 
-Route::get('/pemiliklapangan/dashboard', fn() => view('pemiliklapangan.Dashboard.dashboard'));
+Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
+    Route::get('/pemiliklapangan/dashboard', fn() => view('pemiliklapangan.Dashboard.dashboard'));
+    Route::get('/informasi', [InformasiController::class, 'informasi'])->name('informasi');
+    Route::get('/detail', [InformasiController::class, 'detail'])->name('detail');
+    Route::get('/syarat', [InformasiController::class, 'syarat'])->name('syarat');
+    Route::get('/end', [InformasiController::class, 'end'])->name('end');
+});
 
 // ======================================================
 // SUPERADMIN / BACKOFFICE ROUTES (Authenticated + Role: Superadmin)
@@ -151,10 +157,3 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-        // ======================================================
-        // OWNER VENUE INFORMATION ROUTES
-        // ======================================================
-        Route::get('/informasi', [InformasiController::class, 'informasi'])->name('informasi');
-        Route::get('/detail', [InformasiController::class, 'detail'])->name('detail');
-        Route::get('/syarat', [InformasiController::class, 'syarat'])->name('syarat');
-        Route::get('/end', [InformasiController::class, 'end'])->name('end');
