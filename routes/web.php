@@ -8,6 +8,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\InformasiController;
 
 
 /*
@@ -160,5 +161,9 @@ Route::get('/pemiliklapangan/dashboard', function () {
 });
 
 //ownervenue
+Route::get('/informasi', [InformasiController::class, 'informasi'])->name('informasi');
+Route::get('/detail', [InformasiController::class, 'detail'])->name('detail');
+Route::get('/syarat', [InformasiController::class, 'syarat'])->name('syarat');
+Route::get('/end', [InformasiController::class, 'end'])->name('end');
 
 //ownerhealth

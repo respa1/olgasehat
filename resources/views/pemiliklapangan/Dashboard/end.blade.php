@@ -22,7 +22,7 @@
                             </li>
                             <li class="mb-4">
                                 <div class="d-flex align-items-center">
-                                    <span class="step-number bg-secondary text-white rounded-circle me-2">1</span>
+                                    <span class="step-number bg-primary text-white rounded-circle me-2">1</span>
                                     <div>
                                         <strong>Informasi Venue</strong>
                                         <div class="small text-muted">Isi Data Informasi Venue</div>
@@ -31,7 +31,7 @@
                             </li>
                             <li class="mb-4">
                                 <div class="d-flex align-items-center">
-                                    <span class="step-number bg-secondary text-white rounded-circle me-2">2</span>
+                                    <span class="step-number bg-primary text-white rounded-circle me-2">2</span>
                                     <div>
                                         <strong>Detail Venue</strong>
                                         <div class="small text-muted">Detail Fasilitas Venue</div>
@@ -40,7 +40,7 @@
                             </li>
                             <li class="mb-4">
                                 <div class="d-flex align-items-center">
-                                    <span class="step-number bg-secondary text-white rounded-circle me-2">3</span>
+                                    <span class="step-number bg-primary text-white rounded-circle me-2">3</span>
                                     <div>
                                         <strong>Syarat & Ketentuan</strong>
                                         <div class="small text-muted">Informasi Syarat & Ketentuan</div>
@@ -49,7 +49,7 @@
                             </li>
                             <li>
                                 <div class="d-flex align-items-center">
-                                    <span class="step-number bg-secondary text-white rounded-circle me-2">
+                                    <span class="step-number bg-primary text-white rounded-circle me-2">
                                         <i class="fas fa-check"></i>
                                     </span>
                                     <div>
@@ -69,14 +69,13 @@
                     <div class="card-body text-center">
                         <img src="{{ asset('assets/ilus.png') }}" alt="Welcome" 
                              class="mb-4" style="max-width: 280px;">
-                        <h3 class="fw-bold">Selamat Datang, {{ Auth::user()->name }}</h3>
                         <p class="text-muted">
-                            Terima kasih telah memberikan kepercayaan kepada kami untuk membantu bisnis anda menjadi lebih baik.
+                            Terima kasih telah memberikan kepercayaan kepada kami untuk membantu bisnis anda dengan baik.
                         </p>
                         <p class="text-muted">
-                            Sebelum memulai, kami akan memandu anda untuk mendaftarkan dan mengatur jam operasional venue pertama anda.
+                            Pastikan Data yang Dimasukan Sudah Benar, JIka Sudah Tekan Simpan.
                         </p>
-                        <a href="/informasi" class="btn btn-primary">Selanjutnya →</a>
+                        <a href="/pemiliklapangan/dashboard" class="btn btn-primary">Simpan</a>
                     </div>
                 </div>
             </div>
