@@ -41,7 +41,7 @@
     <!-- Menu Desktop -->
     <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
       <a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a>
-      <a href="#" class="hover:text-blue-700">Tempat Sehat</a>
+      <a href="/healthy" class="hover:text-blue-700">Tempat Sehat</a>
       <a href="/community" class="hover:text-blue-700">Komunitas & Aktivitas</a>
       <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
     </nav>

@@ -71,6 +71,7 @@ Route::get('/login-pemilik', fn() => view('frontend.login_pemilik'));
 Route::get('/payment', fn() => view('frontend.payment'));
 Route::get('/success', fn() => view('frontend.success'));
 Route::get('/venue', fn() => view('frontend.venue'));
+Route::get('/healthy', fn() => view('frontend.healthy'));
 Route::get('/venue-detail', fn() => view('frontend.venue_detail'));
 
 // frontend user
