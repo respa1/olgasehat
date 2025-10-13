@@ -22,7 +22,7 @@
                             </li>
                             <li class="mb-4">
                                 <div class="d-flex align-items-center">
-                                    <span class="step-number bg-primary text-white rounded-circle me-2">1</span>
+                                    <span class="step-number bg-secondary text-white rounded-circle me-2">1</span>
                                     <div>
                                         <strong>Informasi Venue</strong>
                                         <div class="small text-muted">Isi Data Informasi Venue</div>
@@ -31,7 +31,7 @@
                             </li>
                             <li class="mb-4">
                                 <div class="d-flex align-items-center">
-                                    <span class="step-number bg-primary text-white rounded-circle me-2">2</span>
+                                    <span class="step-number bg-secondary text-white rounded-circle me-2">2</span>
                                     <div>
                                         <strong>Detail Venue</strong>
                                         <div class="small text-muted">Detail Fasilitas Venue</div>
@@ -40,7 +40,7 @@
                             </li>
                             <li class="mb-4">
                                 <div class="d-flex align-items-center">
-                                    <span class="step-number bg-primary text-white rounded-circle me-2">3</span>
+                                    <span class="step-number bg-secondary text-white rounded-circle me-2">3</span>
                                     <div>
                                         <strong>Waktu Operasional</strong>
                                         <div class="small text-muted">Pengaturan Jadwal Operasional</div>
@@ -49,7 +49,7 @@
                             </li>
                             <li class="mb-4">
                                 <div class="d-flex align-items-center">
-                                    <span class="step-number bg-primary text-white rounded-circle me-2">4</span>
+                                    <span class="step-number bg-secondary text-white rounded-circle me-2">4</span>
                                     <div>
                                         <strong>Syarat & Ketentuan</strong>
                                         <div class="small text-muted">Informasi Syarat & Ketentuan</div>

@@ -14,7 +14,7 @@
         </h1>
         
         <p class="text-base sm:text-lg mb-6 max-w-2xl mx-auto opacity-90">
-            Temukan klub olahraga, kelas terbuka (Open Class), atau lawan sparring. Mulai perjalanan #HidupLebihAktif Anda hari ini—semua **GRATIS** diakses!
+            Temukan klub olahraga, kelas terbuka (Open Class), atau lawan sparring. Mulai perjalanan #HidupLebihAktif Anda hari ini—semua GRATIS diakses!
         </p>
         
         <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">

@@ -117,10 +117,18 @@
             </a>
           </li>
 
+          <!-- Buat Komunitas -->
+          <li class="nav-item">
+            <a href="/pemiliklapangan/voucher" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>Komunitas</p>
+            </a>
+          </li>
+
           <!-- Membership -->
           <li class="nav-item">
             <a href="/pemiliklapangan/membership" class="nav-link">
-              <i class="nav-icon fas fa-users"></i>
+              <i class="nav-icon fas fa-chalkboard-teacher"></i>
               <p>Membership</p>
             </a>
           </li>
@@ -131,52 +139,14 @@
               <i class="nav-icon fas fa-wallet"></i>
               <p>
                 Keuangan
-                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/riwayat-fasilitas" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Fasilitas</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/riwayat-komunitas" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Komunitas</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/riwayat-klub" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Klub</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-
+            
           <!-- Diskon & Promosi -->
           <li class="nav-item">
             <a href="/pemiliklapangan/promo" class="nav-link">
               <i class="nav-icon fas fa-percent"></i>
               <p>Diskon & Promosi</p>
-            </a>
-          </li>
-
-          <!-- Voucher Campaign -->
-          <li class="nav-item">
-            <a href="/pemiliklapangan/voucher" class="nav-link">
-              <i class="nav-icon fas fa-credit-card"></i>
-              <p>Voucher Campaign</p>
-            </a>
-          </li>
-
-          <!-- CRM -->
-          <li class="nav-item">
-            <a href="/pemiliklapangan/crm" class="nav-link">
-              <i class="nav-icon fas fa-user-tie"></i>
-              <p>CRM</p>
             </a>
           </li>
 

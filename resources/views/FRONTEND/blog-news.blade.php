@@ -229,26 +229,25 @@
     </main>
 </section>
 
----
+<section class="pb-10 md:pb-16">
+    <nav aria-label="Pagination" class="flex justify-center space-x-2 px-4">
+        <button aria-label="Previous page" class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+            <i class="fas fa-arrow-left"></i>
+        </button>
 
-<!-- Pagination -->
-    <nav aria-label="Pagination" class="flex justify-center mt-8 space-x-2">
-      <button class="w-8 h-8 rounded-md bg-blue-700 text-white font-semibold">1</button>
-      <button class="w-8 h-8 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-200">2</button>
-      <button class="w-8 h-8 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-200">3</button>
-      <button class="w-8 h-8 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-200">4</button>
-      <button class="w-8 h-8 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-200">5</button>
-      <button class="w-8 h-8 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-200">6</button>
-      <button class="w-8 h-8 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-200">7</button>
-      <button class="w-8 h-8 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-200">8</button>
-      <button class="w-8 h-8 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-200">9</button>
-      <button class="w-8 h-8 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-200">10</button>
-      <span class="inline-flex items-center px-2 text-gray-700 select-none">...</span>
-      <button class="w-8 h-8 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-200">62</button>
-      <button class="w-8 h-8 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-200">63</button>
-      <button aria-label="Next page" class="w-8 h-8 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-200 flex items-center justify-center">
-        <i class="fas fa-arrow-right"></i>
-      </button>
+        <button class="w-10 h-10 rounded-lg bg-blue-700 text-white font-semibold">1</button>
+        <button class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 hidden sm:flex items-center justify-center">2</button>
+        <button class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 hidden sm:flex items-center justify-center">3</button>
+        
+        <span class="inline-flex items-center px-2 text-gray-700 select-none">...</span>
+        
+        <button class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 hidden sm:flex items-center justify-center">62</button>
+        <button class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200">63</button>
+
+        <button aria-label="Next page" class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 flex items-center justify-center">
+            <i class="fas fa-arrow-right"></i>
+        </button>
     </nav>
+</section>
 
 @endsection

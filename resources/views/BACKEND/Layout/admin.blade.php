@@ -139,6 +139,25 @@
             </ul>
           </li>
 
+          <!-- Blog & News -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-newspaper"></i>
+              <p>
+                Aktivitas
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/category" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Category</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
           <!-- Keuangan -->
           <li class="nav-item">
             <a href="/review" class="nav-link">
