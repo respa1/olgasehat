@@ -110,8 +110,9 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
 
 //backend
-Route::get('/admin', [AdminController::class, 'admin'])->name('admin');
-Route::get('/galeri', [GaleriController::class, 'galeri'])->name('galeri');
+Route::middleware(['role:superadmin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'admin'])->name('admin');
+    Route::get('/galeri', [GaleriController::class, 'galeri'])->name('galeri');
 Route::get('/tambahgaleri',[GaleriController::class, 'tambahgaleri'])->name('tambahgaleri');
 Route::post('/insertgaleri',[GaleriController::class, 'insertgaleri'])->name('insertgaleri');
 Route::get('/tampilkangaleri/{id}',[GaleriController::class, 'tampilkangaleri'])->name('tampilkangaleri');
@@ -155,7 +156,6 @@ Route::post('/updateacc/{id}', [LoginController::class, 'updateacc'])->name('upd
 Route::delete('/deleteacc/{id}', [LoginController::class, 'deleteacc'])->name('deleteacc');
 
 // ## VERIFIKASI MITRA ## //
-Route::middleware(['auth', 'role:superadmin'])->group(function () {
     Route::get('/verifikasi-mitra', [App\Http\Controllers\MitraController::class, 'index'])->name('mitra.index');
     Route::put('/verifikasi-mitra/{id}', [App\Http\Controllers\MitraController::class, 'verify'])->name('mitra.verify');
 
