@@ -481,49 +481,65 @@
 </section>
 
   
-  <!-- FAQ Section -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-    <h2 class="text-center font-bold text-2xl mb-8">FAQ</h2>
-    <div class="space-y-4 max-w-full mx-auto">
-      <details class="border-b border-gray-300 pb-4 group">
-        <summary class="cursor-pointer font-semibold text-lg flex justify-between items-center py-3 group-open:text-blue-700 group-open:font-bold">
-          Apa kelebihan sewa lapangan yang tersedia di Olga Sehat?
-          <i class="fas fa-plus text-gray-700 group-open:text-blue-700"></i>
-        </summary>
-        <p class="text-base text-gray-700 mt-3">Olga Sehat menawarkan berbagai kelebihan seperti sistem booking yang mudah, harga transparan, fasilitas terjamin kualitasnya, dan banyak pilihan venue sesuai kebutuhan Anda.</p>
-      </details>
-      <details class="border-b border-gray-300 pb-4 group">
-        <summary class="cursor-pointer font-semibold text-lg flex justify-between items-center py-3 group-open:text-blue-700 group-open:font-bold">
-          Bagaimana cara memesan lapangan di Olga Sehat?
-          <i class="fas fa-plus text-gray-700 group-open:text-blue-700"></i>
-        </summary>
-        <p class="text-base text-gray-700 mt-3">Anda dapat memesan lapangan dengan mudah melalui website atau aplikasi Olga Sehat. Cukup pilih venue, tanggal, dan jam yang diinginkan, lalu lakukan pembayaran.</p>
-      </details>
-      <details class="border-b border-gray-300 pb-4 group">
-        <summary class="cursor-pointer font-semibold text-lg flex justify-between items-center py-3 group-open:text-blue-700 group-open:font-bold">
-          Berapa biaya sewa lapangan yang tersedia di Olga Sehat?
-          <i class="fas fa-plus text-gray-700 group-open:text-blue-700"></i>
-        </summary>
-        <p class="text-base text-gray-700 mt-3">Biaya sewa bervariasi tergantung venue, jenis olahraga, dan waktu booking. Harga mulai dari Rp180.000 per sesi. Anda dapat melihat detail harga di halaman venue.</p>
-      </details>
-      <details class="border-b border-gray-300 pb-4 group">
-        <summary class="cursor-pointer font-semibold text-lg flex justify-between items-center py-3 group-open:text-blue-700 group-open:font-bold">
-          Apakah ada diskon atau promo khusus untuk penyewaan lapangan di Olga Sehat?
-          <i class="fas fa-plus text-gray-700 group-open:text-blue-700"></i>
-        </summary>
-        <p class="text-base text-gray-700 mt-3">Ya, Olga Sehat secara rutin menawarkan berbagai promo dan diskon khusus. Anda dapat memeriksa halaman promo untuk melihat penawaran terbaru.</p>
-      </details>
-      <details class="border-b border-gray-300 pb-4 group">
-        <summary class="cursor-pointer font-semibold text-lg flex justify-between items-center py-3 group-open:text-blue-700 group-open:font-bold">
-          Bagaimana cara menemukan lapangan yang sesuai dengan kebutuhan saya?
-          <i class="fas fa-plus text-gray-700 group-open:text-blue-700"></i>
-        </summary>
-        <p class="text-base text-gray-700 mt-3">Gunakan filter pencarian di halaman utama untuk menemukan lapangan berdasarkan lokasi, jenis olahraga, tanggal, dan preferensi lainnya. Anda juga dapat melihat ulasan dari pengguna lain.</p>
-      </details>
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-16">
+    <h2 class="text-center font-bold text-3xl mb-10 text-gray-900">
+        Pertanyaan Umum Seputar Layanan Olahraga
+    </h2>
+    <div class="space-y-6 max-w-4xl mx-auto">
+        
+        <details class="border-b border-gray-200 pb-4 group bg-white shadow-sm rounded-lg p-4">
+            <summary class="cursor-pointer font-semibold text-lg flex justify-between items-center py-2 group-open:text-blue-700">
+                Apa kelebihan sewa lapangan yang tersedia di Olga Sehat?
+                <i class="fas fa-plus text-gray-700 group-open:text-blue-700 group-open:rotate-45 transition-transform"></i>
+            </summary>
+            <p class="text-base text-gray-600 mt-3 pl-4 border-l-4 border-blue-200">
+                Olga Sehat menawarkan berbagai kelebihan, termasuk <span class="font-medium">sistem booking yang mudah dan real-time</span>, harga transparan, fasilitas terjamin kualitasnya, dan banyak pilihan venue olahraga (Futsal, Basket, Mini Soccer, dll.) terdekat dari lokasi Anda.
+            </p>
+        </details>
+        
+        <details class="border-b border-gray-200 pb-4 group bg-white shadow-sm rounded-lg p-4">
+            <summary class="cursor-pointer font-semibold text-lg flex justify-between items-center py-2 group-open:text-blue-700">
+                Bagaimana cara memesan lapangan di Olga Sehat?
+                <i class="fas fa-plus text-gray-700 group-open:text-blue-700 group-open:rotate-45 transition-transform"></i>
+            </summary>
+            <p class="text-base text-gray-600 mt-3 pl-4 border-l-4 border-blue-200">
+                Sangat mudah! Cukup gunakan kolom pencarian, pilih venue, jenis olahraga, tanggal, dan jam yang diinginkan. Lakukan pembayaran melalui opsi yang tersedia dan Anda akan mendapatkan e-tiket konfirmasi.
+            </p>
+        </details>
+        
+        <details class="border-b border-gray-200 pb-4 group bg-white shadow-sm rounded-lg p-4">
+            <summary class="cursor-pointer font-semibold text-lg flex justify-between items-center py-2 group-open:text-blue-700">
+                Berapa biaya sewa lapangan yang tersedia di Olga Sehat?
+                <i class="fas fa-plus text-gray-700 group-open:text-blue-700 group-open:rotate-45 transition-transform"></i>
+            </summary>
+            <p class="text-base text-gray-600 mt-3 pl-4 border-l-4 border-blue-200">
+                Biaya sewa bervariasi tergantung venue, jenis olahraga, dan jam booking (biasanya jam malam lebih mahal). Harga mulai dari sekitar Rp180.000 per sesi. Detail harga terperinci ada di halaman detail setiap venue.
+            </p>
+        </details>
+        
+        <details class="border-b border-gray-200 pb-4 group bg-white shadow-sm rounded-lg p-4">
+            <summary class="cursor-pointer font-semibold text-lg flex justify-between items-center py-2 group-open:text-blue-700">
+                Apakah ada diskon atau promo khusus untuk penyewaan lapangan di Olga Sehat?
+                <i class="fas fa-plus text-gray-700 group-open:text-blue-700 group-open:rotate-45 transition-transform"></i>
+            </summary>
+            <p class="text-base text-gray-600 mt-3 pl-4 border-l-4 border-blue-200">
+                Ya, kami secara rutin menawarkan berbagai promo, diskon *early bird*, atau potongan harga khusus di jam tertentu. Selalu cek bagian "Promo Venue" di halaman utama untuk penawaran terbaru!
+            </p>
+        </details>
+
+        <details class="border-b border-gray-200 pb-4 group bg-white shadow-sm rounded-lg p-4">
+            <summary class="cursor-pointer font-semibold text-lg flex justify-between items-center py-2 group-open:text-blue-700">
+                Bagaimana kebijakan pembatalan dan pengembalian dana?
+                <i class="fas fa-plus text-gray-700 group-open:text-blue-700 group-open:rotate-45 transition-transform"></i>
+            </summary>
+            <p class="text-base text-gray-600 mt-3 pl-4 border-l-4 border-blue-200">
+                Kebijakan pembatalan bervariasi antar venue. Umumnya, pembatalan harus dilakukan minimal 24 jam sebelum jadwal. Silakan baca ketentuan pembatalan di halaman detail venue sebelum melakukan pembayaran.
+            </p>
+        </details>
     </div>
-  </section>
+</section>
+
   <section class="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-  
   <div class="bg-gray-900 text-white rounded-xl p-8 mx-auto space-y-4 w-full"> 
     <p class="text-xs font-normal opacity-70">Khusus Pemilik Bisnis</p>
     <h2 class="text-3xl font-bold leading-tight">
