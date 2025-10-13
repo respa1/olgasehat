@@ -115,23 +115,23 @@
     </nav>
 </header>
 
-  <main class="pt-18 flex items-center justify-center min-h-screen p-6">
-    <div class="bg-white rounded-lg shadow-md max-w-4xl w-full grid grid-cols-1 md:grid-cols-2">
+<main class="mt-24 flex items-center justify-center min-h-screen p-6 bg-gray-50">
+  <div class="flex flex-col md:flex-row rounded-lg overflow-hidden shadow-lg max-w-5xl w-full">
     <!-- Left image -->
-    <div class="hidden md:block">
+    <div class="w-full md:w-1/2 md:h-auto flex-shrink-0">
       <img
-        src="{{ asset('assets/sports-tools.jpg') }}"
+        src="assets/sports-tools.jpg"
         alt="Peralatan olahraga di atas rumput"
-        class="object-cover w-full h-full rounded-l-lg"
+        class="object-cover w-full h-64 md:h-full rounded-t-lg md:rounded-l-lg md:rounded-tr-none"
         onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=Image+Unavailable';"
       />
     </div>
 
     <!-- Right content -->
-    <div class="p-10 flex flex-col justify-center">
+    <div class="p-8 md:p-10 flex flex-col justify-center w-full md:w-1/2 bg-white">
       <!-- Judul -->
-      <h1 class="text-4xl font-bold mb-4">Time to Move!</h1>
-      
+      <h1 class="text-3xl font-bold mb-4">Time to Move!</h1>
+
       <!-- Subjudul -->
       <p class="text-gray-600 mb-8 leading-relaxed">
         Ribuan orang sudah memulai gaya hidup sehat.<br />
@@ -148,7 +148,7 @@
         </div>
       @endif
 
-      <form action="{{ route('user.register.submit') }}" method="POST" class="space-y-6">
+      <form action="{{ route('user.register.submit') }}" method="POST" class="space-y-5">
         @csrf
         <div>
           <label for="name" class="block mb-2 font-semibold">Nama</label>
@@ -171,7 +171,7 @@
 
       <!-- Link Login -->
       <p class="text-center text-gray-500 mt-6">
-        Sudah punya akun? 
+        Sudah punya akun?
         <a href="/loginuser" class="text-blue-600 hover:underline font-medium">Login di sini</a>
       </p>
 
@@ -182,8 +182,10 @@
         <a href="#" class="text-indigo-900 font-semibold hover:underline">Community Guidelines</a> OlgaSehat.id
       </p>
     </div>
-    </div>
-  </main>
+  </div>
+</main>
+
+
 
   <!-- Overlay for Cart -->
   <div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>

@@ -19,7 +19,7 @@
 <div class="max-w-md w-full">
   <div class="flex items-center md:justify-start justify-center gap-3 mb-6 text-center">
     <div class="w-52 h-52 rounded-lg flex items-center justify-center">
-      <img src="assets/logo.png" alt="Olga Sehat Logo" class="mx-auto">
+      <img src="assets/olgasehat-icon.png" alt="Olga Sehat Logo" class="mx-auto">
     </div>
   </div>
  

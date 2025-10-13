@@ -32,18 +32,18 @@
 <!-- HEADER -->
 <header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 shadow-md bg-white transition-transform duration-300 ease-in-out">
   <div class="container mx-auto flex items-center justify-between py-4 px-6">
-    
+
     <!-- Logo -->
-    <a href="/" class="flex items-center space-x-2">
+    <a href="/homeuser" class="flex items-center space-x-2">
       <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="h-10 w-auto" />
     </a>
 
     <!-- Menu Desktop -->
     <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
-      <a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a>
-      <a href="/healthy" class="hover:text-blue-700">Tempat Sehat</a>
-      <a href="/community" class="hover:text-blue-700">Komunitas & Aktivitas</a>
-      <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
+      <a href="/venueuser" class="hover:text-blue-700">Sewa Lapangan</a>
+      <a href="#" class="hover:text-blue-700">Tempat Sehat</a>
+      <a href="/communityuser" class="hover:text-blue-700">Komunitas & Aktivitas</a>
+      <a href="/bloguser_news" class="hover:text-blue-700">Blog & News</a>
     </nav>
 
     <!-- Aksi Desktop -->
@@ -54,28 +54,23 @@
         <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
       </button>
 
-      <!-- Register Dropdown -->
+      <!-- Dropdown User -->
       <div class="relative">
-        <button id="registerBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none">Daftar</button>
-        <div id="registerDropdown"
-          class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50
-                 transform scale-95 opacity-0 transition-all duration-200 ease-out">
-          <a href="/daftaruser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Akun User</a>
-          <a href="/regispengelola" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Akun Pengelola Venue</a>
-        </div>
-      </div>
-
-      <!-- Login Dropdown -->
-      <div class="relative">
-        <button id="loginBtn"
-          class="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition focus:outline-none">
-          Masuk
+        <button id="userMenuBtn" class="flex items-center space-x-2 focus:outline-none">
+          <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+          <i class="fas fa-chevron-down text-gray-500 text-sm"></i>
         </button>
-        <div id="loginDropdown"
-          class="hidden absolute right-0 mt-2 w-56 bg-white border rounded-md shadow-lg z-50
-                 transform scale-95 opacity-0 transition-all duration-200 ease-out">
-          <a href="/loginuser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Masuk User</a>
-          <a href="/loginpengelolavenue" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Masuk Pengelola Venue</a>
+        <!-- Dropdown menu -->
+        <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
+          <a href="/editprofile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
+          <a href="/riwayat" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
+          <a href="/komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Aktivitas</a>
+          <a href="/settings" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pengaturan</a>
+          
+          <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="block border-t border-gray-200 mt-1">
+            @csrf
+            <button type="submit" class="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 font-medium transition-colors">Logout</button>
+          </form>
         </div>
       </div>
     </div>
@@ -88,6 +83,27 @@
         <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
       </button>
 
+      <!-- Dropdown User Mobile -->
+      <div class="relative">
+        <button id="mobileUserBtn" class="flex items-center space-x-2 focus:outline-none">
+          <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+          <i class="fas fa-chevron-down text-gray-500 text-sm"></i>
+        </button>
+        <!-- Dropdown menu -->
+        <div id="mobileUserMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
+          <a href="/editprofile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
+          <a href="/riwayat" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
+          <a href="/komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Komunitas</a>
+          <a href="/klub" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Klub</a>
+          <a href="/settings" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pengaturan</a>
+          
+          <form id="mobile-logout-form" action="{{ route('user.logout') }}" method="POST" class="block border-t border-gray-200 mt-1">
+            @csrf
+            <button type="submit" class="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 font-medium transition-colors">Logout</button>
+          </form>
+        </div>
+      </div>
+
       <!-- Tombol Hamburger -->
       <button id="mobileMenuBtn"
               class="text-gray-700 hover:text-blue-700 focus:outline-none"
@@ -98,19 +114,19 @@
 
     <!-- Menu Navigasi Mobile -->
     <nav id="mobileMenu"
-         class="hidden flex-col md:hidden bg-white border-t border-gray-200 shadow-md 
+         class="hidden flex-col md:hidden bg-white border-t border-gray-200 shadow-md
                 transition-all duration-300 ease-in-out absolute top-full left-0 w-full z-[50]">
 
       <!-- Link Navigasi -->
       <a href="/venue" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Sewa Lapangan</a>
       <a href="#" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Tempat Sehat</a>
-      <a href="/community" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas & Aktivitas</a>
+      <a href="/community" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas</a>
+      <a href="/club" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Klub</a>
       <a href="/blog-news" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Blog & News</a>
 
-      <!-- Masuk and Daftar Buttons -->
+      <!-- User Links -->
       <div class="border-t pt-4">
-        <a href="/loginuser" class="block w-full px-6 py-4 text-center text-blue-700 font-semibold border border-blue-700 rounded-md hover:bg-blue-50 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200">Masuk</a>
-        <a href="/daftaruser" class="block w-full px-6 py-4 text-center bg-blue-700 text-white font-semibold rounded-md hover:bg-blue-800 menu-item opacity-0 translate-y-1 transition-all duration-200">Daftar</a>
+        <a href="/logout" class="block w-full px-6 py-4 text-center bg-red-600 text-white font-semibold rounded-md hover:bg-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Logout</a>
       </div>
     </nav>
 </header>
@@ -143,7 +159,7 @@
         <li><a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a></li>
         <li><a href="/" class="hover:text-blue-700">Tempat Sehat</a></li>
         <li><a href="/community" class="hover:text-blue-700">Komunitas & Aktivitas</a></li>
-        <li><a href="/blog-news" class="hover:text-blue-700">Blog & News</a></li>
+   >     <li><a href="/blog-news" class="hover:text-blue-700">Blog & News</a></li>
       </ul>
     </div>
     <div>
@@ -225,19 +241,21 @@
       }
 
       // Desktop Dropdowns
-      const registerBtn = document.getElementById("registerBtn");
-      const registerDropdown = document.getElementById("registerDropdown");
-      const loginBtn = document.getElementById("loginBtn");
-      const loginDropdown = document.getElementById("loginDropdown");
+      const userBtn = document.getElementById("userMenuBtn");
+      const userMenu = document.getElementById("userMenu");
 
-      registerBtn?.addEventListener("click", (e) => {
+      userBtn?.addEventListener("click", (e) => {
         e.stopPropagation();
-        toggleDropdown(registerDropdown, loginDropdown);
+        toggleDropdown(userMenu, null);
       });
 
-      loginBtn?.addEventListener("click", (e) => {
+      // Mobile User Dropdown
+      const mobileUserBtn = document.getElementById("mobileUserBtn");
+      const mobileUserMenu = document.getElementById("mobileUserMenu");
+
+      mobileUserBtn?.addEventListener("click", (e) => {
         e.stopPropagation();
-        toggleDropdown(loginDropdown, registerDropdown);
+        toggleDropdown(mobileUserMenu, userMenu);
       });
 
       // Mobile Menu Toggle with Animation
@@ -280,11 +298,12 @@
       // Close mobile menu on outside click
       window.addEventListener("click", (e) => {
         // Desktop
-        if (!registerBtn?.contains(e.target) && !registerDropdown?.contains(e.target)) {
-          registerDropdown?.classList.add("hidden", "opacity-0", "scale-95");
+        if (!userBtn?.contains(e.target) && !userMenu?.contains(e.target)) {
+          userMenu?.classList.add("hidden", "opacity-0", "scale-95");
         }
-        if (!loginBtn?.contains(e.target) && !loginDropdown?.contains(e.target)) {
-          loginDropdown?.classList.add("hidden", "opacity-0", "scale-95");
+        // Mobile User
+        if (!mobileUserBtn?.contains(e.target) && !mobileUserMenu?.contains(e.target)) {
+          mobileUserMenu?.classList.add("hidden", "opacity-0", "scale-95");
         }
         // Mobile
         if (!mobileMenu.contains(e.target) && !mobileMenuBtn?.contains(e.target)) {

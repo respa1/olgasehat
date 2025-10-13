@@ -65,7 +65,7 @@
   <div class="container mx-auto flex items-center justify-between py-4 px-6">
 
     <!-- Logo -->
-    <a href="/" class="flex items-center space-x-2">
+    <a href="/homeuser" class="flex items-center space-x-2">
       <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="h-10 w-auto" />
     </a>
 

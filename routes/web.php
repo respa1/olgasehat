@@ -72,6 +72,7 @@ Route::get('/login-pemilik', fn() => view('frontend.login_pemilik'));
 Route::get('/payment', fn() => view('frontend.payment'));
 Route::get('/success', fn() => view('frontend.success'));
 Route::get('/venue', fn() => view('frontend.venue'));
+Route::get('/healthy', fn() => view('frontend.healthy'));
 Route::get('/venue-detail', fn() => view('frontend.venue_detail'));
 
 // frontend user
@@ -88,6 +89,14 @@ Route::get('/riwayatpayment', function () {return view('user.riwayatpayment');})
 Route::get('/registeremail', function () {return view('user.registeremail');});
 Route::get('/loginemail', function () { return view('user.loginemail');});
 Route::get('/resetpassword', function () {return view('user.resetpassword'); });
+Route::get('/homeuser', function () {return view('user.homeuser'); });
+Route::get('/venueuser', function () {return view('user.venueuser'); });
+Route::get('/venueuser_detail', function () {return view('user.venueuser_detail'); });
+Route::get('/communityuser', function () {return view('user.communityuser'); });
+Route::get('/communityuser_detail', function () {return view('user.communityuser_detail'); });
+Route::get('/bloguser_news', function () {return view('user.bloguser_news'); });
+Route::get('/bloguser_detail', function () {return view('user.bloguser_detail'); });
+
 
 // login pengelola
 Route::get('/loginpengelolavenue', function () { return view('pemiliklapangan.loginpengelolavenue');});
