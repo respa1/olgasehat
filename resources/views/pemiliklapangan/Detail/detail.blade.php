@@ -2,61 +2,60 @@
 
 @section('content')
 <div class="content-wrapper p-4">
-            <style>
-    .custom-file-upload:hover {
-        border-color: #007bff;
-        background-color: #eaf2ff;
-    }
+    <style>
+        .custom-file-upload:hover {
+            border-color: #007bff;
+            background-color: #eaf2ff;
+        }
 
-    .custom-file-upload input[type="file"] {
-        display: none;
-    }
+        .custom-file-upload input[type="file"] {
+            display: none;
+        }
 
-    .custom-file-upload .icon {
-        font-size: 2.5rem;
-        color: #007bff;
-        margin-bottom: 10px;
-    }
+        .custom-file-upload .icon {
+            font-size: 2.5rem;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
 
-    .custom-file-upload .text {
-        font-size: 1rem;
-        color: #666;
-    }
+        .custom-file-upload .text {
+            font-size: 1rem;
+            color: #666;
+        }
 
-    .image-preview {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 300px;
-        border: 2px dashed #ddd;
-        border-radius: 8px;
-        position: relative;
-        overflow: hidden;
-        background-color: #f8f8f8;
-        padding: 10px;
-        transition: border-color 0.3s ease;
-    }
+        .image-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 300px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            background-color: #f8f8f8;
+            padding: 10px;
+            transition: border-color 0.3s ease;
+        }
 
-    .image-preview:hover {
-        border-color: #4B49AC;
-    }
+        .image-preview:hover {
+            border-color: #4B49AC;
+        }
 
-    .image-preview img {
-        max-height: 100%;
-        max-width: 100%;
-        object-fit: cover;
-        display: none;
-    }
+        .image-preview img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: cover;
+            display: none;
+        }
 
-    .preview-text {
-        font-size: 16px;
-        color: #aaa;
-    }
-</style>
+        .preview-text {
+            font-size: 16px;
+            color: #aaa;
+        }
+    </style>
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar Progress -->
             <div class="col-md-3">
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
@@ -115,53 +114,77 @@
                 </div>
             </div>
 
-            <!-- Konten Utama -->
             <div class="col-md-9">
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
                         <form action="/insertdata" method="post" enctype="multipart/form-data">
-                  @csrf
-                  <div class="mb-3">
-                    <label for="image" class="form-label">Video Riview</label>
-                    <input type="file" id="image" name="foto" class="form-control">
-                    <div class="image-preview" id="thumbnailInput">
-                        <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
-                        <span class="preview-text" id="previewText">No Video selected</span>
+                    @csrf
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Video Riview</label>
+                        <input type="file" id="image" name="foto" class="form-control">
+                        <div class="image-preview" id="thumbnailInput">
+                            <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
+                            <span class="preview-text" id="previewText">No Video selected</span>
+                        </div>
                     </div>
-                </div>
-  
-                <div class="mb-3">
-                    <label for="judulProgram" class="form-label">Detail Venue</label>
-                    <input type="text" name="title" class="form-control" value="{{ old('title') }}">
-                </div>
+ 
+                    <div class="mb-3">
+                        <label for="judulProgram" class="form-label">Detail Venue</label>
+                        <input type="text" name="title" class="form-control" value="{{ old('title') }}">
+                    </div>
 
-                <div class="mb-3">
-                    <label for="judulProgram" class="form-label">Aturan Venue</label>
-                    <input type="text" name="title" class="form-control" value="{{ old('title') }}">
-                </div>
+                    <div class="mb-3">
+                        <label for="judulProgram" class="form-label">Aturan Venue</label>
+                        <input type="text" name="title" class="form-control" value="{{ old('title') }}">
+                    </div>
 
-                <div class="mb-3">
-                    <label for="judulProgram" class="form-label">Lokasi Venue</label>
-                    <input type="text" name="title" class="form-control" value="{{ old('title') }}">
-                </div>
+                    <div class="mb-3">
+                        <label for="judulProgram" class="form-label">Lokasi Venue</label>
+                        <input type="text" name="title" class="form-control" value="{{ old('title') }}">
+                    </div>
 
-                <div class="mb-3">
-                <label for="category_venue" class="form-label">Fasilitas Venue</label>
-                <select class="form-control" name="category_venue[]" id="category_venue" multiple>
-                    <option value="Toilet" {{ (collect(old('category_venue'))->contains('Toilet')) ? 'selected' : '' }}>Toilet</option>
-                    <option value="Parkir" {{ (collect(old('category_venue'))->contains('Parkir')) ? 'selected' : '' }}>Parkir</option>
-                    <option value="Kantin" {{ (collect(old('category_venue'))->contains('Kantin')) ? 'selected' : '' }}>Kantin</option>
-                    <option value="Ruang Ganti" {{ (collect(old('category_venue'))->contains('Ruang Ganti')) ? 'selected' : '' }}>Ruang Ganti</option>
-                    <option value="Panggung" {{ (collect(old('category_venue'))->contains('Panggung')) ? 'selected' : '' }}>Panggung</option>
-                    <option value="Sound System" {{ (collect(old('category_venue'))->contains('Sound System')) ? 'selected' : '' }}>Sound System</option>
-                    <option value="Tribun Penonton" {{ (collect(old('category_venue'))->contains('Tribun Penonton')) ? 'selected' : '' }}>Tribun Penonton</option>
-                    <option value="AC / Ventilasi" {{ (collect(old('category_venue'))->contains('AC / Ventilasi')) ? 'selected' : '' }}>AC / Ventilasi</option>
-                </select>
-                <small class="text-muted">Tekan <strong>Ctrl</strong> (Windows) atau <strong>Command</strong> (Mac) untuk memilih lebih dari satu fasilitas.</small>
-            </div>
-                </div>
-                </form>
-                        <a href="/syarat" class="btn btn-primary">Selanjutnya →</a>
+                    <div class="mb-3">
+                        <label class="form-label d-block">Fasilitas Venue</label>
+                        <div class="row">
+                            {{-- Array Fasilitas Venue --}}
+                            @php
+                                $fasilitas = [
+                                    'Area Parkir', 
+                                    'Toilet/Kamar Mandi', 
+                                    'Ruang Ganti/Transit', 
+                                    'Tempat Ibadah (Musholla)', 
+                                    'Kantin/Area Catering',
+                                    'AC/Pendingin Udara',
+                                    'Sistem Tata Suara (Sound System)',
+                                    'Proyektor & Layar/LED',
+                                    'Akses Internet (Wi-Fi)',
+                                    'Akses Listrik Cadangan (Genset)',
+                                    'Area Registrasi/Lobi',
+                                    'Keamanan (Security) & P3K'
+                                ];
+                            @endphp
+
+                            @foreach ($fasilitas as $item)
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="form-check">
+                                        {{-- Gunakan name="fasilitas_venue[]" agar bisa menyimpan banyak nilai (array) --}}
+                                        <input class="form-check-input" type="checkbox" 
+                                               name="fasilitas_venue[]" 
+                                               value="{{ $item }}" 
+                                               id="check-{{ Str::slug($item) }}"
+                                               {{ (is_array(old('fasilitas_venue')) && in_array($item, old('fasilitas_venue'))) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="check-{{ Str::slug($item) }}">
+                                            {{ $item }}
+                                        </label>
+                                    </div>
+                                </div>
+                            @endforeach
+                            
+                        </div>
+                        <small class="text-muted">Pilih semua fasilitas yang tersedia di venue Anda.</small>
+                    </div>
+                    <a href="/syarat" class="btn btn-primary">Selanjutnya →</a>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -170,8 +193,7 @@
 </div>
 
 
- <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <style>
     .step-number {
         width: 32px;
