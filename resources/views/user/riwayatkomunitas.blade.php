@@ -30,42 +30,6 @@
 <main class="bg-gray-100 min-h-[calc(100vh-64px)] py-8 px-4">
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
 
-        <aside class="lg:col-span-1">
-            <div class="bg-white rounded-xl shadow-2xl p-6">
-                
-                {{-- Detail Profil --}}
-                <div class="flex flex-col items-center space-y-3 mb-6">
-                    {{-- Avatar --}}
-                    <div class="w-24 h-24 rounded-full border-4 border-blue-500 bg-gray-200 flex items-center justify-center text-blue-600 shadow-md">
-                        <i class="fas fa-user text-4xl"></i>
-                    </div>
-                    <div class="text-center">
-                        <p class="font-extrabold text-xl text-gray-900">rsteam</p>
-                        <p class="text-gray-500 text-sm">@rteam166</p>
-                    </div>
-                </div>
-
-                <hr class="w-full border-gray-200 mb-6" />
-
-                {{-- Navigasi Profil --}}
-                <nav class="w-full space-y-2">
-                    <a href="/dashboarduser" class="profile-nav-link">
-                        <i class="fas fa-user-circle"></i> Update Profile
-                    </a>
-                    <a href="/riwayat komunitas" class="profile-nav-link active">
-                        <i class="fas fa-users"></i> Komunitas
-                    </a>
-                    <a href="/riwayatclub" class="profile-nav-link">
-                        <i class="fas fa-calendar-alt"></i> Aktifitas
-                    </a>
-                    {{-- Tambahkan link Logout yang menonjol --}}
-                    <a href="#" class="profile-nav-link text-red-500 hover:bg-red-50 hover:text-red-700 mt-4 border-t pt-3">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a>
-                </nav>
-            </div>
-        </aside>
-
         <section class="lg:col-span-3 space-y-6">
             
             {{-- Header Konten (MODIFIKASI DI SINI) --}}
@@ -136,6 +100,46 @@
             </div>
             
         </section>
+        
+        {{-- Kolom Kanan (Profil) --}}
+<div class="lg:col-span-1 space-y-6">
+
+    {{-- Card: Profil Utama --}}
+    <div class="bg-white shadow-md rounded-2xl p-6 text-center border-t-4 border-blue-500">
+        <img src="https://via.placeholder.com/120/2563EB/FFFFFF?text=R" 
+             alt="Foto Profil" 
+             class="w-24 h-24 mx-auto rounded-full shadow-md mb-4 object-cover">
+        <h2 class="text-xl font-bold text-gray-900">
+            {{ Auth::user()->name ?? 'Rendra Pratama' }}
+        </h2>
+        <p class="text-sm text-gray-500 mb-2">Anggota Sejak 2024</p>
+
+        <span class="inline-block bg-yellow-100 text-yellow-700 text-sm font-semibold px-3 py-1 rounded-full mb-3">
+            Gold Member
+        </span>
+
+        <div class="flex justify-center">
+            <a href="#" 
+               class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold transition duration-200">
+                <i class="fas fa-user-edit mr-2"></i> Edit Profil
+            </a>
+        </div>
+    </div>
+
+    {{-- Card: Statistik Akun --}}
+    <div class="bg-white shadow-md rounded-2xl p-6 border-t-4 border-indigo-500">
+        <h3 class="text-lg font-semibold text-gray-700 mb-3">Statistik Akun</h3>
+        <ul class="space-y-2 text-sm text-gray-600">
+            <li class="flex justify-between">
+                <span>Total Pemesanan</span>
+                <span class="font-semibold text-gray-800">12</span>
+            </li>
+            <li class="flex justify-between">
+                <span>Komunitas Aktif</span>
+                <span class="font-semibold text-gray-800">2</span>
+            </li>
+        </ul>
+    </div>
 
     </div>
 </main>

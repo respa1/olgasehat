@@ -133,42 +133,46 @@
         </section>
         </div>
 
-        {{-- Kolom Kanan (Profil) --}}
-        <div class="lg:col-span-1 space-y-6">
-            <div class="profile-card text-center">
-                <img src="https://via.placeholder.com/120/2563EB/FFFFFF?text=R" 
-                     alt="Foto Profil" 
-                     class="w-24 h-24 mx-auto rounded-full shadow-md mb-4 object-cover">
-                <h2 class="text-xl font-bold text-gray-900">{{ Auth::user()->name ?? 'Rendra Pratama' }}</h2>
-                <p class="text-sm text-gray-500 mb-2">Anggota Sejak 2024</p>
-                <span class="inline-block bg-yellow-100 text-yellow-700 text-sm font-semibold px-3 py-1 rounded-full mb-3">
-                    Gold Member
-                </span>
+       {{-- Kolom Kanan (Profil) --}}
+<div class="lg:col-span-1 space-y-6">
 
-                <div class="flex justify-center gap-3">
-                    <a href="#" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold">
-                        <i class="fas fa-user-edit mr-2"></i> Edit Profil
-                    </a>
-                </div>
-            </div>
+    {{-- Card: Profil Utama --}}
+    <div class="bg-white shadow-md rounded-2xl p-6 text-center border-t-4 border-blue-500">
+        <img src="https://via.placeholder.com/120/2563EB/FFFFFF?text=R" 
+             alt="Foto Profil" 
+             class="w-24 h-24 mx-auto rounded-full shadow-md mb-4 object-cover">
+        <h2 class="text-xl font-bold text-gray-900">
+            {{ Auth::user()->name ?? 'Rendra Pratama' }}
+        </h2>
+        <p class="text-sm text-gray-500 mb-2">Anggota Sejak 2024</p>
 
-            {{-- Info Singkat --}}
-            <div class="profile-card">
-                <h3 class="text-lg font-semibold text-gray-700 mb-3">Statistik Akun</h3>
-                <ul class="space-y-2 text-sm text-gray-600">
-                    <li class="flex justify-between"><span>Total Pemesanan</span><span class="font-semibold">12</span></li>
-                    <li class="flex justify-between"><span>Poin Saat Ini</span><span class="font-semibold">380</span></li>
-                    <li class="flex justify-between"><span>Komunitas Aktif</span><span class="font-semibold">2</span></li>
-                </ul>
-            </div>
+        <span class="inline-block bg-yellow-100 text-yellow-700 text-sm font-semibold px-3 py-1 rounded-full mb-3">
+            Gold Member
+        </span>
 
-            {{-- Logout --}}
-            <div class="text-center">
-                <a href="{{ route('logout') }}" class="text-red-500 hover:text-red-700 text-sm font-semibold">
-                    <i class="fas fa-sign-out-alt mr-1"></i> Keluar Akun
-                </a>
-            </div>
+        <div class="flex justify-center">
+            <a href="#" 
+               class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold transition duration-200">
+                <i class="fas fa-user-edit mr-2"></i> Edit Profil
+            </a>
         </div>
+    </div>
+
+    {{-- Card: Statistik Akun --}}
+    <div class="bg-white shadow-md rounded-2xl p-6 border-t-4 border-indigo-500">
+        <h3 class="text-lg font-semibold text-gray-700 mb-3">Statistik Akun</h3>
+        <ul class="space-y-2 text-sm text-gray-600">
+            <li class="flex justify-between">
+                <span>Total Pemesanan</span>
+                <span class="font-semibold text-gray-800">12</span>
+            </li>
+            <li class="flex justify-between">
+                <span>Komunitas Aktif</span>
+                <span class="font-semibold text-gray-800">2</span>
+            </li>
+        </ul>
+    </div>
+
     </div>
 </main>
 @endsection
