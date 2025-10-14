@@ -46,6 +46,7 @@ Route::get('/payment', fn() => view('frontend.payment'));
 Route::get('/success', fn() => view('frontend.success'));
 Route::get('/venue', fn() => view('frontend.venue'));
 Route::get('/venue-detail', fn() => view('frontend.venue_detail'));
+Route::get('/klinik', fn() => view('frontend.klinik'));
 
 // public frontend user
 Route::get('/daftaruser', function () { return view('frontend.daftaruser');});
