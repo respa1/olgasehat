@@ -117,7 +117,7 @@
 
 
 
-  <main class="mt-24 flex items-center justify-center min-h-screen p-6 bg-gray-50">
+  <main class="mt-30 flex items-center justify-center min-h-screen p-6 bg-gray-50">
   <div class="bg-white rounded-lg shadow-md max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 overflow-hidden">
     <!-- Left image -->
     <div class="w-full h-64 md:h-auto">
