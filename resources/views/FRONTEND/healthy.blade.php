@@ -2,7 +2,7 @@
 
 @section('content')
 
-<section class="bg-[url('assets/blue-banner.png')] bg-no-repeat text-white relative overflow-hidden h-[350px] flex items-center justify-center" style="background-size: 1910px 350px;">
+<section class="bg-[url('assets/green-banner.jpg')] bg-no-repeat text-white relative overflow-hidden h-[350px] flex items-center justify-center" style="background-size: 1910px 350px;">
     <div class="absolute inset-0 bg-blue-900 bg-opacity-30"></div>
     <div class="container mx-auto px-6 text-center w-full relative z-10">
         <h1 class="text-3xl md:text-5xl font-extrabold tracking-wide mt-10">
