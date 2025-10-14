@@ -30,7 +30,7 @@ class LoginController extends Controller
             if ($user->role === 'superadmin') {
                 return redirect('/dashboard');
             } elseif ($user->role === 'user') {
-                return redirect('/editprofile');
+                return redirect('/dashboarduser');
             } elseif ($user->role === 'pemiliklapangan') {
                 if ($user->status === 'approved') {
                     return redirect('/pemiliklapangan/dashboard');
