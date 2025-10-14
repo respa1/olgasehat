@@ -124,7 +124,7 @@ class LoginController extends Controller
     public function editProfile()
     {
         $user = Auth::user();
-        return view('user.editprofile', compact('user'));
+        return view('user.dashboarduser', compact('user'));
     }
 
     // Handle profile update for user role

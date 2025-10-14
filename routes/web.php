@@ -58,7 +58,7 @@ Route::get('/daftaruser', [LoginController::class, 'registerUserForm'])->name('u
 Route::post('/daftaruser', [LoginController::class, 'registerUser'])->name('user.register.submit');
 
 Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/editprofile', [LoginController::class, 'editProfile'])->name('user.editprofile');
+    Route::get('/dashboarduser', [LoginController::class, 'editProfile'])->name('user.editprofile');
     Route::post('/editprofile', [LoginController::class, 'updateProfile'])->name('user.updateprofile');
 });
 

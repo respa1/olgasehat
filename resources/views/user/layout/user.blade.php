@@ -92,7 +92,7 @@
         </button>
         <!-- Dropdown menu -->
         <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
-          <a href="/editprofile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
+          <a href="/dashboarduser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
           <a href="/riwayatpayment" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
           <a href="/riwayat-komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Komunitas</a>
           <a href="/riwayatmembership" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Membership</a>
@@ -122,7 +122,7 @@
         </button>
         <!-- Dropdown menu -->
         <div id="mobileUserMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
-          <a href="/editprofile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
+          <a href="/dashboarduser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
           <a href="/riwayatpayment" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
           <a href="/komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Komunitas</a>
           <a href="/klub" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Klub</a>
