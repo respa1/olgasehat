@@ -31,35 +31,53 @@
             </header>
 
             {{-- Progres Mingguan --}}
-            <section>
-                <h2 class="text-xl font-semibold text-gray-700 mb-5">Progres Mingguan Anda 💪</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    <div class="stat-card border-blue-500">
-                        <i class="fas fa-clock text-blue-500 text-2xl mb-2"></i>
-                        <p class="text-sm text-gray-500">Waktu Aktif</p>
-                        <p class="text-2xl font-bold text-gray-900">4.5 <span class="text-base">Jam</span></p>
-                        <p class="text-sm text-green-500">+1.2 jam minggu ini</p>
-                    </div>
-                    <div class="stat-card border-yellow-400">
-                        <i class="fas fa-calendar-check text-yellow-500 text-2xl mb-2"></i>
-                        <p class="text-sm text-gray-500">Sesi Pemesanan</p>
-                        <p class="text-2xl font-bold text-gray-900">3</p>
-                        <p class="text-sm text-yellow-500">Terakhir: Futsal</p>
-                    </div>
-                    <div class="stat-card border-indigo-500">
-                        <i class="fas fa-users text-indigo-500 text-2xl mb-2"></i>
-                        <p class="text-sm text-gray-500">Komunitas Aktif</p>
-                        <p class="text-2xl font-bold text-gray-900">2</p>
-                        <p class="text-sm text-indigo-500">Volley & Running</p>
-                    </div>
-                    <div class="stat-card border-red-500">
-                        <i class="fas fa-medal text-red-500 text-2xl mb-2"></i>
-                        <p class="text-sm text-gray-500">Membership</p>
-                        <p class="text-2xl font-bold text-gray-900">Gold</p>
-                        <p class="text-sm text-red-500">120 poin ke Platinum</p>
-                    </div>
-                </div>
-            </section>
+<section>
+    <h2 class="text-xl font-semibold text-gray-700 mb-5">Progres Mingguan Anda 💪</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <!-- Card 1 -->
+        <div class="bg-white shadow-md rounded-2xl p-4 border-t-4 border-blue-500 hover:-translate-y-1 transition transform duration-200">
+            <div class="flex flex-col items-start">
+                <i class="fas fa-clock text-blue-500 text-2xl mb-2"></i>
+                <p class="text-sm text-gray-500">Waktu Aktif</p>
+                <p class="text-2xl font-bold text-gray-900">
+                    4.5 <span class="text-base">Jam</span>
+                </p>
+                <p class="text-sm text-green-500 mt-1">+1.2 jam minggu ini</p>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-white shadow-md rounded-2xl p-4 border-t-4 border-yellow-400 hover:-translate-y-1 transition transform duration-200">
+            <div class="flex flex-col items-start">
+                <i class="fas fa-calendar-check text-yellow-500 text-2xl mb-2"></i>
+                <p class="text-sm text-gray-500">Sesi Pemesanan</p>
+                <p class="text-2xl font-bold text-gray-900">3</p>
+                <p class="text-sm text-yellow-500 mt-1">Terakhir: Futsal</p>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white shadow-md rounded-2xl p-4 border-t-4 border-indigo-500 hover:-translate-y-1 transition transform duration-200">
+            <div class="flex flex-col items-start">
+                <i class="fas fa-users text-indigo-500 text-2xl mb-2"></i>
+                <p class="text-sm text-gray-500">Komunitas Aktif</p>
+                <p class="text-2xl font-bold text-gray-900">2</p>
+                <p class="text-sm text-indigo-500 mt-1">Volley & Running</p>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="bg-white shadow-md rounded-2xl p-4 border-t-4 border-red-500 hover:-translate-y-1 transition transform duration-200">
+            <div class="flex flex-col items-start">
+                <i class="fas fa-medal text-red-500 text-2xl mb-2"></i>
+                <p class="text-sm text-gray-500">Membership</p>
+                <p class="text-2xl font-bold text-gray-900">Gold</p>
+                <p class="text-sm text-red-500 mt-1">120 poin ke Platinum</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 
             {{-- Riwayat Pemesanan --}}
             <section class="bg-white p-6 rounded-xl shadow-md">
@@ -87,23 +105,32 @@
             </section>
 
             {{-- Aksi Cepat --}}
-            <section>
-                <h2 class="text-xl font-semibold text-gray-700 mb-5">Aksi Cepat 🚀</h2>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <a href="#" class="quick-action">
-                        <i class="fas fa-futbol text-3xl mb-2"></i>
-                        <p class="font-bold text-lg">Sewa Lapangan</p>
-                    </a>
-                    <a href="#" class="quick-action bg-yellow-500 hover:bg-yellow-600">
-                        <i class="fas fa-handshake text-3xl mb-2"></i>
-                        <p class="font-bold text-lg">Cari Komunitas</p>
-                    </a>
-                    <a href="#" class="quick-action bg-green-500 hover:bg-green-600">
-                        <i class="fas fa-heartbeat text-3xl mb-2"></i>
-                        <p class="font-bold text-lg">Tempat Sehat</p>
-                    </a>
-                </div>
-            </section>
+        <section>
+            <h2 class="text-xl font-semibold text-gray-700 mb-5">Aksi Cepat 🚀</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <!-- Card: Sewa Lapangan -->
+                <a href="#" 
+                class="flex flex-col items-center justify-center bg-white shadow-md rounded-2xl p-6 border-t-4 border-blue-500 hover:-translate-y-1 transition transform duration-200">
+                    <i class="fas fa-futbol text-blue-500 text-3xl mb-3"></i>
+                    <p class="font-bold text-gray-800 text-lg">Sewa Lapangan</p>
+                </a>
+
+                <!-- Card: Cari Komunitas -->
+                <a href="#"
+                class="flex flex-col items-center justify-center bg-white shadow-md rounded-2xl p-6 border-t-4 border-yellow-500 hover:-translate-y-1 transition transform duration-200">
+                    <i class="fas fa-handshake text-yellow-500 text-3xl mb-3"></i>
+                    <p class="font-bold text-gray-800 text-lg">Cari Komunitas</p>
+                </a>
+
+                <!-- Card: Tempat Sehat -->
+                <a href="#"
+                class="flex flex-col items-center justify-center bg-white shadow-md rounded-2xl p-6 border-t-4 border-green-500 hover:-translate-y-1 transition transform duration-200">
+                    <i class="fas fa-heartbeat text-green-500 text-3xl mb-3"></i>
+                    <p class="font-bold text-gray-800 text-lg">Tempat Sehat</p>
+                </a>
+            </div>
+        </section>
         </div>
 
         {{-- Kolom Kanan (Profil) --}}
