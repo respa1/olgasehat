@@ -47,42 +47,57 @@
             {{-- Daftar Komunitas --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                {{-- Komunitas 1: Contoh Komunitas Aktif --}}
-                <div class="community-card">
-                    <div class="flex items-center mb-3">
-                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                            <i class="fas fa-running text-blue-600 text-xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-xl font-bold text-gray-900">Running Club Jakarta</p>
-                            <p class="text-sm text-gray-500">32 Anggota | Aktifitas Terakhir: 2 hari lalu</p>
-                        </div>
+                <div class="community-card bg-white p-6 rounded-lg shadow-md mb-6">
+                <div class="flex items-center mb-4">
+                    {{-- Ikon Lari --}}
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-running text-blue-600 text-xl"></i>
                     </div>
-                    <p class="text-sm text-gray-600 mt-3 border-t pt-3">
-                        Komunitas lari mingguan untuk semua level, dari pemula hingga maraton.
-                    </p>
-                    <div class="flex justify-end mt-4">
-                        <a href="#" class="text-sm font-semibold text-orange-500 hover:text-orange-700">Lihat Detail <i class="fas fa-arrow-right ml-1"></i></a>
+                    {{-- Info Dasar --}}
+                    <div>
+                        <p class="text-xl font-bold text-gray-900">Running Club Jakarta</p>
+                        <p class="text-sm text-gray-500">32 Anggota | Aktifitas Terakhir: 2 hari lalu</p>
                     </div>
                 </div>
+                
+                {{-- Deskripsi Komunitas --}}
+                <p class="text-sm text-gray-600 mt-4 pt-3 border-t border-gray-100">
+                    Komunitas lari mingguan untuk semua level, dari pemula hingga maraton.
+                </p>
+                
+                {{-- Tombol Detail --}}
+                <div class="flex justify-end mt-4">
+                    <a href="#" class="text-sm font-semibold text-orange-500 hover:text-orange-700 transition duration-150 ease-in-out">
+                        Lihat Detail 
+                        <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
 
-                {{-- Komunitas 2: Contoh Komunitas Aktif --}}
-                <div class="community-card">
-                    <div class="flex items-center mb-3">
-                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
-                            <i class="fas fa-volleyball-ball text-green-600 text-xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-xl font-bold text-gray-900">Volly Ball Squad Banten</p>
-                            <p class="text-sm text-gray-500">18 Anggota | Aktifitas Terakhir: Hari ini!</p>
-                        </div>
+            <div class="community-card bg-white p-6 rounded-lg shadow-md mb-6">
+                <div class="flex items-center mb-4">
+                    {{-- Ikon Voli --}}
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-volleyball-ball text-green-600 text-xl"></i>
                     </div>
-                    <p class="text-sm text-gray-600 mt-3 border-t pt-3">
-                        Sesi main volly santai setiap Rabu dan Sabtu sore. Semua level diterima.
-                    </p>
-                    <div class="flex justify-end mt-4">
-                        <a href="#" class="text-sm font-semibold text-orange-500 hover:text-orange-700">Lihat Detail <i class="fas fa-arrow-right ml-1"></i></a>
+                    {{-- Info Dasar --}}
+                    <div>
+                        <p class="text-xl font-bold text-gray-900">Volly Ball Squad Banten</p>
+                        <p class="text-sm text-gray-500">18 Anggota | Aktifitas Terakhir: Hari ini!</p>
                     </div>
+                </div>
+                
+                {{-- Deskripsi Komunitas --}}
+                <p class="text-sm text-gray-600 mt-4 pt-3 border-t border-gray-100">
+                    Sesi main volly santai setiap Rabu dan Sabtu sore. Semua level diterima.
+                </p>
+                
+                {{-- Tombol Detail --}}
+                <div class="flex justify-end mt-4">
+                    <a href="#" class="text-sm font-semibold text-orange-500 hover:text-orange-700 transition duration-150 ease-in-out">
+                        Lihat Detail 
+                        <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
                 </div>
             </div>
 
