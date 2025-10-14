@@ -62,8 +62,8 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::post('/editprofile', [LoginController::class, 'updateProfile'])->name('user.updateprofile');
 });
 
-Route::get('/riwayat komunitas', fn() => view('user.riwayatkomunitas'));
-Route::get('/riwayatclub', fn() => view('user.riwayatclub'));
+Route::get('/riwayat-komunitas', fn() => view('user.riwayatkomunitas'));
+Route::get('/riwayatmembership', fn() => view('user.riwayatmembership'));
 Route::get('/riwayatpayment', fn() => view('user.riwayatpayment'));
 Route::get('/registeremail', fn() => view('user.registeremail'));
 Route::get('/loginemail', fn() => view('user.loginemail'));
