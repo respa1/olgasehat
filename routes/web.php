@@ -73,6 +73,7 @@ Route::get('/venueuser', fn() => view('user.venueuser'));
 Route::get('/venueuser_detail', fn() => view('user.venueuser_detail'));
 Route::get('/communityuser', fn() => view('user.communityuser'));
 Route::get('/communityuser_detail', fn() => view('user.communityuser_detail'));
+Route::get('/membership-user-detail', fn() => view('user.membershipuser_detail'));
 Route::get('/bloguser_news', fn() => view('user.bloguser_news'));
 Route::get('/bloguser_detail', fn() => view('user.bloguser_detail'));
 

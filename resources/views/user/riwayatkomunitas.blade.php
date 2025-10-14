@@ -27,7 +27,7 @@
 
 @section('content')
 
-<main class="bg-gray-100 min-h-[calc(100vh-64px)] py-8 px-4">
+<main class="bg-gray-100 min-h-[calc(100vh-64px)] pt-20 pb-8 px-4">
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
 
         <section class="lg:col-span-3 space-y-6">

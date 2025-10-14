@@ -16,7 +16,7 @@
 @endpush
 
 @section('content')
-<main class="pt-20 min-h-screen p-4 md:p-8 lg:p-10 bg-gray-50">
+<main class="pt-20 min-h-screen pb-8 px-4 md:px-8 lg:px-10 bg-gray-50">
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
 
         {{-- Kolom Kiri (2/3) --}}

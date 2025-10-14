@@ -32,7 +32,7 @@
 
 @section('content')
 
-<main class="bg-gray-100 min-h-[calc(100vh-64px)] py-8 px-4">
+<main class="bg-gray-100 min-h-[calc(100vh-64px)] pt-20 pb-8 px-4">
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
 
         <section class="lg:col-span-3 space-y-6">
@@ -49,94 +49,83 @@
                 </a>
             </div>
             
-            {{-- Daftar Membership (Bisa lebih dari satu) --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Membership Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                {{-- Kartu Membership Aktif (Contoh 1: Futsal) --}}
-                <div class="membership-card">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-2xl font-extrabold flex items-center">
-                            <i class="fas fa-award mr-3 text-yellow-300"></i> GOLD PASS
-                        </h3>
-                        <span class="text-sm font-semibold px-3 py-1 rounded-full bg-white bg-opacity-20">Venue A</span>
-                    </div>
+  <!-- GOLD PASS Card -->
+  <div class="rounded-2xl shadow-lg bg-white border border-gray-200 p-6 flex flex-col justify-between transition hover:shadow-xl">
+    <div>
+      <div class="flex justify-between items-center">
+        <h3 class="text-xl font-extrabold flex items-center text-yellow-500">
+          <i class="fas fa-award mr-2"></i> GOLD PASS
+        </h3>
+        <span class="text-xs font-semibold px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full">Venue A</span>
+      </div>
 
-                    <p class="text-3xl font-bold mt-4">Futsal Tirtayasa Club</p>
-                    
-                    <div class="mt-4 pt-4 border-t border-white border-opacity-30">
-                        <p class="text-xs font-semibold uppercase opacity-80">Masa Aktif</p>
-                        <p class="text-lg font-bold">14 Okt 2025 - 14 Nov 2025</p>
-                        <p class="text-yellow-300 text-sm mt-1">Sisa 31 Hari</p>
-                    </div>
+      <h2 class="text-2xl font-bold mt-3 text-gray-800">Futsal Tirtayasa Club</h2>
 
-                    {{-- Manfaat Membership --}}
-                    <div class="mt-5 space-y-2">
-                        <p class="font-semibold mb-2">Manfaat Keanggotaan:</p>
-                        <div class="membership-feature">
-                            <i class="fas fa-check-circle mr-2 mt-0.5 text-green-300"></i> Diskon Booking 30% setiap hari.
-                        </div>
-                        <div class="membership-feature">
-                            <i class="fas fa-check-circle mr-2 mt-0.5 text-green-300"></i> 4 Sesi Gratis (Sudah terpakai: 1).
-                        </div>
-                        <div class="membership-feature">
-                            <i class="fas fa-check-circle mr-2 mt-0.5 text-green-300"></i> Akses prioritas lapangan A & B.
-                        </div>
-                    </div>
+      <div class="mt-4 pt-3 border-t border-gray-200">
+        <p class="text-xs uppercase text-gray-500 font-semibold">Masa Aktif</p>
+        <p class="text-base font-bold text-gray-800">14 Okt 2025 - 14 Nov 2025</p>
+        <p class="text-sm text-yellow-600 mt-1">Sisa 31 Hari</p>
+      </div>
 
-                    {{-- Aksi --}}
-                    <div class="mt-6 flex justify-between items-center pt-4 border-t border-white border-opacity-30">
-                        <a href="/perpanjang-membership" class="text-sm font-semibold text-white hover:text-yellow-300">
-                            Perpanjang Sekarang <i class="fas fa-chevron-right ml-1"></i>
-                        </a>
-                        <button class="bg-white text-blue-700 font-semibold text-sm px-4 py-2 rounded-full hover:bg-gray-100 transition">
-                            <i class="fas fa-book-open mr-1"></i> Booking
-                        </button>
-                    </div>
-                </div>
-                
-                {{-- Kartu Membership Lain (Contoh 2: Gym/Fitness) --}}
-                <div class="membership-card bg-gradient-to-br from-purple-600 to-indigo-800">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-2xl font-extrabold flex items-center">
-                            <i class="fas fa-dumbbell mr-3 text-pink-300"></i> PLATINUM
-                        </h3>
-                        <span class="text-sm font-semibold px-3 py-1 rounded-full bg-white bg-opacity-20">Venue B</span>
-                    </div>
+      <div class="mt-5 space-y-2">
+        <p class="font-semibold text-gray-700 mb-2">Manfaat Keanggotaan:</p>
+        <div class="flex items-start text-sm text-gray-700"><i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i> Diskon Booking 30% setiap hari.</div>
+        <div class="flex items-start text-sm text-gray-700"><i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i> 4 Sesi Gratis (Sudah terpakai: 1).</div>
+        <div class="flex items-start text-sm text-gray-700"><i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i> Akses prioritas lapangan A & B.</div>
+      </div>
+    </div>
 
-                    <p class="text-3xl font-bold mt-4">Fitness Center Sehat</p>
-                    
-                    <div class="mt-4 pt-4 border-t border-white border-opacity-30">
-                        <p class="text-xs font-semibold uppercase opacity-80">Masa Aktif</p>
-                        <p class="text-lg font-bold">5 Okt 2025 - 5 Des 2025</p>
-                        <p class="text-yellow-300 text-sm mt-1">Sisa 52 Hari</p>
-                    </div>
+    <div class="mt-6 pt-4 border-t border-gray-200 flex justify-between items-center">
+      <a href="/perpanjang-membership" class="text-sm font-semibold text-yellow-600 hover:text-yellow-700 flex items-center">
+        Perpanjang Sekarang <i class="fas fa-chevron-right ml-1 text-xs"></i>
+      </a>
+      <button class="flex items-center bg-blue-600 text-white font-semibold text-sm px-4 py-2 rounded-full hover:bg-blue-700 transition">
+        <i class="fas fa-book-open mr-2"></i> Booking
+      </button>
+    </div>
+  </div>
 
-                    {{-- Manfaat Membership --}}
-                    <div class="mt-5 space-y-2">
-                        <p class="font-semibold mb-2">Manfaat Keanggotaan:</p>
-                        <div class="membership-feature">
-                            <i class="fas fa-check-circle mr-2 mt-0.5 text-green-300"></i> Akses tak terbatas 24/7.
-                        </div>
-                        <div class="membership-feature">
-                            <i class="fas fa-check-circle mr-2 mt-0.5 text-green-300"></i> Gratis 2 Sesi Konsultasi PT.
-                        </div>
-                        <div class="membership-feature">
-                            <i class="fas fa-check-circle mr-2 mt-0.5 text-green-300"></i> Kelas Aerobik dan Yoga Gratis.
-                        </div>
-                    </div>
+  <!-- PLATINUM Card -->
+  <div class="rounded-2xl shadow-lg bg-gradient-to-br from-purple-600 to-indigo-800 text-white p-6 flex flex-col justify-between transition hover:shadow-xl">
+    <div>
+      <div class="flex justify-between items-center">
+        <h3 class="text-xl font-extrabold flex items-center">
+          <i class="fas fa-dumbbell mr-2 text-pink-300"></i> PLATINUM
+        </h3>
+        <span class="text-xs font-semibold px-3 py-1 bg-white bg-opacity-20 rounded-full">Venue B</span>
+      </div>
 
-                    {{-- Aksi --}}
-                    <div class="mt-6 flex justify-between items-center pt-4 border-t border-white border-opacity-30">
-                        <a href="/perpanjang-membership" class="text-sm font-semibold text-white hover:text-yellow-300">
-                            Perpanjang Sekarang <i class="fas fa-chevron-right ml-1"></i>
-                        </a>
-                        <button class="bg-white text-purple-700 font-semibold text-sm px-4 py-2 rounded-full hover:bg-gray-100 transition">
-                            <i class="fas fa-calendar-plus mr-1"></i> Reservasi
-                        </button>
-                    </div>
-                </div>
+      <h2 class="text-2xl font-bold mt-3">Fitness Center Sehat</h2>
 
-            </div>
+      <div class="mt-4 pt-3 border-t border-white border-opacity-30">
+        <p class="text-xs uppercase font-semibold opacity-80">Masa Aktif</p>
+        <p class="text-base font-bold">5 Okt 2025 - 5 Des 2025</p>
+        <p class="text-yellow-300 text-sm mt-1">Sisa 52 Hari</p>
+      </div>
+
+      <div class="mt-5 space-y-2">
+        <p class="font-semibold mb-2">Manfaat Keanggotaan:</p>
+        <div class="flex items-start text-sm"><i class="fas fa-check-circle text-green-300 mr-2 mt-0.5"></i> Akses tak terbatas 24/7.</div>
+        <div class="flex items-start text-sm"><i class="fas fa-check-circle text-green-300 mr-2 mt-0.5"></i> Gratis 2 Sesi Konsultasi PT.</div>
+        <div class="flex items-start text-sm"><i class="fas fa-check-circle text-green-300 mr-2 mt-0.5"></i> Kelas Aerobik dan Yoga Gratis.</div>
+      </div>
+    </div>
+
+    <div class="mt-6 pt-4 border-t border-white border-opacity-30 flex justify-between items-center">
+      <a href="/perpanjang-membership" class="text-sm font-semibold text-white hover:text-yellow-300 flex items-center">
+        Perpanjang Sekarang <i class="fas fa-chevron-right ml-1 text-xs"></i>
+      </a>
+      <button class="flex items-center bg-white text-purple-700 font-semibold text-sm px-4 py-2 rounded-full hover:bg-gray-100 transition">
+        <i class="fas fa-calendar-plus mr-2"></i> Reservasi
+      </button>
+    </div>
+  </div>
+
+</div>
+
 
             {{-- Empty State (Gunakan jika tidak ada data) --}}
             </section>
