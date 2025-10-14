@@ -1,18 +1,26 @@
-
-<!DOCTYPE html>
-<html lang="id" class="bg-gray-50">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Olga Sehat Komunitas</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Olga Sehat
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&amp;display=swap" rel="stylesheet"/>
     <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
   />
-</head>
-<body class="font-sans text-gray-800">
-
+  <style>
+   body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+ </head>
+ <body >
+ 
 <!-- Header -->
 <header class="shadow-md">
   <div class="container mx-auto flex items-center justify-between py-4 px-6">
@@ -23,11 +31,11 @@
 
     <!-- Navigation (desktop) -->
     <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
-      <a href="venue.html" class="hover:text-blue-700">Sewa Lapangan</a>
-      <a href="tempat_sehat.html" class="hover:text-blue-700">Tempat Sehat</a>
-      <a href="community.html" class="hover:text-blue-700">Komunitas</a> 
-      <a href="club.html" class="hover:text-blue-700">Klub</a>
-      <a href="blog&news.html" class="hover:text-blue-700">Blog & News</a>
+      <a href="/" class="hover:text-blue-700">Sewa Lapangan</a>
+      <a href="/tempatsehat" class="hover:text-blue-700">Tempat Sehat</a>
+      <a href="/community" class="hover:text-blue-700">Komunitas</a>
+      <a href="/club" class="hover:text-blue-700">Klub</a>
+      <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
     </nav>
 
     <!-- Actions (desktop) -->
@@ -87,56 +95,45 @@
 </header>
 
 
-
-  <!-- Main Content -->
-  <main class="max-w-7xl mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-
-    <!-- Left Profile Panel -->
-    <aside class="bg-white rounded-md shadow p-6 flex flex-col items-center space-y-4">
-      <div class="w-24 h-24 rounded-full border-2 border-gray-300 flex items-center justify-center text-gray-400">
-        <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="7" r="4"></circle>
-          <path d="M5.5 21a7.5 7.5 0 0113 0"></path>
-        </svg>
-      </div>
-      <div class="text-center">
-        <p class="font-semibold text-lg text-gray-900">rsteam</p>
-        <p class="text-gray-500 text-sm select-text">@rteam166</p>
-      </div>
-
-      <hr class="w-full border-gray-200" />
-
-      <nav class="w-full space-y-3 text-sm text-gray-600 font-semibold">
-        <a href="#" class="block hover:text-orange-500 transition cursor-pointer">Update Profile</a>
-        <a href="#" class="block text-orange-500 cursor-pointer">Komunitas</a>
-        <a href="#" class="block hover:text-orange-500 transition cursor-pointer">Aktifitas</a>
-      </nav>
-    </aside>
-
-    <!-- Right Content -->
-    <section class="md:col-span-2 space-y-6">
-      <div class="bg-white rounded-md shadow p-6">
-        <h2 class="font-bold text-xl text-gray-900">Komunitas Kamu</h2>
-        <p class="text-gray-400 mt-1">Kumpulan komunitas yang kamu telah tergabung</p>
-      </div>
-
-      <div class="bg-white rounded-md shadow p-6 flex flex-col items-center space-y-5">
-
-        <!-- Illustration with fallback styling -->
-        <div class="max-w-md w-full">
-          <img 
-            src="assets/ai.png" 
-            alt="Illustration of a small community park with orange trees, benches, and houses in the background with birds flying above under a clear sky" 
-            class="w-full object-contain"
-            onerror="this.onerror=null;this.src='https://placehold.co/600x300?text=Image+not+available';"
-          />
-        </div>
-
-        <p class="text-gray-500 text-center select-text">Kamu belum tergabung dalam komunitas</p>
-      </div>
-    </section>
-
+  <main class="bg-gray-100 min-h-[calc(100vh-64px)]">
+   <section class="max-w-4xl mx-auto px-4 py-8">
+    <label class="block mb-2 font-semibold text-black text-sm" for="cutoff-date">
+     Pilih Tanggal Cut Off
+    </label>
+    <input class="w-48 rounded border border-gray-300 px-3 py-2 mb-1 text-black text-sm" id="cutoff-date" readonly="" type="text" value="4-Aug-2025"/>
+    <p class="text-xs text-gray-500 mb-3">
+     *Menampilkan transaksi
+     <span class="text-orange-500 font-semibold">
+      6 bulan ke belakang
+     </span>
+     dari tanggal pilihan mu
+    </p>
+    <div class="flex space-x-2 mb-8">
+     <button class="bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded" type="button">
+      Semua Transaksi
+     </button>
+     <button class="text-blue-600 border border-blue-500 text-xs font-semibold px-3 py-1 rounded" type="button">
+      Down Payment
+     </button>
+    </div>
+    <div class="bg-white rounded-md p-6 flex flex-col items-center">
+     <img alt="Illustration of a park with orange trees and benches in front of gray houses with birds flying" class="mb-4" height="150" src="assets/ai.png" width="400"/>
+     <p class="text-gray-500 text-sm text-center">
+      Tidak ditemukan Transaksi pada rentang waktu tanggal pilihan
+     </p>
+    </div>
+   </section>
   </main>
+  <script>
+  // Dropdown user
+  const userBtn = document.getElementById("userMenuBtn");
+  const userMenu = document.getElementById("userMenu");
+  if (userBtn) {
+    userBtn.addEventListener("click", () => {
+      userMenu.classList.toggle("hidden");
+    });
+  }
+</script>
   <!-- Cart Sidebar -->
   <aside id="cartSidebar" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
     <div class="flex justify-between items-center p-4 border-b border-gray-200">
@@ -149,18 +146,6 @@
       Belum ada jadwal di keranjang.
     </div>
   </aside>
-  <!-- Script -->
-<script>
-  // Dropdown user
-  const userBtn = document.getElementById("userMenuBtn");
-  const userMenu = document.getElementById("userMenu");
-  if (userBtn) {
-    userBtn.addEventListener("click", () => {
-      userMenu.classList.toggle("hidden");
-    });
-  }
-</script>
-
 
     <!-- Swiper JS for slider -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -188,6 +173,6 @@
         cartSidebar.classList.add('translate-x-full');
       });
     </script>
-</body>
-</html>
 
+ </body>
+</html>

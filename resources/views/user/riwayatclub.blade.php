@@ -22,11 +22,11 @@
 
     <!-- Navigation (desktop) -->
     <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
-      <a href="venue.html" class="hover:text-blue-700">Sewa Lapangan</a>
-      <a href="tempat_sehat.html" class="hover:text-blue-700">Tempat Sehat</a>
-      <a href="community.html" class="hover:text-blue-700">Komunitas</a> 
-      <a href="club.html" class="hover:text-blue-700">Klub</a>
-      <a href="blog&news.html" class="hover:text-blue-700">Blog & News</a>
+      <a href="/" class="hover:text-blue-700">Sewa Lapangan</a>
+      <a href="/tempatsehat" class="hover:text-blue-700">Tempat Sehat</a>
+      <a href="/community" class="hover:text-blue-700">Komunitas</a>
+      <a href="/club" class="hover:text-blue-700">Klub</a>
+      <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
     </nav>
 
     <!-- Actions (desktop) -->
@@ -105,9 +105,9 @@
       <hr class="w-full border-gray-200" />
 
       <nav class="w-full space-y-3 text-sm text-gray-600 font-semibold">
-        <a href="#" class="block hover:text-orange-500 transition cursor-pointer">Update Profile</a>
-        <a href="#" class="block hover:text-orange-500 cursor-pointer">Komunitas</a>
-        <a href="#" class="block text-orange-500 transition cursor-pointer">Aktifitas</a>
+        <a href="/editprofile" class="block hover:text-orange-500 transition cursor-pointer">Update Profile</a>
+        <a href="/riwayat komunitas" class="block hover:text-orange-500 cursor-pointer">Komunitas</a>
+        <a href="/riwayatclub" class="block text-orange-500 transition cursor-pointer">Aktifitas</a>
       </nav>
     </aside>
 

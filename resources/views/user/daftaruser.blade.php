@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>@yield('title', 'Olga Sehat - Platform Gaya Hidup Sehat')</title>
+  <link rel="icon" href="{{ asset('assets/olgasehat-icon.png') }}" type="image/png" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            blue: {
+              700: '#013D9D',
+              800: '#002D7A',
+              900: '#001F5C',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body class="bg-white text-gray-800 font-sans">
+<!-- HEADER -->
+<header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 shadow-md bg-white transition-transform duration-300 ease-in-out">
+  <div class="container mx-auto flex items-center justify-between py-4 px-6">
+
+    <!-- Logo -->
+    <a href="/" class="flex items-center space-x-2">
+      <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="h-10 w-auto" />
+    </a>
+
+    <!-- Menu Desktop -->
+    <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
+      <a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a>
+      <a href="#" class="hover:text-blue-700">Tempat Sehat</a>
+      <a href="/community" class="hover:text-blue-700">Komunitas & Aktivitas</a>
+      <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
+    </nav>
+
+    <!-- Aksi Desktop -->
+    <div class="hidden md:flex items-center space-x-4 relative">
+      <!-- Tombol Cart (Desktop) -->
+      <button id="cartBtn" aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
+        <i class="fas fa-shopping-cart fa-lg"></i>
+        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
+      </button>
+
+      <!-- Register Dropdown -->
+      <div class="relative">
+        <button id="registerBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none">Daftar</button>
+        <div id="registerDropdown"
+          class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50
+                 transform scale-95 opacity-0 transition-all duration-200 ease-out">
+          <a href="/daftaruser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Akun User</a>
+          <a href="/regispengelola" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Akun Pengelola Venue</a>
+        </div>
+      </div>
+
+      <!-- Login Dropdown -->
+      <div class="relative">
+        <button id="loginBtn"
+          class="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition focus:outline-none">
+          Masuk
+        </button>
+        <div id="loginDropdown"
+          class="hidden absolute right-0 mt-2 w-56 bg-white border rounded-md shadow-lg z-50
+                 transform scale-95 opacity-0 transition-all duration-200 ease-out">
+          <a href="/loginuser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Masuk User</a>
+          <a href="/loginpengelolavenue" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Masuk Pengelola Venue</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header Mobile -->
+    <div class="flex md:hidden items-center space-x-4 ml-auto">
+      <!-- Tombol Cart (Mobile) -->
+      <button id="cartBtnMobile" aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
+        <i class="fas fa-shopping-cart fa-lg"></i>
+        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
+      </button>
+
+      <!-- Tombol Hamburger -->
+      <button id="mobileMenuBtn"
+              class="text-gray-700 hover:text-blue-700 focus:outline-none"
+              aria-label="Open menu">
+        <i class="fas fa-bars fa-lg"></i>
+      </button>
+    </div>
+
+    <!-- Menu Navigasi Mobile -->
+    <nav id="mobileMenu"
+         class="hidden flex-col md:hidden bg-white border-t border-gray-200 shadow-md
+                transition-all duration-300 ease-in-out absolute top-full left-0 w-full z-[50]">
+
+      <!-- Link Navigasi -->
+      <a href="/venue" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Sewa Lapangan</a>
+      <a href="#" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Tempat Sehat</a>
+      <a href="/community" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas & Aktivitas</a>
+      <a href="/blog-news" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Blog & News</a>
+
+      <!-- Masuk and Daftar Buttons -->
+      <div class="border-t pt-4">
+        <a href="/loginuser" class="block w-full px-6 py-4 text-center text-blue-700 font-semibold border border-blue-700 rounded-md hover:bg-blue-50 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200">Masuk</a>
+        <a href="/daftaruser" class="block w-full px-6 py-4 text-center bg-blue-700 text-white font-semibold rounded-md hover:bg-blue-800 menu-item opacity-0 translate-y-1 transition-all duration-200">Daftar</a>
+      </div>
+    </nav>
+</header>
+
+<main class="mt-30 flex items-center justify-center min-h-screen p-6 bg-gray-50">
+  <div class="flex flex-col md:flex-row rounded-lg overflow-hidden shadow-lg max-w-5xl w-full">
+    <!-- Left image -->
+    <div class="w-full md:w-1/2 md:h-auto flex-shrink-0">
+      <img
+        src="assets/sports-tools.jpg"
+        alt="Peralatan olahraga di atas rumput"
+        class="object-cover w-full h-64 md:h-full rounded-t-lg md:rounded-l-lg md:rounded-tr-none"
+        onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=Image+Unavailable';"
+      />
+    </div>
+
+    <!-- Right content -->
+    <div class="p-8 md:p-10 flex flex-col justify-center w-full md:w-1/2 bg-white">
+      <!-- Judul -->
+      <h1 class="text-3xl font-bold mb-4">Time to Move!</h1>
+
+      <!-- Subjudul -->
+      <p class="text-gray-600 mb-8 leading-relaxed">
+        Ribuan orang sudah memulai gaya hidup sehat.<br />
+        Sekarang giliranmu bersama <span class="font-bold text-blue-600">OlgaSehat</span> – olahraga jadi lebih seru!
+      </p>
+
+      @if ($errors->any())
+        <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+          <ul>
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
+
+      <form action="{{ route('user.register.submit') }}" method="POST" class="space-y-5">
+        @csrf
+        <div>
+          <label for="name" class="block mb-2 font-semibold">Nama</label>
+          <input type="text" id="name" name="name" value="{{ old('name') }}" required class="w-full border border-gray-300 rounded-lg px-4 py-3" />
+        </div>
+        <div>
+          <label for="email" class="block mb-2 font-semibold">Email</label>
+          <input type="email" id="email" name="email" value="{{ old('email') }}" required class="w-full border border-gray-300 rounded-lg px-4 py-3" />
+        </div>
+        <div>
+          <label for="password" class="block mb-2 font-semibold">Password</label>
+          <input type="password" id="password" name="password" required class="w-full border border-gray-300 rounded-lg px-4 py-3" />
+        </div>
+        <div>
+          <label for="password_confirmation" class="block mb-2 font-semibold">Confirm Password</label>
+          <input type="password" id="password_confirmation" name="password_confirmation" required class="w-full border border-gray-300 rounded-lg px-4 py-3" />
+        </div>
+        <button type="submit" class="w-full bg-indigo-900 hover:bg-indigo-800 text-white font-medium py-3 rounded-lg">Register</button>
+      </form>
+
+      <!-- Link Login -->
+      <p class="text-center text-gray-500 mt-6">
+        Sudah punya akun?
+        <a href="/loginuser" class="text-blue-600 hover:underline font-medium">Login di sini</a>
+      </p>
+
+      <!-- Footer -->
+      <p class="text-xs text-gray-500 text-center leading-tight mt-10">
+        Dengan melanjutkan, berarti kamu menyetujui
+        <a href="#" class="text-indigo-900 font-semibold hover:underline">Privacy Policy</a> dan
+        <a href="#" class="text-indigo-900 font-semibold hover:underline">Community Guidelines</a> OlgaSehat.id
+      </p>
+    </div>
+  </div>
+</main>
+
+
+
+  <!-- Overlay for Cart -->
+  <div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+
+  <!-- Cart Sidebar -->
+  <div id="cartSidebar"
+       class="fixed top-0 right-0 w-80 max-w-full h-full bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+    <!-- Header -->
+    <div class="flex justify-between items-center px-4 py-3 border-b">
+      <h2 class="font-semibold text-lg">JADWAL DIPILIH</h2>
+      <button id="closeCart" class="text-gray-500 hover:text-gray-700">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Isi Cart -->
+    <div class="p-4 text-gray-600">
+      Belum ada jadwal di keranjang.
+    </div>
+  </div>
+
+  <script src="{{ asset('assets/olgasehat.js') }}"></script>
+  <script>
+    // Header Layout //
+    document.addEventListener("DOMContentLoaded", function () {
+      // Dropdown helper - updated to ensure only one dropdown shows at a time
+      function toggleDropdown(dropdownToToggle, dropdownToClose) {
+        // Close the other dropdown if open
+        if (dropdownToClose && !dropdownToClose.classList.contains("hidden")) {
+          dropdownToClose.classList.remove("opacity-100", "scale-100");
+          dropdownToClose.classList.add("opacity-0", "scale-95");
+          setTimeout(() => dropdownToClose.classList.add("hidden"), 200);
+        }
+
+        // Toggle the target dropdown
+        if (dropdownToToggle.classList.contains("hidden")) {
+          dropdownToToggle.classList.remove("hidden");
+          setTimeout(() => {
+            dropdownToToggle.classList.remove("opacity-0", "scale-95");
+            dropdownToToggle.classList.add("opacity-100", "scale-100");
+          }, 10);
+        } else {
+          dropdownToToggle.classList.remove("opacity-100", "scale-100");
+          dropdownToToggle.classList.add("opacity-0", "scale-95");
+          setTimeout(() => dropdownToToggle.classList.add("hidden"), 200);
+        }
+      }
+
+      // Desktop Dropdowns
+      const registerBtn = document.getElementById("registerBtn");
+      const registerDropdown = document.getElementById("registerDropdown");
+      const loginBtn = document.getElementById("loginBtn");
+      const loginDropdown = document.getElementById("loginDropdown");
+
+      registerBtn?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleDropdown(registerDropdown, loginDropdown);
+      });
+
+      loginBtn?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleDropdown(loginDropdown, registerDropdown);
+      });
+
+      // Mobile Menu Toggle with Animation
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      mobileMenuBtn?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (mobileMenu.classList.contains("hidden")) {
+          // Open menu with stagger animation
+          mobileMenu.classList.remove("hidden");
+          const menuItems = mobileMenu.querySelectorAll(".menu-item");
+          menuItems.forEach((item, index) => {
+            item.style.opacity = "0";
+            item.style.transform = "translateY(4px)";
+            setTimeout(() => {
+              item.style.transition = "all 0.2s ease-out";
+              item.style.opacity = "1";
+              item.style.transform = "translateY(0)";
+            }, index * 50);
+          });
+        } else {
+          // Close menu with fade out
+          const menuItems = mobileMenu.querySelectorAll(".menu-item");
+          menuItems.forEach((item) => {
+            item.style.opacity = "0";
+            item.style.transform = "translateY(-4px)";
+          });
+          setTimeout(() => {
+            mobileMenu.classList.add("hidden");
+            // Reset styles after close
+            menuItems.forEach((item) => {
+              item.style.transition = "";
+              item.style.opacity = "";
+              item.style.transform = "";
+            });
+          }, 200);
+        }
+      });
+
+      // Close mobile menu on outside click
+      window.addEventListener("click", (e) => {
+        // Desktop
+        if (!registerBtn?.contains(e.target) && !registerDropdown?.contains(e.target)) {
+          registerDropdown?.classList.add("hidden", "opacity-0", "scale-95");
+        }
+        if (!loginBtn?.contains(e.target) && !loginDropdown?.contains(e.target)) {
+          loginDropdown?.classList.add("hidden", "opacity-0", "scale-95");
+        }
+        // Mobile
+        if (!mobileMenu.contains(e.target) && !mobileMenuBtn?.contains(e.target)) {
+          mobileMenu.classList.add("hidden");
+        }
+      });
+
+      // Cart Functionality
+      const cartBtns = document.querySelectorAll('#cartBtn, #cartBtnMobile');
+      const cartSidebar = document.getElementById("cartSidebar");
+      const cartOverlay = document.getElementById("cartOverlay");
+      const closeCart = document.getElementById("closeCart");
+
+      cartBtns.forEach(btn => {
+        btn?.addEventListener("click", () => {
+          cartSidebar.classList.remove("translate-x-full");
+          cartOverlay.classList.remove("hidden");
+        });
+      });
+
+      closeCart?.addEventListener("click", () => {
+        cartSidebar.classList.add("translate-x-full");
+        cartOverlay.classList.add("hidden");
+      });
+
+      cartOverlay?.addEventListener("click", () => {
+        cartSidebar.classList.add("translate-x-full");
+        cartOverlay.classList.add("hidden");
+      });
+
+      // Header hide/show on scroll
+      let lastScrollTop = 0;
+      window.addEventListener('scroll', function() {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const header = document.getElementById('mainHeader');
+        if (scrollTop > lastScrollTop && scrollTop > 100) {
+          // Scroll down and past 100px
+          header.style.transform = 'translateY(-100%)';
+        } else {
+          // Scroll up
+          header.style.transform = 'translateY(0)';
+        }
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+      });
+    });
+
+    // HOME JS //
+    @if(session('success'))
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil',
+        text: '{{ session('success') }}',
+        confirmButtonText: 'OK'
+      });
+    @endif
+
+    // VENUE JS //
+    if (document.getElementById('unifiedSearch')) {
+      document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('unifiedSearch');
+        const dropdown = document.getElementById('suggestionsDropdown');
+        const dummyVenues = [
+          {name: "MU Sport Center", address: "Jl. Sunset Road No. 123, Kuta, Denpasar, Bali", distance: 1.2},
+          {name: "Imbo Sport Center", address: "Jl. Bypass Ngurah Rai No. 45, Jimbaran, Denpasar Selatan", distance: 3.5},
+          {name: "DC Arena Bali", address: "Jl. Raya Kuta No. 78, Kuta, Badung, Bali", distance: 5.1},
+          {name: "Arena Sport", address: "Jl. Teuku Umar Barat No. 200, Denpasar Utara", distance: 7.8},
+          {name: "Bali Futsal Center", address: "Jl. Gunung Agung No. 15, Renon, Denpasar Timur", distance: 10.2},
+          {name: "Sport Hub Denpasar", address: "Jl. Diponegoro No. 300, Denpasar Pusat", distance: 15.4}
+        ];
+
+        function showSuggestions(query) {
+          if (!query.trim()) {
+            dropdown.innerHTML = '';
+            dropdown.classList.add('hidden');
+            return;
+          }
+
+          const filtered = dummyVenues
+            .filter(venue => venue.name.toLowerCase().includes(query.toLowerCase()) || venue.address.toLowerCase().includes(query.toLowerCase()))
+            .sort((a, b) => a.distance - b.distance)
+            .slice(0, 5);
+
+          if (filtered.length === 0) {
+            dropdown.innerHTML = '<li class="px-4 py-2 text-gray-500">Tidak ada hasil</li>';
+          } else {
+            dropdown.innerHTML = filtered.map(venue => `
+              <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer border-b last:border-b-0" onclick="selectVenue('${venue.name} - ${venue.address} (${venue.distance} km)')">
+                <div class="font-semibold">${venue.name}</div>
+                <div class="text-sm text-gray-600">${venue.address}</div>
+                <div class="text-xs text-gray-400">${venue.distance} km</div>
+              </li>
+            `).join('');
+          }
+
+          dropdown.classList.remove('hidden');
+        }
+
+        window.selectVenue = function(value) {
+          searchInput.value = value;
+          dropdown.classList.add('hidden');
+        };
+
+        searchInput.addEventListener('input', (e) => {
+          showSuggestions(e.target.value);
+        });
+
+        searchInput.addEventListener('focus', () => {
+          if (searchInput.value.trim()) {
+            showSuggestions(searchInput.value);
+          }
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.add('hidden');
+          }
+        });
+
+        // Form submit handler (placeholder)
+        const form = searchInput.closest('form');
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const searchTerm = searchInput.value;
+          if (searchTerm) {
+            alert(`Searching for: ${searchTerm}`); // Replace with actual search logic later
+          }
+        });
+      });
+    }
+  </script>
+</body>
+</html>

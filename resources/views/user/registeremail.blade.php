@@ -23,11 +23,11 @@
 
     <!-- Navigation (desktop) -->
     <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
-      <a href="venue.html" class="hover:text-blue-700">Sewa Lapangan</a>
-      <a href="tempat_sehat.html" class="hover:text-blue-700">Tempat Sehat</a>
-      <a href="community.html" class="hover:text-blue-700">Komunitas</a>
-      <a href="club.html" class="hover:text-blue-700">Klub</a>
-      <a href="blog&news.html" class="hover:text-blue-700">Blog & News</a>
+      <a href="/" class="hover:text-blue-700">Sewa Lapangan</a>
+      <a href="/tempatsehat" class="hover:text-blue-700">Tempat Sehat</a>
+      <a href="/community" class="hover:text-blue-700">Komunitas</a>
+      <a href="/club" class="hover:text-blue-700">Klub</a>
+      <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
     </nav>
 
     <!-- Actions (desktop) -->
@@ -65,8 +65,7 @@
   <nav id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-200 shadow-md">
     <a href="venue.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Sewa Lapangan</a>
     <a href="tempat_sehat.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Tempat Sehat</a>
-    <a href="community.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Komunitas</a>
-    <a href="club.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Klub</a>
+    <a href="community.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Komunitas & Aktivitas</a>
     <a href="blog&news.html" class="block px-6 py-3 border-b hover:bg-blue-50 hover:text-blue-700">Blog & News</a>
     
     <!-- Register & Login di mobile -->
@@ -108,7 +107,7 @@
       />
     </div>
 
- <!-- Right content -->
+   <!-- Right content -->
 <div class="p-10 flex flex-col justify-center max-w-md mx-auto">
   <!-- Judul -->
   <h1 class="text-4xl font-bold mb-4 text-gray-900">Time to Move!</h1>
@@ -120,33 +119,28 @@
     <span class="font-bold text-blue-600">OlgaSehat</span> – olahraga jadi lebih seru!
   </p>
 
-  <!-- Input Email atau Username -->
+  
+
+  <!-- Input Email -->
   <input 
-    type="text" 
-    placeholder="Email atau Username" 
+    type="email" 
+    placeholder="Alamat Email" 
     class="w-full mb-4 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
   />
-
-  <!-- Input Password -->
-  <input 
-    type="password" 
-    placeholder="Password" 
-    class="w-full mb-2 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-  />
-
-  <!-- Link Lupa Password -->
-  <p class="text-right text-sm text-gray-500 mb-6">
-    Lupa Password? 
-    <a href="/resetpassword" class="text-blue-600 hover:underline font-medium">Klik di sini</a>
-  </p>
 
   <!-- Tombol Register -->
   <button
     class="w-full mb-6 bg-indigo-900 hover:bg-indigo-800 text-white font-semibold py-3 rounded-lg shadow-md transition"
-    aria-label="Register Dengan Email atau Username"
+    aria-label="Register Dengan Email"
   >
     Register
   </button>
+
+  <!-- Link Login -->
+  <p class="text-center text-gray-500 mb-10">
+    Sudah punya akun? 
+    <a href="/loginuser" class="text-blue-600 hover:underline font-medium">Login di sini</a>
+  </p>
 
   <!-- Footer -->
   <p class="text-xs text-gray-500 text-center leading-tight">
@@ -155,8 +149,6 @@
     <a href="#" class="text-indigo-900 font-semibold hover:underline">Community Guidelines</a> OlgaSehat.id
   </p>
 </div>
-
-
 
   <script>
   // Dropdown user

@@ -1,12 +1,10 @@
-# TODO: Link Assets in Home Page using Laravel asset() helper
+# TODO for Venue Detail Session Booking Cart
 
-- [ ] Update favicon link to {{ asset('frontend/assets/olgasehat-icon.png') }}
-- [ ] Update logo img src to {{ asset('frontend/assets/olgasehat-icon.png') }}
-- [ ] Update hero section background to {{ asset('frontend/assets/banten-indonesia-august-02-2022-600nw-2455954305.webp') }}
-- [ ] Update all img src in Kelola Fasilitas section to {{ asset('frontend/assets/') }}
-- [ ] Update img src in Cari Komunitas section to {{ asset('frontend/assets/') }}
-- [ ] Update background in Mengapa Memilih Olga Sehat section to {{ asset('frontend/assets/') }}
-- [ ] Update bg-[url in Testimonial section to {{ asset('frontend/assets/') }}
-- [ ] Update img src in testimonial to {{ asset('frontend/assets/') }}
-- [ ] Update script src to {{ asset('frontend/assets/olgasehat.js') }}
-- [ ] Fix empty img src in imageContainerPenyewa
+1. [ ] Review current JS cart implementation in venue_detail.blade.php.
+2. [ ] Add modal popup for cart display to match screenshot (instead of sidebar).
+3. [ ] Update JS to open modal on session selection, show selected sessions, totals, pay button.
+4. [ ] Ensure cart data passes to /confirm page (e.g., via form or localStorage).
+5. [ ] Edit file with changes.
+6. [ ] Start server with `php artisan serve` if needed.
+7. [ ] Test in browser: navigate to /venue-detail, select slots, verify modal/cart, screenshot.
+8. [ ] Update TODO with progress.

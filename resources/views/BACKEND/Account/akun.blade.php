@@ -70,6 +70,7 @@
                                     <th>Nama</th>
                                     <th>Email</th>
                                     <th>Password</th>
+                                    <th>Role</th>
                                     <th width="20%">Aksi</th>
                                 </tr>
                             </thead>
@@ -80,6 +81,7 @@
                                         <td>{{ $row->name }}</td>
                                         <td>{{ $row->email }}</td>
                                         <td>••••••••</td>
+                                        <td>{{ $row->role }}</td>
                                         <td>
                                             <a href="/tampilkanacc/{{ $row->id }}" class="btn btn-info btn-sm">Edit</a>
                                             <button type="button" class="btn btn-danger btn-sm" onclick="deleteAccount({{ $row->id }})">Delete</button>
@@ -87,7 +89,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center">Data tidak ditemukan</td>
+                                        <td colspan="6" class="text-center">Data tidak ditemukan</td>
                                     </tr>
                                 @endforelse
                             </tbody>

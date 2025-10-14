@@ -10,11 +10,7 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::create([
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('123456'), // password aman
-        ]);
+        // Removed user creation to avoid duplicate or conflicting data
     }
 }
 

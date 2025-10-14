@@ -9,50 +9,68 @@
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
     body {
       font-family: 'Poppins', sans-serif;
-      background: #f9fafb;
+      background: #ffffff;
     }
   </style>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
-<!-- Logo -->
-<div class="mb-6 text-center">
-  <img src="assets/logo.png" 
-       alt="Logo" 
-       class="mx-auto max-h-20 w-auto" />
-</div>
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
+
+  <!-- Logo -->
+  <div class="mb-6 text-center">
+    <img src="assets/olgasehat-icon.png" 
+         alt="Logo" 
+         class="mx-auto max-h-20 w-auto" />
+  </div>
 
   <!-- Card -->
-<div class="max-w-sm w-full bg-white rounded-xl shadow-lg p-8">
-  <!-- Welcome -->
-  <h2 class="text-lg font-semibold text-gray-800">Selamat datang</h2>
-  <h3 class="text-xl font-bold text-[#1a3a7f] mt-1">Pengelola Venue !</h3>
-
-  <!-- Deskripsi -->
-  <p class="text-gray-500 text-sm mt-4">
-    Software Fasilitas Olahraga No <span class="font-bold">#1</span> di Indonesia
-  </p>
-  <p class="text-gray-700 text-sm mt-2 mb-6">
-    Rasakan pengalaman mengelola Fasilitas Olahraga dengan mudah dan optimal
+  <div class="max-w-sm w-full bg-white border-2 rounded-md p-6">
+  <!-- Header -->
+  <h2 class="text-lg font-bold text-gray-800 text-center">Login Pengelola Venue</h2>
+  <p class="text-sm text-gray-600 text-center mt-1">
+    Sudah Punya Akun?
+    <a href="/regispengelola" class="text-[#1a3a7f] font-semibold hover:underline">Register di sini</a>
   </p>
 
+  <!-- Form -->
+  <form class="mt-6 space-y-4" action="{{ route('loginproses') }}" method="POST">
+    @csrf
+    <!-- Email -->
+    <div>
+      <label class="block text-sm font-semibold text-gray-700 mb-1">Email</label>
+      <input type="email"
+             name="email"
+             placeholder="Email"
+             class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#1a3a7f] outline-none"
+             value="{{ old('email') }}" />
+      @error('email')
+        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+      @enderror
+    </div>
 
-   <!-- Form -->
-<form class="space-y-4">
-  <input type="email" 
-         placeholder="Alamat Email" 
-         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1a3a7f] outline-none" />
-  
-  <button type="submit" 
-          class="w-full bg-[#1a3a7f] hover:bg-[#142b5c] text-white font-semibold py-3 rounded-lg transition">
-    Submit
-  </button>
+    <!-- Password -->
+    <div>
+      <label class="block text-sm font-semibold text-gray-700 mb-1">Password</label>
+      <input type="password"
+             name="password"
+             placeholder="Password"
+             class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#1a3a7f] outline-none" />
+      @error('password')
+        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+      @enderror
+    </div>
 
-  <!-- Teks tambahan -->
-  <p class="text-sm text-gray-600 text-center">
-    Sudah punya akun? <a href="#" class="text-[#1a3a7f] font-semibold hover:underline">Klik di sini</a>
+    <!-- Button -->
+    <button type="submit"
+            class="w-full bg-[#1a3a7f] hover:bg-[#142b5c] text-white font-semibold py-2 rounded-md transition">
+      Login
+    </button>
+  </form>
+
+  <!-- Footer text -->
+  <p class="text-xs text-gray-600 text-center mt-4">
+    Ingin daftar sebagai user di web utama OlgaSehat?
+    <a href="/daftaruser" class="text-[#1a3a7f] hover:underline">Klik di sini</a>
   </p>
-</form>
-
   </div>
 
 </body>

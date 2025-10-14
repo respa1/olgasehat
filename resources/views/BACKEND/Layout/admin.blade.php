@@ -125,7 +125,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/venue" class="nav-link">
+                <a href="{{ route('mitra.datapemiliklapangan') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pemilik Lapangan</p>
                 </a>
@@ -139,35 +139,31 @@
             </ul>
           </li>
 
-          <!-- Keuangan -->
+          <!-- Blog & News -->
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-wallet"></i>
+              <i class="nav-icon fas fa-newspaper"></i>
               <p>
-                Keuangan
+                Aktivitas
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/riwayat-fasilitas" class="nav-link">
+                <a href="/category" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Fasilitas</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/riwayat-komunitas" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Komunitas</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/riwayat-klub" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Klub</p>
+                  <p>Category</p>
                 </a>
               </li>
             </ul>
+          </li>
+
+          <!-- Keuangan -->
+          <li class="nav-item">
+            <a href="/review" class="nav-link">
+              <i class="nav-icon fas fa-wallet"></i>
+              <p>Keuangan</p>
+            </a>
           </li>
 
           <!-- Blog & News -->

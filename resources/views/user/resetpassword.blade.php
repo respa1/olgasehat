@@ -23,11 +23,11 @@
 
     <!-- Navigation (desktop) -->
     <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
-      <a href="venue.html" class="hover:text-blue-700">Sewa Lapangan</a>
-      <a href="tempat_sehat.html" class="hover:text-blue-700">Tempat Sehat</a>
-      <a href="community.html" class="hover:text-blue-700">Komunitas</a>
-      <a href="club.html" class="hover:text-blue-700">Klub</a>
-      <a href="blog&news.html" class="hover:text-blue-700">Blog & News</a>
+       <a href="/" class="hover:text-blue-700">Sewa Lapangan</a>
+      <a href="/tempatsehat" class="hover:text-blue-700">Tempat Sehat</a>
+      <a href="/community" class="hover:text-blue-700">Komunitas</a>
+      <a href="/club" class="hover:text-blue-700">Klub</a>
+      <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
     </nav>
 
     <!-- Actions (desktop) -->
@@ -108,48 +108,47 @@
       />
     </div>
 
-   <!-- Right content -->
+<!-- Right content -->
 <div class="p-10 flex flex-col justify-center max-w-md mx-auto">
   <!-- Judul -->
-  <h1 class="text-4xl font-bold mb-4 text-gray-900">Time to Move!</h1>
+  <h1 class="text-4xl font-bold mb-4 text-gray-900 text-left">Lupa Password ?</h1>
   
   <!-- Subjudul -->
-  <p class="text-gray-600 mb-8 leading-relaxed">
-    Ribuan orang sudah memulai gaya hidup sehat.<br />
-    Sekarang giliranmu bersama 
-    <span class="font-bold text-blue-600">OlgaSehat</span> – olahraga jadi lebih seru!
+  <p class="text-gray-600 mb-2 text-left leading-relaxed">
+    Masukkan alamat email kamu yang sudah terdaftar di 
+    <span class="font-bold text-indigo-900">Olgasehat</span>.
   </p>
 
-  
+  <!-- Link kembali -->
+  <p class="text-left text-gray-600 mb-6">
+    Kembali ke halaman 
+    <a href="/loginuser" class="text-blue-600 hover:underline font-medium">Login page</a>
+  </p>
 
   <!-- Input Email -->
   <input 
     type="email" 
     placeholder="Alamat Email" 
-    class="w-full mb-4 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+    class="w-full mb-4 bg-gray-100 border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
   />
 
-  <!-- Tombol Register -->
+  <!-- Tombol Reset -->
   <button
-    class="w-full mb-6 bg-indigo-900 hover:bg-indigo-800 text-white font-semibold py-3 rounded-lg shadow-md transition"
-    aria-label="Register Dengan Email"
+    class="w-full mb-4 bg-indigo-900 hover:bg-indigo-800 text-white font-semibold py-3 rounded-lg shadow-md transition"
+    aria-label="Reset Password"
   >
-    Register
+    RESET PASSWORD
   </button>
 
-  <!-- Link Login -->
-  <p class="text-center text-gray-500 mb-10">
-    Sudah punya akun? 
-    <a href="/loginuser" class="text-blue-600 hover:underline font-medium">Login di sini</a>
-  </p>
-
-  <!-- Footer -->
-  <p class="text-xs text-gray-500 text-center leading-tight">
-    Dengan melanjutkan, berarti kamu menyetujui
-    <a href="#" class="text-indigo-900 font-semibold hover:underline">Privacy Policy</a> dan
-    <a href="#" class="text-indigo-900 font-semibold hover:underline">Community Guidelines</a> OlgaSehat.id
+  <!-- Info OTP -->
+  <p class="text-xs text-gray-500 text-left leading-tight">
+    Kami akan mengirimkan kode OTP ke emailmu yang terdaftar
   </p>
 </div>
+
+
+
+
 
   <script>
   // Dropdown user
