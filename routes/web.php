@@ -96,6 +96,10 @@ Route::get('/communityuser', function () {return view('user.communityuser'); });
 Route::get('/communityuser_detail', function () {return view('user.communityuser_detail'); });
 Route::get('/bloguser_news', function () {return view('user.bloguser_news'); });
 Route::get('/bloguser_detail', function () {return view('user.bloguser_detail'); });
+Route::get('/confirmuser', function () {return view('user.confirmuser'); });
+Route::get('/paymentuser', function () {return view('user.paymentuser'); });
+Route::get('/success_user', function () {return view('user.success_user'); });
+
 
 
 // login pengelola

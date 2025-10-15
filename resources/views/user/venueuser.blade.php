@@ -351,7 +351,7 @@
             scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-100"
         >
             
-            <a href="/venue-detail" class="flex-shrink-0 min-w-[280px] md:min-w-[300px] block">
+            <a href="/venueuser_detail" class="flex-shrink-0 min-w-[280px] md:min-w-[300px] block">
                 <article class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition duration-300 border border-gray-100">
                     <div class="relative">
                         <img 
@@ -376,7 +376,7 @@
                 </article>
             </a>
             
-            <a href="/venue-detail" class="flex-shrink-0 min-w-[280px] md:min-w-[300px] block">
+            <a href="/venueuser_detail" class="flex-shrink-0 min-w-[280px] md:min-w-[300px] block">
                 <article class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition duration-300 border border-gray-100">
                     <div class="relative">
                         <img 
@@ -401,7 +401,7 @@
                 </article>
             </a>
             
-            <a href="/venue-detail" class="flex-shrink-0 min-w-[280px] md:min-w-[300px] block">
+            <a href="/venueuser_detail" class="flex-shrink-0 min-w-[280px] md:min-w-[300px] block">
                 <article class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition duration-300 border border-gray-100">
                     <div class="relative">
                         <img 
@@ -426,7 +426,7 @@
                 </article>
             </a>
             
-            <a href="/venue-detail" class="flex-shrink-0 min-w-[280px] md:min-w-[300px] block">
+            <a href="/venueuser_detail" class="flex-shrink-0 min-w-[280px] md:min-w-[300px] block">
                 <article class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition duration-300 border border-gray-100">
                     <div class="relative">
                         <img 
@@ -451,7 +451,7 @@
                 </article>
             </a>
             
-            <a href="/venue-detail" class="flex-shrink-0 min-w-[280px] md:min-w-[300px] block">
+            <a href="/venueuser_detail" class="flex-shrink-0 min-w-[280px] md:min-w-[300px] block">
                 <article class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition duration-300 border border-gray-100">
                     <div class="relative">
                         <img 
