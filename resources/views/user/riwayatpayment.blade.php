@@ -29,36 +29,85 @@
         <h1 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">Riwayat Transaksi</h1>
 
         {{-- Filter & Keterangan --}}
-        <div class="bg-white p-6 rounded-xl shadow-lg mb-8">
-            <div class="md:flex md:justify-between md:items-end">
-                <div class="mb-4 md:mb-0">
-                    <label class="block mb-2 font-bold text-gray-700 text-sm" for="cutoff-date">
+        <div class="bg-white p-6 rounded-2xl shadow-md mb-8 border border-gray-100">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-end gap-6">
+
+                {{-- Kiri: Tanggal Cut Off --}}
+                <div>
+                    <label for="cutoff-date" class="block text-sm font-semibold text-gray-800 mb-2">
                         Pilih Tanggal Cut Off
                     </label>
-                    <div class="relative">
-                        <input class="datepicker-input" id="cutoff-date" readonly="" type="text" value="14 Oktober 2025"/>
-                        {{-- Icon Calendar --}}
+
+                    <div class="relative max-w-xs">
+                        <input 
+                            id="cutoff-date" 
+                            type="text" 
+                            class="border border-gray-300 rounded-lg px-4 py-2 w-full text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
+                            placeholder="Pilih tanggal"
+                        >
                         <i class="fas fa-calendar-alt absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     </div>
-                    <p class="text-xs text-gray-500 mt-2">
-                        *Menampilkan transaksi
-                        <span class="text-blue-600 font-semibold">
-                            6 bulan ke belakang
-                        </span>
+
+                    <p class="text-xs text-gray-500 mt-2 leading-relaxed">
+                        *Menampilkan transaksi <span class="text-blue-600 font-semibold">6 bulan ke belakang</span> 
                         dari tanggal pilihan Anda.
                     </p>
                 </div>
 
-                <div class="flex space-x-3">
-                    <button class="text-sm font-semibold px-4 py-2 rounded-lg transition duration-150 filter-btn-active" type="button">
-                        <i class="fas fa-list-ul mr-1"></i> Semua Transaksi
+                {{-- Kanan: Tombol Filter --}}
+                <div class="flex flex-wrap gap-3">
+                    <button 
+                        id="btn-semua" 
+                        type="button"
+                        class="flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-lg shadow-sm hover:bg-blue-700 transition active:scale-95">
+                        <i class="fas fa-list-ul"></i> Semua Transaksi
                     </button>
-                    <button class="text-sm font-semibold px-4 py-2 rounded-lg transition duration-150 filter-btn-inactive" type="button">
-                        <i class="fas fa-percent mr-1"></i> Down Payment (DP)
+
+                    <button 
+                        id="btn-dp" 
+                        type="button"
+                        class="flex items-center gap-2 px-5 py-2.5 bg-white text-gray-700 font-semibold rounded-lg border border-gray-300 hover:bg-gray-50 transition active:scale-95">
+                        <i class="fas fa-percent"></i> Down Payment (DP)
                     </button>
                 </div>
             </div>
         </div>
+
+        {{-- Tambahkan di bawah, sebelum </body> atau di @push('scripts') --}}
+        @push('scripts')
+            {{-- Flatpickr (Datepicker Modern) --}}
+            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+            <script>
+                // Inisialisasi datepicker
+                flatpickr("#cutoff-date", {
+                    dateFormat: "d F Y",
+                    defaultDate: "today",
+                    locale: "id",
+                });
+
+                // Tombol toggle
+                const btnSemua = document.getElementById('btn-semua');
+                const btnDP = document.getElementById('btn-dp');
+
+                btnSemua.addEventListener('click', () => {
+                    btnSemua.classList.add('bg-blue-600', 'text-white', 'border-transparent');
+                    btnSemua.classList.remove('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+                    
+                    btnDP.classList.remove('bg-blue-600', 'text-white');
+                    btnDP.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+                });
+
+                btnDP.addEventListener('click', () => {
+                    btnDP.classList.add('bg-blue-600', 'text-white', 'border-transparent');
+                    btnDP.classList.remove('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+
+                    btnSemua.classList.remove('bg-blue-600', 'text-white');
+                    btnSemua.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+                });
+            </script>
+        @endpush
         
         {{-- List Riwayat Transaksi --}}
         <div class="space-y-4">
