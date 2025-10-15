@@ -178,6 +178,19 @@
                         Dengan melanjutkan penggunaan platform ini, Anda dianggap telah menyetujui seluruh ketentuan di atas.
                     </p>
                 </div>
+                <div class="flex items-start mb-6">
+          <input class="mt-1 mr-2 rounded focus:ring-blue-500"
+                 id="terms"
+                 type="checkbox"
+                 name="terms"
+                 required/>
+          <label class="text-xs text-gray-600" for="terms">
+            Saya menyetujui
+            <a class="text-blue-600 hover:underline font-medium" href="#">
+              Syarat & Ketentuan
+            </a>
+          </label>
+        </div>
 
                 </div>
                 </form>

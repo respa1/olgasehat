@@ -134,4 +134,15 @@
         });
     });
 </script>
+@endpushconst sessionMessage = 
+            "{{ Session::get('Success') ?? Session::get('update') ?? Session::get('delete') }}";
+        if (sessionMessage) {
+             toastr.success(sessionMessage);
+        }
+    @endif
+
+    @if (Session::has('error'))
+        toastr.error("{{ Session::get('error') }}");
+    @endif
+</script>
 @endpush

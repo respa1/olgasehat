@@ -72,10 +72,11 @@
           Masuk
         </button>
         <div id="loginDropdown"
-          class="hidden absolute right-0 mt-2 w-56 bg-white border rounded-md shadow-lg z-50
+          class="hidden absolute right-0 mt-2 w-64 bg-white border rounded-md shadow-lg z-50
                  transform scale-95 opacity-0 transition-all duration-200 ease-out">
           <a href="/loginuser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Masuk User</a>
           <a href="/loginpengelolavenue" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Masuk Pengelola Venue</a>
+          <a href="/loginemail" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login Dengan Email</a>
         </div>
       </div>
     </div>
@@ -117,7 +118,7 @@
 
 
 
-  <main class="mt-24 flex items-center justify-center min-h-screen p-6 bg-gray-50">
+  <main class="mt-30 flex items-center justify-center min-h-screen p-6 bg-gray-50">
   <div class="bg-white rounded-lg shadow-md max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 overflow-hidden">
     <!-- Left image -->
     <div class="w-full h-64 md:h-auto">

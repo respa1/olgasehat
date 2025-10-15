@@ -167,9 +167,9 @@
             </a>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-5xl mx-auto">
+        <div class="flex overflow-x-auto gap-4 pb-4 max-w-5xl mx-auto lg:overflow-x-visible lg:grid lg:grid-cols-3 lg:gap-4 lg:pb-0">
 
-            <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02]">
+            <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02] flex-shrink-0 w-72 sm:w-full">
                 <img src="{{ asset('assets/komunitas.png') }}" alt="Komunitas Futsal Jakarta"
                             class="object-cover h-56 md:h-64 w-full transition duration-500 group-hover:opacity-85" />
                 <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-start justify-end p-4">
@@ -178,7 +178,7 @@
                 </div>
             </div>
 
-            <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02]">
+            <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02] flex-shrink-0 w-72 sm:w-full">
                 <img src="{{ asset('assets/komunitas1.png') }}" alt="Komunitas Basket Surabaya"
                             class="object-cover h-56 md:h-64 w-full transition duration-500 group-hover:opacity-85" />
                 <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-start justify-end p-4">
@@ -187,7 +187,7 @@
                 </div>
             </div>
 
-            <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02]">
+            <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02] flex-shrink-0 w-72 sm:w-full">
                 <img src="{{ asset('assets/komunitas2.png') }}" alt="Komunitas Badminton Bandung"
                             class="object-cover h-56 md:h-64 w-full transition duration-500 group-hover:opacity-85" />
                 <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-start justify-end p-4">

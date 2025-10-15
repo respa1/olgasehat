@@ -98,7 +98,7 @@
                 </article>
             </a>
             
-            <a href="/membershipuser_detail" class="block group">
+            <a href="/membership-user-detail" class="block group">
                 <article class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition relative">
                     <img src="assets/DC Arena Bali.jpeg" alt="Klub" class="w-full h-40 object-cover group-hover:scale-105 transition-transform" />
                     <div class="p-4">
