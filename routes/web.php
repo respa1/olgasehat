@@ -20,6 +20,7 @@ Route::get('/blog-news', fn() => view('frontend.blog-news'));
 Route::get('/blog-news-detail', fn() => view('frontend.blog&news_detail'));
 Route::get('/membership-detail', fn() => view('frontend.membership_detail'));
 Route::get('/community', fn() => view('frontend.community'));
+Route::get('/buat-aktivitas', fn() => view('frontend.buat_aktivitas_baru'));
 Route::get('/community-detail', fn() => view('frontend.community_detail'));
 Route::get('/confirm', fn() => view('frontend.confirm'));
 Route::get('/daftar-pemilik', fn() => view('frontend.daftar_pemilik'));
