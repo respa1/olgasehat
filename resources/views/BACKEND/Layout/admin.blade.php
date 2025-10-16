@@ -160,7 +160,7 @@
 
           <!-- Keuangan -->
           <li class="nav-item">
-            <a href="/review" class="nav-link">
+            <a href="/keuangan" class="nav-link">
               <i class="nav-icon fas fa-wallet"></i>
               <p>Keuangan</p>
             </a>
