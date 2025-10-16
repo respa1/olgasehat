@@ -23,6 +23,13 @@
                         <i class="fas fa-calendar-alt text-base text-gray-500"></i>
                         <span>28 March 2025</span>
                     </div>
+                    {{-- Tambahan: Ikon dan Jumlah Dilihat --}}
+                    <div class="flex items-center space-x-1">
+                        <i class="fas fa-eye text-base text-gray-500"></i>
+                        {{-- Ganti '1234' dengan data dinamis jika tersedia, misal: {{ $article->views_count }} --}}
+                        <span>1234 Dilihat</span>
+                    </div>
+                    {{-- End Tambahan --}}
                 </div>
 
                 <div class="flex items-center space-x-3 text-sm">
