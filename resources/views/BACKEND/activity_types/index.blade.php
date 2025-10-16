@@ -33,14 +33,21 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-6">
-                            <h3 class="m-0">Daftar Aktivitas</h3>
+                            <h3 class="card-title">Daftar Tipe Aktivitas</h3>
                         </div>
                         <div class="col-md-6">
                             <div class="row justify-content-end">
                                 <div class="col-auto">
-                                    <a href="{{ route('activity-types.create') }}" class="btn btn-success">
-                                        <i class="fas fa-plus"></i> Tambah Tipe Aktivitas
-                                    </a>
+                                    <form action="{{ route('activity-types.index') }}" method="GET" class="form-inline">
+                                        <div class="input-group">
+                                            <input type="search" name="search" class="form-control" placeholder="Cari tipe aktivitas..." value="{{ request('search') }}">
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +75,6 @@
                                         <td><i class="{{ $type->icon }}"></i> {{ $type->icon }}</td>
                                         <td>
                                             <a href="{{ route('activity-types.edit', $type->id) }}" class="btn btn-info btn-sm">Edit</a>
-                                            <button type="button" class="btn btn-danger btn-sm" onclick="deleteActivityType({{ $type->id }})">Delete</button>
                                         </td>
                                     </tr>
                                 @empty

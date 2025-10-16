@@ -21,7 +21,7 @@ class ActivityTypeController extends Controller
      */
     public function create()
     {
-        return view('backend.activity_types.create');
+        abort(403, 'Tidak diizinkan menambah tipe aktivitas baru.');
     }
 
     /**
@@ -29,15 +29,7 @@ class ActivityTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:activity_types',
-            'title' => 'required|string|max:255',
-            'icon' => 'nullable|string|max:255',
-        ]);
-
-        ActivityType::create($request->all());
-
-        return redirect()->route('activity-types.index')->with('success', 'Tipe Aktivitas berhasil ditambahkan.');
+        abort(403, 'Tidak diizinkan menambah tipe aktivitas baru.');
     }
 
     /**
@@ -80,9 +72,6 @@ class ActivityTypeController extends Controller
      */
     public function destroy(string $id)
     {
-        $activityType = ActivityType::findOrFail($id);
-        $activityType->delete();
-
-        return redirect()->route('activity-types.index')->with('success', 'Tipe Aktivitas berhasil dihapus.');
+        abort(403, 'Tidak diizinkan menghapus tipe aktivitas.');
     }
 }
