@@ -156,7 +156,7 @@
 
         <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mb-14">
 
-            <a href="/buat-aktivitas" class="block w-full sm:w-auto">
+            <a href="/loginuser" class="block w-full sm:w-auto">
             <button class="bg-blue-700 text-white text-sm font-bold rounded-full px-6 py-3 shadow-lg hover:bg-blue-800 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50">
                 <i class="fas fa-plus-circle mr-2"></i> BUAT AKTIVITAS BARU
             </button>
