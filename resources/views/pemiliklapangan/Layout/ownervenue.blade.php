@@ -111,7 +111,7 @@
 
           <!-- Papan Jadwal -->
           <li class="nav-item">
-            <a href="/pemiliklapangan/jadwal" class="nav-link">
+            <a href="/papan" class="nav-link">
               <i class="nav-icon fas fa-calendar"></i>
               <p>Papan Jadwal</p>
             </a>

@@ -37,6 +37,7 @@ class BeritaController extends Controller
 
         $data = new Berita();
         $data->title = $request->input('title');
+        $data->name = $request->input('name');
         $data->excerpt = $request->input('excerpt');
         $data->content = $clean_content; 
         $data->date = $request->input('date');
@@ -96,6 +97,7 @@ public function updatedata(Request $request, $id){
     // Perbarui data selain konten dan gambar, pastikan untuk tidak memperbarui kolom 'id' dan 'image' secara langsung
     $data->update([
         'title' => $request->input('title'),
+        'name' => $request->input('name'),
         'excerpt' => $request->input('excerpt'),
         'content' => $clean_content,  // Content yang sudah dipurifikasi
         'date' => $request->input('date'),

@@ -8,7 +8,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\InformasiController;
+use App\Http\Controllers\PendaftaranController;
 
 // ======================================================
 // PUBLIC ROUTES (No Authentication Required)
@@ -107,10 +107,10 @@ Route::post('/isidata', [App\Http\Controllers\MitraController::class, 'store'])-
 
 Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     Route::get('/pemiliklapangan/dashboard', fn() => view('pemiliklapangan.Dashboard.dashboard'));
-    Route::get('/informasi', [InformasiController::class, 'informasi'])->name('informasi');
-    Route::get('/detail', [InformasiController::class, 'detail'])->name('detail');
-    Route::get('/syarat', [InformasiController::class, 'syarat'])->name('syarat');
-    Route::get('/end', [InformasiController::class, 'end'])->name('end');
+    Route::get('/informasi', [PendaftaranController::class, 'informasi'])->name('informasi');
+    Route::get('/detail', [PendaftaranController::class, 'detail'])->name('detail');
+    Route::get('/syarat', [PendaftaranController::class, 'syarat'])->name('syarat');
+    Route::get('/end', [PendaftaranController::class, 'end'])->name('end');
 });
 
 // ======================================================
@@ -176,6 +176,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/verifikasi-mitra', [App\Http\Controllers\MitraController::class, 'index'])->name('mitra.index');
         Route::put('/verifikasi-mitra/{id}', [App\Http\Controllers\MitraController::class, 'verify'])->name('mitra.verify');
         Route::get('/datapemiliklapangan', [App\Http\Controllers\MitraController::class, 'index'])->name('mitra.datapemiliklapangan');
+
+
+        // PAPAN JADWAL
+        
     });
 });
 

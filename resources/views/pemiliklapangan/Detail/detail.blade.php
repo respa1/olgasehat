@@ -3,56 +3,12 @@
 @section('content')
 <div class="content-wrapper p-4">
     <style>
-        .custom-file-upload:hover {
-            border-color: #007bff;
-            background-color: #eaf2ff;
-        }
-
-        .custom-file-upload input[type="file"] {
-            display: none;
-        }
-
-        .custom-file-upload .icon {
-            font-size: 2.5rem;
-            color: #007bff;
-            margin-bottom: 10px;
-        }
-
-        .custom-file-upload .text {
-            font-size: 1rem;
-            color: #666;
-        }
-
-        .image-preview {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 300px;
-            border: 2px dashed #ddd;
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
-            background-color: #f8f8f8;
-            padding: 10px;
-            transition: border-color 0.3s ease;
-        }
-
-        .image-preview:hover {
-            border-color: #4B49AC;
-        }
-
-        .image-preview img {
-            max-height: 100%;
-            max-width: 100%;
-            object-fit: cover;
-            display: none;
-        }
-
-        .preview-text {
-            font-size: 16px;
-            color: #aaa;
-        }
+    .video-preview iframe {
+        border-radius: 10px;
+        max-width: 560px;
+        width: 100%;
+        height: 315px;
+    }
     </style>
     <div class="container-fluid">
         <div class="row">
@@ -120,13 +76,22 @@
                         <form action="/insertdata" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
-                        <label for="image" class="form-label">Video Riview</label>
-                        <input type="file" id="image" name="foto" class="form-control">
-                        <div class="image-preview" id="thumbnailInput">
-                            <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
-                            <span class="preview-text" id="previewText">No Video selected</span>
-                        </div>
+                    <label for="video_link" class="form-label">Video Review (Link YouTube)</label>
+                    <input 
+                        type="url" 
+                        id="video_link" 
+                        name="video_review" 
+                        class="form-control" 
+                        placeholder="Masukkan link YouTube, contoh: https://www.youtube.com/watch?v=abc123" 
+                        value="{{ old('video_review') }}"
+                    >
+                    <small class="text-muted">Masukkan link YouTube (bukan upload file video).</small>
+
+                    <!-- Preview Video -->
+                    <div class="video-preview mt-3 text-center" id="videoPreview" style="display:none;">
+                        <iframe width="100%" height="315" src="" frameborder="0" allowfullscreen></iframe>
                     </div>
+                </div>
  
                     <div class="mb-3">
                         <label for="judulProgram" class="form-label">Detail Venue</label>
@@ -191,6 +156,34 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const videoInput = document.getElementById('video_link');
+    const videoPreview = document.getElementById('videoPreview');
+    const iframe = videoPreview.querySelector('iframe');
+
+    videoInput.addEventListener('input', function () {
+        const url = this.value.trim();
+        let videoId = null;
+
+        // Ambil ID dari link YouTube (bisa link pendek atau panjang)
+        const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w\-]+)/;
+        const match = url.match(regex);
+        if (match && match[1]) {
+            videoId = match[1];
+        }
+
+        if (videoId) {
+            iframe.src = `https://www.youtube.com/embed/${videoId}`;
+            videoPreview.style.display = 'block';
+        } else {
+            videoPreview.style.display = 'none';
+            iframe.src = '';
+        }
+    });
+});
+</script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

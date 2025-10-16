@@ -80,9 +80,15 @@
                 </div>
   
                 <div class="mb-3">
-                    <label for="judulProgram" class="form-label">Judul</label>
+                    <label for="judulnews" class="form-label">Judul</label>
                     <input type="text" name="title" class="form-control" value="{{ old('title', $data->title) }}">
                 </div>
+
+                <div class="mb-3">
+                    <label for="kontributornews" class="form-label">Kontributor</label>
+                    <input type="text" name="name" class="form-control" value="{{ old('name', $data->name) }}">
+                </div>
+
 
                 <div class="mb-3">
                     <label for="excerpt" class="form-label">Short Content Berita</label>

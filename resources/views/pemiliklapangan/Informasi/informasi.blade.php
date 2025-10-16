@@ -3,65 +3,53 @@
 @section('content')
 <div class="content-wrapper p-4">
     <style>
-        .custom-file-upload:hover {
-            border-color: #007bff;
-            background-color: #eaf2ff;
-        }
-
-        .custom-file-upload input[type="file"] {
-            display: none;
-        }
-
-        .custom-file-upload .icon {
-            font-size: 2.5rem;
-            color: #007bff;
-            margin-bottom: 10px;
-        }
-
-        .custom-file-upload .text {
-            font-size: 1rem;
-            color: #666;
-        }
-
-        .image-preview {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 300px;
-            border: 2px dashed #ddd;
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
-            background-color: #f8f8f8;
-            padding: 10px;
-            transition: border-color 0.3s ease;
-        }
-
-        .image-preview:hover {
-            border-color: #4B49AC;
-        }
-
-        .image-preview img {
-            max-height: 100%;
-            max-width: 100%;
-            object-fit: cover;
-            display: none;
-        }
-
-        .preview-text {
-            font-size: 16px;
-            color: #aaa;
-        }
-
-        .step-number {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
+    .image-preview {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        min-height: 150px;
+        border: 2px dashed #ddd;
+        border-radius: 8px;
+        background-color: #f8f8f8;
+        padding: 15px;
+        justify-content: center;
+        align-items: center;
+        transition: border-color 0.3s ease;
+    }
+    .image-preview:hover {
+        border-color: #4B49AC;
+    }
+    .image-preview .preview-item {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #fff;
+    }
+    .image-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .image-preview .remove-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-color: rgba(255, 0, 0, 0.8);
+        border: none;
+        border-radius: 50%;
+        color: white;
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .preview-text {
+        font-size: 16px;
+        color: #aaa;
+    }
     </style>
 
     <div class="container-fluid">
@@ -69,11 +57,11 @@
             <!-- Sidebar Progress -->
             <div class="col-md-3">
                 <div class="card shadow-sm border-0">
-                    <div class="card-body">
+                   <div class="card-body">
                         <ul class="list-unstyled">
                             <li class="mb-4">
                                 <div class="d-flex align-items-center">
-                                    <span class="step-number bg-primary text-white rounded-circle me-2">
+                                    <span class="step-number bg-primary text-white rounded-circle me-2"> 
                                         <i class="fas fa-handshake"></i>
                                     </span>
                                     <div>
@@ -132,11 +120,12 @@
                         <form action="/insertdata" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
-                                <label for="image" class="form-label">Gambar</label>
-                                <input type="file" id="image" name="foto" class="form-control">
-                                <div class="image-preview" id="thumbnailInput">
-                                    <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
-                                    <span class="preview-text" id="previewText">No image selected</span>
+                                <label for="image" class="form-label">Upload Gambar (Maks. 5)</label>
+                                <input type="file" id="image" name="foto[]" class="form-control" multiple accept="image/*">
+                                <small class="text-muted">Anda dapat memilih hingga 5 gambar.</small>
+
+                                <div class="image-preview mt-3" id="imagePreview">
+                                    <span class="preview-text">Belum ada gambar dipilih</span>
                                 </div>
                             </div>
 
@@ -179,7 +168,7 @@
                                 </select>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Selanjutnya →</button>
+                           <a href="/detail" class="btn btn-primary">Selanjutnya →</a>
                         </form>
                     </div>
                 </div>
@@ -187,6 +176,58 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const imageInput = document.getElementById('image');
+    const imagePreview = document.getElementById('imagePreview');
+
+    imageInput.addEventListener('change', function () {
+        const files = Array.from(this.files);
+        imagePreview.innerHTML = ''; // kosongkan isi preview lama
+
+        if (files.length > 5) {
+            alert('Maksimal hanya 5 foto yang boleh diunggah!');
+            imageInput.value = ''; // reset input file
+            imagePreview.innerHTML = '<span class="preview-text">Belum ada gambar dipilih</span>';
+            return;
+        }
+
+        if (files.length === 0) {
+            imagePreview.innerHTML = '<span class="preview-text">Belum ada gambar dipilih</span>';
+            return;
+        }
+
+        files.forEach((file, index) => {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const div = document.createElement('div');
+                div.classList.add('preview-item');
+
+                const img = document.createElement('img');
+                img.src = e.target.result;
+
+                const removeBtn = document.createElement('button');
+                removeBtn.classList.add('remove-btn');
+                removeBtn.innerHTML = '×';
+                removeBtn.addEventListener('click', () => {
+                    div.remove();
+                    if (imagePreview.children.length === 0) {
+                        imagePreview.innerHTML = '<span class="preview-text">Belum ada gambar dipilih</span>';
+                    }
+                });
+
+                div.appendChild(img);
+                div.appendChild(removeBtn);
+                imagePreview.appendChild(div);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    });
+});
+</script>
 
 <!-- SCRIPT: pindahkan ke bawah agar tidak error -->
 <script>
@@ -220,4 +261,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+    .step-number {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+</style>
 @endsection
