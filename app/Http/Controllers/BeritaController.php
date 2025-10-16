@@ -26,7 +26,8 @@ class BeritaController extends Controller
     }
 
     public function tambahdata(){
-        return view('Backend.News.tambahdata');
+        $categories = \App\Models\Category::all();
+        return view('Backend.News.tambahdata', compact('categories'));
     }
     public function insertdata(Request $request){
     
@@ -39,7 +40,8 @@ class BeritaController extends Controller
         $data->title = $request->input('title');
         $data->name = $request->input('name');
         $data->excerpt = $request->input('excerpt');
-        $data->content = $clean_content; 
+        $data->content = $clean_content;
+        $data->category_id = $request->input('category_id');
         $data->date = $request->input('date');
         $data->hit = $request->input('hit');
     
@@ -73,10 +75,11 @@ class BeritaController extends Controller
     Berita::create($validated);
     // redirect dll
 }
-    public function tampilkandata($id){
+public function tampilkandata($id){
 
     $data = Berita::find($id);
-    return view('Backend.News.editberita', compact('data'));
+    $categories = \App\Models\Category::all();
+    return view('Backend.News.editberita', compact('data', 'categories'));
 
 }
 public function updatedata(Request $request, $id){
@@ -100,6 +103,7 @@ public function updatedata(Request $request, $id){
         'name' => $request->input('name'),
         'excerpt' => $request->input('excerpt'),
         'content' => $clean_content,  // Content yang sudah dipurifikasi
+        'category_id' => $request->input('category_id'),
         'date' => $request->input('date'),
         'hit' => $request->input('hit'),
     ]);

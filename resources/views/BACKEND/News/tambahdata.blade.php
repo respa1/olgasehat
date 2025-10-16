@@ -91,6 +91,18 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="category_id" class="form-label">Kategori</label>
+                    <select name="category_id" class="form-control" id="category_id">
+                        <option value="">-- Pilih Kategori --</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                {{ $category->title }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3">
                     <label for="excerpt" class="form-label">Short Content Berita</label>
                     <textarea class="form-control" name="excerpt" id="excerpt">{{ old('excerpt') }}</textarea>
                 </div>
