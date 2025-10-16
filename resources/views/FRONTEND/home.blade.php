@@ -220,10 +220,11 @@
             Mengapa <span class="text-blue-400">Olga Sehat</span> Adalah Pilihan Terbaik?
         </h2>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 max-w-full w-full">
+        <div class="flex overflow-x-auto w-full pb-4 snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-5 max-w-full lg:max-w-none">
 
-            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
-                         transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400">
+            <div class="flex-shrink-0 w-72 md:min-w-72 lg:w-auto snap-center mr-4 lg:mr-0
+                        bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
+                        transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400">
                 <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl shadow-lg">
                     <i class="fas fa-handshake"></i>
                 </div>
@@ -231,8 +232,9 @@
                 <p class="text-xs text-white/80">Temukan lapangan, studio, hingga layanan fisioterapi dalam satu platform.</p>
             </div>
 
-            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
-                         transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400">
+            <div class="flex-shrink-0 w-72 md:min-w-72 lg:w-auto snap-center mr-4 lg:mr-0
+                        bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
+                        transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400">
                 <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl shadow-lg">
                     <i class="fas fa-map-marker-alt"></i>
                 </div>
@@ -240,8 +242,9 @@
                 <p class="text-xs text-white/80">Cari venue favorit di sekitar Anda dengan akurasi tinggi dan rekomendasi terbaik.</p>
             </div>
 
-            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
-                         transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400">
+            <div class="flex-shrink-0 w-72 md:min-w-72 lg:w-auto snap-center mr-4 lg:mr-0
+                        bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
+                        transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400">
                 <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl shadow-lg">
                     <i class="fas fa-mobile-alt"></i>
                 </div>
@@ -249,8 +252,9 @@
                 <p class="text-xs text-white/80">Jadwalkan dan bayar sesi Anda secara online, kapan saja, 24/7 tanpa ribet.</p>
             </div>
 
-            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
-                         transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400">
+            <div class="flex-shrink-0 w-72 md:min-w-72 lg:w-auto snap-center
+                        bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
+                        transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400">
                 <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl shadow-lg">
                     <i class="fas fa-shield-alt"></i>
                 </div>
@@ -259,7 +263,7 @@
             </div>
 
         </div>
-    </div>
+        </div>
 </section>
 
 <section class="container mx-auto px-6 py-16 md:py-20">
