@@ -51,11 +51,11 @@
       <!-- Login Dropdown -->
       <div class="relative">
         <button id="loginBtn"
-          class="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition focus:outline-none">
+          class="bg-blue-800 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition focus:outline-none">
           Masuk
         </button>
         <div id="loginDropdown"
-          class="hidden absolute right-0 mt-2 w-56 bg-white border rounded-md shadow-lg z-50
+          class="hidden absolute right-0 mt-2 w-64 bg-white border rounded-md shadow-lg z-50
                  transform scale-95 opacity-0 transition-all duration-200 ease-out">
           <a href="/loginuser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Masuk User</a>
           <a href="/loginpengelolavenue" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Masuk Pengelola Venue</a>
@@ -169,55 +169,159 @@
 
 
 
-  <script>
-  // Dropdown user
-  const userBtn = document.getElementById("userMenuBtn");
-  const userMenu = document.getElementById("userMenu"); 
-  if (userBtn) {
-    userBtn.addEventListener("click", () => {
-      userMenu.classList.toggle("hidden");
-    });
-  }
-</script>
+  <!-- Overlay for Cart -->
+  <div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+
   <!-- Cart Sidebar -->
-  <aside id="cartSidebar" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
-    <div class="flex justify-between items-center p-4 border-b border-gray-200">
-      <h2 class="font-bold text-lg">JADWAL DIPILIH</h2>
-      <button id="closeCartSidebar" aria-label="Close sidebar" class="text-gray-700 hover:text-gray-900 focus:outline-none">
-        <i class="fas fa-times fa-lg"></i>
+  <div id="cartSidebar"
+       class="fixed top-0 right-0 w-80 max-w-full h-full bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+    <!-- Header -->
+    <div class="flex justify-between items-center px-4 py-3 border-b">
+      <h2 class="font-semibold text-lg">JADWAL DIPILIH</h2>
+      <button id="closeCart" class="text-gray-500 hover:text-gray-700">
+        <i class="fas fa-times"></i>
       </button>
     </div>
+
+    <!-- Isi Cart -->
     <div class="p-4 text-gray-600">
       Belum ada jadwal di keranjang.
     </div>
-  </aside>
+  </div>
 
-    <!-- Swiper JS for slider -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
+  <script>
+    // Header Layout //
+    document.addEventListener("DOMContentLoaded", function () {
+      // Dropdown helper - updated to ensure only one dropdown shows at a time
+      function toggleDropdown(dropdownToToggle, dropdownToClose) {
+        // Close the other dropdown if open
+        if (dropdownToClose && !dropdownToClose.classList.contains("hidden")) {
+          dropdownToClose.classList.remove("opacity-100", "scale-100");
+          dropdownToClose.classList.add("opacity-0", "scale-95");
+          setTimeout(() => dropdownToClose.classList.add("hidden"), 200);
+        }
 
-      // Mobile menu toggle
-      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-      const mobileMenu = document.getElementById("mobileMenu");
-      mobileMenuBtn.addEventListener("click", () => {
-        mobileMenu.classList.toggle("hidden");
+        // Toggle the target dropdown
+        if (dropdownToToggle.classList.contains("hidden")) {
+          dropdownToToggle.classList.remove("hidden");
+          setTimeout(() => {
+            dropdownToToggle.classList.remove("opacity-0", "scale-95");
+            dropdownToToggle.classList.add("opacity-100", "scale-100");
+          }, 10);
+        } else {
+          dropdownToToggle.classList.remove("opacity-100", "scale-100");
+          dropdownToToggle.classList.add("opacity-0", "scale-95");
+          setTimeout(() => dropdownToToggle.classList.add("hidden"), 200);
+        }
+      }
+
+      // Desktop Dropdowns
+      const registerBtn = document.getElementById("registerBtn");
+      const registerDropdown = document.getElementById("registerDropdown");
+      const loginBtn = document.getElementById("loginBtn");
+      const loginDropdown = document.getElementById("loginDropdown");
+
+      registerBtn?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleDropdown(registerDropdown, loginDropdown);
       });
 
-      // Cart sidebar toggle
-      const cartBtns = document.querySelectorAll('button[aria-label="Cart"]');
-      const cartSidebar = document.getElementById('cartSidebar');
-      const closeCartSidebarBtn = document.getElementById('closeCartSidebar');
+      loginBtn?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleDropdown(loginDropdown, registerDropdown);
+      });
 
-      cartBtns.forEach(cartBtn => {
-        cartBtn.addEventListener('click', () => {
-          cartSidebar.classList.toggle('translate-x-full');
+      // Mobile Menu Toggle with Animation
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      mobileMenuBtn?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (mobileMenu.classList.contains("hidden")) {
+          // Open menu with stagger animation
+          mobileMenu.classList.remove("hidden");
+          const menuItems = mobileMenu.querySelectorAll(".menu-item");
+          menuItems.forEach((item, index) => {
+            item.style.opacity = "0";
+            item.style.transform = "translateY(4px)";
+            setTimeout(() => {
+              item.style.transition = "all 0.2s ease-out";
+              item.style.opacity = "1";
+              item.style.transform = "translateY(0)";
+            }, index * 50);
+          });
+        } else {
+          // Close menu with fade out
+          const menuItems = mobileMenu.querySelectorAll(".menu-item");
+          menuItems.forEach((item) => {
+            item.style.opacity = "0";
+            item.style.transform = "translateY(-4px)";
+          });
+          setTimeout(() => {
+            mobileMenu.classList.add("hidden");
+            // Reset styles after close
+            menuItems.forEach((item) => {
+              item.style.transition = "";
+              item.style.opacity = "";
+              item.style.transform = "";
+            });
+          }, 200);
+        }
+      });
+
+      // Close mobile menu on outside click
+      window.addEventListener("click", (e) => {
+        // Desktop
+        if (!registerBtn?.contains(e.target) && !registerDropdown?.contains(e.target)) {
+          registerDropdown?.classList.add("hidden", "opacity-0", "scale-95");
+        }
+        if (!loginBtn?.contains(e.target) && !loginDropdown?.contains(e.target)) {
+          loginDropdown?.classList.add("hidden", "opacity-0", "scale-95");
+        }
+        // Mobile
+        if (!mobileMenu.contains(e.target) && !mobileMenuBtn?.contains(e.target)) {
+          mobileMenu.classList.add("hidden");
+        }
+      });
+
+      // Cart Functionality
+      const cartBtns = document.querySelectorAll('#cartBtn, #cartBtnMobile');
+      const cartSidebar = document.getElementById("cartSidebar");
+      const cartOverlay = document.getElementById("cartOverlay");
+      const closeCart = document.getElementById("closeCart");
+
+      cartBtns.forEach(btn => {
+        btn?.addEventListener("click", () => {
+          cartSidebar.classList.remove("translate-x-full");
+          cartOverlay.classList.remove("hidden");
         });
       });
 
-      closeCartSidebarBtn.addEventListener('click', () => {
-        cartSidebar.classList.add('translate-x-full');
+      closeCart?.addEventListener("click", () => {
+        cartSidebar.classList.add("translate-x-full");
+        cartOverlay.classList.add("hidden");
       });
-    </script>
+
+      cartOverlay?.addEventListener("click", () => {
+        cartSidebar.classList.add("translate-x-full");
+        cartOverlay.classList.add("hidden");
+      });
+
+      // Header hide/show on scroll
+      let lastScrollTop = 0;
+      window.addEventListener('scroll', function() {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const header = document.getElementById('mainHeader');
+        if (scrollTop > lastScrollTop && scrollTop > 100) {
+          // Scroll down and past 100px
+          header.style.transform = 'translateY(-100%)';
+        } else {
+          // Scroll up
+          header.style.transform = 'translateY(0)';
+        }
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+      });
+    });
+  </script>
 
 </script>
 </body>

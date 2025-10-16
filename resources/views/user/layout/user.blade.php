@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -93,9 +92,10 @@
         </button>
         <!-- Dropdown menu -->
         <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
-          <a href="/editprofile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
-          <a href="/riwayat" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
-          <a href="/komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Aktivitas</a>
+          <a href="/dashboarduser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
+          <a href="/riwayatpayment" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
+          <a href="/riwayat-komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Komunitas</a>
+          <a href="/riwayatmembership" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Membership</a>
           <a href="/settings" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pengaturan</a>
           
           <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="block border-t border-gray-200 mt-1">
@@ -122,8 +122,8 @@
         </button>
         <!-- Dropdown menu -->
         <div id="mobileUserMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
-          <a href="/editprofile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
-          <a href="/riwayat" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
+          <a href="/dashboarduser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
+          <a href="/riwayatpayment" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
           <a href="/komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Komunitas</a>
           <a href="/klub" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Klub</a>
           <a href="/settings" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pengaturan</a>
@@ -160,121 +160,8 @@
       </div>
     </nav>
 </header>
-  <!-- Main Content -->
-  <main class="pt-18 flex items-center justify-center min-h-screen p-6">
-    <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-3 gap-10">
-
-    <!-- Left Side: Profile Image and Username -->
-    <section class="flex flex-col items-center space-y-4">
-      <div class="w-32 h-32 rounded-full border-2 border-gray-400 flex justify-center items-center bg-gray-100 overflow-hidden">
-        <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="4" /><path d="M5.5 21a6.5 6.5 0 0113 0" /></svg>
-      </div>
-      <div class="text-center">
-        <p class="font-semibold text-gray-800 select-text">{{ Auth::user()->name }}</p>
-        <p class="text-gray-500 select-text">{{Auth::user()->email }}</p>
-      </div>
-      <div class="w-full max-w-xs bg-white border border-gray-300 rounded-md p-4 text-center">
-        <p class="font-medium mb-2 text-sm">Update Profile Picture</p>
-        <label for="file-upload" class="cursor-pointer inline-block w-full h-28 border-2 border-dashed border-gray-400 rounded-md text-gray-500 text-center pt-6 hover:border-blue-500 transition">
-          <span class="block select-none">Drop file here to upload</span>
-          <input id="file-upload" type="file" class="hidden" accept="image/*" />
-        </label>
-      </div>
-    </section>
-
-    <!-- Right Side: Profile Form -->
-    <section class="md:col-span-2 bg-white rounded-md p-8 shadow-md">
-      <form>
-        <div>
-          <h2 class="text-lg font-semibold mb-1">Profile</h2>
-          <p class="text-sm text-gray-400 mb-4 select-none">Lengkapi profil anda</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-          <div>
-            <label for="nama-lengkap" class="block text-sm mb-1 text-gray-500 select-none">Nama Lengkap</label>
-            <input id="nama-lengkap" type="text" placeholder="" class="w-full rounded border border-gray-300 h-10 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
-          <div>
-            <label for="username" class="block text-sm mb-1 text-gray-500 select-none">Username</label>
-            <input id="username" type="text" placeholder="" class="w-full rounded border border-gray-300 h-10 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
-        </div>
-
-        <div class="flex flex-wrap gap-6 mb-4">
-          <div class="flex-1 min-w-[6rem]">
-            <label for="bulan-lahir" class="block text-sm mb-1 text-gray-400 select-none">Bulan Lahir</label>
-            <input id="bulan-lahir" type="text" placeholder="" class="w-full rounded border border-gray-300 h-10 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
-          <div class="flex-grow-0" style="min-width:4.5rem;">
-            <label for="tahun-lahir" class="block text-sm mb-1 text-gray-400 select-none">Tahun Lahir</label>
-            <input id="tahun-lahir" maxlength="4" type="text" placeholder="" class="input-date w-full rounded border border-gray-300 h-10 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
-          <div class="flex-grow-0" style="min-width:4.5rem;">
-            <label for="tgl-lahir" class="block text-sm mb-1 text-gray-400 select-none">Tgl. Lahir</label>
-            <input id="tgl-lahir" maxlength="2" type="text" placeholder="" class="input-date w-full rounded border border-gray-300 h-10 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
-        </div>
-
-        <div class="mb-6">
-          <label for="no-hp" class="block text-sm mb-1 text-gray-400 select-none">No. Handphone</label>
-          <input id="no-hp" type="text" placeholder="" class="w-full rounded border border-gray-300 h-10 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        </div>
-
-        <div>
-          <h3 class="font-semibold mb-4 select-none">Olahraga Favorit</h3>
-          <div class="grid grid-cols-5 sm:grid-cols-10 gap-4">
-            <div class="text-center text-xs select-none">
-              <img src="assets/minsok.jpg" alt="Mini Soccer sport scene with a player kicking a small soccer ball on a miniature field" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Mini Soccer</p>
-            </div>
-            <div class="text-center text-xs select-none">
-              <img src="assets/sepakbola.webp" alt="Sepak Bola soccer ball on a grassy field with feet approaching the ball preparing to kick" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Sepak Bola</p>
-            </div>
-            <div class="text-center text-xs select-none">
-              <img src="assets/tennis.jpg" alt="Tenis tennis racket and ball on a clay tennis court with white lines and shadow" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Tenis</p>
-            </div>
-            <div class="text-center text-xs select-none">
-              <img src="assets/futsal.jpg" alt="Futsal indoor futsal court with players and ball in action" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Futsal</p>
-            </div>
-            <div class="text-center text-xs select-none">
-              <img src="assets/bulutangkis.jpg" alt="Bulu Tangkis badminton rackets and shuttlecock on a wooden floor court" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Bulu Tangkis</p>
-            </div>
-
-            <div class="text-center text-xs select-none">
-              <img src="assets/padel.webp" alt="Padel player swinging racket with ball mid air on padel court" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Padel</p>
-            </div>
-            <div class="text-center text-xs select-none">
-              <img src="assets/volly.jpg" alt="Bola Voli volleyball player jumping to spike the ball during an outdoor match" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Bola Volly</p>
-            </div>
-            <div class="text-center text-xs select-none">
-              <img src="assets/bola tangan.jpg" alt="Bola Tangan handball player holding ball preparing to throw" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Bola Tangan</p>
-            </div>
-            <div class="text-center text-xs select-none">
-              <img src="assets/baseball.jpeg" alt="Baseball glove catching baseball ball during outdoor game" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Baseball</p>
-            </div>
-            <div class="text-center text-xs select-none">
-              <img src="assets/running.avif" alt="Running athlete sprinting on a track in outdoor stadium" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Running</p>
-            </div>
-          </div>
-        </div>
-
-<button type="submit" class="btn-save bg-blue-600 text-white rounded-md px-6 py-2 mt-6 select-none hover:bg-blue-700">
-  SIMPAN PROFIL
-</button>
-
-      </form>
-    </section>
-    </div>
+  <main class="pt-18">
+    @yield('content')
   </main>
 
   <!-- Overlay for Cart -->

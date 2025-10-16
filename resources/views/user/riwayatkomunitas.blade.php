@@ -1,193 +1,162 @@
+@extends('user.layout.user')
 
-<!DOCTYPE html>
-<html lang="id" class="bg-gray-50">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Olga Sehat Komunitas</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-  />
-</head>
-<body class="font-sans text-gray-800">
+@push('css')
+{{-- Memastikan ikon Font Awesome tersedia untuk visual --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+    /* Styling untuk tautan navigasi profil yang aktif */
+    .profile-nav-link {
+        @apply flex items-center p-3 rounded-lg font-semibold transition duration-150;
+    }
+    .profile-nav-link.active {
+        @apply bg-orange-500 text-white shadow-md shadow-orange-200;
+    }
+    .profile-nav-link:not(.active) {
+        @apply text-gray-700 hover:bg-gray-100 hover:text-orange-500;
+    }
+    /* Styling untuk ikon navigasi */
+    .profile-nav-link i {
+        @apply w-5 h-5 mr-3;
+    }
+    /* Styling untuk kartu komunitas */
+    .community-card {
+        @apply bg-white p-5 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-xl hover:-translate-y-1;
+    }
+</style>
+@endpush
 
-<!-- Header -->
-<header class="shadow-md">
-  <div class="container mx-auto flex items-center justify-between py-4 px-6">
-    <!-- Logo -->
-    <a href="#" class="flex items-center space-x-2">
-      <img src="assets/logo.png" alt="Olga Sehat Logo" class="w-100 h-10" />
-    </a>
+@section('content')
 
-    <!-- Navigation (desktop) -->
-    <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
-      <a href="/" class="hover:text-blue-700">Sewa Lapangan</a>
-      <a href="/tempatsehat" class="hover:text-blue-700">Tempat Sehat</a>
-      <a href="/community" class="hover:text-blue-700">Komunitas</a>
-      <a href="/club" class="hover:text-blue-700">Klub</a>
-      <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
-    </nav>
+<main class="bg-gray-100 min-h-[calc(100vh-64px)] pt-20 pb-8 px-4">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
 
-    <!-- Actions (desktop) -->
-    <div class="hidden md:flex items-center space-x-4">
-      <!-- Cart -->
-      <button aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
-        <i class="fas fa-shopping-cart fa-lg"></i>
-        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
-      </button>
+        <section class="lg:col-span-3 space-y-6">
+            
+            {{-- Header Konten (MODIFIKASI DI SINI) --}}
+            <div class="bg-white rounded-xl shadow-xl p-6 border-l-4 border-orange-500 flex justify-between items-center">
+                <div>
+                    <h2 class="font-extrabold text-2xl text-gray-900">Komunitas Kamu</h2>
+                    <p class="text-gray-500 mt-1">Kumpulan komunitas yang kamu telah tergabung saat ini.</p>
+                </div>
+                {{-- Tombol Tambah Komunitas di Header --}}
+                <a href="/cari-komunitas" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition duration-150 flex items-center text-sm md:text-base whitespace-nowrap">
+                    <i class="fas fa-plus mr-2"></i> Tambah Komunitas
+                </a>
+            </div>
+            
+            {{-- Daftar Komunitas --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-      <!-- Dropdown User (sudah login) -->
-      <div class="relative">
-        <button id="userMenuBtn" class="flex items-center space-x-2 focus:outline-none">
-          <img src="assets/guru.png" alt="User Avatar" class="w-8 h-8 rounded-full border" />
-          <i class="fas fa-chevron-down text-gray-500 text-sm"></i>
-        </button>
-        <!-- Dropdown menu -->
-        <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-         <a href="venue.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Akun</a>
-    <a href="tempat_sehat.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">komunitas</a>
-    <a href="community.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Aktifitas</a>
-    <a href="club.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Transaksi</a>
-    <a href="blog&news.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Logout</a>
+                <div class="community-card bg-white p-6 rounded-lg shadow-md mb-6">
+                <div class="flex items-center mb-4">
+                    {{-- Ikon Lari --}}
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-running text-blue-600 text-xl"></i>
+                    </div>
+                    {{-- Info Dasar --}}
+                    <div>
+                        <p class="text-xl font-bold text-gray-900">Running Club Jakarta</p>
+                        <p class="text-sm text-gray-500">32 Anggota | Aktifitas Terakhir: 2 hari lalu</p>
+                    </div>
+                </div>
+                
+                {{-- Deskripsi Komunitas --}}
+                <p class="text-sm text-gray-600 mt-4 pt-3 border-t border-gray-100">
+                    Komunitas lari mingguan untuk semua level, dari pemula hingga maraton.
+                </p>
+                
+                {{-- Tombol Detail --}}
+                <div class="flex justify-end mt-4">
+                    <a href="#" class="text-sm font-semibold text-orange-500 hover:text-orange-700 transition duration-150 ease-in-out">
+                        Lihat Detail 
+                        <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="community-card bg-white p-6 rounded-lg shadow-md mb-6">
+                <div class="flex items-center mb-4">
+                    {{-- Ikon Voli --}}
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <i class="fas fa-volleyball-ball text-green-600 text-xl"></i>
+                    </div>
+                    {{-- Info Dasar --}}
+                    <div>
+                        <p class="text-xl font-bold text-gray-900">Volly Ball Squad Banten</p>
+                        <p class="text-sm text-gray-500">18 Anggota | Aktifitas Terakhir: Hari ini!</p>
+                    </div>
+                </div>
+                
+                {{-- Deskripsi Komunitas --}}
+                <p class="text-sm text-gray-600 mt-4 pt-3 border-t border-gray-100">
+                    Sesi main volly santai setiap Rabu dan Sabtu sore. Semua level diterima.
+                </p>
+                
+                {{-- Tombol Detail --}}
+                <div class="flex justify-end mt-4">
+                    <a href="#" class="text-sm font-semibold text-orange-500 hover:text-orange-700 transition duration-150 ease-in-out">
+                        Lihat Detail 
+                        <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            {{-- Empty State yang Ditingkatkan (MODIFIKASI DI SINI) --}}
+            <div class="bg-white rounded-xl shadow-xl p-10 flex flex-col items-center justify-center text-center border-2 border-dashed border-gray-300">
+                <i class="fas fa-users-slash text-6xl text-gray-400 mb-4"></i>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Belum Tergabung Komunitas</h3>
+                <p class="text-gray-500 max-w-lg mb-6">
+                    Yuk, cari teman main baru! Bergabunglah dengan komunitas olahraga favoritmu untuk menambah semangat dan relasi.
+                </p>
+                {{-- Tombol Tambah Komunitas di Empty State --}}
+                <a href="/cari-komunitas" class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-150">
+                    Cari Komunitas Sekarang <i class="fas fa-search ml-2"></i>
+                </a>
+            </div>
+            
+        </section>
+        
+        {{-- Kolom Kanan (Profil) --}}
+<div class="lg:col-span-1 space-y-6">
+
+    {{-- Card: Profil Utama --}}
+    <div class="bg-white shadow-md rounded-2xl p-6 text-center border-t-4 border-blue-500">
+        <img src="https://via.placeholder.com/120/2563EB/FFFFFF?text=R" 
+             alt="Foto Profil" 
+             class="w-24 h-24 mx-auto rounded-full shadow-md mb-4 object-cover">
+        <h2 class="text-xl font-bold text-gray-900">
+            {{ Auth::user()->name ?? 'Rendra Pratama' }}
+        </h2>
+        <p class="text-sm text-gray-500 mb-2">Anggota Sejak 2024</p>
+
+        <span class="inline-block bg-yellow-100 text-yellow-700 text-sm font-semibold px-3 py-1 rounded-full mb-3">
+            Gold Member
+        </span>
+
+        <div class="flex justify-center">
+            <a href="/edit-profile-user" 
+               class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold transition duration-200">
+                <i class="fas fa-user-edit mr-2"></i> Edit Profil
+            </a>
         </div>
-      </div>
     </div>
 
-    <!-- Mobile buttons -->
-    <div class="flex md:hidden items-center space-x-4">
-      <!-- Cart -->
-      <button aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
-        <i class="fas fa-shopping-cart fa-lg"></i>
-        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
-      </button>
-      <!-- Mobile menu button -->
-      <button id="mobileMenuBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none" aria-label="Open menu">
-        <i class="fas fa-bars fa-lg"></i>
-      </button>
+    {{-- Card: Statistik Akun --}}
+    <div class="bg-white shadow-md rounded-2xl p-6 border-t-4 border-indigo-500">
+        <h3 class="text-lg font-semibold text-gray-700 mb-3">Statistik Akun</h3>
+        <ul class="space-y-2 text-sm text-gray-600">
+            <li class="flex justify-between">
+                <span>Total Pemesanan</span>
+                <span class="font-semibold text-gray-800">12</span>
+            </li>
+            <li class="flex justify-between">
+                <span>Komunitas Aktif</span>
+                <span class="font-semibold text-gray-800">2</span>
+            </li>
+        </ul>
     </div>
-  </div>
 
-  <!-- Mobile menu -->
-  <nav id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-200 shadow-md">
-    <a href="venue.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Sewa Lapangan</a>
-    <a href="tempat_sehat.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Tempat Sehat</a>
-    <a href="community.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Komunitas</a>
-    <a href="club.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Klub</a>
-    <a href="blog&news.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Blog & News</a>
-    
-    <!-- Dropdown user di mobile -->
-    <div class="border-t border-gray-200">
-      <a href="profile.html" class="block px-6 py-3 hover:bg-blue-50 hover:text-blue-700">Profil</a>
-      <a href="settings.html" class="block px-6 py-3 hover:bg-blue-50 hover:text-blue-700">Pengaturan</a>
-      <a href="logout.html" class="block px-6 py-3 text-red-600 hover:bg-red-50">Keluar</a>
     </div>
-  </nav>
-</header>
+</main>
 
-
-
-  <!-- Main Content -->
-  <main class="max-w-7xl mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-
-    <!-- Left Profile Panel -->
-    <aside class="bg-white rounded-md shadow p-6 flex flex-col items-center space-y-4">
-      <div class="w-24 h-24 rounded-full border-2 border-gray-300 flex items-center justify-center text-gray-400">
-        <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="7" r="4"></circle>
-          <path d="M5.5 21a7.5 7.5 0 0113 0"></path>
-        </svg>
-      </div>
-      <div class="text-center">
-        <p class="font-semibold text-lg text-gray-900">rsteam</p>
-        <p class="text-gray-500 text-sm select-text">@rteam166</p>
-      </div>
-
-      <hr class="w-full border-gray-200" />
-
-      <nav class="w-full space-y-3 text-sm text-gray-600 font-semibold">
-        <a href="/editprofile" class="block hover:text-orange-500 transition cursor-pointer">Update Profile</a>
-        <a href="/riwayat komunitas" class="block text-orange-500 cursor-pointer">Komunitas</a>
-        <a href="/riwayatclub" class="block hover:text-orange-500 transition cursor-pointer">Aktifitas</a>
-      </nav>
-    </aside>
-
-    <!-- Right Content -->
-    <section class="md:col-span-2 space-y-6">
-      <div class="bg-white rounded-md shadow p-6">
-        <h2 class="font-bold text-xl text-gray-900">Komunitas Kamu</h2>
-        <p class="text-gray-400 mt-1">Kumpulan komunitas yang kamu telah tergabung</p>
-      </div>
-
-      <div class="bg-white rounded-md shadow p-6 flex flex-col items-center space-y-5">
-
-        <!-- Illustration with fallback styling -->
-        <div class="max-w-md w-full">
-          <img 
-            src="assets/ai.png" 
-            alt="Illustration of a small community park with orange trees, benches, and houses in the background with birds flying above under a clear sky" 
-            class="w-full object-contain"
-            onerror="this.onerror=null;this.src='https://placehold.co/600x300?text=Image+not+available';"
-          />
-        </div>
-
-        <p class="text-gray-500 text-center select-text">Kamu belum tergabung dalam komunitas</p>
-      </div>
-    </section>
-
-  </main>
-  <!-- Cart Sidebar -->
-  <aside id="cartSidebar" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
-    <div class="flex justify-between items-center p-4 border-b border-gray-200">
-      <h2 class="font-bold text-lg">JADWAL DIPILIH</h2>
-      <button id="closeCartSidebar" aria-label="Close sidebar" class="text-gray-700 hover:text-gray-900 focus:outline-none">
-        <i class="fas fa-times fa-lg"></i>
-      </button>
-    </div>
-    <div class="p-4 text-gray-600">
-      Belum ada jadwal di keranjang.
-    </div>
-  </aside>
-  <!-- Script -->
-<script>
-  // Dropdown user
-  const userBtn = document.getElementById("userMenuBtn");
-  const userMenu = document.getElementById("userMenu");
-  if (userBtn) {
-    userBtn.addEventListener("click", () => {
-      userMenu.classList.toggle("hidden");
-    });
-  }
-</script>
-
-
-    <!-- Swiper JS for slider -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-
-      // Mobile menu toggle
-      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-      const mobileMenu = document.getElementById("mobileMenu");
-      mobileMenuBtn.addEventListener("click", () => {
-        mobileMenu.classList.toggle("hidden");
-      });
-
-      // Cart sidebar toggle
-      const cartBtns = document.querySelectorAll('button[aria-label="Cart"]');
-      const cartSidebar = document.getElementById('cartSidebar');
-      const closeCartSidebarBtn = document.getElementById('closeCartSidebar');
-
-      cartBtns.forEach(cartBtn => {
-        cartBtn.addEventListener('click', () => {
-          cartSidebar.classList.toggle('translate-x-full');
-        });
-      });
-
-      closeCartSidebarBtn.addEventListener('click', () => {
-        cartSidebar.classList.add('translate-x-full');
-      });
-    </script>
-</body>
-</html>
-
+@endsection

@@ -30,7 +30,7 @@ class LoginController extends Controller
             if ($user->role === 'superadmin') {
                 return redirect('/dashboard');
             } elseif ($user->role === 'user') {
-                return redirect('/editprofile');
+                return redirect('/dashboarduser');
             } elseif ($user->role === 'pemiliklapangan') {
                 if ($user->status === 'approved') {
                     return redirect('/pemiliklapangan/dashboard');
@@ -124,7 +124,7 @@ class LoginController extends Controller
     public function editProfile()
     {
         $user = Auth::user();
-        return view('user.editprofile', compact('user'));
+        return view('user.dashboarduser', compact('user'));
     }
 
     // Handle profile update for user role

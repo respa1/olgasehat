@@ -235,7 +235,7 @@
                     </div>
                 </div>
 
-                <a href="/confirm" id="bookLink" class="block">
+                <a href="/confirmuser" id="bookLink" class="block">
                     <button id="bookButton" class="w-full bg-blue-700 text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition shadow-lg mt-4" disabled>
                         PILIH JADWAL DI ATAS
                     </button>
@@ -251,7 +251,7 @@
         <p class="text-sm text-gray-600"><span id="mobile-session-count">0 Sesi</span></p>
         <p class="text-xl font-bold text-blue-700" id="mobile-total-price">Rp 0</p>
     </div>
-    <a href="/confirm" class="block w-full">
+    <a href="/confirmuser" class="block w-full">
       <button class="w-full bg-blue-700 text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition">
         LANJUT PEMBAYARAN
       </button>

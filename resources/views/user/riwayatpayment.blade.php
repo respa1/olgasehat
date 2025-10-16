@@ -1,178 +1,173 @@
-<html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <title>
-   Olga Sehat
-  </title>
-  <script src="https://cdn.tailwindcss.com">
-  </script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter&amp;display=swap" rel="stylesheet"/>
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-  />
-  <style>
-   body {
-      font-family: 'Inter', sans-serif;
+@extends('user.layout.user')
+
+@push('css')
+{{-- Memastikan ikon Font Awesome tersedia untuk visual --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+    /* Custom style untuk date picker agar terlihat lebih baik */
+    .datepicker-input {
+        @apply w-full md:w-48 rounded-lg border border-gray-300 px-4 py-2.5 mb-1 text-gray-800 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-150;
     }
-  </style>
- </head>
- <body >
- 
-<!-- Header -->
-<header class="shadow-md">
-  <div class="container mx-auto flex items-center justify-between py-4 px-6">
-    <!-- Logo -->
-    <a href="#" class="flex items-center space-x-2">
-      <img src="assets/logo.png" alt="Olga Sehat Logo" class="w-100 h-10" />
-    </a>
-
-    <!-- Navigation (desktop) -->
-    <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
-      <a href="/" class="hover:text-blue-700">Sewa Lapangan</a>
-      <a href="/tempatsehat" class="hover:text-blue-700">Tempat Sehat</a>
-      <a href="/community" class="hover:text-blue-700">Komunitas</a>
-      <a href="/club" class="hover:text-blue-700">Klub</a>
-      <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
-    </nav>
-
-    <!-- Actions (desktop) -->
-    <div class="hidden md:flex items-center space-x-4">
-      <!-- Cart -->
-      <button aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
-        <i class="fas fa-shopping-cart fa-lg"></i>
-        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
-      </button>
-
-      <!-- Dropdown User (sudah login) -->
-      <div class="relative">
-        <button id="userMenuBtn" class="flex items-center space-x-2 focus:outline-none">
-          <img src="assets/guru.png" alt="User Avatar" class="w-8 h-8 rounded-full border" />
-          <i class="fas fa-chevron-down text-gray-500 text-sm"></i>
-        </button>
-        <!-- Dropdown menu -->
-        <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-         <a href="venue.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Sewa Lapangan</a>
-    <a href="tempat_sehat.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Tempat Sehat</a>
-    <a href="community.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Komunitas</a>
-    <a href="club.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Klub</a>
-    <a href="blog&news.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Blog & News</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mobile buttons -->
-    <div class="flex md:hidden items-center space-x-4">
-      <!-- Cart -->
-      <button aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
-        <i class="fas fa-shopping-cart fa-lg"></i>
-        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
-      </button>
-      <!-- Mobile menu button -->
-      <button id="mobileMenuBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none" aria-label="Open menu">
-        <i class="fas fa-bars fa-lg"></i>
-      </button>
-    </div>
-  </div>
-
-  <!-- Mobile menu -->
-  <nav id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-200 shadow-md">
-    <a href="venue.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Sewa Lapangan</a>
-    <a href="tempat_sehat.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Tempat Sehat</a>
-    <a href="community.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Komunitas</a>
-    <a href="club.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Klub</a>
-    <a href="blog&news.html" class="block px-6 py-3 border-b border-gray-200 hover:bg-blue-50 hover:text-blue-700">Blog & News</a>
     
-    <!-- Dropdown user di mobile -->
-    <div class="border-t border-gray-200">
-      <a href="profile.html" class="block px-6 py-3 hover:bg-blue-50 hover:text-blue-700">Profil</a>
-      <a href="settings.html" class="block px-6 py-3 hover:bg-blue-50 hover:text-blue-700">Pengaturan</a>
-      <a href="logout.html" class="block px-6 py-3 text-red-600 hover:bg-red-50">Keluar</a>
-    </div>
-  </nav>
-</header>
+    /* Style untuk tombol filter yang aktif */
+    .filter-btn-active {
+        @apply bg-blue-600 text-white shadow-md hover:bg-blue-700;
+    }
 
+    /* Style untuk tombol filter yang tidak aktif (secondary) */
+    .filter-btn-inactive {
+        @apply text-blue-600 border border-blue-500 bg-blue-50 hover:bg-blue-100;
+    }
+</style>
+@endpush
 
-  <main class="bg-gray-100 min-h-[calc(100vh-64px)]">
-   <section class="max-w-4xl mx-auto px-4 py-8">
-    <label class="block mb-2 font-semibold text-black text-sm" for="cutoff-date">
-     Pilih Tanggal Cut Off
-    </label>
-    <input class="w-48 rounded border border-gray-300 px-3 py-2 mb-1 text-black text-sm" id="cutoff-date" readonly="" type="text" value="4-Aug-2025"/>
-    <p class="text-xs text-gray-500 mb-3">
-     *Menampilkan transaksi
-     <span class="text-orange-500 font-semibold">
-      6 bulan ke belakang
-     </span>
-     dari tanggal pilihan mu
-    </p>
-    <div class="flex space-x-2 mb-8">
-     <button class="bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded" type="button">
-      Semua Transaksi
-     </button>
-     <button class="text-blue-600 border border-blue-500 text-xs font-semibold px-3 py-1 rounded" type="button">
-      Down Payment
-     </button>
-    </div>
-    <div class="bg-white rounded-md p-6 flex flex-col items-center">
-     <img alt="Illustration of a park with orange trees and benches in front of gray houses with birds flying" class="mb-4" height="150" src="assets/ai.png" width="400"/>
-     <p class="text-gray-500 text-sm text-center">
-      Tidak ditemukan Transaksi pada rentang waktu tanggal pilihan
-     </p>
-    </div>
-   </section>
-  </main>
-  <script>
-  // Dropdown user
-  const userBtn = document.getElementById("userMenuBtn");
-  const userMenu = document.getElementById("userMenu");
-  if (userBtn) {
-    userBtn.addEventListener("click", () => {
-      userMenu.classList.toggle("hidden");
-    });
-  }
-</script>
-  <!-- Cart Sidebar -->
-  <aside id="cartSidebar" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
-    <div class="flex justify-between items-center p-4 border-b border-gray-200">
-      <h2 class="font-bold text-lg">JADWAL DIPILIH</h2>
-      <button id="closeCartSidebar" aria-label="Close sidebar" class="text-gray-700 hover:text-gray-900 focus:outline-none">
-        <i class="fas fa-times fa-lg"></i>
-      </button>
-    </div>
-    <div class="p-4 text-gray-600">
-      Belum ada jadwal di keranjang.
-    </div>
-  </aside>
+@section('content')
 
-    <!-- Swiper JS for slider -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
+<main class="bg-gray-50 min-h-[calc(100vh-64px)] p-4 md:p-8">
+    <section class="max-w-4xl mx-auto">
 
-      // Mobile menu toggle
-      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-      const mobileMenu = document.getElementById("mobileMenu");
-      mobileMenuBtn.addEventListener("click", () => {
-        mobileMenu.classList.toggle("hidden");
-      });
+        <h1 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">Riwayat Transaksi</h1>
 
-      // Cart sidebar toggle
-      const cartBtns = document.querySelectorAll('button[aria-label="Cart"]');
-      const cartSidebar = document.getElementById('cartSidebar');
-      const closeCartSidebarBtn = document.getElementById('closeCartSidebar');
+        {{-- Filter & Keterangan --}}
+        <div class="bg-white p-6 rounded-2xl shadow-md mb-8 border border-gray-100">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-end gap-6">
 
-      cartBtns.forEach(cartBtn => {
-        cartBtn.addEventListener('click', () => {
-          cartSidebar.classList.toggle('translate-x-full');
-        });
-      });
+                {{-- Kiri: Tanggal Cut Off --}}
+                <div>
+                    <label for="cutoff-date" class="block text-sm font-semibold text-gray-800 mb-2">
+                        Pilih Tanggal Cut Off
+                    </label>
 
-      closeCartSidebarBtn.addEventListener('click', () => {
-        cartSidebar.classList.add('translate-x-full');
-      });
-    </script>
+                    <div class="relative max-w-xs">
+                        <input 
+                            id="cutoff-date" 
+                            type="text" 
+                            class="border border-gray-300 rounded-lg px-4 py-2 w-full text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
+                            placeholder="Pilih tanggal"
+                        >
+                        <i class="fas fa-calendar-alt absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
 
- </body>
-</html>
+                    <p class="text-xs text-gray-500 mt-2 leading-relaxed">
+                        *Menampilkan transaksi <span class="text-blue-600 font-semibold">6 bulan ke belakang</span> 
+                        dari tanggal pilihan Anda.
+                    </p>
+                </div>
+
+                {{-- Kanan: Tombol Filter --}}
+                <div class="flex flex-wrap gap-3">
+                    <button 
+                        id="btn-semua" 
+                        type="button"
+                        class="flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-lg shadow-sm hover:bg-blue-700 transition active:scale-95">
+                        <i class="fas fa-list-ul"></i> Semua Transaksi
+                    </button>
+
+                    <button 
+                        id="btn-dp" 
+                        type="button"
+                        class="flex items-center gap-2 px-5 py-2.5 bg-white text-gray-700 font-semibold rounded-lg border border-gray-300 hover:bg-gray-50 transition active:scale-95">
+                        <i class="fas fa-percent"></i> Down Payment (DP)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {{-- Tambahkan di bawah, sebelum </body> atau di @push('scripts') --}}
+        @push('scripts')
+            {{-- Flatpickr (Datepicker Modern) --}}
+            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+            <script>
+                // Inisialisasi datepicker
+                flatpickr("#cutoff-date", {
+                    dateFormat: "d F Y",
+                    defaultDate: "today",
+                    locale: "id",
+                });
+
+                // Tombol toggle
+                const btnSemua = document.getElementById('btn-semua');
+                const btnDP = document.getElementById('btn-dp');
+
+                btnSemua.addEventListener('click', () => {
+                    btnSemua.classList.add('bg-blue-600', 'text-white', 'border-transparent');
+                    btnSemua.classList.remove('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+                    
+                    btnDP.classList.remove('bg-blue-600', 'text-white');
+                    btnDP.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+                });
+
+                btnDP.addEventListener('click', () => {
+                    btnDP.classList.add('bg-blue-600', 'text-white', 'border-transparent');
+                    btnDP.classList.remove('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+
+                    btnSemua.classList.remove('bg-blue-600', 'text-white');
+                    btnSemua.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+                });
+            </script>
+        @endpush
+        
+        {{-- List Riwayat Transaksi --}}
+        <div class="space-y-4">
+            
+            {{-- Kasus 1: Transaksi Ditemukan --}}
+            <h2 class="text-lg font-bold text-gray-700 mb-3">Transaksi Ditemukan (Oktober 2025)</h2>
+
+            {{-- Item Transaksi Selesai --}}
+            <div class="bg-white rounded-lg p-5 shadow-md flex justify-between items-center transition hover:shadow-lg border-l-4 border-green-500">
+                <div class="flex flex-col md:flex-row md:items-center">
+                    <div class="text-xl font-bold text-green-600 md:w-24">Rp 150K</div>
+                    <div class="md:ml-6 mt-2 md:mt-0">
+                        <p class="font-bold text-gray-800">Booking Futsal (Lapangan A Tirtayasa)</p>
+                        <p class="text-sm text-gray-500">
+                            <i class="fas fa-calendar-check mr-1"></i> 14 Okt 2025 | ID: #OLG-1014-001
+                        </p>
+                    </div>
+                </div>
+                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-green-100 text-green-700 hidden sm:inline-block">
+                    Selesai
+                </span>
+            </div>
+            
+            {{-- Item Transaksi Pending (DP) --}}
+            <div class="bg-white rounded-lg p-5 shadow-md flex justify-between items-center transition hover:shadow-lg border-l-4 border-yellow-500">
+                <div class="flex flex-col md:flex-row md:items-center">
+                    <div class="text-xl font-bold text-yellow-600 md:w-24">Rp 50K</div>
+                    <div class="md:ml-6 mt-2 md:mt-0">
+                        <p class="font-bold text-gray-800">Down Payment (DP) GOR Bulu Tangkis Sentosa</p>
+                        <p class="text-sm text-gray-500">
+                            <i class="fas fa-calendar-day mr-1"></i> 15 Okt 2025 | ID: #OLG-1015-002
+                        </p>
+                    </div>
+                </div>
+                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 hidden sm:inline-block">
+                    DP
+                </span>
+            </div>
+
+            {{-- Item Transaksi Sebelumnya --}}
+            <div class="bg-white rounded-lg p-5 shadow-md flex justify-between items-center transition hover:shadow-lg border-l-4 border-gray-300">
+                <div class="flex flex-col md:flex-row md:items-center">
+                    <div class="text-xl font-bold text-gray-600 md:w-24">Rp 120K</div>
+                    <div class="md:ml-6 mt-2 md:mt-0">
+                        <p class="font-bold text-gray-800">Booking Lapangan Voli (Komunitas)</p>
+                        <p class="text-sm text-gray-500">
+                            <i class="fas fa-calendar-check mr-1"></i> 05 Sep 2025 | ID: #OLG-0905-008
+                        </p>
+                    </div>
+                </div>
+                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-gray-100 text-gray-700 hidden sm:inline-block">
+                    Selesai
+                </span>
+            </div>
+
+            {{-- Kasus 2: Empty State (diaktifkan jika tidak ada data) --}}
+            {{-- Saya letakkan di bawah sebagai contoh, dalam implementasi nyata, ini hanya ditampilkan jika data kosong --}}
+            </div>
+
+    </section>
+</main>
+
+@endsection

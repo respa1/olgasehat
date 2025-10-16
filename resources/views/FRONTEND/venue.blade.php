@@ -58,7 +58,7 @@
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
       aria-label="Daftar venue olahraga"
     >
-      <a href="/venue-detail" class="block group">
+      <a href="/venue_detail_user" class="block group">
             <article
                 class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:-translate-y-1 group-hover:shadow-xl transition duration-300"
             >
@@ -99,7 +99,7 @@
             </article>
         </a>
 
-        <a href="/venue-detail" class="block group">
+        <a href="/venue_detail_user" class="block group">
             <article
                 class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:-translate-y-1 group-hover:shadow-xl transition duration-300"
             >
@@ -140,7 +140,7 @@
             </article>
         </a>
 
-        <a href="/venue-detail" class="block group">
+        <a href="/venue_detail_user" class="block group">
             <article
                 class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:-translate-y-1 group-hover:shadow-xl transition duration-300"
             >
@@ -181,7 +181,7 @@
             </article>
         </a>
 
-        <a href="/venue-detail" class="block group">
+        <a href="/venue_detail_user" class="block group">
             <article
                 class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:-translate-y-1 group-hover:shadow-xl transition duration-300"
             >

@@ -115,7 +115,7 @@
     </nav>
 </header>
 
-<main class="mt-24 flex items-center justify-center min-h-screen p-6 bg-gray-50">
+<main class="mt-30 flex items-center justify-center min-h-screen p-6 bg-gray-50">
   <div class="flex flex-col md:flex-row rounded-lg overflow-hidden shadow-lg max-w-5xl w-full">
     <!-- Left image -->
     <div class="w-full md:w-1/2 md:h-auto flex-shrink-0">

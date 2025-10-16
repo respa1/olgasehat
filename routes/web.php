@@ -29,6 +29,7 @@ Route::get('/success', fn() => view('frontend.success'));
 Route::get('/venue', fn() => view('frontend.venue'));
 Route::get('/healthy', fn() => view('frontend.healthy'));
 Route::get('/venue-detail', fn() => view('frontend.venue_detail'));
+Route::get('/klinik', fn() => view('frontend.klinik'));
 
 // ======================================================
 // AUTHENTICATION ROUTES
@@ -57,12 +58,32 @@ Route::get('/daftaruser', [LoginController::class, 'registerUserForm'])->name('u
 Route::post('/daftaruser', [LoginController::class, 'registerUser'])->name('user.register.submit');
 
 Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/editprofile', [LoginController::class, 'editProfile'])->name('user.editprofile');
+    Route::get('/dashboarduser', [LoginController::class, 'editProfile'])->name('user.editprofile');
     Route::post('/editprofile', [LoginController::class, 'updateProfile'])->name('user.updateprofile');
 });
 
-Route::get('/riwayat komunitas', fn() => view('user.riwayatkomunitas'));
-Route::get('/riwayatclub', fn() => view('user.riwayatclub'));
+Route::get('/riwayat komunitas', function () {return view('user.riwayatkomunitas');});
+Route::get('/riwayatclub', function () {return view('user.riwayatclub');});
+Route::get('/riwayatpayment', function () {return view('user.riwayatpayment');});
+Route::get('/registeremail', function () {return view('user.registeremail');});
+Route::get('/loginemail', function () { return view('user.loginemail');});
+Route::get('/resetpassword', function () {return view('user.resetpassword'); });
+Route::get('/homeuser', function () {return view('user.homeuser'); });
+Route::get('/venueuser', function () {return view('user.venueuser'); });
+Route::get('/venueuser_detail', function () {return view('user.venueuser_detail'); });
+Route::get('/communityuser', function () {return view('user.communityuser'); });
+Route::get('/communityuser_detail', function () {return view('user.communityuser_detail'); });
+Route::get('/bloguser_news', function () {return view('user.bloguser_news'); });
+Route::get('/bloguser_detail', function () {return view('user.bloguser_detail'); });
+Route::get('/confirmuser', function () {return view('user.confirmuser'); });
+Route::get('/paymentuser', function () {return view('user.paymentuser'); });
+Route::get('/success_user', function () {return view('user.success_user'); });
+
+
+
+Route::get('/edit-profile-user', fn() => view('user.editprofile_user'));
+Route::get('/riwayat-komunitas', fn() => view('user.riwayatkomunitas'));
+Route::get('/riwayatmembership', fn() => view('user.riwayatmembership'));
 Route::get('/riwayatpayment', fn() => view('user.riwayatpayment'));
 Route::get('/registeremail', fn() => view('user.registeremail'));
 Route::get('/loginemail', fn() => view('user.loginemail'));
@@ -72,6 +93,7 @@ Route::get('/venueuser', fn() => view('user.venueuser'));
 Route::get('/venueuser_detail', fn() => view('user.venueuser_detail'));
 Route::get('/communityuser', fn() => view('user.communityuser'));
 Route::get('/communityuser_detail', fn() => view('user.communityuser_detail'));
+Route::get('/membership-user-detail', fn() => view('user.membershipuser_detail'));
 Route::get('/bloguser_news', fn() => view('user.bloguser_news'));
 Route::get('/bloguser_detail', fn() => view('user.bloguser_detail'));
 
