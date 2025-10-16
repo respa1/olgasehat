@@ -2,58 +2,68 @@
 
 @section('content')
 <div class="content-wrapper p-4">
-            <style>
-    .custom-file-upload:hover {
-        border-color: #007bff;
-        background-color: #eaf2ff;
-    }
+    <style>
+        .custom-file-upload:hover {
+            border-color: #007bff;
+            background-color: #eaf2ff;
+        }
 
-    .custom-file-upload input[type="file"] {
-        display: none;
-    }
+        .custom-file-upload input[type="file"] {
+            display: none;
+        }
 
-    .custom-file-upload .icon {
-        font-size: 2.5rem;
-        color: #007bff;
-        margin-bottom: 10px;
-    }
+        .custom-file-upload .icon {
+            font-size: 2.5rem;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
 
-    .custom-file-upload .text {
-        font-size: 1rem;
-        color: #666;
-    }
+        .custom-file-upload .text {
+            font-size: 1rem;
+            color: #666;
+        }
 
-    .image-preview {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 300px;
-        border: 2px dashed #ddd;
-        border-radius: 8px;
-        position: relative;
-        overflow: hidden;
-        background-color: #f8f8f8;
-        padding: 10px;
-        transition: border-color 0.3s ease;
-    }
+        .image-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 300px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            background-color: #f8f8f8;
+            padding: 10px;
+            transition: border-color 0.3s ease;
+        }
 
-    .image-preview:hover {
-        border-color: #4B49AC;
-    }
+        .image-preview:hover {
+            border-color: #4B49AC;
+        }
 
-    .image-preview img {
-        max-height: 100%;
-        max-width: 100%;
-        object-fit: cover;
-        display: none;
-    }
+        .image-preview img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: cover;
+            display: none;
+        }
 
-    .preview-text {
-        font-size: 16px;
-        color: #aaa;
-    }
-</style>
+        .preview-text {
+            font-size: 16px;
+            color: #aaa;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+    </style>
+
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar Progress -->
@@ -63,7 +73,7 @@
                         <ul class="list-unstyled">
                             <li class="mb-4">
                                 <div class="d-flex align-items-center">
-                                    <span class="step-number bg-primary text-white rounded-circle me-2"> 
+                                    <span class="step-number bg-primary text-white rounded-circle me-2">
                                         <i class="fas fa-handshake"></i>
                                     </span>
                                     <div>
@@ -120,48 +130,57 @@
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
                         <form action="/insertdata" method="post" enctype="multipart/form-data">
-                  @csrf
-                  <div class="mb-3">
-                    <label for="image" class="form-label">Gambar</label>
-                    <input type="file" id="image" name="foto" class="form-control">
-                    <div class="image-preview" id="thumbnailInput">
-                        <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
-                        <span class="preview-text" id="previewText">No image selected</span>
-                    </div>
-                </div>
-  
-                <div class="mb-3">
-                    <label for="judulProgram" class="form-label">Nama Venue</label>
-                    <input type="text" name="title" class="form-control" value="{{ old('title') }}">
-                </div>
+                            @csrf
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Gambar</label>
+                                <input type="file" id="image" name="foto" class="form-control">
+                                <div class="image-preview" id="thumbnailInput">
+                                    <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
+                                    <span class="preview-text" id="previewText">No image selected</span>
+                                </div>
+                            </div>
 
-               <div class="mb-3">
-                    <label for="kota" class="form-label">Pilih Kota</label>
-                    <select class="form-control" name="kota" id="kota">
-                        <option value="">-- Pilih Kota --</option>
-                        <option value="Denpasar" {{ old('kota') == 'Denpasar' ? 'selected' : '' }}>Denpasar</option>
-                        <option value="Badung" {{ old('kota') == 'Badung' ? 'selected' : '' }}>Badung</option>
-                        <option value="Gianyar" {{ old('kota') == 'Gianyar' ? 'selected' : '' }}>Gianyar</option>
-                        <option value="Tabanan" {{ old('kota') == 'Tabanan' ? 'selected' : '' }}>Tabanan</option>
-                        <option value="Buleleng" {{ old('kota') == 'Buleleng' ? 'selected' : '' }}>Buleleng</option>
-                    </select>
-                </div>
+                            <div class="mb-3">
+                                <label for="judulProgram" class="form-label">Nama Venue</label>
+                                <input type="text" name="title" class="form-control" value="{{ old('title') }}">
+                            </div>
 
-                <div class="mb-3">
-                    <label for="category_venue" class="form-label">Category Venue</label>
-                    <select class="form-control" name="category_venue" id="category_venue">
-                        <option value="">-- Pilih Kategori --</option>
-                        <option value="Lapangan Olahraga" {{ old('category_venue') == 'Lapangan Olahraga' ? 'selected' : '' }}>Lapangan Olahraga</option>
-                        <option value="Gor" {{ old('category_venue') == 'Gor' ? 'selected' : '' }}>GOR</option>
-                        <option value="Studio" {{ old('category_venue') == 'Studio' ? 'selected' : '' }}>Studio</option>
-                        <option value="Arena Musik" {{ old('category_venue') == 'Arena Musik' ? 'selected' : '' }}>Arena Musik</option>
-                        <option value="Gedung Serbaguna" {{ old('category_venue') == 'Gedung Serbaguna' ? 'selected' : '' }}>Gedung Serbaguna</option>
-                    </select>
-                </div>
+                            <div class="mb-3">
+                                <label for="provinsi" class="form-label">Pilih Provinsi</label>
+                                <select class="form-control" id="provinsi" name="provinsi">
+                                    <option value="">-- Pilih Provinsi --</option>
+                                    <option value="Bali">Bali</option>
+                                    <option value="Jawa Timur">Jawa Timur</option>
+                                    <option value="DKI Jakarta">DKI Jakarta</option>
+                                    <option value="Jawa Barat">Jawa Barat</option>
+                                    <option value="Sumatera Utara">Sumatera Utara</option>
+                                </select>
+                            </div>
 
-                </div>
-                </form>
-                        <a href="/detail" class="btn btn-primary">Selanjutnya →</a>
+                            <div class="mb-3">
+                                <label for="kabupaten" class="form-label">Pilih Kabupaten/Kota</label>
+                                <select class="form-control" id="kabupaten" name="kabupaten">
+                                    <option value="">-- Pilih Kabupaten/Kota --</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="category_venue" class="form-label">Cabang Olahraga</label>
+                                <select class="form-control" name="category_venue" id="category_venue">
+                                    <option value="">-- Pilih Cabang Olahraga --</option>
+                                    <option value="Sepak Bola" {{ old('category_venue') == 'Sepak Bola' ? 'selected' : '' }}>Sepak Bola</option>
+                                    <option value="Futsal" {{ old('category_venue') == 'Futsal' ? 'selected' : '' }}>Futsal</option>
+                                    <option value="Bola Basket" {{ old('category_venue') == 'Bola Basket' ? 'selected' : '' }}>Bola Basket</option>
+                                    <option value="Bola Voli" {{ old('category_venue') == 'Bola Voli' ? 'selected' : '' }}>Bola Voli</option>
+                                    <option value="Bola Tangan" {{ old('category_venue') == 'Bola Tangan' ? 'selected' : '' }}>Bola Tangan</option>
+                                    <option value="Rugby" {{ old('category_venue') == 'Rugby' ? 'selected' : '' }}>Rugby</option>
+                                    <option value="Baseball" {{ old('category_venue') == 'Baseball' ? 'selected' : '' }}>Baseball</option>
+                                    <option value="Softball" {{ old('category_venue') == 'Softball' ? 'selected' : '' }}>Softball</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Selanjutnya →</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -169,17 +188,36 @@
     </div>
 </div>
 
+<!-- SCRIPT: pindahkan ke bawah agar tidak error -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const dataWilayah = {
+        "Bali": ["Denpasar", "Badung", "Gianyar", "Tabanan", "Bangli", "Klungkung", "Karangasem", "Buleleng", "Jembrana"],
+        "Jawa Timur": ["Surabaya", "Malang", "Kediri", "Sidoarjo", "Banyuwangi", "Blitar"],
+        "DKI Jakarta": ["Jakarta Selatan", "Jakarta Barat", "Jakarta Timur", "Jakarta Utara", "Jakarta Pusat"],
+        "Jawa Barat": ["Bandung", "Bogor", "Bekasi", "Cirebon", "Sukabumi"],
+        "Sumatera Utara": ["Medan", "Binjai", "Tebing Tinggi", "Pematangsiantar"]
+    };
 
- <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<style>
-    .step-number {
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-    }
-</style>
+    const provinsiSelect = document.getElementById('provinsi');
+    const kabupatenSelect = document.getElementById('kabupaten');
+
+    provinsiSelect.addEventListener('change', function() {
+        const provinsi = this.value;
+        kabupatenSelect.innerHTML = '<option value="">-- Pilih Kabupaten/Kota --</option>';
+
+        if (provinsi && dataWilayah[provinsi]) {
+            dataWilayah[provinsi].forEach(kab => {
+                const option = document.createElement('option');
+                option.value = kab;
+                option.textContent = kab;
+                kabupatenSelect.appendChild(option);
+            });
+        }
+    });
+});
+</script>
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 @endsection
