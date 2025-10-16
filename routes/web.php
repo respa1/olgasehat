@@ -182,6 +182,7 @@ Route::middleware(['auth'])->group(function () {
 
         // ACTIVITY TYPES
         Route::resource('activity-types', ActivityTypeController::class);
+        Route::get('activity-types-daftar', [ActivityTypeController::class, 'daftar'])->name('activity-types.daftar');
 
         // PAPAN JADWAL
 

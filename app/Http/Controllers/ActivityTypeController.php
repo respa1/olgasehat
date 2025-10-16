@@ -74,4 +74,36 @@ class ActivityTypeController extends Controller
     {
         abort(403, 'Tidak diizinkan menghapus tipe aktivitas.');
     }
+
+    /**
+     * Display a listing of activities for daftar view with dummy data.
+     */
+    public function daftar()
+    {
+        $activities = [
+            [
+                'id' => 1,
+                'title' => 'Kumpulan Pemuda Futsal',
+                'type' => 'Komunitas',
+                'location' => 'Denpasar',
+                'date' => '10 Oktober 2025',
+            ],
+            [
+                'id' => 2,
+                'title' => 'The SportMan Club Denpasar',
+                'type' => 'Membership',
+                'location' => 'Renon, Bali',
+                'date' => '2 Oktober 2025',
+            ],
+            [
+                'id' => 3,
+                'title' => 'Badminton Warriors BDG Championship',
+                'type' => 'Event Olahraga',
+                'location' => 'Jimbaran',
+                'date' => '15 Oktober 2025',
+            ],
+        ];
+
+        return view('backend.activity_types.daftar', compact('activities'));
+    }
 }
