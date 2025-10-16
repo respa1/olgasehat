@@ -8,6 +8,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ActivityTypeController;
 use App\Http\Controllers\PendaftaranController;
 
 // ======================================================
@@ -178,8 +179,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/datapemiliklapangan', [App\Http\Controllers\MitraController::class, 'index'])->name('mitra.datapemiliklapangan');
 
 
+        // ACTIVITY TYPES
+        Route::resource('activity-types', ActivityTypeController::class);
+
         // PAPAN JADWAL
-        
+
     });
 });
 

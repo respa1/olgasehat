@@ -34,20 +34,12 @@
             <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Cari Berdasarkan Tipe Aktivitas</h2>
             
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="/komunitas?type=open-class" class="flex flex-col items-center p-4 w-32 rounded-lg bg-white shadow-md hover:shadow-lg transition">
-                    <i class="fas fa-chalkboard-teacher text-3xl text-blue-600 mb-2"></i>
-                    <span class="text-sm font-medium text-center">Komunitas</span>
+                @foreach(\App\Models\ActivityType::all() as $type)
+                <a href="/komunitas?type={{ $type->name }}" class="flex flex-col items-center p-4 w-32 rounded-lg bg-white shadow-md hover:shadow-lg transition">
+                    <i class="{{ $type->icon }} text-3xl text-blue-600 mb-2"></i>
+                    <span class="text-sm font-medium text-center">{{ $type->title }}</span>
                 </a>
-
-                <a href="/komunitas?type=klub" class="flex flex-col items-center p-4 w-32 rounded-lg bg-white shadow-md hover:shadow-lg transition">
-                    <i class="fas fa-users text-3xl text-blue-600 mb-2"></i>
-                    <span class="text-sm font-medium text-center">Membership</span>
-                </a>
-                
-                <a href="/komunitas?type=event" class="flex flex-col items-center p-4 w-32 rounded-lg bg-white shadow-md hover:shadow-lg transition">
-                    <i class="fas fa-calendar-alt text-3xl text-blue-600 mb-2"></i>
-                    <span class="text-sm font-medium text-center">Event Olahraga</span>
-                </a>
+                @endforeach
             </div>
             
             <div class="max-w-xl mx-auto mt-8 flex space-x-2">
