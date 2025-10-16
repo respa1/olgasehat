@@ -155,6 +155,12 @@
                   <p>Type Aktivitas</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ route('activity-types.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Daftar Aktivitas</p>
+                </a>
+              </li>
             </ul>
           </li>
 
