@@ -133,13 +133,11 @@
             });
         });
     });
-</script>
-@endpushconst sessionMessage = 
-            "{{ Session::get('Success') ?? Session::get('update') ?? Session::get('delete') }}";
-        if (sessionMessage) {
-             toastr.success(sessionMessage);
-        }
-    @endif
+
+    const sessionMessage = "{{ Session::get('Success') ?? Session::get('update') ?? Session::get('delete') }}";
+    if (sessionMessage) {
+        toastr.success(sessionMessage);
+    }
 
     @if (Session::has('error'))
         toastr.error("{{ Session::get('error') }}");
