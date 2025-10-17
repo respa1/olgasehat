@@ -54,7 +54,7 @@
     <div class="bg-sky-700 py-4 shadow-md">
         <header class="max-w-5xl mx-auto px-6 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-white">OLGA SEHAT</h1>
-            <a href="/" class="text-white/80 hover:text-white transition">Kembali ke Dashboard</a>
+            <a href="/homeuser" class="text-white/80 hover:text-white transition">Kembali ke Dashboard</a>
         </header>
     </div>
 
