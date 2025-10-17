@@ -111,14 +111,10 @@
                         <span class="text-gray-600">Harga Lapangan</span>
                         <span class="font-semibold text-gray-800">Rp 100.000</span>
                     </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-600">Biaya Platform</span>
-                        <span class="font-semibold text-gray-800">Rp 6.000</span>
-                    </div>
 
                     <div class="pt-4 border-t border-gray-200 flex justify-between items-center">
                         <div class="text-xl font-semibold text-gray-900">Total Bayar</div>
-                        <div class="text-2xl font-semibold text-blue-700">Rp 106.000</div>
+                        <div class="text-2xl font-semibold text-blue-700">Rp 100.000</div>
                     </div>
                     <p class="text-sm text-right text-blue-600 font-semibold mt-1">Pembayaran Penuh (Full Payment)</p>
                 </div>
@@ -162,7 +158,7 @@
            <div class="sticky bottom-0 bg-white p-4 shadow-top-lg lg:shadow-none lg:p-0">
             <a href="/success_user" class="block"> 
                 <button class="w-full bg-blue-700 text-white text-lg py-3 rounded-xl font-semibold hover:bg-blue-800 transition transform hover:scale-[1.005] shadow-lg">
-                    <i class="fas fa-credit-card mr-2"></i> BAYAR SEKARANG (Rp 106.000)
+                    <i class="fas fa-credit-card mr-2"></i> BAYAR SEKARANG (Rp 100.000)
                 </button>
             </a>
         </div>
