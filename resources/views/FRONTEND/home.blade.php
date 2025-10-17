@@ -156,17 +156,7 @@
 
         <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mb-14">
 
-            <a href="/loginuser" class="block w-full sm:w-auto">
-            <button class="bg-blue-700 text-white text-sm font-bold rounded-full px-6 py-3 shadow-lg hover:bg-blue-800 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50">
-                <i class="fas fa-plus-circle mr-2"></i> BUAT AKTIVITAS BARU
-            </button>
-            </a>
-            
-            <a href="/community" class="block w-full sm:w-auto">
-            <button class="w-full bg-white text-gray-800 text-sm font-bold rounded-full px-6 py-3 border border-gray-300 shadow-md hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-opacity-50">
-                <i class="fas fa-users mr-2"></i> GABUNG AKTIVITAS
-            </button>
-            </a>
+            g
         </div>
 
         <div class="flex overflow-x-auto gap-4 pb-4 max-w-5xl mx-auto lg:overflow-x-visible lg:grid lg:grid-cols-3 lg:gap-4 lg:pb-0">

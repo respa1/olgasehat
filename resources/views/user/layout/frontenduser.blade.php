@@ -159,7 +159,7 @@
         <li><a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a></li>
         <li><a href="/" class="hover:text-blue-700">Tempat Sehat</a></li>
         <li><a href="/community" class="hover:text-blue-700">Komunitas & Aktivitas</a></li>
-   >     <li><a href="/blog-news" class="hover:text-blue-700">Blog & News</a></li>
+        <li><a href="/blog-news" class="hover:text-blue-700">Blog & News</a></li>
       </ul>
     </div>
     <div>
