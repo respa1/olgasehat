@@ -8,6 +8,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ActivityTypeController;
 use App\Http\Controllers\PendaftaranController;
 
 // ======================================================
@@ -19,6 +20,7 @@ Route::get('/blog-news', fn() => view('frontend.blog-news'));
 Route::get('/blog-news-detail', fn() => view('frontend.blog&news_detail'));
 Route::get('/membership-detail', fn() => view('frontend.membership_detail'));
 Route::get('/community', fn() => view('frontend.community'));
+Route::get('/buat-aktivitas', fn() => view('frontend.buat_aktivitas_baru'));
 Route::get('/community-detail', fn() => view('frontend.community_detail'));
 Route::get('/confirm', fn() => view('frontend.confirm'));
 Route::get('/daftar-pemilik', fn() => view('frontend.daftar_pemilik'));
@@ -178,8 +180,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/datapemiliklapangan', [App\Http\Controllers\MitraController::class, 'index'])->name('mitra.datapemiliklapangan');
 
 
+        // ACTIVITY TYPES
+        Route::resource('activity-types', ActivityTypeController::class);
+        Route::get('activity-types-daftar', [ActivityTypeController::class, 'daftar'])->name('activity-types.daftar');
+
         // PAPAN JADWAL
-        
+
     });
 });
 

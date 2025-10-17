@@ -1,4 +1,5 @@
 @extends('backend.layout.admin')
+
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -89,6 +90,17 @@
                     <input type="text" name="name" class="form-control" value="{{ old('name', $data->name) }}">
                 </div>
 
+                <div class="mb-3">
+                    <label for="category_id" class="form-label">Kategori</label>
+                    <select name="category_id" class="form-control" id="category_id">
+                        <option value="">-- Pilih Kategori --</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ old('category_id', $data->category_id) == $category->id ? 'selected' : '' }}>
+                                {{ $category->title }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
 
                 <div class="mb-3">
                     <label for="excerpt" class="form-label">Short Content Berita</label>
