@@ -2,15 +2,15 @@
 
 @section('content')
 
-<section class="relative bg-cover bg-center h-[500px] md:h-[600px]" style="background-image: url('{{ asset('assets/banten-indonesia-august-02-2022-600nw-2455954305.webp') }}');">
+<section class="relative bg-cover bg-center h-[500px] md:h-[600px]" style="background-image: url('{{ asset('assets/banten-indonesia-august-02-2022-600nw-2455954305.webp') }}');" data-aos="fade-in">
     <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center px-6">
-        
-        <div class="container mx-auto text-white text-left">
+
+        <div class="container mx-auto text-white text-left" data-aos="fade-up-right" data-aos-delay="200">
             <h1 class="text-4xl md:text-5xl font-bold mb-4">
                 Kini <span class="font-extrabold">Olga Sehat</span> Hadir<br />
                 Untuk Gaya Hidup Sehat
             </h1>
-    
+
             <p class="text-base md:text-xl mb-4 max-w-3xl">
                 Selamat datang di OLGA SEHAT<br />
                 Satu platform untuk booking lapangan, klinik, komunitas olahraga, dan cek kesehatan.
@@ -22,9 +22,9 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-<section class="container mx-auto px-6 py-12 md:py-16 flex flex-col lg:flex-row items-center lg:items-center lg:space-x-10 max-w-6xl">
+<section class="container mx-auto px-6 py-12 md:py-16 flex flex-col lg:flex-row items-center lg:items-center lg:space-x-10 max-w-6xl" data-aos="fade-up">
 
-    <div class="lg:w-1/2 mb-8 lg:mb-0 order-2 lg:order-1">
+    <div class="lg:w-1/2 mb-8 lg:mb-0 order-2 lg:order-1" data-aos="fade-up-right" data-aos-delay="100">
 
         <div class="inline-flex space-x-2 mb-6 p-1 bg-gray-100 rounded-full shadow-inner" role="tablist" aria-label="Toggle Kelola Fasilitas">
             <button id="btnPemilikLapangan" role="tab" aria-selected="true" aria-controls="contentPemilikLapangan" tabindex="0"
@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <div class="lg:w-1/2 grid grid-cols-2 gap-3 lg:gap-4 order-1 lg:order-2" id="imageContainerPemilikLapangan">
+    <div class="lg:w-1/2 grid grid-cols-2 gap-3 lg:gap-4 order-1 lg:order-2" id="imageContainerPemilikLapangan" data-aos="fade-up-left" data-aos-delay="200">
         <img src="{{ asset('assets/MU Sport Center.jpeg') }}" alt="MU Sport Center"
              class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
         <img src="{{ asset('assets/Imbo Sport Center.webp') }}" alt="Imbo Sport Center"
@@ -83,9 +83,9 @@
     </div>
 </section>
 
-<section class="container mx-auto px-6 py-12 md:py-16 flex flex-col lg:flex-row items-center lg:items-center lg:space-x-10 max-w-6xl">
+<section class="container mx-auto px-6 py-12 md:py-16 flex flex-col lg:flex-row items-center lg:items-center lg:space-x-10 max-w-6xl" data-aos="fade-up">
 
-    <div class="lg:w-1/2 grid grid-cols-2 gap-3 lg:gap-4 mb-8 lg:mb-0 order-1 lg:order-1" id="imageContainerPemilikKesehatan">
+    <div class="lg:w-1/2 grid grid-cols-2 gap-3 lg:gap-4 mb-8 lg:mb-0 order-1 lg:order-1" id="imageContainerPemilikKesehatan" data-aos="fade-up-left" data-aos-delay="100">
         <img src="{{ asset('assets/MU Sport Center.jpeg') }}" alt="Klinik 1"
              class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
         <img src="{{ asset('assets/Imbo Sport Center.webp') }}" alt="Fisio 2"
@@ -96,7 +96,7 @@
              class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
     </div>
 
-    <div class="lg:w-1/2 order-2 lg:order-2">
+    <div class="lg:w-1/2 order-2 lg:order-2" data-aos="fade-up-right" data-aos-delay="200">
 
         <div class="inline-flex space-x-2 mb-6 p-1 bg-gray-100 rounded-full shadow-inner" role="tablist" aria-label="Toggle Kelola Fasilitas Kesehatan">
             <button id="btnPemilikKesehatan" role="tab" aria-selected="true" aria-controls="contentPemilikKesehatan" tabindex="0"
@@ -144,24 +144,33 @@
     </div>
 </section>
 
-<section class="bg-gray-50 py-16 md:py-20">
+<section class="bg-gray-50 py-16 md:py-20" data-aos="fade-up">
     <div class="container mx-auto px-6 text-center max-w-6xl">
 
-        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 leading-tight">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 leading-tight" data-aos="fade-up" data-aos-delay="100">
             Temukan <span class="text-blue-700">Komunitas & Aktivitas</span> Favoritmu!
         </h2>
-        <p class="text-gray-600 mb-10 max-w-3xl mx-auto text-lg leading-relaxed">
+        <p class="text-gray-600 mb-10 max-w-3xl mx-auto text-lg leading-relaxed" data-aos="fade-up" data-aos-delay="200">
             Buat kegiatan seru bersama Olga Sehat! Komunitas, Membership, atau Event Seru dari berbagai kegiatan olahraga di sekitarmu. Saatnya jalin silaturahmi dan tambah semangat di lapangan!
         </p>
 
         <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mb-14">
+            <a href="/loginuser" class="block w-full sm:w-auto">
+            <button class="bg-blue-700 text-white text-sm font-bold rounded-full px-6 py-3 shadow-lg hover:bg-blue-800 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50">
+                <i class="fas fa-plus-circle mr-2"></i> BUAT AKTIVITAS BARU
+            </button>
+            </a>
 
-            g
+            <a href="/community" class="block w-full sm:w-auto">
+            <button class="w-full bg-white text-gray-800 text-sm font-bold rounded-full px-6 py-3 border border-gray-300 shadow-md hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-opacity-50">
+                <i class="fas fa-users mr-2"></i> GABUNG AKTIVITAS
+            </button>
+            </a>
         </div>
 
-        <div class="flex overflow-x-auto gap-4 pb-4 max-w-5xl mx-auto lg:overflow-x-visible lg:grid lg:grid-cols-3 lg:gap-4 lg:pb-0">
+        <div class="flex overflow-x-auto gap-4 pb-4 max-w-5xl mx-auto lg:overflow-x-visible lg:grid lg:grid-cols-3 lg:gap-4 lg:pb-0" data-aos="fade-up" data-aos-delay="300">
 
-            <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02] flex-shrink-0 w-72 sm:w-full">
+            <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02] flex-shrink-0 w-72 sm:w-full" data-aos="fade-up" data-aos-delay="400">
                 <img src="{{ asset('assets/komunitas.png') }}" alt="Komunitas Futsal Jakarta"
                             class="object-cover h-56 md:h-64 w-full transition duration-500 group-hover:opacity-85" />
                 <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-start justify-end p-4">
@@ -170,7 +179,7 @@
                 </div>
             </div>
 
-            <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02] flex-shrink-0 w-72 sm:w-full">
+            <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02] flex-shrink-0 w-72 sm:w-full" data-aos="fade-up" data-aos-delay="500">
                 <img src="{{ asset('assets/komunitas1.png') }}" alt="Komunitas Basket Surabaya"
                             class="object-cover h-56 md:h-64 w-full transition duration-500 group-hover:opacity-85" />
                 <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-start justify-end p-4">
@@ -179,7 +188,7 @@
                 </div>
             </div>
 
-            <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02] flex-shrink-0 w-72 sm:w-full">
+            <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02] flex-shrink-0 w-72 sm:w-full" data-aos="fade-up" data-aos-delay="600">
                 <img src="{{ asset('assets/komunitas2.png') }}" alt="Komunitas Badminton Bandung"
                             class="object-cover h-56 md:h-64 w-full transition duration-500 group-hover:opacity-85" />
                 <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-start justify-end p-4">
@@ -202,21 +211,21 @@
 </section>
 
 <section class="relative h-auto py-16 md:py-24 overflow-hidden"
-    style="background-image: url('{{ asset('assets/banten-indonesia-august-02-2022-600nw-2455954305.webp') }}'); background-attachment: fixed; background-size: cover; background-position: center;">
+    style="background-image: url('{{ asset('assets/banten-indonesia-august-02-2022-600nw-2455954305.webp') }}'); background-attachment: fixed; background-size: cover; background-position: center;" data-aos="fade-up">
 
     <div class="absolute inset-0 bg-black bg-opacity-80 backdrop-blur-sm"></div>
 
     <div class="relative container mx-auto px-6 flex flex-col justify-center items-center text-white max-w-6xl">
 
-        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-12 text-center max-w-4xl leading-snug">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-12 text-center max-w-4xl leading-snug" data-aos="fade-up" data-aos-delay="100">
             Mengapa <span class="text-blue-400">Olga Sehat</span> Adalah Pilihan Terbaik?
         </h2>
 
-        <div class="flex overflow-x-auto w-full pb-4 snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-5 max-w-full lg:max-w-none">
+        <div class="flex overflow-x-auto w-full pb-4 snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-5 max-w-full lg:max-w-none" data-aos="fade-up" data-aos-delay="200">
 
             <div class="flex-shrink-0 w-72 md:min-w-72 lg:w-auto snap-center mr-4 lg:mr-0
                         bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
-                        transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400">
+                        transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400" data-aos="fade-up" data-aos-delay="300">
                 <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl shadow-lg">
                     <i class="fas fa-handshake"></i>
                 </div>
@@ -226,7 +235,7 @@
 
             <div class="flex-shrink-0 w-72 md:min-w-72 lg:w-auto snap-center mr-4 lg:mr-0
                         bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
-                        transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400">
+                        transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400" data-aos="fade-up" data-aos-delay="400">
                 <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl shadow-lg">
                     <i class="fas fa-map-marker-alt"></i>
                 </div>
@@ -236,7 +245,7 @@
 
             <div class="flex-shrink-0 w-72 md:min-w-72 lg:w-auto snap-center mr-4 lg:mr-0
                         bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
-                        transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400">
+                        transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400" data-aos="fade-up" data-aos-delay="500">
                 <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl shadow-lg">
                     <i class="fas fa-mobile-alt"></i>
                 </div>
@@ -246,7 +255,7 @@
 
             <div class="flex-shrink-0 w-72 md:min-w-72 lg:w-auto snap-center
                         bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
-                        transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400">
+                        transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400" data-aos="fade-up" data-aos-delay="600">
                 <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl shadow-lg">
                     <i class="fas fa-shield-alt"></i>
                 </div>
@@ -258,17 +267,17 @@
         </div>
 </section>
 
-<section class="container mx-auto px-6 py-16 md:py-20">
+<section class="container mx-auto px-6 py-16 md:py-20" data-aos="fade-up">
     <div class="max-w-6xl mx-auto flex flex-col lg:flex-row rounded-2xl overflow-hidden shadow-2xl bg-white">
 
         <div class="lg:w-1/3 bg-blue-700 bg-cover bg-center flex items-center justify-center p-8 md:p-10 min-h-56 lg:min-h-full"
-             style="background-image: url('{{ asset('assets/blue-banner.png') }}'); background-blend-mode: multiply; background-color: rgba(29, 78, 216, 0.85);">
+             style="background-image: url('{{ asset('assets/blue-banner.png') }}'); background-blend-mode: multiply; background-color: rgba(29, 78, 216, 0.85);" data-aos="fade-up" data-aos-delay="100">
             <h2 class="text-white text-3xl md:text-4xl font-extrabold text-center relative z-10">
                 Apa Kata Mereka?
             </h2>
         </div>
 
-        <div class="lg:w-2/3 bg-white p-6 md:p-10 flex flex-col justify-between">
+        <div class="lg:w-2/3 bg-white p-6 md:p-10 flex flex-col justify-between" data-aos="fade-up" data-aos-delay="200">
             <div id="testimonial-container" class="relative min-h-[250px] md:min-h-[180px]">
 
                 <div class="testimonial-item absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100">
@@ -339,3 +348,11 @@
 </section>
 
 @endsection
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 1000,
+    once: true,
+  });
+</script>

@@ -39,7 +39,7 @@
                     <p class="text-gray-500 mt-1">Kumpulan komunitas yang kamu telah tergabung saat ini.</p>
                 </div>
                 {{-- Tombol Tambah Komunitas di Header --}}
-                <a href="/cari-komunitas" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition duration-150 flex items-center text-sm md:text-base whitespace-nowrap">
+                <a href="/buat-aktivitas" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition duration-150 flex items-center text-sm md:text-base whitespace-nowrap">
                     <i class="fas fa-plus mr-2"></i> Tambah Komunitas
                 </a>
             </div>
