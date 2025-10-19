@@ -47,7 +47,7 @@
     
     @php
         // Ganti ini dengan pengecekan autentikasi sesungguhnya di Laravel
-        $is_venue_owner = true; // Ganti menjadi false untuk melihat efek disabled
+        $is_venue_owner = false; // User biasa tidak bisa buat membership
         $venue_owner_message = "Hanya Pemilik Lapangan yang terdaftar yang dapat membuat paket Membership.";
     @endphp
 
