@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <!-- AOS (Animate On Scroll) -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -51,11 +52,17 @@
 
     <!-- Aksi Desktop -->
     <div class="hidden md:flex items-center space-x-4 relative">
-      <!-- Tombol Cart (Desktop) -->
-      <button id="cartBtn" aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
-        <i class="fas fa-shopping-cart fa-lg"></i>
-        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
-      </button>
+      <!-- Language Selector -->
+      <div class="relative">
+        <button id="languageBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none flex items-center space-x-2">
+          <i class="fas fa-globe fa-lg"></i>
+          <span id="currentLanguage">ID</span>
+          <i class="fas fa-chevron-down text-sm"></i>
+        </button>
+        <div id="languageDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+          <!-- Daftar bahasa akan diisi oleh JavaScript -->
+        </div>
+      </div>
 
       <!-- Register Dropdown -->
       <div class="relative">
@@ -85,11 +92,17 @@
 
     <!-- Header Mobile -->
     <div class="flex md:hidden items-center space-x-4 ml-auto">
-      <!-- Tombol Cart (Mobile) -->
-      <button id="cartBtnMobile" aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
-        <i class="fas fa-shopping-cart fa-lg"></i>
-        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
-      </button>
+      <!-- Language Selector Mobile -->
+      <div class="relative">
+        <button id="languageBtnMobile" class="text-gray-700 hover:text-blue-700 focus:outline-none flex items-center space-x-2">
+          <i class="fas fa-globe fa-lg"></i>
+          <span id="currentLanguageMobile">ID</span>
+          <i class="fas fa-chevron-down text-sm"></i>
+        </button>
+        <div id="languageDropdownMobile" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+          <!-- Daftar bahasa akan diisi oleh JavaScript -->
+        </div>
+      </div>
 
       <!-- Tombol Hamburger -->
       <button id="mobileMenuBtn"
@@ -295,28 +308,113 @@
         }
       });
 
-      // Cart Functionality
-      const cartBtns = document.querySelectorAll('#cartBtn, #cartBtnMobile');
-      const cartSidebar = document.getElementById("cartSidebar");
-      const cartOverlay = document.getElementById("cartOverlay");
-      const closeCart = document.getElementById("closeCart");
+      // Language Dropdown Functionality
+      const languageBtn = document.getElementById("languageBtn");
+      const languageDropdown = document.getElementById("languageDropdown");
+      const currentLanguage = document.getElementById("currentLanguage");
+      const languageBtnMobile = document.getElementById("languageBtnMobile");
+      const languageDropdownMobile = document.getElementById("languageDropdownMobile");
+      const currentLanguageMobile = document.getElementById("currentLanguageMobile");
 
-      cartBtns.forEach(btn => {
-        btn?.addEventListener("click", () => {
-          cartSidebar.classList.remove("translate-x-full");
-          cartOverlay.classList.remove("hidden");
+      // Fetch languages from LibreTranslate API
+      async function fetchLanguages() {
+        try {
+          const response = await fetch('https://libretranslate.com/languages');
+          const languages = await response.json();
+          populateLanguageDropdown(languages);
+          populateLanguageDropdownMobile(languages);
+        } catch (error) {
+          console.error('Error fetching languages:', error);
+          // Fallback to common languages
+          const fallbackLanguages = [
+            {code: 'en', name: 'English'},
+            {code: 'id', name: 'Indonesian'},
+            {code: 'es', name: 'Spanish'},
+            {code: 'fr', name: 'French'},
+            {code: 'de', name: 'German'},
+            {code: 'it', name: 'Italian'},
+            {code: 'pt', name: 'Portuguese'},
+            {code: 'ru', name: 'Russian'},
+            {code: 'ja', name: 'Japanese'},
+            {code: 'ko', name: 'Korean'},
+            {code: 'zh', name: 'Chinese'},
+            {code: 'ar', name: 'Arabic'},
+            {code: 'hi', name: 'Hindi'}
+          ];
+          populateLanguageDropdown(fallbackLanguages);
+          populateLanguageDropdownMobile(fallbackLanguages);
+        }
+      }
+
+      function populateLanguageDropdown(languages) {
+        languageDropdown.innerHTML = '';
+        languages.forEach(lang => {
+          const li = document.createElement('li');
+          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+          li.textContent = `${lang.name} (${lang.code.toUpperCase()})`;
+          li.addEventListener('click', () => {
+            currentLanguage.textContent = lang.code.toUpperCase();
+            languageDropdown.classList.add('hidden');
+            // Here you can add logic to change the page language
+            changeLanguage(lang.code);
+          });
+          languageDropdown.appendChild(li);
         });
+      }
+
+      function populateLanguageDropdownMobile(languages) {
+        languageDropdownMobile.innerHTML = '';
+        languages.forEach(lang => {
+          const li = document.createElement('li');
+          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+          li.textContent = `${lang.name} (${lang.code.toUpperCase()})`;
+          li.addEventListener('click', () => {
+            currentLanguageMobile.textContent = lang.code.toUpperCase();
+            languageDropdownMobile.classList.add('hidden');
+            // Here you can add logic to change the page language
+            changeLanguage(lang.code);
+          });
+          languageDropdownMobile.appendChild(li);
+        });
+      }
+
+      function changeLanguage(langCode) {
+        // Placeholder function for language change
+        // You can implement translation logic here
+        console.log('Changing language to:', langCode);
+        // For now, just show an alert
+        Swal.fire({
+          icon: 'info',
+          title: 'Language Changed',
+          text: `Language changed to ${langCode.toUpperCase()}`,
+          confirmButtonText: 'OK'
+        });
+      }
+
+      // Toggle desktop language dropdown
+      languageBtn?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        languageDropdown.classList.toggle("hidden");
       });
 
-      closeCart?.addEventListener("click", () => {
-        cartSidebar.classList.add("translate-x-full");
-        cartOverlay.classList.add("hidden");
+      // Toggle mobile language dropdown
+      languageBtnMobile?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        languageDropdownMobile.classList.toggle("hidden");
       });
 
-      cartOverlay?.addEventListener("click", () => {
-        cartSidebar.classList.add("translate-x-full");
-        cartOverlay.classList.add("hidden");
+      // Close dropdowns on outside click
+      window.addEventListener("click", (e) => {
+        if (!languageBtn?.contains(e.target) && !languageDropdown?.contains(e.target)) {
+          languageDropdown?.classList.add("hidden");
+        }
+        if (!languageBtnMobile?.contains(e.target) && !languageDropdownMobile?.contains(e.target)) {
+          languageDropdownMobile?.classList.add("hidden");
+        }
       });
+
+      // Fetch languages on page load
+      fetchLanguages();
 
       // Header hide/show on scroll
       let lastScrollTop = 0;
