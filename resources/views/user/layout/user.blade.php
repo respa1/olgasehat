@@ -87,7 +87,11 @@
       <!-- Dropdown User -->
       <div class="relative">
         <button id="userMenuBtn" class="flex items-center space-x-2 focus:outline-none">
-          <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+          @if(Auth::user()->image)
+              <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="User Avatar" class="w-8 h-8 rounded-full border object-cover" />
+          @else
+              <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+          @endif
           <i class="fas fa-chevron-down text-gray-500 text-sm"></i>
         </button>
         <!-- Dropdown menu -->
@@ -117,7 +121,11 @@
       <!-- Dropdown User Mobile -->
       <div class="relative">
         <button id="mobileUserBtn" class="flex items-center space-x-2 focus:outline-none">
-          <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+          @if(Auth::user()->image)
+              <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="User Avatar" class="w-8 h-8 rounded-full border object-cover" />
+          @else
+              <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+          @endif
           <i class="fas fa-chevron-down text-gray-500 text-sm"></i>
         </button>
         <!-- Dropdown menu -->

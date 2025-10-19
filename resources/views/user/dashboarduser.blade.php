@@ -138,9 +138,15 @@
 
     {{-- Card: Profil Utama --}}
     <div class="bg-white shadow-md rounded-2xl p-6 text-center border-t-4 border-blue-500">
-        <img src="https://via.placeholder.com/120/2563EB/FFFFFF?text=R" 
-             alt="Foto Profil" 
-             class="w-24 h-24 mx-auto rounded-full shadow-md mb-4 object-cover">
+        @if(Auth::user()->image)
+            <img src="{{ asset('storage/' . Auth::user()->image) }}"
+                 alt="Foto Profil"
+                 class="w-24 h-24 mx-auto rounded-full shadow-md mb-4 object-cover">
+        @else
+            <img src="https://via.placeholder.com/120/2563EB/FFFFFF?text={{ substr(Auth::user()->name ?? 'U', 0, 1) }}"
+                 alt="Foto Profil"
+                 class="w-24 h-24 mx-auto rounded-full shadow-md mb-4 object-cover">
+        @endif
         <h2 class="text-xl font-bold text-gray-900">
             {{ Auth::user()->name ?? 'Rendra Pratama' }}
         </h2>

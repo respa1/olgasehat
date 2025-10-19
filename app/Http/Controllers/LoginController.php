@@ -139,7 +139,20 @@ class LoginController extends Controller
             'birth_year' => 'nullable|digits:4',
             'birth_day' => 'nullable|digits_between:1,2',
             'phone' => 'nullable|max:20',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        $imagePath = $user->image; // Keep existing image if no new one uploaded
+
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($user->image && file_exists(public_path('storage/' . $user->image))) {
+                unlink(public_path('storage/' . $user->image));
+            }
+
+            // Store new image
+            $imagePath = $request->file('image')->store('profile_images', 'public');
+        }
 
         $user->update([
             'name' => $validated['name'],
@@ -148,6 +161,7 @@ class LoginController extends Controller
             'birth_year' => $validated['birth_year'] ?? $user->birth_year,
             'birth_day' => $validated['birth_day'] ?? $user->birth_day,
             'phone' => $validated['phone'] ?? $user->phone,
+            'image' => $imagePath,
         ]);
 
         return redirect()->back()->with('success', 'Profil berhasil diperbarui.');
