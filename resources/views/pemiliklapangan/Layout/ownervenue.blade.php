@@ -103,7 +103,7 @@
 
           <!-- Kelola Fasilitas -->
           <li class="nav-item">
-            <a href="/pemiliklapangan/fasilitas" class="nav-link active">
+            <a href="/pemiliklapangan/fasilitas" class="nav-link">
               <i class="nav-icon fas fa-home"></i>
               <p>Kelola Fasilitas</p>
             </a>
@@ -119,7 +119,7 @@
 
           <!-- Buat Komunitas -->
           <li class="nav-item">
-            <a href="/pemiliklapangan/voucher" class="nav-link">
+            <a href="{{ route('pemilik.komunitas') }}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>Komunitas</p>
             </a>
@@ -127,9 +127,17 @@
 
           <!-- Membership -->
           <li class="nav-item">
-            <a href="/pemiliklapangan/membership" class="nav-link">
+            <a href="{{ route('pemilik.membership') }}" class="nav-link">
               <i class="nav-icon fas fa-chalkboard-teacher"></i>
               <p>Membership</p>
+            </a>
+          </li>
+
+          <!-- Event -->
+          <li class="nav-item">
+            <a href="{{ route('pemilik.event') }}" class="nav-link">
+              <i class="nav-icon fas fa-calendar-alt"></i>
+              <p>Event</p>
             </a>
           </li>
 

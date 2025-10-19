@@ -109,6 +109,9 @@ Route::post('/isidata', [App\Http\Controllers\MitraController::class, 'store'])-
 
 Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     Route::get('/pemiliklapangan/dashboard', fn() => view('pemiliklapangan.Dashboard.dashboard'));
+    Route::get('/pemiliklapangan/komunitas', fn() => view('pemiliklapangan.pemilik_buat_komunitas'))->name('pemilik.komunitas');
+    Route::get('/pemiliklapangan/membership', fn() => view('pemiliklapangan.pemilik_buat_membership'))->name('pemilik.membership');
+    Route::get('/pemiliklapangan/event', fn() => view('pemiliklapangan.pemilik_buat_event'))->name('pemilik.event');
     Route::get('/informasi', [PendaftaranController::class, 'informasi'])->name('informasi');
     Route::get('/detail', [PendaftaranController::class, 'detail'])->name('detail');
     Route::get('/syarat', [PendaftaranController::class, 'syarat'])->name('syarat');

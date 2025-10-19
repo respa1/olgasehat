@@ -25,15 +25,32 @@
   <section class="content">
     <div class="container-fluid">
       <!-- Table -->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Lihat semua komunitas, membership, dan event olahraga yang aktif di platform Olga Sehat</h3>
-          <div class="card-tools">
-            <a href="#" class="btn btn-primary btn-sm">
-              <i class="fas fa-plus"></i> Buat Aktivitas Baru
-            </a>
-          </div>
-        </div>
+       <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                          <a href="#" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus"></i> Buat Aktivitas Baru
+                          </a>               
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row justify-content-end">
+                                <div class="col-auto">
+                                    <form action="{{ route('activity-types.index') }}" method="GET" class="form-inline">
+                                        <div class="input-group">
+                                            <input type="search" name="search" class="form-control" placeholder="Cari tipe aktivitas..." value="{{ request('search') }}">
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
           <table class="table table-hover text-nowrap">
