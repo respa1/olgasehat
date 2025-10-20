@@ -157,7 +157,13 @@ public function updatedata(Request $request, $id){
             $beritas = Berita::with('category')->orderBy('created_at', 'desc')->paginate(6);
         }
 
-        return view('FRONTEND.blog-news', compact('beritas'));
+        // Get trending posts (top 5 by hit count)
+        $trendingBeritas = Berita::with('category')
+                                ->orderBy('hit', 'desc')
+                                ->limit(5)
+                                ->get();
+
+        return view('FRONTEND.blog-news', compact('beritas', 'trendingBeritas'));
     }
 
     // Frontend: Display specific news detail

@@ -37,46 +37,18 @@
             🔥 Trending Post
         </h2>
         <ol class="space-y-4">
+            @forelse($trendingBeritas as $trending)
             <li class="border-b border-gray-200 pb-3 last:border-b-0 last:pb-0">
-                <a href="#" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
-                    Strategi Hidrasi: Tips Minum Air yang Tepat Sebelum dan Sesudah Latihan
+                <a href="{{ route('frontend.blog-news-detail', $trending->id) }}" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
+                    {{ $trending->title }}
                 </a>
                 <p class="text-xs text-gray-500 mt-1">
-                    <span class="text-green-600 font-medium">KESEHATAN</span> - April 14, 2024
+                    <span class="text-{{ $trending->category ? strtolower($trending->category->name) : 'blue' }}-600 font-medium">{{ $trending->category ? $trending->category->name : 'OLAHRAGA' }}</span> - {{ $trending->created_at->format('M d, Y') }}
                 </p>
             </li>
-            <li class="border-b border-gray-200 pb-3 last:border-b-0 last:pb-0">
-                <a href="#" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
-                    Teknik Dasar Dribbling Futsal yang Wajib Dikuasai Pemula
-                </a>
-                <p class="text-xs text-gray-500 mt-1">
-                    <span class="text-blue-600 font-medium">OLAHRAGA</span> - May 18, 2024
-                </p>
-            </li>
-            <li class="border-b border-gray-200 pb-3 last:border-b-0 last:pb-0">
-                <a href="#" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
-                    Pentingnya Asuransi Cedera untuk Atlet Amatir: Apa yang Harus Anda Tahu
-                </a>
-                <p class="text-xs text-gray-500 mt-1">
-                    <span class="text-yellow-600 font-medium">EDUKASI</span> - March 28, 2025
-                </p>
-            </li>
-            <li class="border-b border-gray-200 pb-3 last:border-b-0 last:pb-0">
-                <a href="#" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
-                    Perbedaan Kunci antara Lapangan Mini Soccer dan Lapangan Sepak Bola Standar
-                </a>
-                <p class="text-xs text-gray-500 mt-1">
-                    <span class="text-blue-600 font-medium">OLAHRAGA</span> - July 29, 2024
-                </p>
-            </li>
-            <li>
-                <a href="#" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
-                    Mengapa Pemanasan Dinamis Lebih Baik dari Statis Sebelum Berolahraga?
-                </a>
-                <p class="text-xs text-gray-500 mt-1">
-                    <span class="text-green-600 font-medium">KESEHATAN</span> - July 29, 2024
-                </p>
-            </li>
+            @empty
+            <li class="text-sm text-gray-500">Belum ada artikel trending.</li>
+            @endforelse
         </ol>
     </aside>
 
