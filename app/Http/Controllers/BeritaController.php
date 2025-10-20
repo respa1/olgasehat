@@ -169,7 +169,15 @@ public function updatedata(Request $request, $id){
     // Frontend: Display specific news detail
     public function show($id) {
         $berita = Berita::with('category')->findOrFail($id);
-        return view('FRONTEND.blog&news_detail', compact('berita'));
+
+        // Get latest articles (top 5 newest, excluding current article)
+        $latestBeritas = Berita::with('category')
+                              ->where('id', '!=', $id)
+                              ->orderBy('created_at', 'desc')
+                              ->limit(5)
+                              ->get();
+
+        return view('FRONTEND.blog&news_detail', compact('berita', 'latestBeritas'));
     }
 
     // User: Display list of news for logged-in users
