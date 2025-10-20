@@ -1,50 +1,30 @@
-# TODO: Implementasi Sistem Terjemahan
+# TODO: Connect Blog/News to Frontend and User from Backoffice
 
-## Status: ✅ COMPLETED
+## Information Gathered
+- BeritaController exists for backend CRUD operations.
+- Berita model has relationship with Category.
+- Frontend views (blog-news.blade.php, blog&news_detail.blade.php) are static/hardcoded.
+- User views (bloguser_news.blade.php, bloguser_detail.blade.php) are static/hardcoded.
+- Routes currently use direct views, not controllers.
+- Super admin creates news via backend, which should display on frontend/user.
 
-### Tugas yang Telah Diselesaikan:
-- [x] Create standalone translator page with LibreTranslate API integration
-- [x] Add route for translator page (/translate)
-- [x] Add translator link to header layouts (frontend.blade.php and frontenduser.blade.php)
-- [x] Implement full translation functionality with loading indicators
-- [x] Add language swap functionality
-- [x] Add copy to clipboard feature
-- [x] Add character count display
-- [x] Add clear and translate buttons
-- [x] Add error handling and success notifications
-- [x] Replace cart buttons with custom language selector (icon + dropdown)
-- [x] Implement custom language dropdown for desktop and mobile versions
-- [x] Add globe icon for language selector
-- [x] Configure multiple languages (English, Spanish, French, German, Italian, Portuguese, Russian, Japanese, Korean, Chinese, Arabic, Hindi)
-- [x] Add fallback languages if API fails
-- [x] Apply consistent styling across frontend.blade.php and frontenduser.blade.php
-- [x] Add SweetAlert notifications for language changes
+## Plan
+1. Add new methods in BeritaController: index() for listing news, show($id) for detail, and separate for user (indexUser, showUser) to handle different layouts.
+2. Update routes in web.php to use controller methods instead of direct views.
+3. Update frontend views to loop through $beritas from database.
+4. Update user views similarly.
+5. Update detail views to display specific $berita data.
 
-### Fitur yang Diimplementasikan:
-1. **Halaman Translator Standalone**: Halaman terjemahan lengkap dengan UI yang user-friendly
-2. **Custom Language Selector di Header**: Icon globe dengan dropdown bahasa yang elegan
-3. **Multi-bahasa Support**: Mendukung 12 bahasa utama dunia dengan fallback
-4. **Responsive Design**: Berfungsi baik di desktop dan mobile
-5. **Custom Styling**: Styling yang konsisten dengan desain Olga Sehat
-6. **Interactive Dropdown**: Klik untuk membuka dropdown, klik di luar untuk menutup
+## Dependent Files to Edit
+- app/Http/Controllers/BeritaController.php: Add index, show, indexUser, showUser methods.
+- routes/web.php: Update /blog-news, /blog-news-detail, /bloguser_news, /bloguser_detail routes.
+- resources/views/FRONTEND/blog-news.blade.php: Replace static articles with dynamic loop.
+- resources/views/FRONTEND/blog&news_detail.blade.php: Display dynamic $berita data.
+- resources/views/user/bloguser_news.blade.php: Replace static articles with dynamic loop.
+- resources/views/user/bloguser_detail.blade.php: Display dynamic $berita data.
 
-### File yang Dimodifikasi:
-- `resources/views/translate.blade.php` (baru)
-- `routes/web.php`
-- `resources/views/FRONTEND/layout/frontend.blade.php`
-- `resources/views/user/layout/frontenduser.blade.php`
-
-### Testing yang Dianjurkan:
-1. Akses halaman utama dan cek icon globe di header
-2. Klik icon globe dan pilih bahasa lain dari dropdown
-3. Verifikasi notifikasi SweetAlert muncul
-4. Test di mobile device dengan icon globe mobile
-5. Akses halaman `/translate` untuk fitur terjemahan manual
-6. Test semua fitur di halaman translator (swap bahasa, copy, dll.)
-
-### Catatan:
-- Menggunakan custom dropdown dengan icon globe untuk terjemahan
-- Halaman `/translate` menggunakan LibreTranslate API untuk terjemahan manual
-- Dropdown tersedia di desktop dan mobile header
-- Menggunakan SweetAlert untuk feedback perubahan bahasa
-- Fallback ke bahasa umum jika API gagal dimuat
+## Followup Steps
+- Test routes: Visit /blog-news, /blog-news-detail/1, /bloguser_news, /bloguser_detail/1.
+- Ensure news data exists in database (create via backend if needed).
+- Check if images load correctly from public/fotoberita/.
+- Verify category display and links.

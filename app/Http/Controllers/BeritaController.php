@@ -140,9 +140,49 @@ public function updatedata(Request $request, $id){
     }
     public function exportpdf(){
         $data = Berita::orderBy('created_at', 'desc')->get();
-    
+
         view()->share('data', $data);
         $pdf = PDF::loadView('backend.berita.databerita-pdf');
         return $pdf->download('Data News.pdf');
+    }
+
+    // Frontend: Display list of news
+    public function index(Request $request) {
+        if($request->has('search')){
+            $beritas = Berita::where('title','LIKE','%'.$request->search.'%')
+                        ->with('category')
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(6);
+        } else {
+            $beritas = Berita::with('category')->orderBy('created_at', 'desc')->paginate(6);
+        }
+
+        return view('FRONTEND.blog-news', compact('beritas'));
+    }
+
+    // Frontend: Display specific news detail
+    public function show($id) {
+        $berita = Berita::with('category')->findOrFail($id);
+        return view('FRONTEND.blog&news_detail', compact('berita'));
+    }
+
+    // User: Display list of news for logged-in users
+    public function indexUser(Request $request) {
+        if($request->has('search')){
+            $beritas = Berita::where('title','LIKE','%'.$request->search.'%')
+                        ->with('category')
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(6);
+        } else {
+            $beritas = Berita::with('category')->orderBy('created_at', 'desc')->paginate(6);
+        }
+
+        return view('user.bloguser_news', compact('beritas'));
+    }
+
+    // User: Display specific news detail for logged-in users
+    public function showUser($id) {
+        $berita = Berita::with('category')->findOrFail($id);
+        return view('user.bloguser_detail', compact('berita'));
     }
 }

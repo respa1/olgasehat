@@ -16,8 +16,8 @@ use App\Http\Controllers\PendaftaranController;
 // ======================================================
 Route::get('/', fn() => view('frontend.home'));
 
-Route::get('/blog-news', fn() => view('frontend.blog-news'));
-Route::get('/blog-news-detail', fn() => view('frontend.blog&news_detail'));
+Route::get('/blog-news', [BeritaController::class, 'index'])->name('frontend.blog-news');
+Route::get('/blog-news-detail/{id}', [BeritaController::class, 'show'])->name('frontend.blog-news-detail');
 Route::get('/membership-detail', fn() => view('frontend.membership_detail'));
 Route::get('/community', fn() => view('frontend.community'));
 Route::get('/community-detail', fn() => view('frontend.community_detail'));
@@ -75,8 +75,8 @@ Route::get('/venueuser_detail', function () {return view('user.venueuser_detail'
 Route::get('/buat-aktivitas', fn() => view('user.user_buat_aktivitas'));
 Route::get('/communityuser', function () {return view('user.communityuser'); });
 Route::get('/communityuser_detail', function () {return view('user.communityuser_detail'); });
-Route::get('/bloguser_news', function () {return view('user.bloguser_news'); });
-Route::get('/bloguser_detail', function () {return view('user.bloguser_detail'); });
+Route::get('/bloguser_news', [BeritaController::class, 'indexUser'])->name('user.bloguser_news');
+Route::get('/bloguser_detail/{id}', [BeritaController::class, 'showUser'])->name('user.bloguser_detail');
 Route::get('/confirmuser', function () {return view('user.confirmuser'); });
 Route::get('/paymentuser', function () {return view('user.paymentuser'); });
 Route::get('/success_user', function () {return view('user.success_user'); });
@@ -96,8 +96,6 @@ Route::get('/venueuser_detail', fn() => view('user.venueuser_detail'));
 Route::get('/communityuser', fn() => view('user.communityuser'));
 Route::get('/communityuser_detail', fn() => view('user.communityuser_detail'));
 Route::get('/membership-user-detail', fn() => view('user.membershipuser_detail'));
-Route::get('/bloguser_news', fn() => view('user.bloguser_news'));
-Route::get('/bloguser_detail', fn() => view('user.bloguser_detail'));
 
 // ======================================================
 // PEMILIK / MITRA ROUTES
