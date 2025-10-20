@@ -148,14 +148,19 @@ public function updatedata(Request $request, $id){
 
     // Frontend: Display list of news
     public function index(Request $request) {
+        $query = Berita::with('category');
+
         if($request->has('search')){
-            $beritas = Berita::where('title','LIKE','%'.$request->search.'%')
-                        ->with('category')
-                        ->orderBy('created_at', 'desc')
-                        ->paginate(6);
-        } else {
-            $beritas = Berita::with('category')->orderBy('created_at', 'desc')->paginate(6);
+            $query->where('title','LIKE','%'.$request->search.'%');
         }
+
+        if($request->has('category') && $request->category != ''){
+            $query->whereHas('category', function($q) use ($request) {
+                $q->where('name', $request->category);
+            });
+        }
+
+        $beritas = $query->orderBy('created_at', 'desc')->paginate(6);
 
         // Get trending posts (top 5 by hit count)
         $trendingBeritas = Berita::with('category')
@@ -182,14 +187,19 @@ public function updatedata(Request $request, $id){
 
     // User: Display list of news for logged-in users
     public function indexUser(Request $request) {
+        $query = Berita::with('category');
+
         if($request->has('search')){
-            $beritas = Berita::where('title','LIKE','%'.$request->search.'%')
-                        ->with('category')
-                        ->orderBy('created_at', 'desc')
-                        ->paginate(6);
-        } else {
-            $beritas = Berita::with('category')->orderBy('created_at', 'desc')->paginate(6);
+            $query->where('title','LIKE','%'.$request->search.'%');
         }
+
+        if($request->has('category') && $request->category != ''){
+            $query->whereHas('category', function($q) use ($request) {
+                $q->where('name', $request->category);
+            });
+        }
+
+        $beritas = $query->orderBy('created_at', 'desc')->paginate(6);
 
         return view('user.bloguser_news', compact('beritas'));
     }
@@ -197,6 +207,14 @@ public function updatedata(Request $request, $id){
     // User: Display specific news detail for logged-in users
     public function showUser($id) {
         $berita = Berita::with('category')->findOrFail($id);
-        return view('user.bloguser_detail', compact('berita'));
+
+        // Get latest articles (top 5 newest, excluding current article)
+        $latestBeritas = Berita::with('category')
+                              ->where('id', '!=', $id)
+                              ->orderBy('created_at', 'desc')
+                              ->limit(5)
+                              ->get();
+
+        return view('user.bloguser_detail', compact('berita', 'latestBeritas'));
     }
 }

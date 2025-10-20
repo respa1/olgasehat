@@ -8,7 +8,7 @@
     <main class="lg:col-span-3 order-2 lg:order-1">
         
         <div class="mb-8 border-b border-gray-200 pb-4">
-            <span class="inline-block bg-blue-100 text-blue-700 text-sm font-semibold px-3 py-1 rounded-full mb-3">{{ $berita->category ? $berita->category->name : 'OLAHRAGA' }}</span>
+            <span class="inline-block bg-blue-100 text-blue-700 text-sm font-semibold px-3 py-1 rounded-full mb-3">{{ $berita->category ? $berita->category->title : 'OLAHRAGA' }}</span>
             <h1 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight mb-4">
                 {{ $berita->title }}
             </h1>
@@ -58,7 +58,7 @@
         </article>
         
         <div class="mt-10 pt-6 border-t border-gray-200">
-            <p class="text-gray-700 font-semibold text-sm">Tags: <span class="text-blue-700 font-medium hover:underline cursor-pointer">#Tennis</span>, <span class="text-blue-700 font-medium hover:underline cursor-pointer">#Sparring</span>, <span class="text-blue-700 font-medium hover:underline cursor-pointer">#Latihan</span></p>
+            <p class="text-gray-700 font-semibold text-sm">Kategori: <a href="{{ route('frontend.blog-news') }}?category={{ $berita->category ? $berita->category->title : 'OLAHRAGA' }}" class="text-blue-700 font-medium hover:underline">{{ $berita->category ? $berita->category->title : 'OLAHRAGA' }}</a></p>
         </div>
 
     </main>
@@ -76,7 +76,7 @@
                         {{ $latest->title }}
                     </a>
                     <p class="text-xs text-gray-500 mt-1">
-                        <span class="text-{{ $latest->category ? strtolower($latest->category->name) : 'blue' }}-600 font-medium">{{ $latest->category ? $latest->category->name : 'OLAHRAGA' }}</span> - {{ $latest->created_at->format('d M Y') }}
+                        <span class="text-{{ $latest->category ? strtolower($latest->category->title) : 'blue' }}-600 font-medium">{{ $latest->category ? $latest->category->title : 'OLAHRAGA' }}</span> - {{ $latest->created_at->format('d M Y') }}
                     </p>
                 </li>
                 @empty

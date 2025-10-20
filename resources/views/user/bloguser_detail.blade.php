@@ -8,7 +8,7 @@
     <main class="lg:col-span-3 order-2 lg:order-1">
         
         <div class="mb-8 border-b border-gray-200 pb-4">
-            <span class="inline-block bg-blue-100 text-blue-700 text-sm font-semibold px-3 py-1 rounded-full mb-3">{{ $berita->category ? $berita->category->name : 'OLAHRAGA' }}</span>
+            <span class="inline-block bg-blue-100 text-blue-700 text-sm font-semibold px-3 py-1 rounded-full mb-3">{{ $berita->category ? $berita->category->title : 'OLAHRAGA' }}</span>
             <h1 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight mb-4">
                 {{ $berita->title }}
             </h1>
@@ -58,7 +58,7 @@
         </article>
         
         <div class="mt-10 pt-6 border-t border-gray-200">
-            <p class="text-gray-700 font-semibold text-sm">Tags: <span class="text-blue-700 font-medium hover:underline cursor-pointer">#Tennis</span>, <span class="text-blue-700 font-medium hover:underline cursor-pointer">#Sparring</span>, <span class="text-blue-700 font-medium hover:underline cursor-pointer">#Latihan</span></p>
+            <p class="text-gray-700 font-semibold text-sm">Kategori: <a href="{{ route('user.bloguser_news') }}?category={{ $berita->category ? $berita->category->title : 'OLAHRAGA' }}" class="text-blue-700 font-medium hover:underline">{{ $berita->category ? $berita->category->title : 'OLAHRAGA' }}</a></p>
         </div>
 
     </main>
@@ -70,46 +70,18 @@
                 Artikel Terbaru
             </h2>
             <ol class="space-y-4 text-base">
-                <li class="pb-3 border-b border-gray-100">
-                    <p class="font-bold text-blue-700">
-                        Kenapa Sparring Tennis Penting? Ini Manfaat yang Bisa Didapat!
-                    </p>
-                    <p class="text-xs text-gray-500 mt-1">
-                        <span class="text-blue-600 font-medium">OLAHRAGA</span> - 28 March 2025
-                    </p>
-                </li>
-                <li class="pb-3 border-b border-gray-100">
-                    <a href="#" class="font-semibold text-gray-800 hover:text-blue-700 transition block">
-                        6 Manfaat Sparing Badminton yang Wajib Diketahui Pebulutangkis
+                @forelse($latestBeritas as $latest)
+                <li class="pb-3 border-b border-gray-100 last:border-b-0 last:pb-0">
+                    <a href="{{ route('user.bloguser_detail', $latest->id) }}" class="font-semibold text-gray-800 hover:text-blue-700 transition block">
+                        {{ $latest->title }}
                     </a>
                     <p class="text-xs text-gray-500 mt-1">
-                        <span class="text-blue-600 font-medium">OLAHRAGA</span> - 28 March 2025
+                        <span class="text-{{ $latest->category ? strtolower($latest->category->title) : 'blue' }}-600 font-medium">{{ $latest->category ? $latest->category->title : 'OLAHRAGA' }}</span> - {{ $latest->created_at->format('d M Y') }}
                     </p>
                 </li>
-                <li class="pb-3 border-b border-gray-100">
-                    <a href="#" class="font-semibold text-gray-800 hover:text-blue-700 transition block">
-                        Panduan Lengkap untuk Memahami Peraturan Tenis Meja Tunggal
-                    </a>
-                    <p class="text-xs text-gray-500 mt-1">
-                        <span class="text-yellow-600 font-medium">EDUKASI</span> - 28 March 2025
-                    </p>
-                </li>
-                <li class="pb-3 border-b border-gray-100">
-                    <a href="#" class="font-semibold text-gray-800 hover:text-blue-700 transition block">
-                        Cara Mencari Lawan Bermain Tennis untuk Mengasah Skill
-                    </a>
-                    <p class="text-xs text-gray-500 mt-1">
-                        <span class="text-blue-600 font-medium">OLAHRAGA</span> - 28 March 2025
-                    </p>
-                </li>
-                <li class="last:border-b-0 last:pb-0">
-                    <a href="#" class="font-semibold text-gray-800 hover:text-blue-700 transition block">
-                        Cara Bermain Bulu Tangkis 1 Lawan 1 untuk Pemula dan Pro
-                    </a>
-                    <p class="text-xs text-gray-500 mt-1">
-                        <span class="text-blue-600 font-medium">OLAHRAGA</span> - 28 March 2025
-                    </p>
-                </li>
+                @empty
+                <li class="text-sm text-gray-500">Belum ada artikel terbaru.</li>
+                @endforelse
             </ol>
         </div>
         
