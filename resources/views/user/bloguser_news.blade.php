@@ -37,46 +37,18 @@
             🔥 Trending Post
         </h2>
         <ol class="space-y-4">
+            @forelse($trendingBeritas as $trending)
             <li class="border-b border-gray-200 pb-3 last:border-b-0 last:pb-0">
-                <a href="#" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
-                    Strategi Hidrasi: Tips Minum Air yang Tepat Sebelum dan Sesudah Latihan
+                <a href="{{ route('user.bloguser_detail', $trending->id) }}" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
+                    {{ $trending->title }}
                 </a>
                 <p class="text-xs text-gray-500 mt-1">
-                    <span class="text-green-600 font-medium">KESEHATAN</span> - April 14, 2024
+                    <span class="text-{{ $trending->category ? strtolower($trending->category->title) : 'blue' }}-600 font-medium">{{ $trending->category ? $trending->category->title : 'OLAHRAGA' }}</span> - {{ $trending->created_at->format('d M Y') }}
                 </p>
             </li>
-            <li class="border-b border-gray-200 pb-3 last:border-b-0 last:pb-0">
-                <a href="#" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
-                    Teknik Dasar Dribbling Futsal yang Wajib Dikuasai Pemula
-                </a>
-                <p class="text-xs text-gray-500 mt-1">
-                    <span class="text-blue-600 font-medium">OLAHRAGA</span> - May 18, 2024
-                </p>
-            </li>
-            <li class="border-b border-gray-200 pb-3 last:border-b-0 last:pb-0">
-                <a href="#" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
-                    Pentingnya Asuransi Cedera untuk Atlet Amatir: Apa yang Harus Anda Tahu
-                </a>
-                <p class="text-xs text-gray-500 mt-1">
-                    <span class="text-yellow-600 font-medium">EDUKASI</span> - March 28, 2025
-                </p>
-            </li>
-            <li class="border-b border-gray-200 pb-3 last:border-b-0 last:pb-0">
-                <a href="#" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
-                    Perbedaan Kunci antara Lapangan Mini Soccer dan Lapangan Sepak Bola Standar
-                </a>
-                <p class="text-xs text-gray-500 mt-1">
-                    <span class="text-blue-600 font-medium">OLAHRAGA</span> - July 29, 2024
-                </p>
-            </li>
-            <li>
-                <a href="#" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
-                    Mengapa Pemanasan Dinamis Lebih Baik dari Statis Sebelum Berolahraga?
-                </a>
-                <p class="text-xs text-gray-500 mt-1">
-                    <span class="text-green-600 font-medium">KESEHATAN</span> - July 29, 2024
-                </p>
-            </li>
+            @empty
+            <li class="text-sm text-gray-500">Belum ada artikel trending.</li>
+            @endforelse
         </ol>
     </aside>
 
@@ -90,7 +62,7 @@
                         alt="{{ $berita->title }}"
                         class="w-full h-48 object-cover group-hover:scale-110 transition duration-500"
                     />
-                    <p class="absolute top-3 left-3 {{ $berita->category ? 'bg-' . strtolower($berita->category->name) . '-600' : 'bg-blue-700' }} text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">{{ $berita->category ? $berita->category->name : 'OLAHRAGA' }}</p>
+                    <p class="absolute top-3 left-3 {{ $berita->category ? 'bg-' . strtolower($berita->category->title) . '-600' : 'bg-blue-700' }} text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">{{ $berita->category ? $berita->category->title : 'OLAHRAGA' }}</p>
                 </div>
                 <div class="p-5">
                     <h3 class="font-bold text-lg text-gray-900 mb-3 group-hover:text-blue-700 transition leading-snug line-clamp-2">

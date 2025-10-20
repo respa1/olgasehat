@@ -195,13 +195,19 @@ public function updatedata(Request $request, $id){
 
         if($request->has('category') && $request->category != ''){
             $query->whereHas('category', function($q) use ($request) {
-                $q->where('name', $request->category);
+                $q->where('title', $request->category);
             });
         }
 
         $beritas = $query->orderBy('created_at', 'desc')->paginate(6);
 
-        return view('user.bloguser_news', compact('beritas'));
+        // Get trending posts (top 5 by hit count)
+        $trendingBeritas = Berita::with('category')
+                                ->orderBy('hit', 'desc')
+                                ->limit(5)
+                                ->get();
+
+        return view('user.bloguser_news', compact('beritas', 'trendingBeritas'));
     }
 
     // User: Display specific news detail for logged-in users

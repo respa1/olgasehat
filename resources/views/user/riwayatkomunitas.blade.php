@@ -109,7 +109,7 @@
                     Yuk, cari teman main baru! Bergabunglah dengan komunitas olahraga favoritmu untuk menambah semangat dan relasi.
                 </p>
                 {{-- Tombol Tambah Komunitas di Empty State --}}
-                <a href="/cari-komunitas" class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-150">
+                <a href="/communityuser" class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-150">
                     Cari Komunitas Sekarang <i class="fas fa-search ml-2"></i>
                 </a>
             </div>
