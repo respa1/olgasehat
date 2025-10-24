@@ -116,6 +116,10 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     Route::get('/end', [PendaftaranController::class, 'end'])->name('end');
     Route::get('/papan', [PendaftaranController::class, 'papan'])->name('papan');
     Route::get('/fasilitas', [PendaftaranController::class, 'fasilitas'])->name('fasilitas');
+    Route::post('insertinform', [PendaftaranController::class, 'insertinform'])->name('insertinform');
+    Route::get('/detail/{id}', [PendaftaranController::class, 'detail'])->name('detail');
+    Route::post('insertdetail', [PendaftaranController::class, 'insertdetail'])->name('insertdetail');
+    
 });
 
 // ======================================================

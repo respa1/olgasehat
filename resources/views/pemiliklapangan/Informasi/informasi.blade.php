@@ -5,52 +5,46 @@
     <style>
     .image-preview {
         display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        min-height: 150px;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 300px;
         border: 2px dashed #ddd;
         border-radius: 8px;
+        position: relative;
+        overflow: hidden;
         background-color: #f8f8f8;
-        padding: 15px;
-        justify-content: center;
-        align-items: center;
+        padding: 10px;
         transition: border-color 0.3s ease;
     }
+
     .image-preview:hover {
         border-color: #4B49AC;
     }
-    .image-preview .preview-item {
-        position: relative;
-        width: 150px;
-        height: 150px;
-        border-radius: 10px;
-        overflow: hidden;
-        border: 1px solid #ccc;
-        background-color: #fff;
-    }
+
     .image-preview img {
-        width: 100%;
-        height: 100%;
+        max-height: 100%;
+        max-width: 100%;
         object-fit: cover;
+        display: none;
     }
-    .image-preview .remove-btn {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        background-color: rgba(255, 0, 0, 0.8);
-        border: none;
-        border-radius: 50%;
-        color: white;
-        width: 25px;
-        height: 25px;
-        font-size: 14px;
-        cursor: pointer;
-    }
+
     .preview-text {
         font-size: 16px;
         color: #aaa;
     }
-    </style>
+</style>
+
+<style>
+    .step-number {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+</style>
 
     <div class="container-fluid">
         <div class="row">
@@ -117,21 +111,21 @@
             <div class="col-md-9">
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
-                        <form action="/insertdata" method="post" enctype="multipart/form-data">
+                        <form action="/insertinform" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
-                                <label for="image" class="form-label">Upload Gambar (Maks. 5)</label>
-                                <input type="file" id="image" name="foto[]" class="form-control" multiple accept="image/*">
-                                <small class="text-muted">Anda dapat memilih hingga 5 gambar.</small>
+                                <label for="image" class="form-label">Gambar Logo</label>
+                                <input type="file" id="image" name="logo" class="form-control" accept="image/*">
 
-                                <div class="image-preview mt-3" id="imagePreview">
-                                    <span class="preview-text">Belum ada gambar dipilih</span>
+                                <div class="image-preview" id="thumbnailInput">
+                                    <img src="#" alt="Image Preview" id="previewImage">
+                                    <span class="preview-text" id="previewText">No image selected</span>
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="judulProgram" class="form-label">Nama Venue</label>
-                                <input type="text" name="title" class="form-control" value="{{ old('title') }}">
+                                <input type="text" name="title" class="form-control" value="{{ old('namavenue') }}">
                             </div>
 
                             <div class="mb-3">
@@ -148,27 +142,28 @@
 
                             <div class="mb-3">
                                 <label for="kabupaten" class="form-label">Pilih Kabupaten/Kota</label>
-                                <select class="form-control" id="kabupaten" name="kabupaten">
+                                <select class="form-control" id="kabupaten" name="kota">
                                     <option value="">-- Pilih Kabupaten/Kota --</option>
                                 </select>
                             </div>
 
                             <div class="mb-3">
                                 <label for="category_venue" class="form-label">Cabang Olahraga</label>
-                                <select class="form-control" name="category_venue" id="category_venue">
+                                <select class="form-control" name="category_venue" id="kategori">
                                     <option value="">-- Pilih Cabang Olahraga --</option>
-                                    <option value="Sepak Bola" {{ old('category_venue') == 'Sepak Bola' ? 'selected' : '' }}>Sepak Bola</option>
-                                    <option value="Futsal" {{ old('category_venue') == 'Futsal' ? 'selected' : '' }}>Futsal</option>
-                                    <option value="Bola Basket" {{ old('category_venue') == 'Bola Basket' ? 'selected' : '' }}>Bola Basket</option>
-                                    <option value="Bola Voli" {{ old('category_venue') == 'Bola Voli' ? 'selected' : '' }}>Bola Voli</option>
-                                    <option value="Bola Tangan" {{ old('category_venue') == 'Bola Tangan' ? 'selected' : '' }}>Bola Tangan</option>
-                                    <option value="Rugby" {{ old('category_venue') == 'Rugby' ? 'selected' : '' }}>Rugby</option>
-                                    <option value="Baseball" {{ old('category_venue') == 'Baseball' ? 'selected' : '' }}>Baseball</option>
-                                    <option value="Softball" {{ old('category_venue') == 'Softball' ? 'selected' : '' }}>Softball</option>
+                                    <option value="Sepak Bola" {{ old('kategori') == 'Sepak Bola' ? 'selected' : '' }}>Sepak Bola</option>
+                                    <option value="Futsal" {{ old('kategori') == 'Futsal' ? 'selected' : '' }}>Futsal</option>
+                                    <option value="Bola Basket" {{ old('kategori') == 'Bola Basket' ? 'selected' : '' }}>Bola Basket</option>
+                                    <option value="Bola Voli" {{ old('kategori') == 'Bola Voli' ? 'selected' : '' }}>Bola Voli</option>
+                                    <option value="Bola Tangan" {{ old('kategori') == 'Bola Tangan' ? 'selected' : '' }}>Bola Tangan</option>
+                                    <option value="Rugby" {{ old('kategori') == 'Rugby' ? 'selected' : '' }}>Rugby</option>
+                                    <option value="Baseball" {{ old('kategori') == 'Baseball' ? 'selected' : '' }}>Baseball</option>
+                                    <option value="Softball" {{ old('kategori') == 'Softball' ? 'selected' : '' }}>Softball</option>
                                 </select>
                             </div>
 
-                           <a href="/detail" class="btn btn-primary">Selanjutnya →</a>
+                           <button type="submit" class="btn btn-primary">Selanjutnya →</button>
+
                         </form>
                     </div>
                 </div>
@@ -176,55 +171,27 @@
         </div>
     </div>
 </div>
-
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const imageInput = document.getElementById('image');
-    const imagePreview = document.getElementById('imagePreview');
+// Image preview handling
+          document.addEventListener("DOMContentLoaded", function () {
+    const imageInput = document.getElementById("image");
+    const previewImage = document.getElementById("previewImage");
+    const previewText = document.getElementById("previewText");
 
-    imageInput.addEventListener('change', function () {
-        const files = Array.from(this.files);
-        imagePreview.innerHTML = ''; // kosongkan isi preview lama
-
-        if (files.length > 5) {
-            alert('Maksimal hanya 5 foto yang boleh diunggah!');
-            imageInput.value = ''; // reset input file
-            imagePreview.innerHTML = '<span class="preview-text">Belum ada gambar dipilih</span>';
-            return;
-        }
-
-        if (files.length === 0) {
-            imagePreview.innerHTML = '<span class="preview-text">Belum ada gambar dipilih</span>';
-            return;
-        }
-
-        files.forEach((file, index) => {
+    imageInput.addEventListener("change", function () {
+        const file = this.files[0];
+        if (file) {
             const reader = new FileReader();
-
             reader.onload = function (e) {
-                const div = document.createElement('div');
-                div.classList.add('preview-item');
-
-                const img = document.createElement('img');
-                img.src = e.target.result;
-
-                const removeBtn = document.createElement('button');
-                removeBtn.classList.add('remove-btn');
-                removeBtn.innerHTML = '×';
-                removeBtn.addEventListener('click', () => {
-                    div.remove();
-                    if (imagePreview.children.length === 0) {
-                        imagePreview.innerHTML = '<span class="preview-text">Belum ada gambar dipilih</span>';
-                    }
-                });
-
-                div.appendChild(img);
-                div.appendChild(removeBtn);
-                imagePreview.appendChild(div);
+                previewImage.src = e.target.result;
+                previewImage.style.display = "block";
+                previewText.style.display = "none";
             };
-
             reader.readAsDataURL(file);
-        });
+        } else {
+            previewImage.style.display = "none";
+            previewText.style.display = "block";
+        }
     });
 });
 </script>
@@ -261,14 +228,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<style>
-    .step-number {
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-    }
-</style>
 @endsection
+
+

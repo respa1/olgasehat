@@ -16,9 +16,10 @@ return new class extends Migration
 
             // Step 1
             $table->string('namavenue');
+            $table->string('provinsi');
             $table->string('kota');
             $table->string('kategori');
-            $table->json('gambar')->nullable(); // Menyimpan hingga 5 gambar
+            $table->string('logo'); 
 
             // Step 2
             $table->string('video_review')->nullable(); // link YouTube
