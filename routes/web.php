@@ -114,6 +114,8 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     Route::get('/detail', [PendaftaranController::class, 'detail'])->name('detail');
     Route::get('/syarat', [PendaftaranController::class, 'syarat'])->name('syarat');
     Route::get('/end', [PendaftaranController::class, 'end'])->name('end');
+    Route::get('/papan', [PendaftaranController::class, 'papan'])->name('papan');
+    Route::get('/fasilitas', [PendaftaranController::class, 'fasilitas'])->name('fasilitas');
 });
 
 // ======================================================

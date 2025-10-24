@@ -21,4 +21,12 @@ class PendaftaranController extends Controller
     public function end(){
         return view('pemiliklapangan.Dashboard.end');
     }
+
+    public function papan(){
+        return view('pemiliklapangan.Papan.papan');
+    }
+
+    public function fasilitas(){
+        return view('pemiliklapangan.Fasilitas.detailvenue');
+    }
 }
