@@ -75,7 +75,7 @@ class LoginController extends Controller
             'role'     => 'user',
         ]);
 
-       return redirect()->back()->with('success', 'Akun anda berhasil terdaftar.');
+       return redirect('/loginemail')->with('success', 'Akun anda berhasil terdaftar.');
     }
 
     // Registration form for Pemilik Lapangan role
