@@ -73,9 +73,9 @@
                             Terima kasih telah memberikan kepercayaan kepada kami untuk membantu bisnis anda dengan baik.
                         </p>
                         <p class="text-muted">
-                            Pastikan Data yang Dimasukan Sudah Benar, JIka Sudah Tekan Simpan.
+                            Proses Pengisian Data Sudah Selesai!!.
                         </p>
-                        <a href="/pemiliklapangan/dashboard" class="btn btn-primary">Simpan</a>
+                        <a href="/pemiliklapangan/dashboard" class="btn btn-primary">Selesai</a>
                     </div>
                 </div>
             </div>

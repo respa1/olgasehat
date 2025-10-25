@@ -73,7 +73,7 @@
             <div class="col-md-9">
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
-                        <form action="/insertdata" method="post" enctype="multipart/form-data">
+                        <form action="/insertdetail" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                     <label for="video_link" class="form-label">Video Review (Link YouTube)</label>
@@ -95,17 +95,17 @@
  
                     <div class="mb-3">
                         <label for="judulProgram" class="form-label">Detail Venue</label>
-                        <input type="text" name="title" class="form-control" value="{{ old('title') }}">
+                        <input type="text" name="title" class="form-control" value="{{ old('detail') }}">
                     </div>
 
                     <div class="mb-3">
                         <label for="judulProgram" class="form-label">Aturan Venue</label>
-                        <input type="text" name="title" class="form-control" value="{{ old('title') }}">
+                        <input type="text" name="title" class="form-control" value="{{ old('aturan') }}">
                     </div>
 
                     <div class="mb-3">
-                        <label for="judulProgram" class="form-label">Lokasi Venue</label>
-                        <input type="text" name="title" class="form-control" value="{{ old('title') }}">
+                        <label for="judulProgram" class="form-label">Lokasi Venue (Link Maps)</label>
+                        <input type="text" name="title" class="form-control" value="{{ old('lokasi') }}">
                     </div>
 
                     <div class="mb-3">
@@ -137,7 +137,7 @@
                                                name="fasilitas_venue[]" 
                                                value="{{ $item }}" 
                                                id="check-{{ Str::slug($item) }}"
-                                               {{ (is_array(old('fasilitas_venue')) && in_array($item, old('fasilitas_venue'))) ? 'checked' : '' }}>
+                                               {{ (is_array(old('fasilitas_venue')) && in_array($item, old('fasilitas'))) ? 'checked' : '' }}>
                                         <label class="form-check-label" for="check-{{ Str::slug($item) }}">
                                             {{ $item }}
                                         </label>
@@ -148,7 +148,7 @@
                         </div>
                         <small class="text-muted">Pilih semua fasilitas yang tersedia di venue Anda.</small>
                     </div>
-                    <a href="/syarat" class="btn btn-primary">Selanjutnya →</a>
+                    <button type="submit" class="btn btn-primary">Selanjutnya →</button>
                         </form>
                     </div>
                 </div>
