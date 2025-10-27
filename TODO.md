@@ -1,6 +1,18 @@
-- [x] Replace cart button in desktop actions with language selector div (similar to frontenduser.blade.php)
-- [x] Replace cart button in mobile header with language selector div
-- [x] Add language dropdown functionality JavaScript (fetchLanguagesUser, populateLanguageDropdownUser, etc.)
-- [x] Remove cart overlay and sidebar divs
-- [x] Remove cart functionality JavaScript
-- [ ] Test the changes
+# TODO: Update Category Colors in Blog Views
+
+## Overview
+Update dynamic category color classes in blog views to map specific categories to colors: 'olahraga' -> blue, 'kesehatan' -> green, 'edukasi' -> yellow. Apply to trending posts, article badges, latest articles, and category badges in detail pages.
+
+## Steps
+- [x] Add color mapping array to resources/views/user/bloguser_news.blade.php
+- [x] Update trending posts text color in resources/views/user/bloguser_news.blade.php
+- [x] Update article badges bg color in resources/views/user/bloguser_news.blade.php
+- [x] Add color mapping array to resources/views/user/bloguser_detail.blade.php
+- [x] Update latest articles text color in resources/views/user/bloguser_detail.blade.php
+- [x] Update category badge colors in resources/views/user/bloguser_detail.blade.php
+- [x] Add color mapping array to resources/views/FRONTEND/blog-news.blade.php
+- [x] Update trending posts text color in resources/views/FRONTEND/blog-news.blade.php
+- [x] Update article badges bg color in resources/views/FRONTEND/blog-news.blade.php
+- [x] Add color mapping array to resources/views/FRONTEND/blog&news_detail.blade.php
+- [x] Update latest articles text color in resources/views/FRONTEND/blog&news_detail.blade.php
+- [x] Update category badge colors in resources/views/FRONTEND/blog&news_detail.blade.php

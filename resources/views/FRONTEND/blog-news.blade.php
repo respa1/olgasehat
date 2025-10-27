@@ -2,6 +2,14 @@
 
 @section('content')
 
+@php
+$categoryColors = [
+    'olahraga' => 'blue',
+    'kesehatan' => 'green',
+    'edukasi' => 'yellow',
+];
+@endphp
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 <section class="bg-[url('assets/blue-banner.png')] bg-no-repeat text-white relative overflow-hidden h-[300px] flex items-center justify-center" style="background-size: 1910px 300px;">
@@ -43,7 +51,7 @@
                     {{ $trending->title }}
                 </a>
                 <p class="text-xs text-gray-500 mt-1">
-                    <span class="text-{{ $trending->category ? strtolower($trending->category->title) : 'blue' }}-600 font-medium">{{ $trending->category ? $trending->category->title : 'OLAHRAGA' }}</span> - {{ $trending->created_at->format('d M Y') }}
+                    <span class="text-{{ $trending->category ? ($categoryColors[strtolower($trending->category->title)] ?? 'blue') : 'blue' }}-600 font-medium">{{ $trending->category ? $trending->category->title : 'OLAHRAGA' }}</span> - {{ $trending->created_at->format('d M Y') }}
                 </p>
             </li>
             @empty
@@ -62,7 +70,7 @@
                         alt="{{ $berita->title }}"
                         class="w-full h-48 object-cover group-hover:scale-110 transition duration-500"
                     />
-                    <p class="absolute top-3 left-3 {{ $berita->category ? 'bg-' . strtolower($berita->category->title) . '-600' : 'bg-blue-700' }} text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">{{ $berita->category ? $berita->category->title : 'OLAHRAGA' }}</p>
+                    <p class="absolute top-3 left-3 {{ $berita->category ? 'bg-' . ($categoryColors[strtolower($berita->category->title)] ?? 'blue') . '-600' : 'bg-blue-700' }} text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">{{ $berita->category ? $berita->category->title : 'OLAHRAGA' }}</p>
                 </div>
                 <div class="p-5">
                     <h3 class="font-bold text-lg text-gray-900 mb-3 group-hover:text-blue-700 transition leading-snug line-clamp-2">
