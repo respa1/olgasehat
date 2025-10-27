@@ -78,11 +78,17 @@
 
     <!-- Aksi Desktop -->
     <div class="hidden md:flex items-center space-x-4 relative">
-      <!-- Tombol Cart (Desktop) -->
-      <button id="cartBtn" aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
-        <i class="fas fa-shopping-cart fa-lg"></i>
-        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
-      </button>
+      <!-- Language Selector -->
+      <div class="relative">
+        <button id="languageBtnUser" class="text-gray-700 hover:text-blue-700 focus:outline-none flex items-center space-x-2">
+          <i class="fas fa-globe fa-lg"></i>
+          <span id="currentLanguageUser">ID</span>
+          <i class="fas fa-chevron-down text-sm"></i>
+        </button>
+        <div id="languageDropdownUser" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+          <!-- Daftar bahasa akan diisi oleh JavaScript -->
+        </div>
+      </div>
 
       <!-- Dropdown User -->
       <div class="relative">
@@ -112,11 +118,17 @@
 
     <!-- Header Mobile -->
     <div class="flex md:hidden items-center space-x-4 ml-auto">
-      <!-- Tombol Cart (Mobile) -->
-      <button id="cartBtnMobile" aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
-        <i class="fas fa-shopping-cart fa-lg"></i>
-        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
-      </button>
+      <!-- Language Selector Mobile -->
+      <div class="relative">
+        <button id="languageBtnUserMobile" class="text-gray-700 hover:text-blue-700 focus:outline-none flex items-center space-x-2">
+          <i class="fas fa-globe fa-lg"></i>
+          <span id="currentLanguageUserMobile">ID</span>
+          <i class="fas fa-chevron-down text-sm"></i>
+        </button>
+        <div id="languageDropdownUserMobile" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+          <!-- Daftar bahasa akan diisi oleh JavaScript -->
+        </div>
+      </div>
 
       <!-- Dropdown User Mobile -->
       <div class="relative">
@@ -172,25 +184,7 @@
     @yield('content')
   </main>
 
-  <!-- Overlay for Cart -->
-  <div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
 
-  <!-- Cart Sidebar -->
-  <div id="cartSidebar"
-       class="fixed top-0 right-0 w-80 max-w-full h-full bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
-    <!-- Header -->
-    <div class="flex justify-between items-center px-4 py-3 border-b">
-      <h2 class="font-semibold text-lg">JADWAL DIPILIH</h2>
-      <button id="closeCart" class="text-gray-500 hover:text-gray-700">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-
-    <!-- Isi Cart -->
-    <div class="p-4 text-gray-600">
-      Belum ada jadwal di keranjang.
-    </div>
-  </div>
 
   <script src="{{ asset('assets/olgasehat.js') }}"></script>
   <script>
@@ -290,28 +284,115 @@
         }
       });
 
-      // Cart Functionality
-      const cartBtns = document.querySelectorAll('#cartBtn, #cartBtnMobile');
-      const cartSidebar = document.getElementById("cartSidebar");
-      const cartOverlay = document.getElementById("cartOverlay");
-      const closeCart = document.getElementById("closeCart");
 
-      cartBtns.forEach(btn => {
-        btn?.addEventListener("click", () => {
-          cartSidebar.classList.remove("translate-x-full");
-          cartOverlay.classList.remove("hidden");
+
+      // Language Dropdown Functionality
+      const languageBtnUser = document.getElementById("languageBtnUser");
+      const languageDropdownUser = document.getElementById("languageDropdownUser");
+      const currentLanguageUser = document.getElementById("currentLanguageUser");
+      const languageBtnUserMobile = document.getElementById("languageBtnUserMobile");
+      const languageDropdownUserMobile = document.getElementById("languageDropdownUserMobile");
+      const currentLanguageUserMobile = document.getElementById("currentLanguageUserMobile");
+
+      // Fetch languages from LibreTranslate API
+      async function fetchLanguagesUser() {
+        try {
+          const response = await fetch('https://libretranslate.com/languages');
+          const languages = await response.json();
+          populateLanguageDropdownUser(languages);
+          populateLanguageDropdownUserMobile(languages);
+        } catch (error) {
+          console.error('Error fetching languages:', error);
+          // Fallback to common languages
+          const fallbackLanguages = [
+            {code: 'en', name: 'English'},
+            {code: 'id', name: 'Indonesian'},
+            {code: 'es', name: 'Spanish'},
+            {code: 'fr', name: 'French'},
+            {code: 'de', name: 'German'},
+            {code: 'it', name: 'Italian'},
+            {code: 'pt', name: 'Portuguese'},
+            {code: 'ru', name: 'Russian'},
+            {code: 'ja', name: 'Japanese'},
+            {code: 'ko', name: 'Korean'},
+            {code: 'zh', name: 'Chinese'},
+            {code: 'ar', name: 'Arabic'},
+            {code: 'hi', name: 'Hindi'}
+          ];
+          populateLanguageDropdownUser(fallbackLanguages);
+          populateLanguageDropdownUserMobile(fallbackLanguages);
+        }
+      }
+
+      function populateLanguageDropdownUser(languages) {
+        languageDropdownUser.innerHTML = '';
+        languages.forEach(lang => {
+          const li = document.createElement('li');
+          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+          li.textContent = `${lang.name} (${lang.code.toUpperCase()})`;
+          li.addEventListener('click', () => {
+            currentLanguageUser.textContent = lang.code.toUpperCase();
+            languageDropdownUser.classList.add('hidden');
+            // Here you can add logic to change the page language
+            changeLanguageUser(lang.code);
+          });
+          languageDropdownUser.appendChild(li);
         });
+      }
+
+      function populateLanguageDropdownUserMobile(languages) {
+        languageDropdownUserMobile.innerHTML = '';
+        languages.forEach(lang => {
+          const li = document.createElement('li');
+          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+          li.textContent = `${lang.name} (${lang.code.toUpperCase()})`;
+          li.addEventListener('click', () => {
+            currentLanguageUserMobile.textContent = lang.code.toUpperCase();
+            languageDropdownUserMobile.classList.add('hidden');
+            // Here you can add logic to change the page language
+            changeLanguageUser(lang.code);
+          });
+          languageDropdownUserMobile.appendChild(li);
+        });
+      }
+
+      function changeLanguageUser(langCode) {
+        // Placeholder function for language change
+        // You can implement translation logic here
+        console.log('Changing language to:', langCode);
+        // For now, just show an alert
+        Swal.fire({
+          icon: 'info',
+          title: 'Language Changed',
+          text: `Language changed to ${langCode.toUpperCase()}`,
+          confirmButtonText: 'OK'
+        });
+      }
+
+      // Toggle desktop language dropdown
+      languageBtnUser?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        languageDropdownUser.classList.toggle("hidden");
       });
 
-      closeCart?.addEventListener("click", () => {
-        cartSidebar.classList.add("translate-x-full");
-        cartOverlay.classList.add("hidden");
+      // Toggle mobile language dropdown
+      languageBtnUserMobile?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        languageDropdownUserMobile.classList.toggle("hidden");
       });
 
-      cartOverlay?.addEventListener("click", () => {
-        cartSidebar.classList.add("translate-x-full");
-        cartOverlay.classList.add("hidden");
+      // Close dropdowns on outside click
+      window.addEventListener("click", (e) => {
+        if (!languageBtnUser?.contains(e.target) && !languageDropdownUser?.contains(e.target)) {
+          languageDropdownUser?.classList.add("hidden");
+        }
+        if (!languageBtnUserMobile?.contains(e.target) && !languageDropdownUserMobile?.contains(e.target)) {
+          languageDropdownUserMobile?.classList.add("hidden");
+        }
       });
+
+      // Fetch languages on page load
+      fetchLanguagesUser();
 
       // Header hide/show on scroll
       let lastScrollTop = 0;
