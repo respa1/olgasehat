@@ -286,6 +286,14 @@
                         <div>
                             <p class="font-bold text-lg sm:text-xl text-gray-900 leading-snug">Ir. Bagus Nathaniel Mahendra, M.Eng.</p>
                             <p class="text-sm text-blue-700 font-semibold mt-0.5">Backbone Indonesia</p>
+                            <div class="flex items-center mt-2">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <span class="ml-2 text-sm text-gray-600 font-medium">5.0</span>
+                            </div>
                         </div>
                         <div class="text-blue-200 text-5xl font-extrabold select-none ml-auto hidden md:block">“</div>
                     </div>

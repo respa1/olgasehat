@@ -2,13 +2,21 @@
 
 @section('content')
 
+@php
+$categoryColors = [
+    'olahraga' => 'blue',
+    'kesehatan' => 'green',
+    'edukasi' => 'yellow',
+];
+@endphp
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 <section class="container mx-auto px-4 sm:px-6 py-24 grid grid-cols-1 lg:grid-cols-4 gap-12 max-w-7xl">
     <main class="lg:col-span-3 order-2 lg:order-1">
         
         <div class="mb-8 border-b border-gray-200 pb-4">
-            <span class="inline-block bg-blue-100 text-blue-700 text-sm font-semibold px-3 py-1 rounded-full mb-3">{{ $berita->category ? $berita->category->title : 'OLAHRAGA' }}</span>
+            <span class="inline-block bg-{{ $berita->category ? ($categoryColors[strtolower($berita->category->title)] ?? 'blue') : 'blue' }}-100 text-{{ $berita->category ? ($categoryColors[strtolower($berita->category->title)] ?? 'blue') : 'blue' }}-700 text-sm font-semibold px-3 py-1 rounded-full mb-3">{{ $berita->category ? $berita->category->title : 'OLAHRAGA' }}</span>
             <h1 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight mb-4">
                 {{ $berita->title }}
             </h1>
@@ -76,7 +84,7 @@
                         {{ $latest->title }}
                     </a>
                     <p class="text-xs text-gray-500 mt-1">
-                        <span class="text-{{ $latest->category ? strtolower($latest->category->title) : 'blue' }}-600 font-medium">{{ $latest->category ? $latest->category->title : 'OLAHRAGA' }}</span> - {{ $latest->created_at->format('d M Y') }}
+                        <span class="text-{{ $latest->category ? ($categoryColors[strtolower($latest->category->title)] ?? 'blue') : 'blue' }}-600 font-medium">{{ $latest->category ? $latest->category->title : 'OLAHRAGA' }}</span> - {{ $latest->created_at->format('d M Y') }}
                     </p>
                 </li>
                 @empty

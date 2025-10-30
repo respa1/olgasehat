@@ -45,7 +45,7 @@
     <!-- Menu Desktop -->
     <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
       <a href="/venueuser" class="hover:text-blue-700">Sewa Lapangan</a>
-      <a href="#" class="hover:text-blue-700">Tempat Sehat</a>
+      <a href="/healthyuser" class="hover:text-blue-700">Tempat Sehat</a>
       <a href="/communityuser" class="hover:text-blue-700">Komunitas & Aktivitas</a>
       <a href="/bloguser_news" class="hover:text-blue-700">Blog & News</a>
     </nav>
@@ -144,7 +144,7 @@
 
       <!-- Link Navigasi -->
       <a href="/venueuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Sewa Lapangan</a>
-      <a href="#" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Tempat Sehat</a>
+      <a href="/healthyuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Tempat Sehat</a>
       <a href="/communityuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas % Aktifitas</a>
       <a href="/bloguser_news" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Blog & News</a>
 
@@ -181,7 +181,7 @@
       <h3 class="font-semibold text-lg mb-4 text-gray-800">Ekosistem</h3>
       <ul class="space-y-3 text-base">
         <li><a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a></li>
-        <li><a href="/" class="hover:text-blue-700">Tempat Sehat</a></li>
+        <li><a href="/healthyuser" class="hover:text-blue-700">Tempat Sehat</a></li>
         <li><a href="/community" class="hover:text-blue-700">Komunitas & Aktivitas</a></li>
         <li><a href="/blog-news" class="hover:text-blue-700">Blog & News</a></li>
       </ul>
