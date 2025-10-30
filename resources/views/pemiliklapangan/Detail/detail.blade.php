@@ -73,83 +73,83 @@
             <div class="col-md-9">
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
-                        <form action="/insertdetail" method="post" enctype="multipart/form-data">
-                    @csrf
-                    <div class="mb-3">
-                    <label for="video_link" class="form-label">Video Review (Link YouTube)</label>
-                    <input 
-                        type="url" 
-                        id="video_link" 
-                        name="video_review" 
-                        class="form-control" 
-                        placeholder="Masukkan link YouTube, contoh: https://www.youtube.com/watch?v=abc123" 
-                        value="{{ old('video_review') }}"
-                    >
-                    <small class="text-muted">Masukkan link YouTube (bukan upload file video).</small>
+                    <form action="/insertdetail" method="post" enctype="multipart/form-data" id="detailForm">
+    @csrf
+    <!-- PASTIKAN VENUE ID TERKIRIM -->
+    <input type="hidden" name="venue_id" value="{{ session('venue_id') }}">
+    
+    <!-- TAMPILKAN ERROR JIKA VENUE_ID TIDAK ADA -->
+    @if(!session('venue_id'))
+        <div class="alert alert-warning">
+            <strong>Peringatan!</strong> Session tidak ditemukan. Silakan pastikan Anda telah menyelesaikan step 1.
+        </div>
+    @endif
 
-                    <!-- Preview Video -->
-                    <div class="video-preview mt-3 text-center" id="videoPreview" style="display:none;">
-                        <iframe width="100%" height="315" src="" frameborder="0" allowfullscreen></iframe>
+    <div class="mb-3">
+        <label for="video_link" class="form-label">Video Review (Link YouTube)</label>
+        <input 
+            type="url" 
+            id="video_link" 
+            name="video_review" 
+            class="form-control" 
+            placeholder="Masukkan link YouTube, contoh: https://www.youtube.com/watch?v=abc123" 
+            value="{{ old('video_review') }}"
+        >
+        <small class="text-muted">Masukkan link YouTube (bukan upload file video).</small>
+
+        <div class="video-preview mt-3 text-center" id="videoPreview" style="display:none;">
+            <iframe width="100%" height="315" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="detailVenue" class="form-label">Detail Venue</label>
+        <textarea name="detail" class="form-control" rows="3" placeholder="Deskripsikan detail venue Anda">{{ old('detail') }}</textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="aturanVenue" class="form-label">Aturan Venue</label>
+        <textarea name="aturan" class="form-control" rows="3" placeholder="Tuliskan aturan-aturan yang berlaku di venue">{{ old('aturan') }}</textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="lokasiVenue" class="form-label">Lokasi Venue (Link Google Maps)</label>
+        <input type="url" name="lokasi" class="form-control" placeholder="https://www.google.com/maps/place/..." value="{{ old('lokasi') }}">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label d-block">Fasilitas Venue</label>
+        <div class="row">
+            @php
+                $fasilitas = [
+                    'Area Parkir', 'Toilet/Kamar Mandi', 'Ruang Ganti/Transit', 
+                    'Tempat Ibadah (Musholla)', 'Kantin/Area Catering', 'AC/Pendingin Udara',
+                    'Sistem Tata Suara (Sound System)', 'Proyektor & Layar/LED', 
+                    'Akses Internet (Wi-Fi)', 'Akses Listrik Cadangan (Genset)',
+                    'Area Registrasi/Lobi', 'Keamanan (Security) & P3K'
+                ];
+            @endphp
+
+            @foreach ($fasilitas as $item)
+                <div class="col-md-4 col-sm-6 mb-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" 
+                               name="fasilitas_venue[]" 
+                               value="{{ $item }}" 
+                               id="check-{{ Str::slug($item) }}"
+                               {{ (is_array(old('fasilitas_venue')) && in_array($item, old('fasilitas_venue'))) ? 'checked' : '' }}>
+                        <label class="form-check-label" for="check-{{ Str::slug($item) }}">
+                            {{ $item }}
+                        </label>
                     </div>
                 </div>
- 
-                    <div class="mb-3">
-                        <label for="judulProgram" class="form-label">Detail Venue</label>
-                        <input type="text" name="detail" class="form-control" value="{{ old('detail') }}">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="judulProgram" class="form-label">Aturan Venue</label>
-                        <input type="text" name="aturan" class="form-control" value="{{ old('aturan') }}">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="judulProgram" class="form-label">Lokasi Venue (Link Maps)</label>
-                        <input type="text" name="lokasi" class="form-control" value="{{ old('lokasi') }}">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label d-block">Fasilitas Venue</label>
-                        <div class="row">
-                            {{-- Array Fasilitas Venue --}}
-                            @php
-                                $fasilitas = [
-                                    'Area Parkir', 
-                                    'Toilet/Kamar Mandi', 
-                                    'Ruang Ganti/Transit', 
-                                    'Tempat Ibadah (Musholla)', 
-                                    'Kantin/Area Catering',
-                                    'AC/Pendingin Udara',
-                                    'Sistem Tata Suara (Sound System)',
-                                    'Proyektor & Layar/LED',
-                                    'Akses Internet (Wi-Fi)',
-                                    'Akses Listrik Cadangan (Genset)',
-                                    'Area Registrasi/Lobi',
-                                    'Keamanan (Security) & P3K'
-                                ];
-                            @endphp
-
-                            @foreach ($fasilitas as $item)
-                                <div class="col-md-4 col-sm-6">
-                                    <div class="form-check">
-                                        {{-- Gunakan name="fasilitas_venue[]" agar bisa menyimpan banyak nilai (array) --}}
-                                        <input class="form-check-input" type="checkbox" 
-                                               name="fasilitas_venue[]" 
-                                               value="{{ $item }}" 
-                                               id="check-{{ Str::slug($item) }}"
-                                               {{ (is_array(old('fasilitas_venue')) && in_array($item, old('fasilitas'))) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="check-{{ Str::slug($item) }}">
-                                            {{ $item }}
-                                        </label>
-                                    </div>
-                                </div>
-                            @endforeach
-                            
-                        </div>
-                        <small class="text-muted">Pilih semua fasilitas yang tersedia di venue Anda.</small>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Selanjutnya →</button>
-                        </form>
+            @endforeach
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary" {{ !session('venue_id') ? 'disabled' : '' }}>
+        Selanjutnya →
+    </form>
                     </div>
                 </div>
             </div>

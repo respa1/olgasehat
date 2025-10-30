@@ -125,7 +125,7 @@
 
                             <div class="mb-3">
                                 <label for="judulProgram" class="form-label">Nama Venue</label>
-                                <input type="text" name="title" class="form-control" value="{{ old('namavenue') }}">
+                                <input type="text" name="namavenue" class="form-control" value="{{ old('namavenue') }}">
                             </div>
 
                             <div class="mb-3">

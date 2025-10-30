@@ -68,26 +68,39 @@ class PendaftaranController extends Controller
      * Simpan data detail venue.
      */
     public function insertdetail(Request $request)
-    {
-        // Validasi input
-        $request->validate([
-            'video_review' => 'nullable|url',
-            'detail' => 'nullable|string|max:255',
-            'aturan' => 'nullable|string|max:255',
-            'lokasi' => 'nullable|string|max:255',
-            'fasilitas' => 'nullable|array',
-        ]);
+{
+    // Validasi input
+    $request->validate([
+        'video_review' => 'nullable|url',
+        'detail' => 'nullable|string|max:255',
+        'aturan' => 'nullable|string|max:255',
+        'lokasi' => 'nullable|string|max:255',
+        'fasilitas' => 'nullable|array', // SESUAIKAN DENGAN NAME DI FORM
+    ]);
 
-        // Simpan data ke database
-        $pendaftaran =New Pendaftaran();
-        $pendaftaran->video_review = $request->video_review;
-        $pendaftaran->detail = $request->detail;
-        $pendaftaran->aturan = $request->aturan;
-        $pendaftaran->lokasi = $request->lokasi;
-        $pendaftaran->fasilitas = json_encode($request->fasilitas); // disimpan dalam bentuk array JSON
-        $pendaftaran->save();
-
-        // Arahkan ke halaman "Syarat & Ketentuan"
-        return redirect()->route('syarat')->with('success', 'Detail venue berhasil disimpan!');
+    // DAPATKAN ID VENUE DARI SESSION ATAU REQUEST
+    $venueId = session('venue_id'); // atau dari hidden field
+    
+    if (!$venueId) {
+        return redirect()->back()->with('error', 'Data venue tidak ditemukan. Silakan mulai dari step 1.');
     }
+
+    // UPDATE RECORD YANG SUDAH ADA, BUKAN BUAT BARU
+    $pendaftaran = Pendaftaran::find($venueId);
+    
+    if (!$pendaftaran) {
+        return redirect()->back()->with('error', 'Data venue tidak ditemukan.');
+    }
+
+    // Update data
+    $pendaftaran->video_review = $request->video_review;
+    $pendaftaran->detail = $request->detail;
+    $pendaftaran->aturan = $request->aturan;
+    $pendaftaran->lokasi = $request->lokasi;
+    $pendaftaran->fasilitas = json_encode($request->fasilitas_venue); // SESUAIKAN DENGAN NAME DI FORM
+    $pendaftaran->save();
+
+    // Arahkan ke halaman "Syarat & Ketentuan"
+    return redirect()->route('syarat')->with('success', 'Detail venue berhasil disimpan!');
+}
 }
