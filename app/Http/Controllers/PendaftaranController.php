@@ -41,7 +41,7 @@ class PendaftaranController extends Controller
     {
         $validatedData = $request->validate([
         'logo' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-        'title' => 'required|string|max:255',
+        'namavenue' => 'required|string|max:255',
         'provinsi' => 'required|string|max:100',
         'kota' => 'required|string|max:100',
         'kategori' => 'required|string|max:100',
@@ -53,7 +53,7 @@ class PendaftaranController extends Controller
     // Simpan ke database
     $pendaftaran = new Pendaftaran();
     $pendaftaran->logo = $pathLogo;
-    $pendaftaran->namavenue = $validatedData['title'];
+    $pendaftaran->namavenue = $validatedData['namavenue'];
     $pendaftaran->provinsi = $validatedData['provinsi'];
     $pendaftaran->kota = $validatedData['kota'];
     $pendaftaran->kategori = $validatedData['kategori'];
@@ -75,7 +75,7 @@ class PendaftaranController extends Controller
             'detail' => 'nullable|string|max:255',
             'aturan' => 'nullable|string|max:255',
             'lokasi' => 'nullable|string|max:255',
-            'fasilitas_venue' => 'nullable|array',
+            'fasilitas' => 'nullable|array',
         ]);
 
         // Simpan data ke database

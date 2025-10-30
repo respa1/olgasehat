@@ -149,7 +149,7 @@
 
                             <div class="mb-3">
                                 <label for="category_venue" class="form-label">Cabang Olahraga</label>
-                                <select class="form-control" name="category_venue" id="kategori">
+                                <select class="form-control" name="kategori" id="kategori">
                                     <option value="">-- Pilih Cabang Olahraga --</option>
                                     <option value="Sepak Bola" {{ old('kategori') == 'Sepak Bola' ? 'selected' : '' }}>Sepak Bola</option>
                                     <option value="Futsal" {{ old('kategori') == 'Futsal' ? 'selected' : '' }}>Futsal</option>

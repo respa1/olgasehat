@@ -95,17 +95,17 @@
  
                     <div class="mb-3">
                         <label for="judulProgram" class="form-label">Detail Venue</label>
-                        <input type="text" name="title" class="form-control" value="{{ old('detail') }}">
+                        <input type="text" name="detail" class="form-control" value="{{ old('detail') }}">
                     </div>
 
                     <div class="mb-3">
                         <label for="judulProgram" class="form-label">Aturan Venue</label>
-                        <input type="text" name="title" class="form-control" value="{{ old('aturan') }}">
+                        <input type="text" name="aturan" class="form-control" value="{{ old('aturan') }}">
                     </div>
 
                     <div class="mb-3">
                         <label for="judulProgram" class="form-label">Lokasi Venue (Link Maps)</label>
-                        <input type="text" name="title" class="form-control" value="{{ old('lokasi') }}">
+                        <input type="text" name="lokasi" class="form-control" value="{{ old('lokasi') }}">
                     </div>
 
                     <div class="mb-3">
