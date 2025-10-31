@@ -111,17 +111,23 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     Route::get('/pemiliklapangan/komunitas', fn() => view('pemiliklapangan.pemilik_buat_komunitas'))->name('pemilik.komunitas');
     Route::get('/pemiliklapangan/membership', fn() => view('pemiliklapangan.pemilik_buat_membership'))->name('pemilik.membership');
     Route::get('/pemiliklapangan/event', fn() => view('pemiliklapangan.pemilik_buat_event'))->name('pemilik.event');
+    // Route untuk proses pendaftaran venue
     Route::get('/informasi', [PendaftaranController::class, 'informasi'])->name('informasi');
-    Route::get('/detail', [PendaftaranController::class, 'detail'])->name('detail');
+    Route::post('/insertinform', [PendaftaranController::class, 'insertinform'])->name('insertinform');
+
+    // Route detail - GET untuk menampilkan form, POST untuk menyimpan
+    Route::get('/detail/{id?}', [PendaftaranController::class, 'detail'])->name('detail');
+    Route::post('/insertdetail', [PendaftaranController::class, 'insertdetail'])->name('insertdetail');
+
     Route::get('/syarat', [PendaftaranController::class, 'syarat'])->name('syarat');
     Route::get('/end', [PendaftaranController::class, 'end'])->name('end');
     Route::get('/papan', [PendaftaranController::class, 'papan'])->name('papan');
+
+    // Route untuk halaman fasilitas
     Route::get('/fasilitas', [PendaftaranController::class, 'fasilitas'])->name('fasilitas');
-    Route::post('insertinform', [PendaftaranController::class, 'insertinform'])->name('insertinform');
-    Route::get('/detail/{id}', [PendaftaranController::class, 'detail'])->name('detail');
-    Route::post('insertdetail', [PendaftaranController::class, 'insertdetail'])->name('insertdetail');
-    
-});
+    Route::get('/fasilitas/venue/{id}', [PendaftaranController::class, 'showVenue'])->name('fasilitas.detail');
+        
+    });
 
 // ======================================================
 // SUPERADMIN / BACKOFFICE ROUTES (Authenticated + Role: Superadmin)
