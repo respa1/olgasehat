@@ -1,30 +1,29 @@
-# TODO: Update Category Colors in Blog Views
+# TODO: Sesuaikan Backoffice Review dengan Home Page
 
-## Overview
-Update dynamic category color classes in blog views to map specific categories to colors: 'olahraga' -> blue, 'kesehatan' -> green, 'edukasi' -> yellow. Apply to trending posts, article badges, latest articles, and category badges in detail pages.
+## 1. Update Database dan Model
+- [ ] Tambahkan kolom 'company' dan 'foto' ke migration reviews
+- [ ] Update model Review untuk fillable kolom baru
+- [ ] Jalankan migration
 
-## Steps
-- [x] Add color mapping array to resources/views/user/bloguser_news.blade.php
-- [x] Update trending posts text color in resources/views/user/bloguser_news.blade.php
-- [x] Update article badges bg color in resources/views/user/bloguser_news.blade.php
-- [x] Add color mapping array to resources/views/user/bloguser_detail.blade.php
-- [x] Update latest articles text color in resources/views/user/bloguser_detail.blade.php
-- [x] Update category badge colors in resources/views/user/bloguser_detail.blade.php
-- [x] Add color mapping array to resources/views/FRONTEND/blog-news.blade.php
-- [x] Update trending posts text color in resources/views/FRONTEND/blog-news.blade.php
-- [x] Update article badges bg color in resources/views/FRONTEND/blog-news.blade.php
-- [x] Add color mapping array to resources/views/FRONTEND/blog&news_detail.blade.php
-- [x] Update latest articles text color in resources/views/FRONTEND/blog&news_detail.blade.php
-- [x] Update category badge colors in resources/views/FRONTEND/blog&news_detail.blade.php
+## 2. Update Backoffice Views
+- [ ] Update tambah_riview.blade.php untuk input company dan foto
+- [ ] Update edit_riview.blade.php untuk input company dan foto
+- [ ] Update review.blade.php untuk tampilan kolom baru
 
-# TODO: Add Detail and Delete Actions to Verifikasi Mitra Pemilik Lapangan
+## 3. Update Controller
+- [ ] Update ReviewController untuk handle kolom company dan foto
+- [ ] Tambahkan validasi dan file upload untuk foto
 
-## Overview
-Add actions to view detailed data and delete mitra in the Verifikasi Mitra Pemilik Lapangan page.
+## 4. Buat Seeder untuk Review
+- [ ] Buat ReviewSeeder dengan data Ir. Bagus Nathaniel Mahendra
+- [ ] Update DatabaseSeeder untuk include ReviewSeeder
 
-## Steps
-- [x] Add show method to MitraController for viewing detail
-- [x] Add destroy method to MitraController for deleting mitra
-- [x] Add routes for show and destroy in web.php
-- [x] Create detail view for mitra
-- [x] Update datapemiliklapangan.blade.php to add Detail and Delete buttons
+## 5. Update Frontend Home Pages
+- [ ] Update home.blade.php untuk testimonial dinamis dari database
+- [ ] Update homeuser.blade.php untuk testimonial dinamis dari database
+- [ ] Tambahkan route API jika perlu untuk fetch reviews
+
+## 6. Testing
+- [ ] Test backoffice CRUD review dengan kolom baru
+- [ ] Test frontend menampilkan testimonial dari database
+- [ ] Verifikasi tampilan cocok dengan home page
