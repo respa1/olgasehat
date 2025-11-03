@@ -44,10 +44,10 @@
 
     <!-- Menu Desktop -->
     <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
-      <a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a>
-      <a href="/healthy" class="hover:text-blue-700">Tempat Sehat</a>
-      <a href="/community" class="hover:text-blue-700">Komunitas & Aktivitas</a>
-      <a href="/blog-news" class="hover:text-blue-700">Blog & News</a>
+      <a href="/venue" class="hover:text-blue-700" data-translate>Sewa Lapangan</a>
+      <a href="/healthy" class="hover:text-blue-700" data-translate>Tempat Sehat</a>
+      <a href="/community" class="hover:text-blue-700" data-translate>Komunitas & Aktivitas</a>
+      <a href="/blog-news" class="hover:text-blue-700" data-translate>Blog & News</a>
     </nav>
 
     <!-- Aksi Desktop -->
@@ -66,26 +66,26 @@
 
       <!-- Register Dropdown -->
       <div class="relative">
-        <button id="registerBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none">Daftar</button>
+        <button id="registerBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none" data-translate>Daftar</button>
         <div id="registerDropdown"
           class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50
                  transform scale-95 opacity-0 transition-all duration-200 ease-out">
-          <a href="/daftaruser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Akun User</a>
-          <a href="/regispengelola" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Akun Pengelola Venue</a>
+          <a href="/daftaruser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Akun User</a>
+          <a href="/regispengelola" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Akun Pengelola Venue</a>
         </div>
       </div>
 
       <!-- Login Dropdown -->
       <div class="relative">
         <button id="loginBtn"
-          class="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition focus:outline-none">
+          class="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition focus:outline-none" data-translate>
           Masuk
         </button>
         <div id="loginDropdown"
           class="hidden absolute right-0 mt-2 w-56 bg-white border rounded-md shadow-lg z-50
                  transform scale-95 opacity-0 transition-all duration-200 ease-out">
-          <a href="/loginuser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Masuk User</a>
-          <a href="/loginpengelolavenue" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Masuk Pengelola Venue</a>
+          <a href="/loginuser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Masuk User</a>
+          <a href="/loginpengelolavenue" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Masuk Pengelola Venue</a>
         </div>
       </div>
     </div>
@@ -118,15 +118,15 @@
                 transition-all duration-300 ease-in-out absolute top-full left-0 w-full z-[50]">
 
       <!-- Link Navigasi -->
-      <a href="/venue" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Sewa Lapangan</a>
-      <a href="#" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Tempat Sehat</a>
-      <a href="/community" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas & Aktivitas</a>
-      <a href="/blog-news" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Blog & News</a>
+      <a href="/venue" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Sewa Lapangan</a>
+      <a href="#" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Tempat Sehat</a>
+      <a href="/community" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Komunitas & Aktivitas</a>
+      <a href="/blog-news" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Blog & News</a>
 
       <!-- Masuk and Daftar Buttons -->
       <div class="border-t pt-4">
-        <a href="/loginuser" class="block w-full px-6 py-4 text-center text-blue-700 font-semibold border border-blue-700 rounded-md hover:bg-blue-50 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200">Masuk</a>
-        <a href="/daftaruser" class="block w-full px-6 py-4 text-center bg-blue-700 text-white font-semibold rounded-md hover:bg-blue-800 menu-item opacity-0 translate-y-1 transition-all duration-200">Daftar</a>
+        <a href="/loginuser" class="block w-full px-6 py-4 text-center text-blue-700 font-semibold border border-blue-700 rounded-md hover:bg-blue-50 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Masuk</a>
+        <a href="/daftaruser" class="block w-full px-6 py-4 text-center bg-blue-700 text-white font-semibold rounded-md hover:bg-blue-800 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Daftar</a>
       </div>
     </nav>
 </header>
@@ -146,28 +146,28 @@
       </p>
     </div>
     <div>
-      <h3 class="font-semibold text-lg mb-4 text-gray-800">Perusahaan</h3>
+      <h3 class="font-semibold text-lg mb-4 text-gray-800" data-translate>Perusahaan</h3>
       <ul class="space-y-3 text-base">
-        <li><a href="#" class="hover:text-blue-700">Tentang</a></li>
-        <li><a href="#" class="hover:text-blue-700">Kebijakan &amp; Privasi</a></li>
-        <li><a href="#" class="hover:text-blue-700">Syarat &amp; Ketentuan</a></li>
+        <li><a href="#" class="hover:text-blue-700" data-translate>Tentang</a></li>
+        <li><a href="#" class="hover:text-blue-700" data-translate>Kebijakan &amp; Privasi</a></li>
+        <li><a href="#" class="hover:text-blue-700" data-translate>Syarat &amp; Ketentuan</a></li>
       </ul>
     </div>
     <div>
-      <h3 class="font-semibold text-lg mb-4 text-gray-800">Ekosistem</h3>
+      <h3 class="font-semibold text-lg mb-4 text-gray-800" data-translate>Ekosistem</h3>
       <ul class="space-y-3 text-base">
-        <li><a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a></li>
-        <li><a href="/" class="hover:text-blue-700">Tempat Sehat</a></li>
-        <li><a href="/community" class="hover:text-blue-700">Komunitas & Aktivitas</a></li>
-        <li><a href="/blog-news" class="hover:text-blue-700">Blog & News</a></li>
+        <li><a href="/venue" class="hover:text-blue-700" data-translate>Sewa Lapangan</a></li>
+        <li><a href="/" class="hover:text-blue-700" data-translate>Tempat Sehat</a></li>
+        <li><a href="/community" class="hover:text-blue-700" data-translate>Komunitas & Aktivitas</a></li>
+        <li><a href="/blog-news" class="hover:text-blue-700" data-translate>Blog & News</a></li>
       </ul>
     </div>
     <div>
-      <h3 class="font-semibold text-lg mb-4 text-gray-800">Support</h3>
+      <h3 class="font-semibold text-lg mb-4 text-gray-800" data-translate>Support</h3>
       <ul class="space-y-3 text-base">
-        <li><a href="#" class="hover:text-blue-700">FAQs</a></li>
-        <li><a href="#" class="hover:text-blue-700">Support Center</a></li>
-        <li><a href="#" class="hover:text-blue-700">Contact Us</a></li>
+        <li><a href="#" class="hover:text-blue-700" data-translate>FAQs</a></li>
+        <li><a href="#" class="hover:text-blue-700" data-translate>Support Center</a></li>
+        <li><a href="#" class="hover:text-blue-700" data-translate>Contact Us</a></li>
       </ul>
       <div class="flex space-x-4 mt-6">
         <a
@@ -188,7 +188,7 @@
       </div>
     </div>
   </div>
-  <div class="container mx-auto px-6 text-center mt-10 pt-6 border-t border-gray-300 text-base text-gray-500">
+  <div class="container mx-auto px-6 text-center mt-10 pt-6 border-t border-gray-300 text-base text-gray-500" data-translate>
     &copy; 2024 Olga Sehat. All rights reserved.
   </div>
 </footer>
@@ -378,17 +378,75 @@
         });
       }
 
-      function changeLanguage(langCode) {
-        // Placeholder function for language change
-        // You can implement translation logic here
+      async function changeLanguage(langCode) {
         console.log('Changing language to:', langCode);
-        // For now, just show an alert
+
+        // Show loading
         Swal.fire({
-          icon: 'info',
-          title: 'Language Changed',
-          text: `Language changed to ${langCode.toUpperCase()}`,
-          confirmButtonText: 'OK'
+          title: 'Mengubah Bahasa...',
+          text: 'Mohon tunggu sebentar',
+          allowOutsideClick: false,
+          showConfirmButton: false,
+          willOpen: () => {
+            Swal.showLoading();
+          }
         });
+
+        try {
+          // Get all translatable text elements
+          const elements = document.querySelectorAll('[data-translate]');
+          const textsToTranslate = Array.from(elements).map(el => el.textContent.trim()).filter(text => text);
+
+          if (textsToTranslate.length === 0) {
+            Swal.close();
+            Swal.fire({
+              icon: 'info',
+              title: 'Informasi',
+              text: 'Fitur terjemahan sedang dalam pengembangan',
+              confirmButtonText: 'OK'
+            });
+            return;
+          }
+
+          // Translate texts using Google Translate API
+          const translatedTexts = await Promise.all(
+            textsToTranslate.map(async (text) => {
+              try {
+                const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=id&tl=${langCode}&dt=t&q=${encodeURIComponent(text)}`);
+                const data = await response.json();
+                return data[0][0][0];
+              } catch (error) {
+                console.error('Translation error:', error);
+                return text; // Return original text if translation fails
+              }
+            })
+          );
+
+          // Apply translations
+          elements.forEach((el, index) => {
+            if (translatedTexts[index]) {
+              el.textContent = translatedTexts[index];
+            }
+          });
+
+          Swal.close();
+          Swal.fire({
+            icon: 'success',
+            title: 'Bahasa Berhasil Diubah',
+            text: `Bahasa telah diubah ke ${langCode.toUpperCase()}`,
+            confirmButtonText: 'OK'
+          });
+
+        } catch (error) {
+          console.error('Language change error:', error);
+          Swal.close();
+          Swal.fire({
+            icon: 'error',
+            title: 'Terjadi Kesalahan',
+            text: 'Gagal mengubah bahasa. Silakan coba lagi.',
+            confirmButtonText: 'OK'
+          });
+        }
       }
 
       // Toggle desktop language dropdown
