@@ -44,10 +44,10 @@
 
     <!-- Menu Desktop -->
     <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
-      <a href="/venue" class="hover:text-blue-700" data-translate>Fasilitas Olahraga</a>
-      <a href="/healthy" class="hover:text-blue-700" data-translate>Layanan Kesehatan</a>
-      <a href="/community" class="hover:text-blue-700" data-translate>Komunitas & Aktivitas</a>
-      <a href="/blog-news" class="hover:text-blue-700" data-translate>News</a>
+      <a href="/venue" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Fasilitas Olahraga</a>
+      <a href="/healthy" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Layanan Kesehatan</a>
+      <a href="/community" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Komunitas & Aktivitas</a>
+      <a href="/blog-news" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>News</a>
     </nav>
 
     <!-- Aksi Desktop -->
