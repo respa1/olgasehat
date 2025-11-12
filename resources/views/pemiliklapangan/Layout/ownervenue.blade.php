@@ -35,6 +35,67 @@
     .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active:hover {
       box-shadow: inset 3px 0 0 0 #00a6ff;
     }
+    .owner-topbar .owner-avatar-sm,
+    .owner-topbar .owner-avatar-lg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f1f5ff;
+      color: #1c2a56;
+      font-weight: 700;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    .owner-topbar .owner-avatar-sm {
+      width: 36px;
+      height: 36px;
+      font-size: 0.9rem;
+    }
+    .owner-topbar .owner-avatar-lg {
+      width: 64px;
+      height: 64px;
+      font-size: 1.25rem;
+    }
+    .owner-topbar .owner-avatar-sm img,
+    .owner-topbar .owner-avatar-lg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .owner-avatar-toggle {
+      color: #1c2a56;
+      font-weight: 600;
+    }
+    .owner-avatar-toggle i {
+      font-size: 0.7rem;
+    }
+    .owner-dropdown {
+      width: 240px;
+      border-radius: 18px;
+      padding: 20px 20px 12px;
+    }
+    .owner-profile-card h6 {
+      font-weight: 700;
+      color: #1c2a56;
+    }
+    .badge-role {
+      background: rgba(40, 200, 120, 0.15);
+      color: #1f9d67;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.75rem;
+    }
+    .owner-dropdown .dropdown-item {
+      border-radius: 12px;
+      padding: 0.55rem 0.75rem;
+      font-weight: 600;
+      color: #1c2a56;
+    }
+    .owner-dropdown .dropdown-item:hover {
+      background: #f1f5ff;
+      color: #1c2a56;
+    }
   </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -54,7 +115,52 @@
       </li>
     </ul>
     <!-- Right navbar links -->
-    
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown owner-topbar">
+        <a class="nav-link d-flex align-items-center owner-avatar-toggle" data-toggle="dropdown" href="#">
+          <div class="owner-avatar-sm mr-2">
+            @if(Auth::user()->image ?? false)
+              <img src="{{ asset(Auth::user()->image) }}" alt="{{ Auth::user()->name }}">
+            @else
+              <span>{{ strtoupper(substr(Auth::user()->name ?? 'P', 0, 1)) }}</span>
+            @endif
+          </div>
+          <span class="owner-name d-none d-md-inline">{{ Auth::user()->name ?? 'Pemilik' }}</span>
+          <i class="fas fa-chevron-down ml-2"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right owner-dropdown shadow-lg border-0">
+          <div class="owner-profile-card text-center mb-3">
+            <div class="owner-avatar-lg mx-auto mb-2">
+              @if(Auth::user()->image ?? false)
+                <img src="{{ asset(Auth::user()->image) }}" alt="{{ Auth::user()->name }}">
+              @else
+                <span>{{ strtoupper(substr(Auth::user()->name ?? 'P', 0, 1)) }}</span>
+              @endif
+            </div>
+            <h6 class="mb-0">{{ Auth::user()->name ?? 'Pemilik' }}</h6>
+            <span class="badge badge-role mt-1">{{ ucwords(str_replace('_', ' ', Auth::user()->role ?? 'Administrator')) }}</span>
+          </div>
+          <a href="{{ route('pemilik.pengaturan') }}" class="dropdown-item d-flex align-items-center">
+            <span>Keamanan Akun</span>
+            <i class="fas fa-info-circle ml-auto text-muted"></i>
+          </a>
+          <a href="{{ route('pemilik.pengaturan') }}" class="dropdown-item d-flex align-items-center">
+            <span>Profil User</span>
+            <i class="fas fa-info-circle ml-auto text-muted"></i>
+          </a>
+          <a href="{{ route('pemilik.pengaturan') }}" class="dropdown-item d-flex align-items-center">
+            <span>Profil Bisnis</span>
+            <i class="fas fa-info-circle ml-auto text-muted"></i>
+          </a>
+          <a href="{{ route('pemilik.pengaturan') }}" class="dropdown-item d-flex align-items-center">
+            <span>Pengaturan Pengelola</span>
+            <i class="fas fa-info-circle ml-auto text-muted"></i>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item text-danger">Sign Out</a>
+        </div>
+      </li>
+    </ul>
   </nav>
   <!-- /.navbar -->
 
