@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pendaftaran;
+use App\Models\VenueGallery;
 use Illuminate\Support\Facades\Storage;
 
 class PendaftaranController extends Controller
@@ -15,7 +16,7 @@ class PendaftaranController extends Controller
     public function detail($id = null){
         // Jika ada ID dari parameter URL, gunakan itu
         if ($id) {
-            $venue = Pendaftaran::find($id);
+            $venue = Pendaftaran::with('galleries')->find($id);
             if ($venue) {
                 // Simpan ke session juga
                 session(['venue_id' => $venue->id]);
@@ -26,7 +27,7 @@ class PendaftaranController extends Controller
         // Jika tidak ada ID, coba dari session
         $venueId = session('venue_id');
         if ($venueId) {
-            $venue = Pendaftaran::find($venueId);
+            $venue = Pendaftaran::with('galleries')->find($venueId);
             if ($venue) {
                 return view('pemiliklapangan.Detail.detail', compact('venue'));
             }
@@ -85,9 +86,11 @@ class PendaftaranController extends Controller
             'provinsi' => 'required|string|max:100',
             'kota' => 'required|string|max:100',
             'kategori' => 'required|string|max:100',
+            'nomor_telepon' => 'required|string|max:20',
+            'email_venue' => 'required|email|max:255',
         ]);
 
-        // Upload logo
+        // Upload logo (banner)
         $pathLogo = $request->file('logo')->store('logovenue', 'public');
 
         // Simpan ke database
@@ -97,6 +100,8 @@ class PendaftaranController extends Controller
         $pendaftaran->provinsi = $validatedData['provinsi'];
         $pendaftaran->kota = $validatedData['kota'];
         $pendaftaran->kategori = $validatedData['kategori'];
+        $pendaftaran->nomor_telepon = $validatedData['nomor_telepon'];
+        $pendaftaran->email_venue = $validatedData['email_venue'];
         $pendaftaran->save();
 
         // Simpan ID venue di session untuk step berikutnya
@@ -120,6 +125,8 @@ class PendaftaranController extends Controller
             'aturan' => 'nullable|string',
             'lokasi' => 'nullable|string',
             'fasilitas_venue' => 'nullable|array',
+            'galeri_foto' => 'nullable|array',
+            'galeri_foto.*' => 'image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         // Dapatkan ID venue dari request
@@ -139,6 +146,19 @@ class PendaftaranController extends Controller
         $pendaftaran->lokasi = $request->lokasi;
         $pendaftaran->fasilitas = $request->fasilitas_venue ? json_encode($request->fasilitas_venue) : null;
         $pendaftaran->save();
+
+        // Handle upload galeri foto multiple
+        if ($request->hasFile('galeri_foto')) {
+            foreach ($request->file('galeri_foto') as $index => $file) {
+                $pathFoto = $file->store('venue_galleries', 'public');
+                
+                VenueGallery::create([
+                    'pendaftaran_id' => $venueId,
+                    'foto' => $pathFoto,
+                    'urutan' => $index + 1,
+                ]);
+            }
+        }
 
         // Update session dengan ID terbaru
         session(['venue_id' => $venueId]);
