@@ -103,7 +103,7 @@
 
           <!-- Analytics -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/analytics" class="nav-link">
               <i class="nav-icon fas fa-chart-line"></i>
               <p>Analytics</p>
             </a>
