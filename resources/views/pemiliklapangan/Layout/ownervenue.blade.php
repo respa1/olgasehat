@@ -25,6 +25,17 @@
   <link rel="stylesheet" href="{{ asset('template/plugins/daterangepicker/daterangepicker.css') }}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('template/plugins/summernote/summernote-bs4.min.css') }}">
+  <style>
+    .nav-sidebar .nav-link.active {
+      background-color: transparent !important;
+      color: #ffffff !important;
+      font-weight: 600;
+    }
+    .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active,
+    .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active:hover {
+      box-shadow: inset 3px 0 0 0 #00a6ff;
+    }
+  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -84,7 +95,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Dashboard -->
           <li class="nav-item">
-            <a href="/pemiliklapangan/dashboard" class="nav-link {{ request()->is('pemiliklapangan/dashboard') ? 'active' : '' }}">
+            <a href="/pemiliklapangan/dashboard" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>Dashboard</p>
             </a>
@@ -92,7 +103,7 @@
 
           <!-- Analytics -->
           <li class="nav-item">
-            <a href="{{ route('pemilik.analytics') }}" class="nav-link {{ request()->routeIs('pemilik.analytics') ? 'active' : '' }}">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-line"></i>
               <p>Analytics</p>
             </a>
@@ -209,7 +220,7 @@
 
           <!-- Pengaturan -->
           <li class="nav-item">
-            <a href="{{ route('pemilik.pengaturan') }}" class="nav-link">
+            <a href="/pemiliklapangan/pengaturan" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
               <p>Pengaturan</p>
             </a>
