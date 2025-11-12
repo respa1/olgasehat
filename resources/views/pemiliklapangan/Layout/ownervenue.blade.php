@@ -141,15 +141,61 @@
             </a>
           </li>
 
+          @php
+            $isKeuangan = request()->is('keuangan*');
+            $isKeuanganFasilitas = request()->is('keuangan/fasilitas');
+            $isKeuanganKomunitas = request()->is('keuangan/komunitas');
+            $isKeuanganMembership = request()->is('keuangan/membership');
+            $isKeuanganEvent = request()->is('keuangan/event');
+          @endphp
           <!-- Keuangan -->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          <li class="nav-item {{ $isKeuangan ? 'menu-is-opening menu-open' : '' }}">
+            <a href="#" class="nav-link {{ $isKeuangan ? 'active' : '' }}">
               <i class="nav-icon fas fa-wallet"></i>
               <p>
                 Keuangan
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            
+            <ul class="nav nav-treeview">
+              <li class="nav-item {{ ($isKeuanganFasilitas || $isKeuanganKomunitas || $isKeuanganMembership || $isKeuanganEvent) ? 'menu-is-opening menu-open' : '' }}">
+                <a href="#" class="nav-link {{ ($isKeuanganFasilitas || $isKeuanganKomunitas || $isKeuanganMembership || $isKeuanganEvent) ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    Riwayat Transaksi
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('keuangan.fasilitas') }}" class="nav-link {{ $isKeuanganFasilitas ? 'active' : '' }}">
+                      <i class="far fa-dot-circle nav-icon"></i>
+                      <p>Fasilitas</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('keuangan.komunitas') }}" class="nav-link {{ $isKeuanganKomunitas ? 'active' : '' }}">
+                      <i class="far fa-dot-circle nav-icon"></i>
+                      <p>Komunitas</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('keuangan.membership') }}" class="nav-link {{ $isKeuanganMembership ? 'active' : '' }}">
+                      <i class="far fa-dot-circle nav-icon"></i>
+                      <p>Membership</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('keuangan.event') }}" class="nav-link {{ $isKeuanganEvent ? 'active' : '' }}">
+                      <i class="far fa-dot-circle nav-icon"></i>
+                      <p>Event</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
           <!-- Diskon & Promosi -->
           <li class="nav-item">
             <a href="/pemiliklapangan/promo" class="nav-link">

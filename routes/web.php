@@ -126,6 +126,13 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     // Route untuk halaman fasilitas
     Route::get('/fasilitas', [PendaftaranController::class, 'fasilitas'])->name('fasilitas');
     Route::get('/fasilitas/venue/{id}', [PendaftaranController::class, 'showVenue'])->name('fasilitas.detail');
+    
+    Route::prefix('keuangan')->group(function () {
+        Route::get('/fasilitas', fn() => view('pemiliklapangan.Keuangan.fasilitas'))->name('keuangan.fasilitas');
+        Route::get('/komunitas', fn() => view('pemiliklapangan.Keuangan.komunitas'))->name('keuangan.komunitas');
+        Route::get('/membership', fn() => view('pemiliklapangan.Keuangan.membership'))->name('keuangan.membership');
+        Route::get('/event', fn() => view('pemiliklapangan.Keuangan.event'))->name('keuangan.event');
+    });
         
     });
 

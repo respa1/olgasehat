@@ -126,7 +126,7 @@
                         <form action="{{ route('insertinform') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
-                                <label for="image" class="form-label">Gambar Logo</label>
+                                <label for="image" class="form-label">Gambar Banner</label>
                                 <input type="file" id="image" name="logo" class="form-control @error('logo') is-invalid @enderror" accept="image/*">
                                 @error('logo')
                                     <div class="invalid-feedback">{{ $message }}</div>
