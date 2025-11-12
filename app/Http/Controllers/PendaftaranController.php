@@ -71,8 +71,15 @@ class PendaftaranController extends Controller
 
     public function showVenue($id)
     {
-        $venue = Pendaftaran::findOrFail($id);
-        return view('pemiliklapangan.Fasilitas.detailvenue', compact('venue'));
+        $venue = Pendaftaran::with('galleries')->findOrFail($id);
+        
+        // Parse fasilitas jika ada
+        $fasilitas = [];
+        if ($venue->fasilitas) {
+            $fasilitas = json_decode($venue->fasilitas, true) ?? [];
+        }
+        
+        return view('pemiliklapangan.Fasilitas.detailvenue', compact('venue', 'fasilitas'));
     }
 
     /**

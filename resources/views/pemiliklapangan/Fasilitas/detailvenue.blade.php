@@ -49,7 +49,13 @@
                   </div>
                   <div class="col-md-4 mb-2">
                     <span class="text-uppercase text-secondary d-block font-weight-bold">Kontak</span>
-                    <span class="font-weight-bold">{{ $venue->kontak ?? '+62XXXXXXXXXX' }}</span>
+                    <span class="font-weight-bold">
+                      @if($venue->nomor_telepon)
+                        +62{{ $venue->nomor_telepon }}
+                      @else
+                        +62XXXXXXXXXX
+                      @endif
+                    </span>
                   </div>
                   <div class="col-md-4 mb-2">
                     <span class="text-uppercase text-secondary d-block font-weight-bold">Lokasi</span>
@@ -57,10 +63,48 @@
                   </div>
                 </div>
                 <div class="d-flex flex-wrap align-items-center icon-badges">
-                  <span class="badge badge-pill badge-light border mr-2 mb-2"><i class="fas fa-wifi mr-1 text-primary"></i> Wifi</span>
-                  <span class="badge badge-pill badge-light border mr-2 mb-2"><i class="fas fa-parking mr-1 text-primary"></i> Parkir</span>
-                  <span class="badge badge-pill badge-light border mr-2 mb-2"><i class="fas fa-utensils mr-1 text-primary"></i> Kantin</span>
-                  <span class="badge badge-pill badge-light border mr-2 mb-2"><i class="fas fa-shower mr-1 text-primary"></i> Shower</span>
+                  @if(isset($fasilitas) && count($fasilitas) > 0)
+                    @php
+                      $fasilitasIcons = [
+                        'Area Parkir' => 'fa-parking',
+                        'Toilet/Kamar Mandi' => 'fa-toilet',
+                        'Ruang Ganti/Transit' => 'fa-tshirt',
+                        'Tempat Ibadah (Musholla)' => 'fa-mosque',
+                        'Kantin/Area Catering' => 'fa-utensils',
+                        'AC/Pendingin Udara' => 'fa-snowflake',
+                        'Sistem Tata Suara (Sound System)' => 'fa-volume-up',
+                        'Proyektor & Layar/LED' => 'fa-tv',
+                        'Akses Internet (Wi-Fi)' => 'fa-wifi',
+                        'Akses Listrik Cadangan (Genset)' => 'fa-plug',
+                        'Area Registrasi/Lobi' => 'fa-door-open',
+                        'Keamanan (Security) & P3K' => 'fa-shield-alt'
+                      ];
+                      $fasilitasLabels = [
+                        'Area Parkir' => 'Parkir',
+                        'Toilet/Kamar Mandi' => 'Toilet',
+                        'Ruang Ganti/Transit' => 'Ruang Ganti',
+                        'Tempat Ibadah (Musholla)' => 'Musholla',
+                        'Kantin/Area Catering' => 'Kantin',
+                        'AC/Pendingin Udara' => 'AC',
+                        'Sistem Tata Suara (Sound System)' => 'Sound System',
+                        'Proyektor & Layar/LED' => 'Proyektor',
+                        'Akses Internet (Wi-Fi)' => 'WiFi',
+                        'Akses Listrik Cadangan (Genset)' => 'Genset',
+                        'Area Registrasi/Lobi' => 'Lobi',
+                        'Keamanan (Security) & P3K' => 'Security'
+                      ];
+                    @endphp
+                    @foreach($fasilitas as $fas)
+                      @if(isset($fasilitasIcons[$fas]))
+                        <span class="badge badge-pill badge-light border mr-2 mb-2">
+                          <i class="fas {{ $fasilitasIcons[$fas] }} mr-1 text-primary"></i> 
+                          {{ $fasilitasLabels[$fas] ?? $fas }}
+                        </span>
+                      @endif
+                    @endforeach
+                  @else
+                    <span class="text-muted small">Belum ada fasilitas yang ditambahkan.</span>
+                  @endif
                 </div>
               </div>
             </div>
@@ -100,6 +144,30 @@
 
           <div class="tab-content pt-4">
             <div class="tab-pane fade show active" id="tab-lapangan" role="tabpanel">
+              @if($venue->kategori)
+                <div class="mb-4">
+                  <h5 class="font-weight-bold mb-3">Informasi Lapangan</h5>
+                  <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-md-8">
+                          <h6 class="font-weight-bold text-dark mb-2">
+                            <i class="fas fa-futbol text-primary mr-2"></i>
+                            Cabang Olahraga
+                          </h6>
+                          <p class="text-muted mb-0">{{ $venue->kategori }}</p>
+                        </div>
+                        <div class="col-md-4 text-right">
+                          <span class="badge badge-primary badge-pill px-3 py-2">
+                            {{ $venue->kategori }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              @endif
+              
               <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-12">
                   <div class="card h-100 border border-primary border-dashed text-center add-box">
@@ -122,19 +190,82 @@
             </div>
 
             <div class="tab-pane fade" id="tab-experience" role="tabpanel">
-              <p class="text-muted mb-0">Belum ada data experience yang ditambahkan.</p>
+              @if($venue->video_review)
+                <div class="mb-3">
+                  <h5 class="font-weight-bold mb-3">Video Review</h5>
+                  @php
+                    // Extract YouTube video ID
+                    $videoId = null;
+                    if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $venue->video_review, $matches)) {
+                      $videoId = $matches[1];
+                    }
+                  @endphp
+                  @if($videoId)
+                    <div class="embed-responsive embed-responsive-16by9" style="max-width: 800px;">
+                      <iframe class="embed-responsive-item" 
+                              src="https://www.youtube.com/embed/{{ $videoId }}" 
+                              allowfullscreen></iframe>
+                    </div>
+                    <p class="mt-2">
+                      <a href="{{ $venue->video_review }}" target="_blank" class="text-primary">
+                        <i class="fab fa-youtube mr-1"></i> Buka di YouTube
+                      </a>
+                    </p>
+                  @else
+                    <p class="text-muted">Link video tidak valid.</p>
+                  @endif
+                </div>
+              @else
+                <p class="text-muted mb-0">Belum ada video review yang ditambahkan.</p>
+              @endif
             </div>
             <div class="tab-pane fade" id="tab-operasional" role="tabpanel">
               <p class="text-muted mb-0">Jam operasional belum diatur.</p>
             </div>
             <div class="tab-pane fade" id="tab-deskripsi" role="tabpanel">
-              <p class="text-muted mb-0">{{ $venue->detail ?? 'Belum ada deskripsi venue.' }}</p>
+              @if($venue->detail)
+                <div class="venue-content">
+                  {!! $venue->detail !!}
+                </div>
+              @else
+                <p class="text-muted mb-0">Belum ada deskripsi venue.</p>
+              @endif
             </div>
             <div class="tab-pane fade" id="tab-syarat" role="tabpanel">
-              <p class="text-muted mb-0">{{ $venue->aturan ?? 'Belum ada syarat dan ketentuan.' }}</p>
+              @if($venue->aturan)
+                <div class="venue-content">
+                  {!! $venue->aturan !!}
+                </div>
+              @else
+                <p class="text-muted mb-0">Belum ada syarat dan ketentuan.</p>
+              @endif
             </div>
             <div class="tab-pane fade" id="tab-galeri" role="tabpanel">
-              <p class="text-muted mb-0">Galeri belum tersedia.</p>
+              @if($venue->galleries && $venue->galleries->count() > 0)
+                <div class="row">
+                  @foreach($venue->galleries as $gallery)
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                      <div class="card border-0 shadow-sm h-100">
+                        <div class="card-img-top position-relative" style="height: 200px; overflow: hidden;">
+                          <img src="{{ asset('storage/' . $gallery->foto) }}" 
+                               alt="Gallery {{ $loop->iteration }}" 
+                               class="w-100 h-100" 
+                               style="object-fit: cover;">
+                        </div>
+                        <div class="card-body p-2 text-center">
+                          <small class="text-muted">Foto {{ $loop->iteration }}</small>
+                        </div>
+                      </div>
+                    </div>
+                  @endforeach
+                </div>
+              @else
+                <div class="text-center py-5">
+                  <i class="fas fa-images fa-3x text-muted mb-3"></i>
+                  <p class="text-muted mb-0">Galeri belum tersedia.</p>
+                  <p class="text-muted small">Tambahkan foto galeri melalui form Detail Venue.</p>
+                </div>
+              @endif
             </div>
           </div>
 
@@ -198,6 +329,23 @@
     justify-content: center;
     font-size: 28px;
     color: #2b8af7;
+  }
+  .venue-content {
+    line-height: 1.8;
+    color: #495057;
+  }
+  .venue-content p {
+    margin-bottom: 1rem;
+  }
+  .venue-content ul, .venue-content ol {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+  }
+  .venue-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1rem 0;
   }
 </style>
 @endsection
