@@ -84,7 +84,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Dashboard -->
           <li class="nav-item">
-            <a href="/pemiliklapangan/dashboard" class="nav-link">
+            <a href="/pemiliklapangan/dashboard" class="nav-link {{ request()->is('pemiliklapangan/dashboard') ? 'active' : '' }}">
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>Dashboard</p>
             </a>
@@ -92,7 +92,7 @@
 
           <!-- Analytics -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('pemilik.analytics') }}" class="nav-link {{ request()->routeIs('pemilik.analytics') ? 'active' : '' }}">
               <i class="nav-icon fas fa-chart-line"></i>
               <p>Analytics</p>
             </a>
@@ -209,7 +209,7 @@
 
           <!-- Pengaturan -->
           <li class="nav-item">
-            <a href="/pemiliklapangan/pengaturan" class="nav-link">
+            <a href="{{ route('pemilik.pengaturan') }}" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
               <p>Pengaturan</p>
             </a>
