@@ -281,6 +281,35 @@
         <div class="lg:w-2/3 bg-white p-6 md:p-10 flex flex-col justify-between" data-aos="fade-up" data-aos-delay="200">
             <div id="testimonial-container" class="relative min-h-[250px] md:min-h-[180px]">
 
+                @php
+                    $reviews = \App\Models\Review::all();
+                    $currentReview = $reviews->first();
+                @endphp
+                @if($currentReview)
+                <div class="testimonial-item absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100">
+                    <div class="flex items-start space-x-4 mb-4">
+                        @if($currentReview->foto)
+                            <img src="{{ asset('storage/' . $currentReview->foto) }}" alt="{{ $currentReview->nama }}" class="w-14 h-14 rounded-full object-cover border-3 border-gray-100" />
+                        @else
+                            <img src="{{ asset('assets/Goes Natha bos .jpg') }}" alt="{{ $currentReview->nama }}" class="w-14 h-14 rounded-full object-cover border-3 border-gray-100" />
+                        @endif
+                        <div>
+                            <p class="font-bold text-lg sm:text-xl text-gray-900 leading-snug">{{ $currentReview->nama }}</p>
+                            <p class="text-sm text-blue-700 font-semibold mt-0.5">{{ $currentReview->company ?? 'Pengguna Olga Sehat' }}</p>
+                            <div class="flex items-center mt-2">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <i class="fas fa-star {{ $i <= $currentReview->rate ? 'text-yellow-400' : 'text-gray-300' }}"></i>
+                                @endfor
+                                <span class="ml-2 text-sm text-gray-600 font-medium">{{ $currentReview->rate }}.0</span>
+                            </div>
+                        </div>
+                        <div class="text-blue-200 text-5xl font-extrabold select-none ml-auto hidden md:block">“</div>
+                    </div>
+                    <p class="text-gray-800 text-base md:text-lg leading-relaxed italic border-l-4 border-blue-500 pl-4 py-1">
+                        "{{ $currentReview->ulasan }}"
+                    </p>
+                </div>
+                @else
                 <div class="testimonial-item absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100">
                     <div class="flex items-start space-x-4 mb-4">
                         <img src="{{ asset('assets/Goes Natha bos .jpg') }}" alt="Ir. Bagus Nathaniel Mahendra" class="w-14 h-14 rounded-full object-cover border-3 border-gray-100" />
@@ -302,6 +331,7 @@
                         "Olga Sehat membawa revolusi di kalangan penggemar olahraga. Aplikasi ini memudahkan pencarian aktivitas olahraga, mengembangkan komunitas olahraga, dan memesan tempat olahraga. Ini adalah ekosistem olahraga yang menyeluruh."
                     </p>
                 </div>
+                @endif
 
                 <div class="testimonial-item absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 pointer-events-none">
                     <div class="flex items-start space-x-4 mb-4">

@@ -16,7 +16,7 @@
                 <div class="col-md-8">
                     <div class="card">
 
-                        <form action="{{ route('review.store') }}" method="POST">
+                        <form action="{{ route('review.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="card-body">
@@ -40,6 +40,17 @@
                                 <div class="form-group">
                                     <label>Ulasan</label>
                                     <textarea name="ulasan" class="form-control" rows="3" placeholder="Tulis ulasan" required></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Company</label>
+                                    <input type="text" name="company" class="form-control" placeholder="Masukkan nama perusahaan">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Foto</label>
+                                    <input type="file" name="foto" class="form-control" accept="image/*">
+                                    <small class="form-text text-muted">Format: JPG, PNG, GIF. Maksimal 2MB.</small>
                                 </div>
 
                                 <div class="form-group">

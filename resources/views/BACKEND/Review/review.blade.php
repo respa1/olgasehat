@@ -18,8 +18,10 @@
                 <tr>
                   <th>No</th>
                   <th>Nama</th>
+                  <th>Company</th>
                   <th>Ulasan</th>
                   <th>Rate</th>
+                  <th>Foto</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -29,8 +31,16 @@
                   <tr>
                     <td>{{ $no++ }}</td>
                     <td>{{ $row->nama }}</td>
+                    <td>{{ $row->company ?? '-' }}</td>
                     <td class="text-start">{{ $row->ulasan }}</td>
                     <td>⭐ {{ $row->rate }}</td>
+                    <td>
+                      @if($row->foto)
+                        <img src="{{ asset('storage/' . $row->foto) }}" alt="Foto" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                      @else
+                        -
+                      @endif
+                    </td>
                     <td>
                       <a href="{{ route('review.edit', $row->id) }}" class="btn btn-info btn-sm text-white">Edit</a>
 
@@ -45,7 +55,7 @@
                     </td>
                   </tr>
                 @empty
-                  <tr><td colspan="5" class="text-center text-muted py-4">Belum ada ulasan pengguna</td></tr>
+                  <tr><td colspan="7" class="text-center text-muted py-4">Belum ada ulasan pengguna</td></tr>
                 @endforelse
               </tbody>
             </table>
