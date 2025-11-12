@@ -44,10 +44,10 @@
 
     <!-- Menu Desktop -->
     <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
-      <a href="/venueuser" class="hover:text-blue-700">Sewa Lapangan</a>
-      <a href="/healthyuser" class="hover:text-blue-700">Tempat Sehat</a>
+      <a href="/venueuser" class="hover:text-blue-700">Fasilitas Olahraga</a>
+      <a href="/healthyuser" class="hover:text-blue-700">Layanan Kesehatan</a>
       <a href="/communityuser" class="hover:text-blue-700">Komunitas & Aktivitas</a>
-      <a href="/bloguser_news" class="hover:text-blue-700">Blog & News</a>
+      <a href="/bloguser_news" class="hover:text-blue-700">News</a>
     </nav>
 
     <!-- Aksi Desktop -->
@@ -143,10 +143,10 @@
                 transition-all duration-300 ease-in-out absolute top-full left-0 w-full z-[50]">
 
       <!-- Link Navigasi -->
-      <a href="/venueuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Sewa Lapangan</a>
-      <a href="/healthyuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Tempat Sehat</a>
-      <a href="/communityuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas % Aktifitas</a>
-      <a href="/bloguser_news" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Blog & News</a>
+      <a href="/venueuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Fasilitas Olahraga</a>
+      <a href="/healthyuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Layanan Kesehatan</a>
+      <a href="/communityuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas & Aktivitas</a>
+      <a href="/bloguser_news" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">News</a>
 
       <!-- User Links -->
       <div class="border-t pt-4">
