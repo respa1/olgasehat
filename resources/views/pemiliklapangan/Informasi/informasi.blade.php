@@ -2,27 +2,7 @@
 
 @section('content')
 <div class="content-wrapper p-4">
-            <style>
-    .custom-file-upload:hover {
-        border-color: #007bff;
-        background-color: #eaf2ff;
-    }
-
-    .custom-file-upload input[type="file"] {
-        display: none;
-    }
-
-    .custom-file-upload .icon {
-        font-size: 2.5rem;
-        color: #007bff;
-        margin-bottom: 10px;
-    }
-
-    .custom-file-upload .text {
-        font-size: 1rem;
-        color: #666;
-    }
-
+    <style>
     .image-preview {
         display: flex;
         align-items: center;
@@ -53,13 +33,22 @@
         font-size: 16px;
         color: #aaa;
     }
-</style>
+    .step-number {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+    </style>
+
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar Progress -->
             <div class="col-md-3">
                 <div class="card shadow-sm border-0">
-                    <div class="card-body">
+                   <div class="card-body">
                         <ul class="list-unstyled">
                             <li class="mb-4">
                                 <div class="d-flex align-items-center">
@@ -117,51 +106,91 @@
 
             <!-- Konten Utama -->
             <div class="col-md-9">
+                <!-- Tampilkan pesan error/success -->
+                @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
-                        <form action="/insertdata" method="post" enctype="multipart/form-data">
-                  @csrf
-                  <div class="mb-3">
-                    <label for="image" class="form-label">Gambar</label>
-                    <input type="file" id="image" name="foto" class="form-control">
-                    <div class="image-preview" id="thumbnailInput">
-                        <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
-                        <span class="preview-text" id="previewText">No image selected</span>
-                    </div>
-                </div>
-  
-                <div class="mb-3">
-                    <label for="judulProgram" class="form-label">Nama Venue</label>
-                    <input type="text" name="title" class="form-control" value="{{ old('title') }}">
-                </div>
+                        <form action="{{ route('insertinform') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Gambar Logo</label>
+                                <input type="file" id="image" name="logo" class="form-control @error('logo') is-invalid @enderror" accept="image/*">
+                                @error('logo')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
 
-               <div class="mb-3">
-                    <label for="kota" class="form-label">Pilih Kota</label>
-                    <select class="form-control" name="kota" id="kota">
-                        <option value="">-- Pilih Kota --</option>
-                        <option value="Denpasar" {{ old('kota') == 'Denpasar' ? 'selected' : '' }}>Denpasar</option>
-                        <option value="Badung" {{ old('kota') == 'Badung' ? 'selected' : '' }}>Badung</option>
-                        <option value="Gianyar" {{ old('kota') == 'Gianyar' ? 'selected' : '' }}>Gianyar</option>
-                        <option value="Tabanan" {{ old('kota') == 'Tabanan' ? 'selected' : '' }}>Tabanan</option>
-                        <option value="Buleleng" {{ old('kota') == 'Buleleng' ? 'selected' : '' }}>Buleleng</option>
-                    </select>
-                </div>
+                                <div class="image-preview mt-2" id="thumbnailInput">
+                                    <img src="#" alt="Image Preview" id="previewImage">
+                                    <span class="preview-text" id="previewText">No image selected</span>
+                                </div>
+                            </div>
 
-                <div class="mb-3">
-                    <label for="category_venue" class="form-label">Category Venue</label>
-                    <select class="form-control" name="category_venue" id="category_venue">
-                        <option value="">-- Pilih Kategori --</option>
-                        <option value="Lapangan Olahraga" {{ old('category_venue') == 'Lapangan Olahraga' ? 'selected' : '' }}>Lapangan Olahraga</option>
-                        <option value="Gor" {{ old('category_venue') == 'Gor' ? 'selected' : '' }}>GOR</option>
-                        <option value="Studio" {{ old('category_venue') == 'Studio' ? 'selected' : '' }}>Studio</option>
-                        <option value="Arena Musik" {{ old('category_venue') == 'Arena Musik' ? 'selected' : '' }}>Arena Musik</option>
-                        <option value="Gedung Serbaguna" {{ old('category_venue') == 'Gedung Serbaguna' ? 'selected' : '' }}>Gedung Serbaguna</option>
-                    </select>
-                </div>
+                            <div class="mb-3">
+                                <label for="judulProgram" class="form-label">Nama Venue</label>
+                                <input type="text" name="namavenue" class="form-control @error('namavenue') is-invalid @enderror" value="{{ old('namavenue') }}">
+                                @error('namavenue')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                </div>
-                </form>
-                        <a href="/detail" class="btn btn-primary">Selanjutnya →</a>
+                            <div class="mb-3">
+                                <label for="provinsi" class="form-label">Pilih Provinsi</label>
+                                <select class="form-control @error('provinsi') is-invalid @enderror" id="provinsi" name="provinsi">
+                                    <option value="">-- Pilih Provinsi --</option>
+                                    <option value="Bali" {{ old('provinsi') == 'Bali' ? 'selected' : '' }}>Bali</option>
+                                    <option value="Jawa Timur" {{ old('provinsi') == 'Jawa Timur' ? 'selected' : '' }}>Jawa Timur</option>
+                                    <option value="DKI Jakarta" {{ old('provinsi') == 'DKI Jakarta' ? 'selected' : '' }}>DKI Jakarta</option>
+                                    <option value="Jawa Barat" {{ old('provinsi') == 'Jawa Barat' ? 'selected' : '' }}>Jawa Barat</option>
+                                    <option value="Sumatera Utara" {{ old('provinsi') == 'Sumatera Utara' ? 'selected' : '' }}>Sumatera Utara</option>
+                                </select>
+                                @error('provinsi')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="kabupaten" class="form-label">Pilih Kabupaten/Kota</label>
+                                <select class="form-control @error('kota') is-invalid @enderror" id="kabupaten" name="kota">
+                                    <option value="">-- Pilih Kabupaten/Kota --</option>
+                                </select>
+                                @error('kota')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="category_venue" class="form-label">Cabang Olahraga</label>
+                                <select class="form-control @error('kategori') is-invalid @enderror" name="kategori" id="kategori">
+                                    <option value="">-- Pilih Cabang Olahraga --</option>
+                                    <option value="Sepak Bola" {{ old('kategori') == 'Sepak Bola' ? 'selected' : '' }}>Sepak Bola</option>
+                                    <option value="Futsal" {{ old('kategori') == 'Futsal' ? 'selected' : '' }}>Futsal</option>
+                                    <option value="Bola Basket" {{ old('kategori') == 'Bola Basket' ? 'selected' : '' }}>Bola Basket</option>
+                                    <option value="Bola Voli" {{ old('kategori') == 'Bola Voli' ? 'selected' : '' }}>Bola Voli</option>
+                                    <option value="Bola Tangan" {{ old('kategori') == 'Bola Tangan' ? 'selected' : '' }}>Bola Tangan</option>
+                                    <option value="Rugby" {{ old('kategori') == 'Rugby' ? 'selected' : '' }}>Rugby</option>
+                                    <option value="Baseball" {{ old('kategori') == 'Baseball' ? 'selected' : '' }}>Baseball</option>
+                                    <option value="Softball" {{ old('kategori') == 'Softball' ? 'selected' : '' }}>Softball</option>
+                                </select>
+                                @error('kategori')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                           <button type="submit" class="btn btn-primary">Selanjutnya →</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -169,17 +198,77 @@
     </div>
 </div>
 
+<script>
+// Image preview handling
+document.addEventListener("DOMContentLoaded", function () {
+    const imageInput = document.getElementById("image");
+    const previewImage = document.getElementById("previewImage");
+    const previewText = document.getElementById("previewText");
 
- <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<style>
-    .step-number {
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
+    imageInput.addEventListener("change", function () {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = "block";
+                previewText.style.display = "none";
+            };
+            reader.readAsDataURL(file);
+        } else {
+            previewImage.style.display = "none";
+            previewText.style.display = "block";
+        }
+    });
+});
+
+// Script untuk dropdown wilayah
+document.addEventListener('DOMContentLoaded', function () {
+    const dataWilayah = {
+        "Bali": ["Denpasar", "Badung", "Gianyar", "Tabanan", "Bangli", "Klungkung", "Karangasem", "Buleleng", "Jembrana"],
+        "Jawa Timur": ["Surabaya", "Malang", "Kediri", "Sidoarjo", "Banyuwangi", "Blitar"],
+        "DKI Jakarta": ["Jakarta Selatan", "Jakarta Barat", "Jakarta Timur", "Jakarta Utara", "Jakarta Pusat"],
+        "Jawa Barat": ["Bandung", "Bogor", "Bekasi", "Cirebon", "Sukabumi"],
+        "Sumatera Utara": ["Medan", "Binjai", "Tebing Tinggi", "Pematangsiantar"]
+    };
+
+    const provinsiSelect = document.getElementById('provinsi');
+    const kabupatenSelect = document.getElementById('kabupaten');
+
+    // Set nilai sebelumnya jika ada
+    const oldProvinsi = "{{ old('provinsi') }}";
+    const oldKota = "{{ old('kota') }}";
+    
+    if (oldProvinsi) {
+        provinsiSelect.value = oldProvinsi;
+        // Trigger change untuk memuat kabupaten
+        setTimeout(() => {
+            provinsiSelect.dispatchEvent(new Event('change'));
+            
+            // Set nilai kota setelah dropdown terisi
+            setTimeout(() => {
+                if (oldKota) {
+                    kabupatenSelect.value = oldKota;
+                }
+            }, 100);
+        }, 100);
     }
-</style>
+
+    provinsiSelect.addEventListener('change', function() {
+        const provinsi = this.value;
+        kabupatenSelect.innerHTML = '<option value="">-- Pilih Kabupaten/Kota --</option>';
+
+        if (provinsi && dataWilayah[provinsi]) {
+            dataWilayah[provinsi].forEach(kab => {
+                const option = document.createElement('option');
+                option.value = kab;
+                option.textContent = kab;
+                kabupatenSelect.appendChild(option);
+            });
+        }
+    });
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 @endsection

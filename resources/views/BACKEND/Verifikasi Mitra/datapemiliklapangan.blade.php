@@ -71,6 +71,9 @@
                                             @endif
                                         </td>
                                         <td>
+                                            <a href="{{ route('mitra.show', $mitra->id) }}" class="btn btn-info btn-sm">
+                                                <i class="fas fa-eye"></i> Detail
+                                            </a>
                                             @if($mitra->status === 'pending')
                                             <form action="{{ route('mitra.verify', $mitra->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin verifikasi mitra ini?');">
                                                 @csrf
@@ -79,9 +82,14 @@
                                                     <i class="fas fa-check"></i> Verifikasi
                                                 </button>
                                             </form>
-                                            @else
-                                                <span class="text-success fw-bold">Terverifikasi</span>
                                             @endif
+                                            <form action="{{ route('mitra.destroy', $mitra->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus mitra ini?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-trash"></i> Hapus
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                     @endforeach

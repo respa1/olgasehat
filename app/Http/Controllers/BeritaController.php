@@ -26,7 +26,8 @@ class BeritaController extends Controller
     }
 
     public function tambahdata(){
-        return view('Backend.News.tambahdata');
+        $categories = Category::all();
+        return view('Backend.News.tambahdata', compact('categories'));
     }
     public function insertdata(Request $request){
     
@@ -37,8 +38,10 @@ class BeritaController extends Controller
 
         $data = new Berita();
         $data->title = $request->input('title');
+        $data->name = $request->input('name');
         $data->excerpt = $request->input('excerpt');
-        $data->content = $clean_content; 
+        $data->content = $clean_content;
+        $data->category_id = $request->input('category_id');
         $data->date = $request->input('date');
         $data->hit = $request->input('hit');
     
@@ -72,10 +75,11 @@ class BeritaController extends Controller
     Berita::create($validated);
     // redirect dll
 }
-    public function tampilkandata($id){
+public function tampilkandata($id){
 
     $data = Berita::find($id);
-    return view('Backend.News.editberita', compact('data'));
+    $categories = \App\Models\Category::all();
+    return view('Backend.News.editberita', compact('data', 'categories'));
 
 }
 public function updatedata(Request $request, $id){
@@ -96,8 +100,10 @@ public function updatedata(Request $request, $id){
     // Perbarui data selain konten dan gambar, pastikan untuk tidak memperbarui kolom 'id' dan 'image' secara langsung
     $data->update([
         'title' => $request->input('title'),
+        'name' => $request->input('name'),
         'excerpt' => $request->input('excerpt'),
         'content' => $clean_content,  // Content yang sudah dipurifikasi
+        'category_id' => $request->input('category_id'),
         'date' => $request->input('date'),
         'hit' => $request->input('hit'),
     ]);
@@ -134,9 +140,87 @@ public function updatedata(Request $request, $id){
     }
     public function exportpdf(){
         $data = Berita::orderBy('created_at', 'desc')->get();
-    
+
         view()->share('data', $data);
         $pdf = PDF::loadView('backend.berita.databerita-pdf');
         return $pdf->download('Data News.pdf');
+    }
+
+    // Frontend: Display list of news
+    public function index(Request $request) {
+        $query = Berita::with('category');
+
+        if($request->has('search')){
+            $query->where('title','LIKE','%'.$request->search.'%');
+        }
+
+        if($request->has('category') && $request->category != ''){
+            $query->whereHas('category', function($q) use ($request) {
+                $q->where('name', $request->category);
+            });
+        }
+
+        $beritas = $query->orderBy('created_at', 'desc')->paginate(6);
+
+        // Get trending posts (top 5 by hit count)
+        $trendingBeritas = Berita::with('category')
+                                ->orderBy('hit', 'desc')
+                                ->limit(5)
+                                ->get();
+
+        return view('FRONTEND.blog-news', compact('beritas', 'trendingBeritas'));
+    }
+
+    // Frontend: Display specific news detail
+    public function show($id) {
+        $berita = Berita::with('category')->findOrFail($id);
+
+        // Get latest articles (top 5 newest, excluding current article)
+        $latestBeritas = Berita::with('category')
+                              ->where('id', '!=', $id)
+                              ->orderBy('created_at', 'desc')
+                              ->limit(5)
+                              ->get();
+
+        return view('FRONTEND.blog&news_detail', compact('berita', 'latestBeritas'));
+    }
+
+    // User: Display list of news for logged-in users
+    public function indexUser(Request $request) {
+        $query = Berita::with('category');
+
+        if($request->has('search')){
+            $query->where('title','LIKE','%'.$request->search.'%');
+        }
+
+        if($request->has('category') && $request->category != ''){
+            $query->whereHas('category', function($q) use ($request) {
+                $q->where('title', $request->category);
+            });
+        }
+
+        $beritas = $query->orderBy('created_at', 'desc')->paginate(6);
+
+        // Get trending posts (top 5 by hit count)
+        $trendingBeritas = Berita::with('category')
+                                ->orderBy('hit', 'desc')
+                                ->limit(5)
+                                ->get();
+
+        return view('user.bloguser_news', compact('beritas', 'trendingBeritas'));
+    }
+
+    // User: Display specific news detail for logged-in users
+    public function showUser($id) {
+        $berita = Berita::with('category')->findOrFail($id);
+
+        // Get latest articles (top 5 newest, excluding current article)
+        $latestBeritas = Berita::with('category')
+                              ->where('id', '!=', $id)
+                              ->orderBy('created_at', 'desc')
+                              ->limit(5)
+                              ->get();
+
+        return view('user.bloguser_detail', compact('berita', 'latestBeritas'));
     }
 }

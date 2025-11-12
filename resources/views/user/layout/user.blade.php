@@ -78,21 +78,31 @@
 
     <!-- Aksi Desktop -->
     <div class="hidden md:flex items-center space-x-4 relative">
-      <!-- Tombol Cart (Desktop) -->
-      <button id="cartBtn" aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
-        <i class="fas fa-shopping-cart fa-lg"></i>
-        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
-      </button>
+      <!-- Language Selector -->
+      <div class="relative">
+        <button id="languageBtnUser" class="text-gray-700 hover:text-blue-700 focus:outline-none flex items-center space-x-2">
+          <i class="fas fa-globe fa-lg"></i>
+          <span id="currentLanguageUser">ID</span>
+          <i class="fas fa-chevron-down text-sm"></i>
+        </button>
+        <div id="languageDropdownUser" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+          <!-- Daftar bahasa akan diisi oleh JavaScript -->
+        </div>
+      </div>
 
       <!-- Dropdown User -->
       <div class="relative">
         <button id="userMenuBtn" class="flex items-center space-x-2 focus:outline-none">
-          <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+          @if(Auth::user()->image)
+              <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="User Avatar" class="w-8 h-8 rounded-full border object-cover" />
+          @else
+              <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+          @endif
           <i class="fas fa-chevron-down text-gray-500 text-sm"></i>
         </button>
         <!-- Dropdown menu -->
         <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
-          <a href="/editprofile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
+          <a href="/dashboarduser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
           <a href="/riwayatpayment" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
           <a href="/riwayat-komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Komunitas</a>
           <a href="/riwayatmembership" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Membership</a>
@@ -108,21 +118,31 @@
 
     <!-- Header Mobile -->
     <div class="flex md:hidden items-center space-x-4 ml-auto">
-      <!-- Tombol Cart (Mobile) -->
-      <button id="cartBtnMobile" aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
-        <i class="fas fa-shopping-cart fa-lg"></i>
-        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
-      </button>
+      <!-- Language Selector Mobile -->
+      <div class="relative">
+        <button id="languageBtnUserMobile" class="text-gray-700 hover:text-blue-700 focus:outline-none flex items-center space-x-2">
+          <i class="fas fa-globe fa-lg"></i>
+          <span id="currentLanguageUserMobile">ID</span>
+          <i class="fas fa-chevron-down text-sm"></i>
+        </button>
+        <div id="languageDropdownUserMobile" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+          <!-- Daftar bahasa akan diisi oleh JavaScript -->
+        </div>
+      </div>
 
       <!-- Dropdown User Mobile -->
       <div class="relative">
         <button id="mobileUserBtn" class="flex items-center space-x-2 focus:outline-none">
-          <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+          @if(Auth::user()->image)
+              <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="User Avatar" class="w-8 h-8 rounded-full border object-cover" />
+          @else
+              <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+          @endif
           <i class="fas fa-chevron-down text-gray-500 text-sm"></i>
         </button>
         <!-- Dropdown menu -->
         <div id="mobileUserMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
-          <a href="/editprofile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
+          <a href="/dashboarduser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
           <a href="/riwayatpayment" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
           <a href="/komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Komunitas</a>
           <a href="/klub" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Klub</a>
@@ -160,142 +180,11 @@
       </div>
     </nav>
 </header>
-  <!-- Main Content -->
-  <main class="pt-18 flex items-center justify-center min-h-screen p-6">
-    <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-3 gap-10">
-
-    <!-- Left Side: Profile Image and Username -->
-    <section class="flex flex-col items-center space-y-4">
-      <div class="w-32 h-32 rounded-full border-2 border-gray-400 flex justify-center items-center bg-gray-100 overflow-hidden">
-        <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="4" /><path d="M5.5 21a6.5 6.5 0 0113 0" /></svg>
-      </div>
-      <div class="text-center">
-        <p class="font-semibold text-gray-800 select-text">{{ Auth::user()->name }}</p>
-        <p class="text-gray-500 select-text">{{Auth::user()->email }}</p>
-      </div>
-      <div class="w-full max-w-xs bg-white border border-gray-300 rounded-md p-4 text-center">
-        <p class="font-medium mb-2 text-sm">Update Profile Picture</p>
-        <label for="file-upload" class="cursor-pointer inline-block w-full h-28 border-2 border-dashed border-gray-400 rounded-md text-gray-500 text-center pt-6 hover:border-blue-500 transition">
-          <span class="block select-none">Drop file here to upload</span>
-          <input id="file-upload" type="file" class="hidden" accept="image/*" />
-        </label>
-      </div>
-    </section>
-
-    <!-- Right Side: Profile Form -->
-    <section class="md:col-span-2 bg-white rounded-md p-8 shadow-md">
-      <form>
-        <div>
-          <h2 class="text-lg font-semibold mb-1">Profile</h2>
-          <p class="text-sm text-gray-400 mb-4 select-none">Lengkapi profil anda</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-          <div>
-            <label for="nama-lengkap" class="block text-sm mb-1 text-gray-500 select-none">Nama Lengkap</label>
-            <input id="nama-lengkap" type="text" placeholder="" class="w-full rounded border border-gray-300 h-10 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
-          <div>
-            <label for="username" class="block text-sm mb-1 text-gray-500 select-none">Username</label>
-            <input id="username" type="text" placeholder="" class="w-full rounded border border-gray-300 h-10 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
-        </div>
-
-        <div class="flex flex-wrap gap-6 mb-4">
-          <div class="flex-1 min-w-[6rem]">
-            <label for="bulan-lahir" class="block text-sm mb-1 text-gray-400 select-none">Bulan Lahir</label>
-            <input id="bulan-lahir" type="text" placeholder="" class="w-full rounded border border-gray-300 h-10 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
-          <div class="flex-grow-0" style="min-width:4.5rem;">
-            <label for="tahun-lahir" class="block text-sm mb-1 text-gray-400 select-none">Tahun Lahir</label>
-            <input id="tahun-lahir" maxlength="4" type="text" placeholder="" class="input-date w-full rounded border border-gray-300 h-10 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
-          <div class="flex-grow-0" style="min-width:4.5rem;">
-            <label for="tgl-lahir" class="block text-sm mb-1 text-gray-400 select-none">Tgl. Lahir</label>
-            <input id="tgl-lahir" maxlength="2" type="text" placeholder="" class="input-date w-full rounded border border-gray-300 h-10 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-          </div>
-        </div>
-
-        <div class="mb-6">
-          <label for="no-hp" class="block text-sm mb-1 text-gray-400 select-none">No. Handphone</label>
-          <input id="no-hp" type="text" placeholder="" class="w-full rounded border border-gray-300 h-10 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        </div>
-
-        <div>
-          <h3 class="font-semibold mb-4 select-none">Olahraga Favorit</h3>
-          <div class="grid grid-cols-5 sm:grid-cols-10 gap-4">
-            <div class="text-center text-xs select-none">
-              <img src="assets/minsok.jpg" alt="Mini Soccer sport scene with a player kicking a small soccer ball on a miniature field" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Mini Soccer</p>
-            </div>
-            <div class="text-center text-xs select-none">
-              <img src="assets/sepakbola.webp" alt="Sepak Bola soccer ball on a grassy field with feet approaching the ball preparing to kick" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Sepak Bola</p>
-            </div>
-            <div class="text-center text-xs select-none">
-              <img src="assets/tennis.jpg" alt="Tenis tennis racket and ball on a clay tennis court with white lines and shadow" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Tenis</p>
-            </div>
-            <div class="text-center text-xs select-none">
-              <img src="assets/futsal.jpg" alt="Futsal indoor futsal court with players and ball in action" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Futsal</p>
-            </div>
-            <div class="text-center text-xs select-none">
-              <img src="assets/bulutangkis.jpg" alt="Bulu Tangkis badminton rackets and shuttlecock on a wooden floor court" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Bulu Tangkis</p>
-            </div>
-
-            <div class="text-center text-xs select-none">
-              <img src="assets/padel.webp" alt="Padel player swinging racket with ball mid air on padel court" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Padel</p>
-            </div>
-            <div class="text-center text-xs select-none">
-              <img src="assets/volly.jpg" alt="Bola Voli volleyball player jumping to spike the ball during an outdoor match" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Bola Volly</p>
-            </div>
-            <div class="text-center text-xs select-none">
-              <img src="assets/bola tangan.jpg" alt="Bola Tangan handball player holding ball preparing to throw" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Bola Tangan</p>
-            </div>
-            <div class="text-center text-xs select-none">
-              <img src="assets/baseball.jpeg" alt="Baseball glove catching baseball ball during outdoor game" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Baseball</p>
-            </div>
-            <div class="text-center text-xs select-none">
-              <img src="assets/running.avif" alt="Running athlete sprinting on a track in outdoor stadium" class="img-sport mb-1" onerror="this.style.display='none'"/>
-              <p>Running</p>
-            </div>
-          </div>
-        </div>
-
-<button type="submit" class="btn-save bg-blue-600 text-white rounded-md px-6 py-2 mt-6 select-none hover:bg-blue-700">
-  SIMPAN PROFIL
-</button>
-
-      </form>
-    </section>
-    </div>
+  <main class="pt-18">
+    @yield('content')
   </main>
 
-  <!-- Overlay for Cart -->
-  <div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
 
-  <!-- Cart Sidebar -->
-  <div id="cartSidebar"
-       class="fixed top-0 right-0 w-80 max-w-full h-full bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
-    <!-- Header -->
-    <div class="flex justify-between items-center px-4 py-3 border-b">
-      <h2 class="font-semibold text-lg">JADWAL DIPILIH</h2>
-      <button id="closeCart" class="text-gray-500 hover:text-gray-700">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-
-    <!-- Isi Cart -->
-    <div class="p-4 text-gray-600">
-      Belum ada jadwal di keranjang.
-    </div>
-  </div>
 
   <script src="{{ asset('assets/olgasehat.js') }}"></script>
   <script>
@@ -395,28 +284,115 @@
         }
       });
 
-      // Cart Functionality
-      const cartBtns = document.querySelectorAll('#cartBtn, #cartBtnMobile');
-      const cartSidebar = document.getElementById("cartSidebar");
-      const cartOverlay = document.getElementById("cartOverlay");
-      const closeCart = document.getElementById("closeCart");
 
-      cartBtns.forEach(btn => {
-        btn?.addEventListener("click", () => {
-          cartSidebar.classList.remove("translate-x-full");
-          cartOverlay.classList.remove("hidden");
+
+      // Language Dropdown Functionality
+      const languageBtnUser = document.getElementById("languageBtnUser");
+      const languageDropdownUser = document.getElementById("languageDropdownUser");
+      const currentLanguageUser = document.getElementById("currentLanguageUser");
+      const languageBtnUserMobile = document.getElementById("languageBtnUserMobile");
+      const languageDropdownUserMobile = document.getElementById("languageDropdownUserMobile");
+      const currentLanguageUserMobile = document.getElementById("currentLanguageUserMobile");
+
+      // Fetch languages from LibreTranslate API
+      async function fetchLanguagesUser() {
+        try {
+          const response = await fetch('https://libretranslate.com/languages');
+          const languages = await response.json();
+          populateLanguageDropdownUser(languages);
+          populateLanguageDropdownUserMobile(languages);
+        } catch (error) {
+          console.error('Error fetching languages:', error);
+          // Fallback to common languages
+          const fallbackLanguages = [
+            {code: 'en', name: 'English'},
+            {code: 'id', name: 'Indonesian'},
+            {code: 'es', name: 'Spanish'},
+            {code: 'fr', name: 'French'},
+            {code: 'de', name: 'German'},
+            {code: 'it', name: 'Italian'},
+            {code: 'pt', name: 'Portuguese'},
+            {code: 'ru', name: 'Russian'},
+            {code: 'ja', name: 'Japanese'},
+            {code: 'ko', name: 'Korean'},
+            {code: 'zh', name: 'Chinese'},
+            {code: 'ar', name: 'Arabic'},
+            {code: 'hi', name: 'Hindi'}
+          ];
+          populateLanguageDropdownUser(fallbackLanguages);
+          populateLanguageDropdownUserMobile(fallbackLanguages);
+        }
+      }
+
+      function populateLanguageDropdownUser(languages) {
+        languageDropdownUser.innerHTML = '';
+        languages.forEach(lang => {
+          const li = document.createElement('li');
+          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+          li.textContent = `${lang.name} (${lang.code.toUpperCase()})`;
+          li.addEventListener('click', () => {
+            currentLanguageUser.textContent = lang.code.toUpperCase();
+            languageDropdownUser.classList.add('hidden');
+            // Here you can add logic to change the page language
+            changeLanguageUser(lang.code);
+          });
+          languageDropdownUser.appendChild(li);
         });
+      }
+
+      function populateLanguageDropdownUserMobile(languages) {
+        languageDropdownUserMobile.innerHTML = '';
+        languages.forEach(lang => {
+          const li = document.createElement('li');
+          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+          li.textContent = `${lang.name} (${lang.code.toUpperCase()})`;
+          li.addEventListener('click', () => {
+            currentLanguageUserMobile.textContent = lang.code.toUpperCase();
+            languageDropdownUserMobile.classList.add('hidden');
+            // Here you can add logic to change the page language
+            changeLanguageUser(lang.code);
+          });
+          languageDropdownUserMobile.appendChild(li);
+        });
+      }
+
+      function changeLanguageUser(langCode) {
+        // Placeholder function for language change
+        // You can implement translation logic here
+        console.log('Changing language to:', langCode);
+        // For now, just show an alert
+        Swal.fire({
+          icon: 'info',
+          title: 'Language Changed',
+          text: `Language changed to ${langCode.toUpperCase()}`,
+          confirmButtonText: 'OK'
+        });
+      }
+
+      // Toggle desktop language dropdown
+      languageBtnUser?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        languageDropdownUser.classList.toggle("hidden");
       });
 
-      closeCart?.addEventListener("click", () => {
-        cartSidebar.classList.add("translate-x-full");
-        cartOverlay.classList.add("hidden");
+      // Toggle mobile language dropdown
+      languageBtnUserMobile?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        languageDropdownUserMobile.classList.toggle("hidden");
       });
 
-      cartOverlay?.addEventListener("click", () => {
-        cartSidebar.classList.add("translate-x-full");
-        cartOverlay.classList.add("hidden");
+      // Close dropdowns on outside click
+      window.addEventListener("click", (e) => {
+        if (!languageBtnUser?.contains(e.target) && !languageDropdownUser?.contains(e.target)) {
+          languageDropdownUser?.classList.add("hidden");
+        }
+        if (!languageBtnUserMobile?.contains(e.target) && !languageDropdownUserMobile?.contains(e.target)) {
+          languageDropdownUserMobile?.classList.add("hidden");
+        }
       });
+
+      // Fetch languages on page load
+      fetchLanguagesUser();
 
       // Header hide/show on scroll
       let lastScrollTop = 0;

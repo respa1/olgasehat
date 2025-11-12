@@ -17,7 +17,7 @@
             </div>
         @endif
 
-        <form action="{{ route('review.update', $review->id) }}" method="POST">
+        <form action="{{ route('review.update', $review->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -29,6 +29,23 @@
             <div class="mb-3">
                 <label class="form-label">Ulasan</label>
                 <textarea name="ulasan" class="form-control" rows="3" required>{{ old('ulasan', $review->ulasan) }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Company</label>
+                <input type="text" name="company" value="{{ old('company', $review->company) }}" class="form-control" placeholder="Masukkan nama perusahaan">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Foto</label>
+                <input type="file" name="foto" class="form-control" accept="image/*">
+                <small class="form-text text-muted">Format: JPG, PNG, GIF. Maksimal 2MB. Biarkan kosong jika tidak ingin mengubah foto.</small>
+                @if($review->foto)
+                    <div class="mt-2">
+                        <img src="{{ asset('storage/' . $review->foto) }}" alt="Foto saat ini" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
+                        <p class="mt-1 mb-0">Foto saat ini</p>
+                    </div>
+                @endif
             </div>
 
             <div class="mb-3">

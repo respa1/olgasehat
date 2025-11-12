@@ -1,10 +1,29 @@
-# TODO for Venue Detail Session Booking Cart
+# TODO: Sesuaikan Backoffice Review dengan Home Page
 
-1. [ ] Review current JS cart implementation in venue_detail.blade.php.
-2. [ ] Add modal popup for cart display to match screenshot (instead of sidebar).
-3. [ ] Update JS to open modal on session selection, show selected sessions, totals, pay button.
-4. [ ] Ensure cart data passes to /confirm page (e.g., via form or localStorage).
-5. [ ] Edit file with changes.
-6. [ ] Start server with `php artisan serve` if needed.
-7. [ ] Test in browser: navigate to /venue-detail, select slots, verify modal/cart, screenshot.
-8. [ ] Update TODO with progress.
+## 1. Update Database dan Model
+- [ ] Tambahkan kolom 'company' dan 'foto' ke migration reviews
+- [ ] Update model Review untuk fillable kolom baru
+- [ ] Jalankan migration
+
+## 2. Update Backoffice Views
+- [ ] Update tambah_riview.blade.php untuk input company dan foto
+- [ ] Update edit_riview.blade.php untuk input company dan foto
+- [ ] Update review.blade.php untuk tampilan kolom baru
+
+## 3. Update Controller
+- [ ] Update ReviewController untuk handle kolom company dan foto
+- [ ] Tambahkan validasi dan file upload untuk foto
+
+## 4. Buat Seeder untuk Review
+- [ ] Buat ReviewSeeder dengan data Ir. Bagus Nathaniel Mahendra
+- [ ] Update DatabaseSeeder untuk include ReviewSeeder
+
+## 5. Update Frontend Home Pages
+- [ ] Update home.blade.php untuk testimonial dinamis dari database
+- [ ] Update homeuser.blade.php untuk testimonial dinamis dari database
+- [ ] Tambahkan route API jika perlu untuk fetch reviews
+
+## 6. Testing
+- [ ] Test backoffice CRUD review dengan kolom baru
+- [ ] Test frontend menampilkan testimonial dari database
+- [ ] Verifikasi tampilan cocok dengan home page

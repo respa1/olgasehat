@@ -26,6 +26,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- AOS (Animate On Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
 <body class="bg-white text-gray-800 font-sans">
 
@@ -41,30 +45,41 @@
     <!-- Menu Desktop -->
     <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
       <a href="/venueuser" class="hover:text-blue-700">Sewa Lapangan</a>
-      <a href="#" class="hover:text-blue-700">Tempat Sehat</a>
+      <a href="/healthyuser" class="hover:text-blue-700">Tempat Sehat</a>
       <a href="/communityuser" class="hover:text-blue-700">Komunitas & Aktivitas</a>
       <a href="/bloguser_news" class="hover:text-blue-700">Blog & News</a>
     </nav>
 
     <!-- Aksi Desktop -->
     <div class="hidden md:flex items-center space-x-4 relative">
-      <!-- Tombol Cart (Desktop) -->
-      <button id="cartBtn" aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
-        <i class="fas fa-shopping-cart fa-lg"></i>
-        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
-      </button>
+      <!-- Language Selector -->
+      <div class="relative">
+        <button id="languageBtnUser" class="text-gray-700 hover:text-blue-700 focus:outline-none flex items-center space-x-2">
+          <i class="fas fa-globe fa-lg"></i>
+          <span id="currentLanguageUser">ID</span>
+          <i class="fas fa-chevron-down text-sm"></i>
+        </button>
+        <div id="languageDropdownUser" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+          <!-- Daftar bahasa akan diisi oleh JavaScript -->
+        </div>
+      </div>
 
       <!-- Dropdown User -->
       <div class="relative">
         <button id="userMenuBtn" class="flex items-center space-x-2 focus:outline-none">
-          <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+          @if(Auth::user()->image)
+              <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="User Avatar" class="w-8 h-8 rounded-full border object-cover" />
+          @else
+              <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+          @endif
           <i class="fas fa-chevron-down text-gray-500 text-sm"></i>
         </button>
         <!-- Dropdown menu -->
         <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
-          <a href="/editprofile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
-          <a href="/riwayat" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
-          <a href="/komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Aktivitas</a>
+          <a href="/dashboarduser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
+          <a href="/riwayatpayment" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
+          <a href="/riwayat-komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Komunitas</a>
+          <a href="/riwayatmembership" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Membership</a>
           <a href="/settings" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pengaturan</a>
           
           <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="block border-t border-gray-200 mt-1">
@@ -77,22 +92,32 @@
 
     <!-- Header Mobile -->
     <div class="flex md:hidden items-center space-x-4 ml-auto">
-      <!-- Tombol Cart (Mobile) -->
-      <button id="cartBtnMobile" aria-label="Cart" class="text-gray-700 hover:text-blue-700 relative">
-        <i class="fas fa-shopping-cart fa-lg"></i>
-        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
-      </button>
+      <!-- Language Selector Mobile -->
+      <div class="relative">
+        <button id="languageBtnUserMobile" class="text-gray-700 hover:text-blue-700 focus:outline-none flex items-center space-x-2">
+          <i class="fas fa-globe fa-lg"></i>
+          <span id="currentLanguageUserMobile">ID</span>
+          <i class="fas fa-chevron-down text-sm"></i>
+        </button>
+        <div id="languageDropdownUserMobile" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+          <!-- Daftar bahasa akan diisi oleh JavaScript -->
+        </div>
+      </div>
 
       <!-- Dropdown User Mobile -->
       <div class="relative">
         <button id="mobileUserBtn" class="flex items-center space-x-2 focus:outline-none">
-          <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+          @if(Auth::user()->image)
+              <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="User Avatar" class="w-8 h-8 rounded-full border object-cover" />
+          @else
+              <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+          @endif
           <i class="fas fa-chevron-down text-gray-500 text-sm"></i>
         </button>
         <!-- Dropdown menu -->
         <div id="mobileUserMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
-          <a href="/editprofile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
-          <a href="/riwayat" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
+          <a href="/dashboarduser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
+          <a href="/riwayatpayment" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
           <a href="/komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Komunitas</a>
           <a href="/klub" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Klub</a>
           <a href="/settings" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pengaturan</a>
@@ -118,11 +143,10 @@
                 transition-all duration-300 ease-in-out absolute top-full left-0 w-full z-[50]">
 
       <!-- Link Navigasi -->
-      <a href="/venue" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Sewa Lapangan</a>
-      <a href="#" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Tempat Sehat</a>
-      <a href="/community" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas</a>
-      <a href="/club" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Klub</a>
-      <a href="/blog-news" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Blog & News</a>
+      <a href="/venueuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Sewa Lapangan</a>
+      <a href="/healthyuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Tempat Sehat</a>
+      <a href="/communityuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas % Aktifitas</a>
+      <a href="/bloguser_news" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Blog & News</a>
 
       <!-- User Links -->
       <div class="border-t pt-4">
@@ -157,9 +181,9 @@
       <h3 class="font-semibold text-lg mb-4 text-gray-800">Ekosistem</h3>
       <ul class="space-y-3 text-base">
         <li><a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a></li>
-        <li><a href="/" class="hover:text-blue-700">Tempat Sehat</a></li>
+        <li><a href="/healthyuser" class="hover:text-blue-700">Tempat Sehat</a></li>
         <li><a href="/community" class="hover:text-blue-700">Komunitas & Aktivitas</a></li>
-   >     <li><a href="/blog-news" class="hover:text-blue-700">Blog & News</a></li>
+        <li><a href="/blog-news" class="hover:text-blue-700">Blog & News</a></li>
       </ul>
     </div>
     <div>
@@ -311,28 +335,113 @@
         }
       });
 
-      // Cart Functionality
-      const cartBtns = document.querySelectorAll('#cartBtn, #cartBtnMobile');
-      const cartSidebar = document.getElementById("cartSidebar");
-      const cartOverlay = document.getElementById("cartOverlay");
-      const closeCart = document.getElementById("closeCart");
+      // Language Dropdown Functionality
+      const languageBtnUser = document.getElementById("languageBtnUser");
+      const languageDropdownUser = document.getElementById("languageDropdownUser");
+      const currentLanguageUser = document.getElementById("currentLanguageUser");
+      const languageBtnUserMobile = document.getElementById("languageBtnUserMobile");
+      const languageDropdownUserMobile = document.getElementById("languageDropdownUserMobile");
+      const currentLanguageUserMobile = document.getElementById("currentLanguageUserMobile");
 
-      cartBtns.forEach(btn => {
-        btn?.addEventListener("click", () => {
-          cartSidebar.classList.remove("translate-x-full");
-          cartOverlay.classList.remove("hidden");
+      // Fetch languages from LibreTranslate API
+      async function fetchLanguagesUser() {
+        try {
+          const response = await fetch('https://libretranslate.com/languages');
+          const languages = await response.json();
+          populateLanguageDropdownUser(languages);
+          populateLanguageDropdownUserMobile(languages);
+        } catch (error) {
+          console.error('Error fetching languages:', error);
+          // Fallback to common languages
+          const fallbackLanguages = [
+            {code: 'en', name: 'English'},
+            {code: 'id', name: 'Indonesian'},
+            {code: 'es', name: 'Spanish'},
+            {code: 'fr', name: 'French'},
+            {code: 'de', name: 'German'},
+            {code: 'it', name: 'Italian'},
+            {code: 'pt', name: 'Portuguese'},
+            {code: 'ru', name: 'Russian'},
+            {code: 'ja', name: 'Japanese'},
+            {code: 'ko', name: 'Korean'},
+            {code: 'zh', name: 'Chinese'},
+            {code: 'ar', name: 'Arabic'},
+            {code: 'hi', name: 'Hindi'}
+          ];
+          populateLanguageDropdownUser(fallbackLanguages);
+          populateLanguageDropdownUserMobile(fallbackLanguages);
+        }
+      }
+
+      function populateLanguageDropdownUser(languages) {
+        languageDropdownUser.innerHTML = '';
+        languages.forEach(lang => {
+          const li = document.createElement('li');
+          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+          li.textContent = `${lang.name} (${lang.code.toUpperCase()})`;
+          li.addEventListener('click', () => {
+            currentLanguageUser.textContent = lang.code.toUpperCase();
+            languageDropdownUser.classList.add('hidden');
+            // Here you can add logic to change the page language
+            changeLanguageUser(lang.code);
+          });
+          languageDropdownUser.appendChild(li);
         });
+      }
+
+      function populateLanguageDropdownUserMobile(languages) {
+        languageDropdownUserMobile.innerHTML = '';
+        languages.forEach(lang => {
+          const li = document.createElement('li');
+          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+          li.textContent = `${lang.name} (${lang.code.toUpperCase()})`;
+          li.addEventListener('click', () => {
+            currentLanguageUserMobile.textContent = lang.code.toUpperCase();
+            languageDropdownUserMobile.classList.add('hidden');
+            // Here you can add logic to change the page language
+            changeLanguageUser(lang.code);
+          });
+          languageDropdownUserMobile.appendChild(li);
+        });
+      }
+
+      function changeLanguageUser(langCode) {
+        // Placeholder function for language change
+        // You can implement translation logic here
+        console.log('Changing language to:', langCode);
+        // For now, just show an alert
+        Swal.fire({
+          icon: 'info',
+          title: 'Language Changed',
+          text: `Language changed to ${langCode.toUpperCase()}`,
+          confirmButtonText: 'OK'
+        });
+      }
+
+      // Toggle desktop language dropdown
+      languageBtnUser?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        languageDropdownUser.classList.toggle("hidden");
       });
 
-      closeCart?.addEventListener("click", () => {
-        cartSidebar.classList.add("translate-x-full");
-        cartOverlay.classList.add("hidden");
+      // Toggle mobile language dropdown
+      languageBtnUserMobile?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        languageDropdownUserMobile.classList.toggle("hidden");
       });
 
-      cartOverlay?.addEventListener("click", () => {
-        cartSidebar.classList.add("translate-x-full");
-        cartOverlay.classList.add("hidden");
+      // Close dropdowns on outside click
+      window.addEventListener("click", (e) => {
+        if (!languageBtnUser?.contains(e.target) && !languageDropdownUser?.contains(e.target)) {
+          languageDropdownUser?.classList.add("hidden");
+        }
+        if (!languageBtnUserMobile?.contains(e.target) && !languageDropdownUserMobile?.contains(e.target)) {
+          languageDropdownUserMobile?.classList.add("hidden");
+        }
       });
+
+      // Fetch languages on page load
+      fetchLanguagesUser();
 
       // Header hide/show on scroll
       let lastScrollTop = 0;
@@ -348,6 +457,14 @@
         }
         lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
       });
+    });
+
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true,
+      offset: 100
     });
 
     // HOME JS //

@@ -30,7 +30,7 @@ class LoginController extends Controller
             if ($user->role === 'superadmin') {
                 return redirect('/dashboard');
             } elseif ($user->role === 'user') {
-                return redirect('/editprofile');
+                return redirect('/dashboarduser');
             } elseif ($user->role === 'pemiliklapangan') {
                 if ($user->status === 'approved') {
                     return redirect('/pemiliklapangan/dashboard');
@@ -75,7 +75,7 @@ class LoginController extends Controller
             'role'     => 'user',
         ]);
 
-       return redirect()->back()->with('success', 'Akun anda berhasil terdaftar.');
+       return redirect('/loginemail')->with('success', 'Akun anda berhasil terdaftar.');
     }
 
     // Registration form for Pemilik Lapangan role
@@ -124,7 +124,7 @@ class LoginController extends Controller
     public function editProfile()
     {
         $user = Auth::user();
-        return view('user.editprofile', compact('user'));
+        return view('user.dashboarduser', compact('user'));
     }
 
     // Handle profile update for user role
@@ -139,7 +139,20 @@ class LoginController extends Controller
             'birth_year' => 'nullable|digits:4',
             'birth_day' => 'nullable|digits_between:1,2',
             'phone' => 'nullable|max:20',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        $imagePath = $user->image; // Keep existing image if no new one uploaded
+
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($user->image && file_exists(public_path('storage/' . $user->image))) {
+                unlink(public_path('storage/' . $user->image));
+            }
+
+            // Store new image
+            $imagePath = $request->file('image')->store('profile_images', 'public');
+        }
 
         $user->update([
             'name' => $validated['name'],
@@ -148,6 +161,7 @@ class LoginController extends Controller
             'birth_year' => $validated['birth_year'] ?? $user->birth_year,
             'birth_day' => $validated['birth_day'] ?? $user->birth_day,
             'phone' => $validated['phone'] ?? $user->phone,
+            'image' => $imagePath,
         ]);
 
         return redirect()->back()->with('success', 'Profil berhasil diperbarui.');

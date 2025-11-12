@@ -150,9 +150,15 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/category-aktivitas" class="nav-link">
+                <a href="{{ route('activity-types.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Category</p>
+                  <p>Type Aktivitas</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('activity-types.daftar') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Daftar Aktivitas</p>
                 </a>
               </li>
             </ul>
@@ -160,7 +166,7 @@
 
           <!-- Keuangan -->
           <li class="nav-item">
-            <a href="/review" class="nav-link">
+            <a href="/keuangan" class="nav-link">
               <i class="nav-icon fas fa-wallet"></i>
               <p>Keuangan</p>
             </a>

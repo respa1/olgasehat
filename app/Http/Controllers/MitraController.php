@@ -57,4 +57,18 @@ class MitraController extends Controller
 
         return redirect()->back()->with('success', 'Mitra berhasil diverifikasi.');
     }
+
+    public function show($id)
+    {
+        $mitra = Mitra::findOrFail($id);
+        return view('BACKEND.Verifikasi Mitra.detail', compact('mitra'));
+    }
+
+    public function destroy($id)
+    {
+        $mitra = Mitra::findOrFail($id);
+        $mitra->delete();
+
+        return redirect()->back()->with('success', 'Mitra berhasil dihapus.');
+    }
 }

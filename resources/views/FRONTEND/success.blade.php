@@ -53,7 +53,7 @@
             <div class="space-y-2 text-gray-700">
                 <div class="flex justify-between">
                     <span class="font-medium">Total Dibayar</span>
-                    <span class="font-semibold text-green-700">Rp 106.000</span>
+                    <span class="font-semibold text-green-700">Rp 100.000</span>
                 </div>
                 <div class="flex justify-between">
                     <span class="font-medium">Jadwal</span>

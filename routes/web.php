@@ -3,20 +3,21 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\GaleriController; 
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\InformasiController;
+use App\Http\Controllers\ActivityTypeController;
+use App\Http\Controllers\PendaftaranController;
 
 // ======================================================
 // PUBLIC ROUTES (No Authentication Required)
 // ======================================================
 Route::get('/', fn() => view('frontend.home'));
 
-Route::get('/blog-news', fn() => view('frontend.blog-news'));
-Route::get('/blog-news-detail', fn() => view('frontend.blog&news_detail'));
+Route::get('/blog-news', [BeritaController::class, 'index'])->name('frontend.blog-news');
+Route::get('/blog-news-detail/{id}', [BeritaController::class, 'show'])->name('frontend.blog-news-detail');
 Route::get('/membership-detail', fn() => view('frontend.membership_detail'));
 Route::get('/community', fn() => view('frontend.community'));
 Route::get('/community-detail', fn() => view('frontend.community_detail'));
@@ -58,10 +59,31 @@ Route::get('/daftaruser', [LoginController::class, 'registerUserForm'])->name('u
 Route::post('/daftaruser', [LoginController::class, 'registerUser'])->name('user.register.submit');
 
 Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/editprofile', [LoginController::class, 'editProfile'])->name('user.editprofile');
+    Route::get('/dashboarduser', [LoginController::class, 'editProfile'])->name('user.editprofile');
     Route::post('/editprofile', [LoginController::class, 'updateProfile'])->name('user.updateprofile');
 });
 
+Route::get('/riwayat komunitas', function () {return view('user.riwayatkomunitas');});
+Route::get('/riwayatclub', function () {return view('user.riwayatclub');});
+Route::get('/riwayatpayment', function () {return view('user.riwayatpayment');});
+Route::get('/registeremail', function () {return view('user.registeremail');});
+Route::get('/loginemail', function () { return view('user.loginemail');});
+Route::get('/resetpassword', function () {return view('user.resetpassword'); });
+Route::get('/homeuser', function () {return view('user.homeuser'); });
+Route::get('/venueuser', function () {return view('user.venueuser'); });
+Route::get('/venueuser_detail', function () {return view('user.venueuser_detail'); });
+Route::get('/buat-aktivitas', fn() => view('user.user_buat_aktivitas'));
+Route::get('/communityuser', function () {return view('user.communityuser'); });
+Route::get('/communityuser_detail', function () {return view('user.communityuser_detail'); });
+Route::get('/bloguser_news', [BeritaController::class, 'indexUser'])->name('user.bloguser_news');
+Route::get('/bloguser_detail/{id}', [BeritaController::class, 'showUser'])->name('user.bloguser_detail');
+Route::get('/confirmuser', function () {return view('user.confirmuser'); });
+Route::get('/paymentuser', function () {return view('user.paymentuser'); });
+Route::get('/success_user', function () {return view('user.success_user'); });
+
+
+
+Route::get('/edit-profile-user', fn() => view('user.editprofile_user'));
 Route::get('/riwayat-komunitas', fn() => view('user.riwayatkomunitas'));
 Route::get('/riwayatmembership', fn() => view('user.riwayatmembership'));
 Route::get('/riwayatpayment', fn() => view('user.riwayatpayment'));
@@ -73,8 +95,8 @@ Route::get('/venueuser', fn() => view('user.venueuser'));
 Route::get('/venueuser_detail', fn() => view('user.venueuser_detail'));
 Route::get('/communityuser', fn() => view('user.communityuser'));
 Route::get('/communityuser_detail', fn() => view('user.communityuser_detail'));
-Route::get('/bloguser_news', fn() => view('user.bloguser_news'));
-Route::get('/bloguser_detail', fn() => view('user.bloguser_detail'));
+Route::get('/membership-user-detail', fn() => view('user.membershipuser_detail'));
+Route::get('/healthyuser', fn() => view('user.healthyuser'));
 
 // ======================================================
 // PEMILIK / MITRA ROUTES
@@ -86,11 +108,26 @@ Route::post('/isidata', [App\Http\Controllers\MitraController::class, 'store'])-
 
 Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     Route::get('/pemiliklapangan/dashboard', fn() => view('pemiliklapangan.Dashboard.dashboard'));
-    Route::get('/informasi', [InformasiController::class, 'informasi'])->name('informasi');
-    Route::get('/detail', [InformasiController::class, 'detail'])->name('detail');
-    Route::get('/syarat', [InformasiController::class, 'syarat'])->name('syarat');
-    Route::get('/end', [InformasiController::class, 'end'])->name('end');
-});
+    Route::get('/pemiliklapangan/komunitas', fn() => view('pemiliklapangan.pemilik_buat_komunitas'))->name('pemilik.komunitas');
+    Route::get('/pemiliklapangan/membership', fn() => view('pemiliklapangan.pemilik_buat_membership'))->name('pemilik.membership');
+    Route::get('/pemiliklapangan/event', fn() => view('pemiliklapangan.pemilik_buat_event'))->name('pemilik.event');
+    // Route untuk proses pendaftaran venue
+    Route::get('/informasi', [PendaftaranController::class, 'informasi'])->name('informasi');
+    Route::post('/insertinform', [PendaftaranController::class, 'insertinform'])->name('insertinform');
+
+    // Route detail - GET untuk menampilkan form, POST untuk menyimpan
+    Route::get('/detail/{id?}', [PendaftaranController::class, 'detail'])->name('detail');
+    Route::post('/insertdetail', [PendaftaranController::class, 'insertdetail'])->name('insertdetail');
+
+    Route::get('/syarat', [PendaftaranController::class, 'syarat'])->name('syarat');
+    Route::get('/end', [PendaftaranController::class, 'end'])->name('end');
+    Route::get('/papan', [PendaftaranController::class, 'papan'])->name('papan');
+
+    // Route untuk halaman fasilitas
+    Route::get('/fasilitas', [PendaftaranController::class, 'fasilitas'])->name('fasilitas');
+    Route::get('/fasilitas/venue/{id}', [PendaftaranController::class, 'showVenue'])->name('fasilitas.detail');
+        
+    });
 
 // ======================================================
 // SUPERADMIN / BACKOFFICE ROUTES (Authenticated + Role: Superadmin)
@@ -155,6 +192,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/verifikasi-mitra', [App\Http\Controllers\MitraController::class, 'index'])->name('mitra.index');
         Route::put('/verifikasi-mitra/{id}', [App\Http\Controllers\MitraController::class, 'verify'])->name('mitra.verify');
         Route::get('/datapemiliklapangan', [App\Http\Controllers\MitraController::class, 'index'])->name('mitra.datapemiliklapangan');
+        Route::get('/verifikasi-mitra/{id}', [App\Http\Controllers\MitraController::class, 'show'])->name('mitra.show');
+        Route::delete('/verifikasi-mitra/{id}', [App\Http\Controllers\MitraController::class, 'destroy'])->name('mitra.destroy');
+
+
+        // ACTIVITY TYPES
+        Route::resource('activity-types', ActivityTypeController::class);
+        Route::get('activity-types-daftar', [ActivityTypeController::class, 'daftar'])->name('activity-types.daftar');
+
+        // PAPAN JADWAL
+
     });
 });
 
