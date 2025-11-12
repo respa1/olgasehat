@@ -18,6 +18,7 @@ class Mitra extends Model
         'email_bisnis',
         'tipe_venue',
         'status',
+        'kontak_bisnis',
     ];
 
     public function user()

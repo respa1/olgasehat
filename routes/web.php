@@ -133,6 +133,7 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
         Route::get('/membership', fn() => view('pemiliklapangan.Keuangan.membership'))->name('keuangan.membership');
         Route::get('/event', fn() => view('pemiliklapangan.Keuangan.event'))->name('keuangan.event');
     });
+    Route::get('/pemiliklapangan/pengaturan', [App\Http\Controllers\MitraController::class, 'pengaturan'])->name('pemilik.pengaturan');
         
     });
 
