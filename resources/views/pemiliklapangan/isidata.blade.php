@@ -138,7 +138,7 @@
                  required/>
           <label class="text-xs text-gray-600" for="terms">
             Saya menyetujui
-            <a class="text-blue-600 hover:underline font-medium" href="#">
+            <a class="text-blue-600 hover:underline font-medium" href="#" onclick="showTermsModal()">
               Syarat & Ketentuan
             </a>
           </label>
@@ -182,6 +182,67 @@
     });
 </script>
 @endif
+
+<!-- Modal Syarat & Ketentuan -->
+<div id="termsModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold text-gray-800">Syarat & Ketentuan Olga Sehat</h2>
+        <button onclick="closeTermsModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+      </div>
+      <div class="text-sm text-gray-700 space-y-4">
+        <p><strong>1. Penerimaan Syarat & Ketentuan</strong></p>
+        <p>Dengan mengakses dan menggunakan layanan Olga Sehat, Anda menyetujui untuk terikat oleh Syarat & Ketentuan ini. Jika Anda tidak setuju dengan syarat ini, mohon untuk tidak menggunakan layanan kami.</p>
+
+        <p><strong>2. Penggunaan Layanan</strong></p>
+        <p>Layanan Olga Sehat disediakan untuk membantu pemilik venue olahraga dan kesehatan dalam mengelola fasilitas mereka. Anda bertanggung jawab untuk memastikan bahwa informasi yang Anda berikan akurat dan terkini.</p>
+
+        <p><strong>3. Kewajiban Pengguna</strong></p>
+        <ul class="list-disc list-inside ml-4">
+          <li>Menyediakan informasi yang benar dan akurat saat pendaftaran</li>
+          <li>Menjaga kerahasiaan akun dan password</li>
+          <li>Tidak menggunakan layanan untuk tujuan ilegal</li>
+          <li>Mematuhi semua peraturan dan kebijakan yang berlaku</li>
+        </ul>
+
+        <p><strong>4. Hak Kekayaan Intelektual</strong></p>
+        <p>Semua konten, fitur, dan fungsionalitas layanan Olga Sehat adalah milik PT. Indo Apps Solusindo dan dilindungi oleh undang-undang hak cipta.</p>
+
+        <p><strong>5. Pembatasan Tanggung Jawab</strong></p>
+        <p>Olga Sehat tidak bertanggung jawab atas kerugian langsung atau tidak langsung yang timbul dari penggunaan layanan ini.</p>
+
+        <p><strong>6. Perubahan Syarat & Ketentuan</strong></p>
+        <p>Kami berhak untuk mengubah Syarat & Ketentuan ini kapan saja. Perubahan akan diberitahukan melalui platform kami.</p>
+
+        <p><strong>7. Hukum yang Berlaku</strong></p>
+        <p>Syarat & Ketentuan ini diatur oleh hukum Republik Indonesia.</p>
+      </div>
+      <div class="mt-6 flex justify-end">
+        <button onclick="closeTermsModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+          Saya Mengerti
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTermsModal() {
+    document.getElementById('termsModal').classList.remove('hidden');
+}
+
+function closeTermsModal() {
+    document.getElementById('termsModal').classList.add('hidden');
+}
+
+// Close modal when clicking outside
+document.getElementById('termsModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeTermsModal();
+    }
+});
+</script>
 
 </body>
 </html>
