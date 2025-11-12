@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Data Berita</h1>
+                    <h1 class="m-0">Data Lapangan</h1>
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
                     <h6 class="venue-title mb-0">Lapangan Bali United Arena</h6>
                     <small class="venue-subtitle">Jl. Gatot Subroto, Denpasar</small>
                 </div>
-                <img src="{{ asset('fotovenue/balilady.png') }}" class="venue-image" alt="Lapangan Bali United Arena">
+                <img src="{{ asset('logovenue/phpmyadmin.png') }}" class="venue-image" alt="Lapangan Bali United Arena">
                 <a href="/detaillapangan" class="btn btn-blue w-100 mt-2">Lihat Lapangan</a>
             </div>
         </div>

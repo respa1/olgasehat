@@ -26,7 +26,7 @@ class BeritaController extends Controller
     }
 
     public function tambahdata(){
-        $categories = \App\Models\Category::all();
+        $categories = Category::all();
         return view('Backend.News.tambahdata', compact('categories'));
     }
     public function insertdata(Request $request){

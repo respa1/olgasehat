@@ -1,110 +1,154 @@
 @extends('pemiliklapangan.layout.ownervenue')
 
 @section('content')
-<div class="container mx-auto px-4 py-6">
-    <!-- Breadcrumb -->
-    <div class="text-sm text-gray-500 mb-4">
-        <span class="font-bold">Kelola Fasilitas</span> <span class="mx-1">/</span> Detail Venue
-    </div>
 
-    <!-- Header -->
-    <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Detail Venue</h1>
-        <div class="flex items-center mt-2 text-gray-600">
-            <span>Kelola Fasilitas - </span>
-            <span class="font-bold ml-1">Detail Venue</span>
-        </div>
-    </div>
+<div class="content-wrapper">
+    <div class="container py-4">
 
-    <hr class="mb-6">
-
-    <!-- Venue Information -->
-    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">{{ $venue->namavenue }}</h2>
-        
-        <div class="space-y-3">
-            <!-- Alamat -->
-            <div class="flex items-start">
-                <svg class="w-5 h-5 text-gray-500 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                </svg>
-                <span class="text-gray-700">{{ $venue->lokasi }}</span>
+        <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+            {{-- Header / Breadcrumbs --}}
+            <div class="text-sm text-gray-500 mb-4">
+                Detail Venue <span class="mx-1">/</span> Kelola Fasilitas <span class="mx-1">/</span> Detail Venue
             </div>
+            
+            {{-- Card Utama Venue --}}
+            <div class="bg-white shadow-xl rounded-lg overflow-hidden p-6">
 
-            <!-- Username & Kontak Table -->
-            <div class="overflow-x-auto mt-4">
-                <table class="min-w-full bg-white border border-gray-200">
-                    <thead>
-                        <tr class="bg-gray-50">
-                            <th class="py-2 px-4 border-b text-left font-semibold text-gray-700">Username</th>
-                            <th class="py-2 px-4 border-b text-left font-semibold text-gray-700">Kontak</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="py-2 px-4 border-b text-gray-600">username</td>
-                            <td class="py-2 px-4 border-b text-gray-600">kontak</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                {{-- Venue Information Header (Top Section) --}}
+                <div class="flex items-start justify-between pb-6 mb-6">
+                    <div class="flex items-start w-full">
+                        
+                        {{-- Logo Venue --}}
+                        <div class="w-24 h-24 mr-6 flex-shrink-0">
+                            {{-- Ganti dengan gambar logo yang diupload (misalnya dari $venue->logo_url) --}}
+                            <img src="https://via.placeholder.com/100x100/f87171/ffffff?text=LOGO" alt="Logo Venue" class="w-full h-full rounded-full border p-1 object-cover">
+                        </div>
 
-            <!-- Kota & Slug -->
-            <div class="mt-4 space-y-2">
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 text-gray-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                    </svg>
-                    <span class="text-gray-700">{{ $venue->kota }}</span>
+                        {{-- Nama, Alamat, Kontak --}}
+                        <div class="w-full">
+                            <div class="flex items-center mb-1">
+                                <h1 class="text-2xl font-bold text-gray-800 mr-3">Andika Sport</h1>
+                                {{-- Tombol Edit Kecil --}}
+                                <button class="text-gray-400 hover:text-blue-500 transition-colors" title="Edit Detail Venue">
+                                    <i class="fas fa-pencil-alt text-sm"></i>
+                                </button>
+                            </div>
+                            
+                            {{-- Alamat --}}
+                            <p class="text-sm text-gray-600 mb-4">
+                                {{ $venue->alamat ?? 'Jl. Gelora Senayan No.10, Gelora, Tanah Abang, Jakarta Selatan' }}
+                            </p>
+                            
+                            {{-- Detail Ringkas (Username & Kontak) --}}
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-2 text-sm">
+                                <div class="col-span-1">
+                                    <span class="text-gray-500 font-semibold block">Username</span>
+                                    <span class="text-blue-600"></span>
+                                </div>
+                                <div class="col-span-1">
+                                    <span class="text-gray-500 font-semibold block">Kontak <i class="fas fa-info-circle text-xs text-gray-400 ml-1 cursor-pointer" title="Nomor Kontak Venue"></i></span>
+                                    <span class="text-gray-700 font-medium"></span>
+                                </div>
+                                
+                                {{-- Ikon Lokasi dan Instagram/Sosial Media Lain --}}
+                                <div class="col-span-2 flex items-center space-x-4 mt-2">
+                                    <span class="text-gray-500 flex items-center">
+                                        <i class="fas fa-map-marker-alt mr-1 text-red-500"></i>
+                                        }
+                                    </span>
+                                    <span class="text-gray-500 flex items-center">
+                                        <i class="fab fa-instagram mr-1 text-pink-500"></i>
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            {{-- Social Media Icons (Diletakkan terpisah agar mirip gambar) --}}
+                            <div class="mt-4 flex space-x-3 text-lg text-gray-500">
+                                <i class="fab fa-facebook-square hover:text-blue-700 cursor-pointer"></i>
+                                <i class="fab fa-twitter-square hover:text-blue-400 cursor-pointer"></i>
+                                <i class="far fa-envelope hover:text-yellow-600 cursor-pointer"></i>
+                                <i class="fas fa-globe hover:text-green-600 cursor-pointer"></i>
+                                <i class="far fa-calendar-alt hover:text-purple-600 cursor-pointer"></i>
+                                {{-- Icons tambahan dari gambar --}}
+                                <i class="fas fa-wifi hover:text-blue-400 cursor-pointer"></i>
+                                <i class="fas fa-utensils hover:text-orange-500 cursor-pointer"></i>
+                                <i class="fas fa-parking hover:text-gray-600 cursor-pointer"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    {{-- Action Buttons --}}
+                    <div class="flex space-x-3 flex-shrink-0">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors text-sm">QR Code</button>
+                        <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg shadow transition-colors text-sm">Preview Venue</button>
+                        <button class="text-gray-500 hover:text-gray-700 text-lg p-2 rounded-lg hover:bg-gray-100 transition-colors" title="Opsi Lain">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 text-gray-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
-                    </svg>
-                    <span class="text-gray-700"></span>
+                
+                {{-- --- --}}
+
+                {{-- Navigation Tabs --}}
+                <div class="border-b mb-6 overflow-x-auto">
+                    <ul class="flex -mb-px text-sm font-medium text-center whitespace-nowrap" role="tablist">
+                        {{-- Tab Aktif --}}
+                        <li class="mr-2">
+                            <a class="inline-block p-4 border-b-2 border-blue-600 text-blue-600 font-bold" href="#">Lapangan</a>
+                        </li>
+                        {{-- Tab Lain --}}
+                        <li class="mr-2">
+                            <a class="inline-block p-4 border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 text-gray-500 transition-colors" href="#">Experience</a>
+                        </li>
+                        <li class="mr-2">
+                            <a class="inline-block p-4 border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 text-gray-500 transition-colors" href="#">Jam Operasional</a>
+                        </li>
+                        <li class="mr-2">
+                            <a class="inline-block p-4 border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 text-gray-500 transition-colors" href="#">Deskripsi</a>
+                        </li>
+                        <li class="mr-2">
+                            <a class="inline-block p-4 border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 text-gray-500 transition-colors" href="#">Syarat dan Ketentuan</a>
+                        </li>
+                        <li class="mr-2">
+                            <a class="inline-block p-4 border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 text-gray-500 transition-colors" href="#">Galeri</a>
+                        </li>
+                    </ul>
                 </div>
+
+                {{-- Tab Content: Lapangan (Aktif) --}}
+                <div id="lapangan-content">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+                        {{-- CARD: Tambah Lapangan (Sesuai Gambar) --}}
+                        {{-- Sesuaikan tautan dengan route create Lapangan Anda --}}
+                        <a href="" class="border-2 border-dashed border-blue-400 bg-white hover:bg-blue-50 transition-colors duration-200 rounded-lg p-6 text-center w-full max-w-xs flex flex-col justify-between shadow-sm hover:shadow-md h-64 mx-auto">
+                            <div>
+                                <i class="fas fa-plus text-blue-500 text-3xl mb-4"></i>
+                                <h3 class="text-xl font-semibold text-gray-800 mb-2">Tambah Lapangan</h3>
+                                <p class="text-xs text-gray-600">
+                                    Anda dapat menambahkan lapangan di venue yang anda miliki dengan menekan tombol tambah
+                                </p>
+                            </div>
+                            {{-- Tombol --}}
+                            <span class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-colors inline-block mt-4">
+                                Tambah
+                            </span>
+                        </a>
+
+                        {{-- LOOP: Lapangan yang Sudah Ada (jika $lapangans tidak kosong) --}}
+                        {{-- Tempatkan loop data lapangan di sini, di sebelah card 'Tambah Lapangan' --}}
+                    </div>
+                </div>
+
             </div>
         </div>
-    </div>
 
-    <!-- Navigation Tabs -->
-    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <h3 class="text-lg font-bold text-gray-800 mb-4">Lapangan</h3>
-        
-        <div class="flex flex-wrap gap-4">
-            <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
-                Experience
-            </button>
-            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
-                Jam Operasional
-            </button>
-            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
-                Deskripsi
-            </button>
-            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
-                Syarat dan Ketentuan
-            </button>
-            <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
-                Galeri
-            </button>
-        </div>
-    </div>
-
-    <!-- Tambah Lapangan Section -->
-    <div class="bg-white rounded-lg shadow-md p-6">
-        <h3 class="text-lg font-bold text-gray-800 mb-4">Tambah Lapangan</h3>
-        <p class="text-gray-600 mb-4">
-            Anda dapat menambahkan lapangan di venue yang anda miliki dengan menekan tombol tambah
-        </p>
-        
-        <a href="{{ route('pendaftarans', $venue->id) }}" 
-           class="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition inline-flex items-center">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-            </svg>
-            Tambah Lapangan
-        </a>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+{{-- Pastikan Anda memiliki Font Awesome (fas, fab) terhubung di layout utama Anda --}}
+@endpush

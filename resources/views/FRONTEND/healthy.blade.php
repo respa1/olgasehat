@@ -51,394 +51,212 @@
         </button>
     </form>
 </section>
+<body class="bg-gray-50 min-h-screen py-10">
 
-<body class="bg-gray-100 text-gray-800 p-6 min-h-screen">
-  <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-5">
+  <h1 class="text-3xl font-bold text-center mb-10 text-gray-800">Kalkulator Kesehatan</h1>
 
-    <div id="kolesterol-card" class="bg-white p-5 rounded-xl shadow-lg border border-blue-100">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
 
-      <h2 class="text-xl font-bold mb-4 text-center text-blue-700">Kalkulator Kolesterol</h2>
+    <!-- Kalkulator Kolesterol -->
+    <div class="bg-white shadow-md rounded-2xl p-6 border">
+      <h2 class="text-xl font-semibold mb-4 text-center">Kalkulator Kolesterol</h2>
+      <label class="block mb-2 font-medium">Masukkan kadar LDL (mg/dL)</label>
+      <input type="number" id="ldl" class="w-full border rounded p-2 mb-3" placeholder="contoh: 130">
 
-      <div class="space-y-4">
-        <div class="mb-4">
-          <label for="ldl" class="block mb-1 text-sm font-medium text-gray-700">Masukan kadar LDL</label>
-          <div class="flex items-center">
-            <input id="ldl" type="number" placeholder="150" value="150" class="border w-full p-2 rounded-l focus:ring-blue-500 focus:border-blue-500">
-            <span class="p-2 border border-l-0 rounded-r bg-gray-50 text-sm text-gray-600">mg/dl</span>
-          </div>
-        </div>
+      <label class="block mb-2 font-medium">Masukkan kadar HDL (mg/dL)</label>
+      <input type="number" id="hdl" class="w-full border rounded p-2 mb-3" placeholder="contoh: 45">
 
-        <div class="mb-4">
-          <label for="hdl" class="block mb-1 text-sm font-medium text-gray-700">Masukan kadar HDL</label>
-          <div class="flex items-center">
-            <input id="hdl" type="number" placeholder="45" value="45" class="border w-full p-2 rounded-l focus:ring-blue-500 focus:border-blue-500">
-            <span class="p-2 border border-l-0 rounded-r bg-gray-50 text-sm text-gray-600">mg/dl</span>
-          </div>
-        </div>
-      </div>
+      <button onclick="hitungKolesterol()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg">Hitung Kolesterol</button>
 
-      <div class="flex space-x-2 mb-6 mt-6">
-        <button onclick="hitungKolesterol()" class="bg-blue-600 hover:bg-blue-700 text-white flex-1 py-2 rounded-lg font-semibold transition duration-150 shadow-md">Hitung</button>
-        <button onclick="resetKolesterol()" class="bg-gray-400 hover:bg-gray-500 text-white flex-1 py-2 rounded-lg font-semibold transition duration-150 shadow-md">Reset</button>
-      </div>
-
-      <div id="hasilKolesterol" class="mt-4 pt-4 border-t border-gray-200">
-        <h3 class="text-md font-semibold mb-2 text-gray-700">Kolesterol Total</h3>
-        <div class="flex justify-between items-center mb-4 p-2 bg-blue-50 rounded">
-            <span class="text-lg font-bold text-blue-800">Total</span>
-            <div class="flex items-center space-x-2">
-                <span class="text-xl font-bold">200 <span class="text-sm">mg/dl</span></span>
-                <span class="inline-block bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded-full">Normal</span>
-            </div>
-        </div>
-        <h3 class="text-md font-semibold mb-2 text-gray-700">Detail Kadar</h3>
-        <div class="space-y-2">
-            <div class="flex justify-between items-center text-sm p-1">
-                <p>LDL: 150 mg/dl</p>
-                <span class="flex items-center space-x-1 text-yellow-600 font-semibold">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                    <span>Tinggi</span>
-                </span>
-            </div>
-            <div class="flex justify-between items-center text-sm p-1">
-                <p>HDL: 45 mg/dl</p>
-                <span class="flex items-center space-x-1 text-red-600 font-semibold">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                    <span>Rendah</span>
-                </span>
-            </div>
-        </div>
-      </div>
+      <div id="hasilKolesterol" class="hidden mt-4 p-4 rounded-lg border text-center"></div>
     </div>
 
-    <div id="gula-card" class="bg-white p-5 rounded-xl shadow-lg border border-green-100">
-      <h2 class="text-xl font-bold mb-4 text-center text-green-700">Kalkulator Gula Darah</h2>
+    <!-- Kalkulator Gula Darah -->
+    <div class="bg-white shadow-md rounded-2xl p-6 border">
+      <h2 class="text-xl font-semibold mb-4 text-center">Kalkulator Gula Darah</h2>
+      <label class="block mb-2 font-medium">Total Gula Darah (mg/dL)</label>
+      <input type="number" id="gula" class="w-full border rounded p-2 mb-3" placeholder="contoh: 110">
 
-      <div class="mb-4">
-        <label for="gula-input" class="block mb-1 text-sm font-medium text-gray-700">Total Gula Darah (mg/dl)</label>
-        <div class="flex items-center">
-            <input id="gula-input" type="number" placeholder="110" value="110" class="border w-full p-2 rounded-l focus:ring-green-500 focus:border-green-500">
-            <span class="p-2 border border-l-0 rounded-r bg-gray-50 text-sm text-gray-600">mg/dl</span>
-        </div>
-      </div>
-      
-      <div class="mb-4">
-        <label for="waktu-pengukuran" class="block mb-1 text-sm font-medium text-gray-700">Waktu Pengukuran</label>
-        <select id="waktu-pengukuran" class="border w-full p-2 rounded focus:ring-green-500 focus:border-green-500 bg-white">
-          <option value="puasa">Puasa (Fasting)</option>
-          <option value="2jam">2 Jam Setelah Makan</option>
-          <option value="acak">Sewaktu/Acak (Random)</option>
-        </select>
-      </div>
+      <label class="block mb-2 font-medium">Waktu Pengukuran</label>
+      <select id="waktuGula" class="w-full border rounded p-2 mb-3">
+        <option value="puasa">Puasa</option>
+        <option value="2jam">2 Jam Setelah Makan</option>
+      </select>
 
-      <button onclick="hitungGula()" class="bg-green-600 hover:bg-green-700 text-white w-full py-2 rounded-lg font-semibold mb-6 transition duration-150 shadow-md">Hitung Gula Darah</button>
+      <button onclick="hitungGula()" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg">Hitung Gula Darah</button>
 
-      <div id="hasilGula" class="p-4 rounded-xl bg-green-100 border border-green-300">
-        <div class="text-center">
-          <p class="text-5xl font-extrabold text-green-700">110 <span class="text-lg text-gray-600 font-normal">mg/dl</span></p>
-          <span class="inline-block bg-green-600 text-white text-sm font-semibold px-3 py-1 mt-3 rounded-full shadow-md">Normal</span>
-          
-          <div class="w-full h-2 rounded mt-4 flex overflow-hidden">
-            <div class="w-1/4 h-2 bg-blue-500"></div> 
-            <div class="w-1/4 h-2 bg-green-500"></div> 
-            <div class="w-1/4 h-2 bg-yellow-500"></div>
-            <div class="w-1/4 h-2 bg-red-500"></div>
-          </div>
-          <div class="flex justify-between text-xs text-gray-500 mt-1 px-1">
-            <span>&lt;70</span>
-            <span class="text-green-600 font-bold">Normal</span>
-            <span>&gt;140</span>
-          </div>
-          
-          <p class="text-sm mt-4 text-gray-700 font-medium">Status Gula Darah Anda Saat Ini Normal Dan Terkendali</p>
-        </div>
-      </div>
+      <div id="hasilGula" class="hidden mt-4 p-4 rounded-lg border text-center"></div>
     </div>
 
-    <div id="bmi-card" class="bg-white p-5 rounded-xl shadow-lg border border-red-100">
-      <h2 class="text-xl font-bold mb-4 text-center text-red-700">Kalkulator BMI</h2>
+    <!-- Kalkulator BMI -->
+    <div class="bg-white shadow-md rounded-2xl p-6 border">
+      <h2 class="text-xl font-semibold mb-4 text-center">Kalkulator BMI</h2>
+      <label class="block mb-2 font-medium">Berat (kg)</label>
+      <input type="number" id="berat" class="w-full border rounded p-2 mb-3" placeholder="contoh: 70">
 
-      <div class="mb-4">
-        <label for="berat" class="block mb-1 text-sm font-medium text-gray-700">Berat Badan (kg)</label>
-        <div class="flex items-center">
-            <input id="berat" type="number" placeholder="70" value="70" class="border w-full p-2 rounded-l focus:ring-red-500 focus:border-red-500">
-            <span class="p-2 border border-l-0 rounded-r bg-gray-50 text-sm text-gray-600">kg</span>
-        </div>
-      </div>
-      
-      <div class="mb-4">
-        <label for="tinggi" class="block mb-1 text-sm font-medium text-gray-700">Tinggi Badan (cm)</label>
-        <div class="flex items-center">
-            <input id="tinggi" type="number" placeholder="175" value="175" class="border w-full p-2 rounded-l focus:ring-red-500 focus:border-red-500">
-            <span class="p-2 border border-l-0 rounded-r bg-gray-50 text-sm text-gray-600">cm</span>
-        </div>
-      </div>
+      <label class="block mb-2 font-medium">Tinggi (cm)</label>
+      <input type="number" id="tinggi" class="w-full border rounded p-2 mb-3" placeholder="contoh: 170">
 
-      <div class="grid grid-cols-2 gap-4 mb-6">
-        <div>
-            <label for="age" class="block mb-1 text-sm font-medium text-gray-700">Usia</label>
-            <input id="age" type="number" placeholder="30" class="border w-full p-2 rounded focus:ring-red-500 focus:border-red-500">
-        </div>
-        <div>
-            <label for="gender" class="block mb-1 text-sm font-medium text-gray-700">Jenis Kelamin</label>
-            <select id="gender" class="border w-full p-2 rounded focus:ring-red-500 focus:border-red-500 bg-white">
-                <option value="pria">Pria</option>
-                <option value="wanita">Wanita</option>
-            </select>
-        </div>
-      </div>
+      <button onclick="hitungBMI()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded-lg">Hitung BMI</button>
 
-      <button onclick="hitungBMI()" class="bg-red-600 hover:bg-red-700 text-white w-full py-2 rounded-lg font-semibold mb-6 transition duration-150 shadow-md">Hitung BMI</button>
-
-      <div id="hasilBMI" class="p-4 rounded-xl bg-red-100 border border-red-300 shadow-inner">
-        <div class="text-center">
-          <p class="text-5xl font-extrabold text-red-700">22.8 <span class="text-lg text-gray-600 font-normal">kg/m²</span></p>
-          <span class="inline-block bg-green-600 text-white text-sm font-semibold px-3 py-1 mt-2 rounded-full">Normal</span>
-          
-          <div class="w-full h-3 rounded mt-4 flex overflow-hidden">
-            <div class="w-1/4 h-3 bg-blue-500"></div> <div class="w-1/4 h-3 bg-green-500"></div> <div class="w-1/4 h-3 bg-yellow-500"></div> <div class="w-1/4 h-3 bg-red-500"></div> </div>
-          <div class="flex justify-between text-xs text-gray-500 mt-1">
-            <span>Rendah</span>
-            <span>Normal</span>
-            <span>Obesitas</span>
-          </div>
-          
-          <p class="text-sm mt-4 text-gray-700 font-medium">Pertahankan Gaya Hidup Sehat</p>
-        </div>
-      </div>
+      <div id="hasilBMI" class="hidden mt-4 p-4 rounded-lg border text-center"></div>
     </div>
   </div>
 
-<script>
-  // Helper function to get status badge HTML
-  function getStatusBadge(status, colorClass) {
-    // Badge disempurnakan
-    return `<span class="inline-block ${colorClass} text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">${status}</span>`;
-  }
-  
-  // Fungsi Kolesterol di-update agar menggunakan style baru
-  function hitungKolesterol() {
-    const ldl = parseFloat(document.getElementById("ldl").value);
-    const hdl = parseFloat(document.getElementById("hdl").value);
-    const hasilDiv = document.getElementById("hasilKolesterol");
+  <script>
+    // === Fungsi Bar Indikator ===
+    function getBarHTML(level) {
+      const colors = ["bg-blue-500", "bg-green-500", "bg-yellow-500", "bg-red-500"];
+      let activeIndex = 0;
+      if (level === "rendah") activeIndex = 0;
+      else if (level === "normal") activeIndex = 1;
+      else if (level === "sedang") activeIndex = 2;
+      else activeIndex = 3;
 
-    if (isNaN(ldl) || isNaN(hdl) || ldl < 0 || hdl < 0) {
-      hasilDiv.innerHTML = "<p class='text-red-600 font-semibold text-center'>Masukkan angka LDL dan HDL yang valid!</p>";
-      hasilDiv.classList.add("p-4", "border", "rounded");
-      return;
+      return `
+        <div class="w-full h-3 rounded mt-3 flex overflow-hidden">
+          ${colors.map((color, i) => `<div class="w-1/4 h-3 ${i===activeIndex ? color : 'bg-gray-200'}"></div>`).join('')}
+        </div>
+        <div class="flex justify-between text-xs text-gray-500 mt-1">
+          <span>Rendah</span><span>Normal</span><span>Tinggi</span><span>Sangat Tinggi</span>
+        </div>`;
     }
 
-    const total = ldl + hdl;
-    let totalStatus = "Normal", totalColor = "bg-blue-600";
-    let totalBg = "bg-blue-50", totalText = "text-blue-800";
+    // === Kalkulator Kolesterol ===
+    function hitungKolesterol() {
+      const ldl = parseFloat(document.getElementById("ldl").value);
+      const hdl = parseFloat(document.getElementById("hdl").value);
+      const hasil = document.getElementById("hasilKolesterol");
 
-    // LDL Status
-    let ldlStatus = "Optimal", ldlColor = "text-green-600", ldlIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`;
-    if (ldl >= 190) { ldlStatus = "Sangat Tinggi"; ldlColor = "text-red-600"; ldlIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>`; }
-    else if (ldl >= 160) { ldlStatus = "Tinggi"; ldlColor = "text-red-600"; ldlIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>`; }
-    else if (ldl >= 130) { ldlStatus = "Batas Tinggi"; ldlColor = "text-yellow-600"; } 
+      if (isNaN(ldl) || isNaN(hdl)) {
+        hasil.innerHTML = "<p class='text-red-600 font-semibold'>Masukkan nilai LDL dan HDL yang valid!</p>";
+        hasil.className = "mt-4 p-4 bg-red-50 border border-red-300 rounded-lg text-center";
+        hasil.classList.remove("hidden");
+        return;
+      }
 
-    // HDL Status
-    let hdlStatus = "Normal", hdlColor = "text-green-600", hdlIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`;
-    if (hdl < 40) { hdlStatus = "Rendah"; hdlColor = "text-red-600"; hdlIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>`;}
-    else if (hdl >= 60) { hdlStatus = "Protektif"; }
+      let status = "", warna = "", saran = "", level = "normal";
+      if (ldl < 100) {
+        status = "Normal"; warna = "bg-green-50 border-green-400 text-green-700";
+        saran = "Kolesterol Anda normal. Pertahankan pola makan seimbang, olahraga teratur, dan hindari stres.";
+        level = "normal";
+      } else if (ldl <= 159) {
+        status = "Batas Tinggi"; warna = "bg-yellow-50 border-yellow-400 text-yellow-700";
+        saran = "Kurangi makanan berlemak jenuh seperti gorengan, santan, dan daging berlemak.";
+        level = "sedang";
+      } else {
+        status = "Tinggi"; warna = "bg-red-50 border-red-400 text-red-700";
+        saran = "Segera konsultasi dengan dokter. Perbanyak sayur, ikan, dan olahraga minimal 30 menit per hari.";
+        level = "tinggi";
+      }
 
-    // Total Cholesterol status based on standard guidelines (simplified)
-    if (total >= 240) { totalStatus = "Tinggi"; totalColor = "bg-red-600"; totalBg = "bg-red-50"; totalText = "text-red-800"; }
-    else if (total >= 200) { totalStatus = "Batas Tinggi"; totalColor = "bg-yellow-600"; totalBg = "bg-yellow-50"; totalText = "text-yellow-800"; }
-    
-    // Clear error class
-    hasilDiv.classList.remove("p-4", "border", "rounded");
+      hasil.className = `mt-4 p-4 border rounded-lg ${warna}`;
+      hasil.innerHTML = `
+        <p class="text-3xl font-bold">${ldl} mg/dL</p>
+        <p class="font-semibold">${status}</p>
+        ${getBarHTML(level)}
+        <p class="text-sm mt-3 text-gray-700">${saran}</p>`;
+      hasil.classList.remove("hidden");
+    }
 
-    hasilDiv.innerHTML = `
-      <h3 class="text-md font-semibold mb-2 text-gray-700">Kolesterol Total</h3>
-      <div class="flex justify-between items-center mb-4 p-2 ${totalBg} rounded">
-          <span class="text-lg font-bold ${totalText}">Total</span>
-          <div class="flex items-center space-x-2">
-              <span class="text-xl font-bold">${total} <span class="text-sm">mg/dl</span></span>
-              ${getStatusBadge(totalStatus, totalColor)}
-          </div>
-      </div>
-      <h3 class="text-md font-semibold mb-2 text-gray-700">Detail Kadar</h3>
-      <div class="space-y-2">
-          <div class="flex justify-between items-center text-sm p-1">
-              <p>LDL: ${ldl} mg/dl</p>
-              <span class="flex items-center space-x-1 ${ldlColor} font-semibold">
-                  ${ldlIcon}
-                  <span>${ldlStatus}</span>
-              </span>
-          </div>
-          <div class="flex justify-between items-center text-sm p-1">
-              <p>HDL: ${hdl} mg/dl</p>
-              <span class="flex items-center space-x-1 ${hdlColor} font-semibold">
-                  ${hdlIcon}
-                  <span>${hdlStatus}</span>
-              </span>
-          </div>
-      </div>`;
-  }
+    // === Kalkulator Gula Darah ===
+    function hitungGula() {
+      const gula = parseFloat(document.getElementById("gula").value);
+      const waktu = document.getElementById("waktuGula").value;
+      const hasil = document.getElementById("hasilGula");
 
-  function resetKolesterol() {
-    document.getElementById("ldl").value = "";
-    document.getElementById("hdl").value = "";
-    // Reset to initial state
-    const initialHtml = `
-        <h3 class="text-md font-semibold mb-2 text-gray-700">Kolesterol Total</h3>
-        <div class="flex justify-between items-center mb-4 p-2 bg-blue-50 rounded">
-            <span class="text-lg font-bold text-blue-800">Total</span>
-            <div class="flex items-center space-x-2">
-                <span class="text-xl font-bold">200 <span class="text-sm">mg/dl</span></span>
-                <span class="inline-block bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded-full">Normal</span>
-            </div>
-        </div>
-        <h3 class="text-md font-semibold mb-2 text-gray-700">Detail Kadar</h3>
-        <div class="space-y-2">
-            <div class="flex justify-between items-center text-sm p-1">
-                <p>LDL: 150 mg/dl</p>
-                <span class="flex items-center space-x-1 text-yellow-600 font-semibold">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                    <span>Tinggi</span>
-                </span>
-            </div>
-            <div class="flex justify-between items-center text-sm p-1">
-                <p>HDL: 45 mg/dl</p>
-                <span class="flex items-center space-x-1 text-red-600 font-semibold">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                    <span>Rendah</span>
-                </span>
-            </div>
-        </div>`;
-    document.getElementById("hasilKolesterol").innerHTML = initialHtml;
-    document.getElementById("hasilKolesterol").classList.remove("p-4", "border", "rounded");
-  }
+      if (isNaN(gula)) {
+        hasil.innerHTML = "<p class='text-red-600 font-semibold'>Masukkan kadar gula darah yang valid!</p>";
+        hasil.className = "mt-4 p-4 bg-red-50 border border-red-300 rounded-lg text-center";
+        hasil.classList.remove("hidden");
+        return;
+      }
 
+      let status = "", warna = "", saran = "", level = "normal";
+      if (waktu === "puasa") {
+        if (gula < 70) {
+          status = "Rendah"; warna = "bg-blue-50 border-blue-400 text-blue-700";
+          saran = "Segera konsumsi makanan atau minuman manis untuk menstabilkan gula darah.";
+          level = "rendah";
+        } else if (gula <= 125) {
+          status = "Normal"; warna = "bg-green-50 border-green-400 text-green-700";
+          saran = "Pertahankan pola makan sehat, tidur cukup, dan olahraga rutin.";
+          level = "normal";
+        } else {
+          status = "Tinggi"; warna = "bg-red-50 border-red-400 text-red-700";
+          saran = "Periksa ke dokter. Hindari gula tambahan, karbohidrat olahan, dan rutin berolahraga.";
+          level = "tinggi";
+        }
+      } else {
+        if (gula < 140) {
+          status = "Normal"; warna = "bg-green-50 border-green-400 text-green-700";
+          saran = "Bagus! Jaga asupan makanan dan gaya hidup Anda.";
+          level = "normal";
+        } else if (gula <= 199) {
+          status = "Pra-Diabetes"; warna = "bg-yellow-50 border-yellow-400 text-yellow-700";
+          saran = "Kurangi nasi putih, gula, dan makanan manis. Perbanyak serat dan air putih.";
+          level = "sedang";
+        } else {
+          status = "Tinggi"; warna = "bg-red-50 border-red-400 text-red-700";
+          saran = "Segera konsultasi ke dokter. Olahraga teratur dan pantau kadar gula harian Anda.";
+          level = "tinggi";
+        }
+      }
 
-  // === KALKULATOR GULA DARAH ===
-  function hitungGula() {
-    const gula = parseFloat(document.getElementById("gula-input").value); 
-    const hasilDiv = document.getElementById("hasilGula");
-    const waktu = document.getElementById("waktu-pengukuran").value;
+      hasil.className = `mt-4 p-4 border rounded-lg ${warna}`;
+      hasil.innerHTML = `
+        <p class="text-3xl font-bold">${gula} mg/dL</p>
+        <p class="font-semibold">${status}</p>
+        ${getBarHTML(level)}
+        <p class="text-sm mt-3 text-gray-700">${saran}</p>`;
+      hasil.classList.remove("hidden");
+    }
 
-    if (isNaN(gula) || gula < 0) {
-      hasilDiv.innerHTML = "<p class='text-red-600 font-semibold text-center'>Masukkan nilai gula darah yang valid!</p>";
-      hasilDiv.classList.add("p-4", "rounded", "bg-red-100", "border-red-300");
-      hasilDiv.classList.remove("bg-green-100", "border-green-300", "bg-blue-100", "border-blue-300");
-      return;
-    }
+    // === Kalkulator BMI ===
+    function hitungBMI() {
+      const berat = parseFloat(document.getElementById("berat").value);
+      const tinggi = parseFloat(document.getElementById("tinggi").value) / 100;
+      const hasil = document.getElementById("hasilBMI");
 
-    let status = "Normal", statusText = "Terkendali";
-    let colorClass = "bg-green-600", colorText = "text-green-700";
-    let bgClass = "bg-green-100", borderColor = "border-green-300";
+      if (isNaN(berat) || isNaN(tinggi) || tinggi === 0) {
+        hasil.innerHTML = "<p class='text-red-600 font-semibold'>Masukkan berat dan tinggi badan yang valid!</p>";
+        hasil.className = "mt-4 p-4 bg-red-50 border border-red-300 rounded-lg text-center";
+        hasil.classList.remove("hidden");
+        return;
+      }
 
-    // Menggunakan standar sederhana untuk demo
-    if (gula < 70) { 
-      status = "Rendah"; statusText = "Terlalu Rendah, Perlu Pemeriksaan"; 
-      colorClass = "bg-blue-600"; colorText = "text-blue-700"; 
-      bgClass = "bg-blue-100"; borderColor = "border-blue-300";
-    } else if (gula > 140) { 
-      status = "Tinggi"; statusText = "Tinggi, Segera Konsultasi"; 
-      colorClass = "bg-red-600"; colorText = "text-red-700"; 
-      bgClass = "bg-red-100"; borderColor = "border-red-300";
-    }
-    
-    // Update container colors
-    hasilDiv.classList.remove("bg-green-100", "border-green-300", "bg-blue-100", "border-blue-300", "bg-red-100", "border-red-300");
-    hasilDiv.classList.add(bgClass, borderColor);
+      const bmi = berat / (tinggi * tinggi);
+      const bmiFixed = bmi.toFixed(1);
 
+      let status = "", warna = "", saran = "", level = "normal";
+      if (bmi < 18.5) {
+        status = "Kurus"; warna = "bg-blue-50 border-blue-400 text-blue-700";
+        saran = "Tambahkan asupan protein dan kalori, makan lebih sering, dan lakukan latihan kekuatan.";
+        level = "rendah";
+      } else if (bmi < 25) {
+        status = "Normal"; warna = "bg-green-50 border-green-400 text-green-700";
+        saran = "BMI Anda ideal. Pertahankan dengan pola makan seimbang dan aktivitas fisik rutin.";
+        level = "normal";
+      } else if (bmi < 30) {
+        status = "Berlebih"; warna = "bg-yellow-50 border-yellow-400 text-yellow-700";
+        saran = "Mulailah olahraga teratur seperti jogging atau bersepeda. Kurangi makanan tinggi gula dan lemak.";
+        level = "sedang";
+      } else {
+        status = "Obesitas"; warna = "bg-red-50 border-red-400 text-red-700";
+        saran = "Segera konsultasi dengan dokter atau ahli gizi. Atur pola makan dan lakukan aktivitas fisik setiap hari.";
+        level = "tinggi";
+      }
 
-    hasilDiv.innerHTML = `
-      <div class="text-center">
-        <p class="text-5xl font-extrabold ${colorText}">${gula} <span class="text-lg text-gray-600 font-normal">mg/dl</span></p>
-        ${getStatusBadge(status, colorClass)}
-        
-        <div class="w-full h-2 rounded mt-4 flex overflow-hidden">
-            <div class="w-1/4 h-2 bg-blue-500"></div> 
-            <div class="w-1/4 h-2 bg-green-500"></div> 
-            <div class="w-1/4 h-2 bg-yellow-500"></div>
-            <div class="w-1/4 h-2 bg-red-500"></div>
-        </div>
-        <div class="flex justify-between text-xs text-gray-500 mt-1">
-            <span>Rendah</span>
-            <span>Normal</span>
-            <span>Tinggi</span>
-        </div>
-        
-        <p class="text-sm mt-4 text-gray-700 font-medium">Status Gula Darah Anda Saat Ini ${status} (${waktu.toUpperCase()})</p>
-      </div>`;
-    hasilDiv.classList.remove("hidden");
-  }
-
-  // === KALKULATOR BMI ===
-  function hitungBMI() {
-    const berat = parseFloat(document.getElementById("berat").value);
-    const tinggi = parseFloat(document.getElementById("tinggi").value) / 100; 
-    const hasilDiv = document.getElementById("hasilBMI");
-
-    if (isNaN(berat) || isNaN(tinggi) || tinggi === 0 || berat < 0 || tinggi < 0.1) {
-      hasilDiv.innerHTML = "<p class='text-red-600 font-semibold text-center'>Masukkan berat dan tinggi badan yang valid!</p>";
-      hasilDiv.classList.add("p-4", "border", "rounded");
-      return;
-    }
-
-    const bmi = berat / (tinggi * tinggi);
-    const bmiFixed = bmi.toFixed(1);
-
-    let status = "", colorClass = "bg-red-600", colorText = "text-red-700";
-    let bgClass = "bg-red-100", borderColor = "border-red-300";
-    let advice = "Pertahankan Gaya Hidup Sehat";
-    
-    if (bmi < 18.5) { 
-      status = "Kurus (Underweight)"; 
-      colorClass = "bg-blue-600"; colorText = "text-blue-700"; 
-      bgClass = "bg-blue-100"; borderColor = "border-blue-300";
-      advice = "Perlu peningkatan berat badan yang sehat.";
-    }
-    else if (bmi < 25) { 
-      status = "Normal (Healthy Weight)"; 
-      colorClass = "bg-green-600"; colorText = "text-green-700"; 
-      bgClass = "bg-green-100"; borderColor = "border-green-300";
-      advice = "Pertahankan Gaya Hidup Sehat";
-    }
-    else if (bmi < 30) { 
-      status = "Kelebihan Berat (Overweight)"; 
-      colorClass = "bg-yellow-600"; colorText = "text-yellow-700"; 
-      bgClass = "bg-yellow-100"; borderColor = "border-yellow-300";
-      advice = "Disarankan untuk mengurangi berat badan secara bertahap.";
-    }
-    else { 
-      status = "Obesitas (Obese)"; 
-      colorClass = "bg-red-600"; colorText = "text-red-700"; 
-      bgClass = "bg-red-100"; borderColor = "border-red-300";
-      advice = "Segera konsultasi untuk program penurunan berat badan.";
-    }
-
-    // Update container colors
-    hasilDiv.classList.remove("bg-white", "border-gray-200", "bg-blue-100", "border-blue-300", "bg-green-100", "border-green-300", "bg-yellow-100", "border-yellow-300", "bg-red-100", "border-red-300");
-    hasilDiv.classList.add(bgClass, borderColor);
-
-
-    hasilDiv.innerHTML = `
-      <div class="text-center">
-        <p class="text-5xl font-extrabold ${colorText}">${bmiFixed} <span class="text-lg text-gray-600 font-normal">kg/m²</span></p>
-        ${getStatusBadge(status, colorClass)}
-        
-        <div class="w-full h-3 rounded mt-4 flex overflow-hidden">
-            <div class="w-1/4 h-3 bg-blue-500"></div> 
-            <div class="w-1/4 h-3 bg-green-500"></div> 
-            <div class="w-1/4 h-3 bg-yellow-500"></div> 
-            <div class="w-1/4 h-3 bg-red-500"></div> 
-        </div>
-        <div class="flex justify-between text-xs text-gray-500 mt-1">
-            <span>Rendah</span>
-            <span>Normal</span>
-            <span>Obesitas</span>
-        </div>
-        
-        <p class="text-sm mt-4 text-gray-700 font-medium">${advice}</p>
-      </div>`;
-    hasilDiv.classList.remove("hidden");
-  }
-</script>
+      hasil.className = `mt-4 p-4 border rounded-lg ${warna}`;
+      hasil.innerHTML = `
+        <p class="text-3xl font-bold">${bmiFixed}</p>
+        <p class="font-semibold">${status}</p>
+        ${getBarHTML(level)}
+        <p class="text-sm mt-3 text-gray-700">${saran}</p>`;
+      hasil.classList.remove("hidden");
+    }
+  </script>
+</body>
 
 <section class="container mx-auto px-6 py-16">
     <h2 class="font-bold text-2xl mb-8 text-gray-800">
