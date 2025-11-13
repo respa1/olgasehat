@@ -77,6 +77,28 @@
                                     <td>{{ $mitra->email_bisnis }}</td>
                                 </tr>
                                 <tr>
+                                    <td><strong>Kontak Bisnis:</strong></td>
+                                    <td>
+                                        @php
+                                            $kontakBisnis = $mitra->kontak_bisnis ?? '';
+                                            // Format nomor telepon dengan +62
+                                            if ($kontakBisnis) {
+                                                $rawPhone = trim($kontakBisnis);
+                                                if (\Illuminate\Support\Str::startsWith($rawPhone, '+62')) {
+                                                    $displayPhone = $rawPhone;
+                                                } elseif (\Illuminate\Support\Str::startsWith($rawPhone, '62')) {
+                                                    $displayPhone = '+' . $rawPhone;
+                                                } else {
+                                                    $displayPhone = '+62' . $rawPhone;
+                                                }
+                                            } else {
+                                                $displayPhone = 'Belum diisi';
+                                            }
+                                        @endphp
+                                        {{ $displayPhone }}
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td><strong>Tipe Venue:</strong></td>
                                     <td>{{ $mitra->tipe_venue }}</td>
                                 </tr>
