@@ -129,36 +129,7 @@ class PendaftaranController extends Controller
 
         $date = request('date') ? Carbon::parse(request('date')) : now();
 
-        $timeslots = collect([
-            [
-                'start' => '06:00',
-                'end' => '07:00',
-                'price' => 125000,
-                'status' => 'booked',
-                'label' => null,
-            ],
-            [
-                'start' => '07:00',
-                'end' => '08:00',
-                'price' => 100000,
-                'status' => 'available',
-                'label' => 'PROMO',
-            ],
-            [
-                'start' => '08:00',
-                'end' => '09:00',
-                'price' => 125000,
-                'status' => 'available',
-                'label' => null,
-            ],
-            [
-                'start' => '09:00',
-                'end' => '10:00',
-                'price' => 125000,
-                'status' => 'blocked',
-                'label' => null,
-            ],
-        ]);
+        $timeslots = collect();
 
         return view('pemiliklapangan.Papan.papan', compact(
             'venue',
