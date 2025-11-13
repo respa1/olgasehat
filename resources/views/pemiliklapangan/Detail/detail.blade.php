@@ -210,6 +210,41 @@
                                 </div>
                             </div>
 
+                            {{-- Galeri Foto Multiple --}}
+                            <div class="mb-3">
+                                <label class="form-label d-block">Galeri Foto Venue</label>
+                                <input type="file" name="galeri_foto[]" id="galeri_foto" class="form-control @error('galeri_foto') is-invalid @enderror" 
+                                       accept="image/*" multiple>
+                                @error('galeri_foto')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                                @error('galeri_foto.*')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                                <small class="text-muted">Pilih multiple gambar untuk galeri venue (maksimal 10 gambar, format: JPG, PNG, maksimal 2MB per gambar)</small>
+                                
+                                {{-- Preview galeri yang sudah ada --}}
+                                @if(isset($venue) && $venue->galleries->count() > 0)
+                                    <div class="mt-3">
+                                        <p class="small text-muted mb-2">Galeri yang sudah diupload:</p>
+                                        <div class="row">
+                                            @foreach($venue->galleries as $gallery)
+                                                <div class="col-md-3 col-sm-4 mb-2">
+                                                    <div class="position-relative">
+                                                        <img src="{{ asset('storage/' . $gallery->foto) }}" 
+                                                             alt="Gallery {{ $loop->iteration }}" 
+                                                             class="img-thumbnail" style="width: 100%; height: 120px; object-fit: cover;">
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
+
+                                {{-- Preview gambar baru yang dipilih --}}
+                                <div id="galeriPreview" class="mt-3 row"></div>
+                            </div>
+
                             <button type="submit" class="btn btn-primary" {{ !isset($venue) && !session('venue_id') ? 'disabled' : '' }}>
                                 Selanjutnya →
                             </button>
@@ -277,6 +312,47 @@ document.addEventListener('DOMContentLoaded', function () {
         const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w\-]+)/;
         const match = url.match(regex);
         return match && match[1] ? match[1] : null;
+    }
+
+    // Preview galeri foto multiple
+    const galeriInput = document.getElementById('galeri_foto');
+    const galeriPreview = document.getElementById('galeriPreview');
+    
+    if (galeriInput) {
+        galeriInput.addEventListener('change', function(e) {
+            galeriPreview.innerHTML = '';
+            const files = e.target.files;
+            
+            if (files.length > 10) {
+                alert('Maksimal 10 gambar yang dapat diupload');
+                e.target.value = '';
+                return;
+            }
+            
+            Array.from(files).forEach((file, index) => {
+                if (file.size > 2048 * 1024) {
+                    alert(`File ${file.name} terlalu besar (maksimal 2MB)`);
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const col = document.createElement('div');
+                    col.className = 'col-md-3 col-sm-4 mb-2';
+                    col.innerHTML = `
+                        <div class="position-relative">
+                            <img src="${e.target.result}" 
+                                 alt="Preview ${index + 1}" 
+                                 class="img-thumbnail" 
+                                 style="width: 100%; height: 120px; object-fit: cover;">
+                            <small class="d-block text-center text-muted mt-1">${file.name}</small>
+                        </div>
+                    `;
+                    galeriPreview.appendChild(col);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
     }
 });
 </script>
