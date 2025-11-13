@@ -138,11 +138,35 @@
 
                         <div class="tab-pane fade" id="business-profile" role="tabpanel" aria-labelledby="business-profile-tab">
                             <h5 class="section-title">Profil Bisnis</h5>
-                            <form action="javascript:void(0)" class="mt-4">
+                            @if(session('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session('success') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+                            @if($errors->any())
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <ul class="mb-0">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+                            <form action="{{ route('pemilik.pengaturan.update') }}" method="POST" class="mt-4">
+                                @csrf
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Nama Bisnis <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" value="{{ optional($mitra)->nama_bisnis ?? '' }}" placeholder="Masukkan nama bisnis">
+                                        <input type="text" name="nama_bisnis" class="form-control @error('nama_bisnis') is-invalid @enderror" value="{{ old('nama_bisnis', optional($mitra)->nama_bisnis ?? '') }}" placeholder="Masukkan nama bisnis" required>
+                                        @error('nama_bisnis')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>No. Telepon <span class="text-danger">*</span></label>
@@ -150,8 +174,12 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-light">+62</span>
                                             </div>
-                                            <input type="text" class="form-control" value="{{ $businessPhoneDisplay }}" placeholder="81234567890">
+                                            <input type="text" name="kontak_bisnis" class="form-control @error('kontak_bisnis') is-invalid @enderror" value="{{ old('kontak_bisnis', $businessPhoneDisplay) }}" placeholder="81234567890" required>
                                         </div>
+                                        @error('kontak_bisnis')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                        <small class="form-text text-muted">Masukkan nomor telepon tanpa kode negara (+62)</small>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -190,7 +218,6 @@
                                 </div>
 
                                 <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-light mr-3">Batalkan</button>
                                     <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                                 </div>
                             </form>

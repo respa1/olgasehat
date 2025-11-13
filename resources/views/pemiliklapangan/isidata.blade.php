@@ -91,11 +91,18 @@
         </div>
         
         <div class="mb-4">
-          <label class="text-xs font-semibold text-gray-700 mb-1 block" for="kontak-bisnis">Kontak Bisnis</label>
-          <input name="kontak_bisnis" class="w-full text-sm rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
-                 id="kontak-bisnis" 
-                 placeholder="Masukkan nomor telepon" 
-                 type="tel"/>
+          <label class="text-xs font-semibold text-gray-700 mb-1 block" for="kontak-bisnis">Kontak Bisnis <span class="text-red-500">*</span></label>
+          <div class="flex">
+            <div class="flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 text-gray-700 text-sm font-medium">
+              +62
+            </div>
+            <input name="kontak_bisnis" class="w-full text-sm rounded-r-lg border border-gray-300 bg-gray-50 px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+                   id="kontak-bisnis" 
+                   placeholder="81234567890" 
+                   type="tel"
+                   required/>
+          </div>
+          <small class="text-gray-500 text-xs mt-1 block">Masukkan nomor telepon tanpa kode negara (+62)</small>
         </div>
         
         <div class="mb-4">

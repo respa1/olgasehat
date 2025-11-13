@@ -54,6 +54,24 @@ class MitraController extends Controller
         return view('pemiliklapangan.Pengaturan.index', compact('user', 'mitra'));
     }
 
+    public function updatePengaturan(Request $request)
+    {
+        $user = auth()->user();
+        $mitra = Mitra::where('user_id', $user->id)->firstOrFail();
+
+        $request->validate([
+            'kontak_bisnis' => 'required|string|max:20',
+            'nama_bisnis' => 'required|string|max:255',
+        ]);
+
+        $mitra->update([
+            'kontak_bisnis' => $request->kontak_bisnis,
+            'nama_bisnis' => $request->nama_bisnis,
+        ]);
+
+        return redirect()->back()->with('success', 'Data bisnis berhasil diperbarui.');
+    }
+
     public function index()
     {
         $mitras = Mitra::all();
