@@ -230,7 +230,7 @@
           <li class="nav-item">
             <a href="/papan" class="nav-link">
               <i class="nav-icon fas fa-calendar"></i>
-              <p>Papan Jadwal</p>
+              <p>Kelola Jadwal</p>
             </a>
           </li>
 

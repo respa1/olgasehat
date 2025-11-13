@@ -7,8 +7,10 @@ use App\Models\Pendaftaran;
 use App\Models\VenueGallery;
 use App\Models\Mitra;
 use App\Models\Lapangan;
+use App\Models\LapanganSlot;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
+use Illuminate\Validation\Rule;
 
 class PendaftaranController extends Controller
 {
@@ -121,15 +123,34 @@ class PendaftaranController extends Controller
             ->with('success', 'Lapangan berhasil ditambahkan!');
     }
 
-    public function showLapanganSchedule($venueId, $lapanganId)
+    public function papan()
+    {
+        $venue = Pendaftaran::with('lapangans')
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if (!$venue || $venue->lapangans->isEmpty()) {
+            return redirect()->route('fasilitas')
+                ->with('error', 'Silakan tambahkan lapangan terlebih dahulu untuk mengelola papan jadwal.');
+        }
+
+        $lapangan = $venue->lapangans->first();
+
+        return redirect()->route('fasilitas.lapangan.jadwal', [$venue->id, $lapangan->id]);
+    }
+
+    public function showLapanganSchedule(Request $request, $venueId, $lapanganId)
     {
         $venue = Pendaftaran::where('user_id', auth()->id())->findOrFail($venueId);
         $lapangan = $venue->lapangans()->findOrFail($lapanganId);
         $availableLapangans = $venue->lapangans()->get();
 
-        $date = request('date') ? Carbon::parse(request('date')) : now();
+        $date = $request->filled('date') ? Carbon::parse($request->input('date')) : now();
 
-        $timeslots = collect();
+        $timeslots = $lapangan->slots()
+            ->whereDate('tanggal', $date->toDateString())
+            ->orderBy('jam_mulai')
+            ->get();
 
         return view('pemiliklapangan.Papan.papan', compact(
             'venue',
@@ -138,6 +159,41 @@ class PendaftaranController extends Controller
             'date',
             'timeslots'
         ));
+    }
+
+    public function storeLapanganSlot(Request $request, $venueId, $lapanganId)
+    {
+        $venue = Pendaftaran::where('user_id', auth()->id())->findOrFail($venueId);
+        $lapangan = $venue->lapangans()->findOrFail($lapanganId);
+
+        $validated = $request->validate([
+            'tanggal' => ['required', 'date'],
+            'jam_mulai' => ['required', 'date_format:H:i'],
+            'jam_selesai' => ['required', 'date_format:H:i', 'after:jam_mulai'],
+            'harga' => ['nullable', 'integer', 'min:0'],
+            'status' => ['required', Rule::in(['available', 'booked', 'blocked'])],
+            'promo_status' => ['nullable', Rule::in(['none', 'promo'])],
+            'catatan' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        LapanganSlot::create([
+            'lapangan_id' => $lapangan->id,
+            'tanggal' => Carbon::parse($validated['tanggal'])->toDateString(),
+            'jam_mulai' => $validated['jam_mulai'],
+            'jam_selesai' => $validated['jam_selesai'],
+            'harga' => $validated['harga'] ?? 0,
+            'status' => $validated['status'],
+            'is_promo' => ($validated['promo_status'] ?? 'none') === 'promo',
+            'catatan' => $validated['catatan'] ?? null,
+        ]);
+
+        return redirect()
+            ->route('fasilitas.lapangan.jadwal', [
+                $venue->id,
+                $lapangan->id,
+                'date' => Carbon::parse($validated['tanggal'])->format('Y-m-d'),
+            ])
+            ->with('success', 'Slot jadwal berhasil ditambahkan.');
     }
 
     /**

@@ -11,7 +11,7 @@
         </a>
         <div>
           <p class="text-muted mb-1 small">Kelola Fasilitas &nbsp; • &nbsp; {{ $venue->namavenue }}</p>
-          <h3 class="mb-0 font-weight-bold text-dark">Detail Lapangan</h3>
+          <h3 class="mb-0 font-weight-bold text-dark">Detail Jadwal</h3>
         </div>
       </div>
 
@@ -40,6 +40,19 @@
         </div>
       </div>
 
+      @if(session('success'))
+        <div class="alert alert-success border-0 shadow-sm rounded-4 mb-4 d-flex align-items-center">
+          <i class="fas fa-check-circle text-success mr-2"></i>
+          <span>{{ session('success') }}</span>
+        </div>
+      @endif
+
+      @if($errors->any())
+        <div class="alert alert-danger border-0 shadow-sm rounded-4 mb-4">
+          <strong>Terjadi kesalahan.</strong> Silakan periksa kembali input jadwal.
+        </div>
+      @endif
+
       <div class="card border-0 shadow-sm rounded-4">
         <div class="card-body">
           <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between mb-4">
@@ -62,7 +75,9 @@
             </button>
           </div>
 
-          <div id="slotForm" class="card border-0 shadow-sm rounded-4 bg-light slot-form-wrapper mb-4 d-none">
+          <form action="{{ route('fasilitas.lapangan.jadwal.store', [$venue->id, $lapangan->id]) }}" method="POST" id="slotForm" class="card border-0 shadow-sm rounded-4 bg-light slot-form-wrapper mb-4 d-none">
+            @csrf
+            <input type="hidden" name="tanggal" value="{{ $date->format('Y-m-d') }}">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-3">
                 <h6 class="mb-0 font-weight-bold text-dark">Tambah Jadwal Slot</h6>
@@ -71,11 +86,17 @@
               <div class="row">
                 <div class="col-md-3 mb-3">
                   <label class="small font-weight-semibold text-muted">Jam Mulai</label>
-                  <input type="time" class="form-control rounded-lg" placeholder="08:00">
+                  <input type="time" name="jam_mulai" class="form-control rounded-lg @error('jam_mulai') is-invalid @enderror" value="{{ old('jam_mulai') }}" placeholder="08:00">
+                  @error('jam_mulai')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
                 </div>
                 <div class="col-md-3 mb-3">
                   <label class="small font-weight-semibold text-muted">Jam Selesai</label>
-                  <input type="time" class="form-control rounded-lg" placeholder="09:00">
+                  <input type="time" name="jam_selesai" class="form-control rounded-lg @error('jam_selesai') is-invalid @enderror" value="{{ old('jam_selesai') }}" placeholder="09:00">
+                  @error('jam_selesai')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
                 </div>
                 <div class="col-md-3 mb-3">
                   <label class="small font-weight-semibold text-muted">Harga</label>
@@ -83,35 +104,47 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text bg-white border-right-0">Rp</span>
                     </div>
-                    <input type="number" class="form-control border-left-0 rounded-right" placeholder="0">
+                    <input type="number" name="harga" class="form-control border-left-0 rounded-right @error('harga') is-invalid @enderror" value="{{ old('harga') }}" placeholder="0" min="0">
+                    @error('harga')
+                      <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                   </div>
                 </div>
                 <div class="col-md-3 mb-3">
                   <label class="small font-weight-semibold text-muted">Status Ketersediaan</label>
-                  <select class="form-control rounded-lg">
-                    <option value="available">Tersedia</option>
-                    <option value="booked">Sudah Dibooking</option>
-                    <option value="blocked">Blokir</option>
+                  <select name="status" class="form-control rounded-lg @error('status') is-invalid @enderror">
+                    <option value="available" {{ old('status') === 'available' ? 'selected' : '' }}>Tersedia</option>
+                    <option value="booked" {{ old('status') === 'booked' ? 'selected' : '' }}>Sudah Dibooking</option>
+                    <option value="blocked" {{ old('status') === 'blocked' ? 'selected' : '' }}>Blokir</option>
                   </select>
+                  @error('status')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
                 </div>
                 <div class="col-md-3 mb-3">
                   <label class="small font-weight-semibold text-muted">Status Promo</label>
-                  <select class="form-control rounded-lg">
-                    <option value="none">Tidak Ada</option>
-                    <option value="promo">Promo</option>
+                  <select name="promo_status" class="form-control rounded-lg @error('promo_status') is-invalid @enderror">
+                    <option value="none" {{ old('promo_status', 'none') === 'none' ? 'selected' : '' }}>Tidak Ada</option>
+                    <option value="promo" {{ old('promo_status') === 'promo' ? 'selected' : '' }}>Promo</option>
                   </select>
+                  @error('promo_status')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
                 </div>
                 <div class="col-md-9 mb-3">
                   <label class="small font-weight-semibold text-muted">Catatan (opsional)</label>
-                  <input type="text" class="form-control rounded-lg" placeholder="Contoh: Diskon 20% untuk member komunitas">
+                  <input type="text" name="catatan" class="form-control rounded-lg @error('catatan') is-invalid @enderror" value="{{ old('catatan') }}" placeholder="Contoh: Diskon 20% untuk member komunitas">
+                  @error('catatan')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
               <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-outline-secondary mr-2" id="cancelSlotForm">Batal</button>
-                <button type="button" class="btn btn-primary font-weight-bold">Simpan Slot</button>
+                <button type="submit" class="btn btn-primary font-weight-bold">Simpan Slot</button>
               </div>
             </div>
-          </div>
+          </form>
 
           @if($timeslots->isEmpty())
             <div class="empty-state border-0 rounded-4 text-center py-5">
@@ -131,22 +164,27 @@
                     'available' => 'slot-available',
                     'booked' => 'slot-booked',
                     'blocked' => 'slot-blocked',
-                  ][$slot['status']] ?? 'slot-available';
+                  ][$slot->status] ?? 'slot-available';
                 @endphp
                 <div class="schedule-slot {{ $statusClass }}">
-                  @if($slot['label'])
-                    <span class="slot-pill">{{ $slot['label'] }}</span>
+                  @if($slot->is_promo)
+                    <span class="slot-pill">Promo</span>
                   @endif
-                  <h6 class="slot-time mb-1">{{ $slot['start'] }} - {{ $slot['end'] }}</h6>
-                  @if($slot['status'] === 'booked')
-                    <p class="slot-price text-muted text-decoration-line-through mb-1">Rp {{ number_format($slot['price'], 0, ',', '.') }}</p>
+                  <h6 class="slot-time mb-1">{{ \Illuminate\Support\Carbon::parse($slot->jam_mulai)->format('H:i') }} - {{ \Illuminate\Support\Carbon::parse($slot->jam_selesai)->format('H:i') }}</h6>
+                  @if($slot->status === 'booked')
+                    <p class="slot-price text-muted text-decoration-line-through mb-1">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
                     <span class="slot-status">Booked</span>
-                  @elseif($slot['status'] === 'blocked')
-                    <p class="slot-price text-muted mb-1">Rp {{ number_format($slot['price'], 0, ',', '.') }}</p>
+                  @elseif($slot->status === 'blocked')
+                    <p class="slot-price text-muted mb-1">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
                     <span class="slot-status text-danger font-weight-bold">Blokir</span>
                   @else
-                    <p class="slot-price mb-1">Rp {{ number_format($slot['price'], 0, ',', '.') }}</p>
+                    <p class="slot-price mb-1">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
                     <span class="slot-status text-success font-weight-bold">Tersedia</span>
+                  @endif
+                  @if($slot->catatan)
+                    <p class="slot-note text-muted small mt-2 mb-0">
+                      <i class="fas fa-info-circle mr-1"></i>{{ $slot->catatan }}
+                    </p>
                   @endif
                 </div>
               @endforeach
@@ -243,6 +281,9 @@
     font-size: 0.8rem;
     font-weight: 600;
   }
+  .slot-note {
+    max-width: 180px;
+  }
   .slot-form-wrapper {
     border: 1px dashed rgba(1, 61, 157, 0.2) !important;
   }
@@ -307,6 +348,10 @@
         toggleForm(false);
       });
     }
+
+    @if($errors->any())
+      toggleForm(true);
+    @endif
   });
 </script>
 @endsection
