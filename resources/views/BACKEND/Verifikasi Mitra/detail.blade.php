@@ -42,7 +42,7 @@
                             <h6 class="text-muted">Informasi Pribadi</h6>
                             <table class="table table-borderless">
                                 <tr>
-                                    <td width="30%"><strong>Nama Anda:</strong></td>
+                                    <td width="30%"><strong>Nama Mitra:</strong></td>
                                     <td>{{ $mitra->nama_anda }}</td>
                                 </tr>
                                 <tr>

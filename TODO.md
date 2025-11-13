@@ -1,29 +1,14 @@
-# TODO: Sesuaikan Backoffice Review dengan Home Page
+# TODO: Make Testimonials Dynamic on Home Pages
 
-## 1. Update Database dan Model
-- [ ] Tambahkan kolom 'company' dan 'foto' ke migration reviews
-- [ ] Update model Review untuk fillable kolom baru
-- [ ] Jalankan migration
+## Tasks
+- [ ] Update resources/views/FRONTEND/home.blade.php to make testimonials fully dynamic
+- [ ] Update resources/views/user/homeuser.blade.php to make testimonials fully dynamic
+- [ ] Add JavaScript for testimonial navigation and counter updates
+- [ ] Test by adding/removing reviews and verifying frontend updates
 
-## 2. Update Backoffice Views
-- [ ] Update tambah_riview.blade.php untuk input company dan foto
-- [ ] Update edit_riview.blade.php untuk input company dan foto
-- [ ] Update review.blade.php untuk tampilan kolom baru
-
-## 3. Update Controller
-- [ ] Update ReviewController untuk handle kolom company dan foto
-- [ ] Tambahkan validasi dan file upload untuk foto
-
-## 4. Buat Seeder untuk Review
-- [ ] Buat ReviewSeeder dengan data Ir. Bagus Nathaniel Mahendra
-- [ ] Update DatabaseSeeder untuk include ReviewSeeder
-
-## 5. Update Frontend Home Pages
-- [ ] Update home.blade.php untuk testimonial dinamis dari database
-- [ ] Update homeuser.blade.php untuk testimonial dinamis dari database
-- [ ] Tambahkan route API jika perlu untuk fetch reviews
-
-## 6. Testing
-- [ ] Test backoffice CRUD review dengan kolom baru
-- [ ] Test frontend menampilkan testimonial dari database
-- [ ] Verifikasi tampilan cocok dengan home page
+## Details
+- Fetch all reviews from database
+- If no reviews, show placeholder message
+- If reviews exist, generate testimonial items dynamically
+- Update counter to show current/total
+- Ensure navigation buttons cycle through reviews properly

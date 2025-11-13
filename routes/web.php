@@ -108,6 +108,8 @@ Route::post('/isidata', [App\Http\Controllers\MitraController::class, 'store'])-
 
 Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     Route::get('/pemiliklapangan/dashboard', fn() => view('pemiliklapangan.Dashboard.dashboard'));
+    Route::get('/pemiliklapangan/analytics', fn() => view('pemiliklapangan.Analytics.index'))->name('pemilik.analytics');
+    Route::get('/analytics', fn() => view('pemiliklapangan.Analytics.index'))->name('pemilik.analytics.short');
     Route::get('/pemiliklapangan/komunitas', fn() => view('pemiliklapangan.pemilik_buat_komunitas'))->name('pemilik.komunitas');
     Route::get('/pemiliklapangan/membership', fn() => view('pemiliklapangan.pemilik_buat_membership'))->name('pemilik.membership');
     Route::get('/pemiliklapangan/event', fn() => view('pemiliklapangan.pemilik_buat_event'))->name('pemilik.event');
@@ -124,8 +126,19 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     Route::get('/papan', [PendaftaranController::class, 'papan'])->name('papan');
 
     // Route untuk halaman fasilitas
-    Route::get('/fasilitas', [PendaftaranController::class, 'fasilitas'])->name('fasilitas');
+    Route::get('/venue', [PendaftaranController::class, 'venue'])->name('venue');
+    Route::get('/detailvenue', [PendaftaranController::class, 'detailvenue'])->name('detailvenue');
     Route::get('/fasilitas/venue/{id}', [PendaftaranController::class, 'showVenue'])->name('fasilitas.detail');
+    Route::get('/fasilitas/venue/{id}/edit', [PendaftaranController::class, 'editVenue'])->name('fasilitas.edit');
+    Route::post('/fasilitas/venue/{id}/update', [PendaftaranController::class, 'updateVenue'])->name('fasilitas.update');
+    
+    Route::prefix('keuangan')->group(function () {
+        Route::get('/fasilitas', fn() => view('pemiliklapangan.Keuangan.fasilitas'))->name('keuangan.fasilitas');
+        Route::get('/komunitas', fn() => view('pemiliklapangan.Keuangan.komunitas'))->name('keuangan.komunitas');
+        Route::get('/membership', fn() => view('pemiliklapangan.Keuangan.membership'))->name('keuangan.membership');
+        Route::get('/event', fn() => view('pemiliklapangan.Keuangan.event'))->name('keuangan.event');
+    });
+    Route::get('/pemiliklapangan/pengaturan', [App\Http\Controllers\MitraController::class, 'pengaturan'])->name('pemilik.pengaturan');
         
     });
 

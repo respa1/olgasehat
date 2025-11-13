@@ -126,7 +126,7 @@
                         <form action="{{ route('insertinform') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
-                                <label for="image" class="form-label">Gambar Logo</label>
+                                <label for="image" class="form-label">Gambar Banner</label>
                                 <input type="file" id="image" name="logo" class="form-control @error('logo') is-invalid @enderror" accept="image/*">
                                 @error('logo')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -187,6 +187,31 @@
                                 @error('kategori')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="nomor_telepon" class="form-label">Nomor Telepon <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">+62</span>
+                                    </div>
+                                    <input type="text" id="nomor_telepon" name="nomor_telepon" class="form-control @error('nomor_telepon') is-invalid @enderror" 
+                                           placeholder="81234567890" value="{{ old('nomor_telepon') }}">
+                                </div>
+                                @error('nomor_telepon')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                                <small class="text-muted">Masukkan nomor telepon tanpa kode negara (+62)</small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email_venue" class="form-label">Email Venue <span class="text-danger">*</span></label>
+                                <input type="email" id="email_venue" name="email_venue" class="form-control @error('email_venue') is-invalid @enderror" 
+                                       placeholder="venue@example.com" value="{{ old('email_venue') }}">
+                                @error('email_venue')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                                <small class="text-muted">Email untuk kontak venue</small>
                             </div>
 
                            <button type="submit" class="btn btn-primary">Selanjutnya →</button>

@@ -283,99 +283,66 @@
 
                 @php
                     $reviews = \App\Models\Review::all();
-                    $currentReview = $reviews->first();
                 @endphp
-                @if($currentReview)
-                <div class="testimonial-item absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100">
-                    <div class="flex items-start space-x-4 mb-4">
-                        @if($currentReview->foto)
-                            <img src="{{ asset('storage/' . $currentReview->foto) }}" alt="{{ $currentReview->nama }}" class="w-14 h-14 rounded-full object-cover border-3 border-gray-100" />
-                        @else
-                            <img src="{{ asset('assets/Goes Natha bos .jpg') }}" alt="{{ $currentReview->nama }}" class="w-14 h-14 rounded-full object-cover border-3 border-gray-100" />
-                        @endif
-                        <div>
-                            <p class="font-bold text-lg sm:text-xl text-gray-900 leading-snug">{{ $currentReview->nama }}</p>
-                            <p class="text-sm text-blue-700 font-semibold mt-0.5">{{ $currentReview->company ?? 'Pengguna Olga Sehat' }}</p>
-                            <div class="flex items-center mt-2">
-                                @for($i = 1; $i <= 5; $i++)
-                                    <i class="fas fa-star {{ $i <= $currentReview->rate ? 'text-yellow-400' : 'text-gray-300' }}"></i>
-                                @endfor
-                                <span class="ml-2 text-sm text-gray-600 font-medium">{{ $currentReview->rate }}.0</span>
+                @if($reviews->count() > 0)
+                    @foreach($reviews as $index => $review)
+                        <div class="testimonial-item absolute inset-0 transition-opacity duration-700 ease-in-out {{ $index === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none' }}">
+                            <div class="flex items-start space-x-4 mb-4">
+                                @if($review->foto)
+                                    <img src="{{ asset('storage/' . $review->foto) }}" alt="{{ $review->nama }}" class="w-14 h-14 rounded-full object-cover border-3 border-gray-100" />
+                                @else
+                                    <img src="{{ asset('assets/Goes Natha bos .jpg') }}" alt="{{ $review->nama }}" class="w-14 h-14 rounded-full object-cover border-3 border-gray-100" />
+                                @endif
+                                <div>
+                                    <p class="font-bold text-lg sm:text-xl text-gray-900 leading-snug">{{ $review->nama }}</p>
+                                    <p class="text-sm text-blue-700 font-semibold mt-0.5">{{ $review->company ?? 'Pengguna Olga Sehat' }}</p>
+                                    <div class="flex items-center mt-2">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <i class="fas fa-star {{ $i <= $review->rate ? 'text-yellow-400' : 'text-gray-300' }}"></i>
+                                        @endfor
+                                        <span class="ml-2 text-sm text-gray-600 font-medium">{{ $review->rate }}/5</span>
+                                    </div>
+                                </div>
+                                <div class="text-blue-200 text-5xl font-extrabold select-none ml-auto hidden md:block">"</div>
                             </div>
+                            <p class="text-gray-800 text-base md:text-lg leading-relaxed italic border-l-4 border-blue-500 pl-4 py-1">
+                                "{{ $review->ulasan }}"
+                            </p>
                         </div>
-                        <div class="text-blue-200 text-5xl font-extrabold select-none ml-auto hidden md:block">“</div>
-                    </div>
-                    <p class="text-gray-800 text-base md:text-lg leading-relaxed italic border-l-4 border-blue-500 pl-4 py-1">
-                        "{{ $currentReview->ulasan }}"
-                    </p>
-                </div>
+                    @endforeach
                 @else
-                <div class="testimonial-item absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100">
-                    <div class="flex items-start space-x-4 mb-4">
-                        <img src="{{ asset('assets/Goes Natha bos .jpg') }}" alt="Ir. Bagus Nathaniel Mahendra" class="w-14 h-14 rounded-full object-cover border-3 border-gray-100" />
-                        <div>
-                            <p class="font-bold text-lg sm:text-xl text-gray-900 leading-snug">Ir. Bagus Nathaniel Mahendra, M.Eng.</p>
-                            <p class="text-sm text-blue-700 font-semibold mt-0.5">Backbone Indonesia</p>
-                            <div class="flex items-center mt-2">
-                                <i class="fas fa-star text-yellow-400"></i>
-                                <i class="fas fa-star text-yellow-400"></i>
-                                <i class="fas fa-star text-yellow-400"></i>
-                                <i class="fas fa-star text-yellow-400"></i>
-                                <i class="fas fa-star text-yellow-400"></i>
-                                <span class="ml-2 text-sm text-gray-600 font-medium">5.0</span>
+                    <div class="testimonial-item absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100">
+                        <div class="flex items-center justify-center h-full">
+                            <div class="text-center">
+                                <i class="fas fa-comments text-gray-300 text-4xl mb-4"></i>
+                                <p class="text-gray-500 text-lg">Belum ada testimoni.</p>
+                                <p class="text-gray-400 text-sm">Testimoni akan muncul di sini setelah data ditambahkan.</p>
                             </div>
                         </div>
-                        <div class="text-blue-200 text-5xl font-extrabold select-none ml-auto hidden md:block">“</div>
                     </div>
-                    <p class="text-gray-800 text-base md:text-lg leading-relaxed italic border-l-4 border-blue-500 pl-4 py-1">
-                        "Olga Sehat membawa revolusi di kalangan penggemar olahraga. Aplikasi ini memudahkan pencarian aktivitas olahraga, mengembangkan komunitas olahraga, dan memesan tempat olahraga. Ini adalah ekosistem olahraga yang menyeluruh."
-                    </p>
-                </div>
                 @endif
-
-                <div class="testimonial-item absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 pointer-events-none">
-                    <div class="flex items-start space-x-4 mb-4">
-                        <img src="{{ asset('assets/ir_bagus.jpg') }}" alt="Testimonial User 2" class="w-14 h-14 rounded-full object-cover border-3 border-gray-100" />
-                        <div>
-                            <p class="font-extrabold text-lg sm:text-xl text-gray-900 leading-snug">Testimonial User 2</p>
-                            <p class="text-sm text-blue-700 font-semibold mt-0.5">Company 2</p>
-                        </div>
-                        <div class="text-blue-200 text-5xl font-extrabold select-none ml-auto hidden md:block">“</div>
-                    </div>
-                    <p class="text-gray-800 text-base md:text-lg leading-relaxed italic border-l-4 border-blue-500 pl-4 py-1">
-                        "Sewa lapangan jadi sangat mudah dan cepat! Saya tidak perlu repot lagi datang ke venue untuk sekedar booking. Sangat direkomendasikan untuk komunitas olahraga."
-                    </p>
-                </div>
-
-                <div class="testimonial-item absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 pointer-events-none">
-                    <div class="flex items-start space-x-4 mb-4">
-                        <img src="{{ asset('assets/ir_bagus.jpg') }}" alt="Testimonial User 3" class="w-14 h-14 rounded-full object-cover border-3 border-gray-100" />
-                        <div>
-                            <p class="font-extrabold text-lg sm:text-xl text-gray-900 leading-snug">Testimonial User 3</p>
-                            <p class="text-sm text-blue-700 font-semibold mt-0.5">Company 3</p>
-                        </div>
-                        <div class="text-blue-200 text-5xl font-extrabold select-none ml-auto hidden md:block">“</div>
-                    </div>
-                    <p class="text-gray-800 text-base md:text-lg leading-relaxed italic border-l-4 border-blue-500 pl-4 py-1">
-                        "Manajemen venue kami menjadi sangat efisien sejak menggunakan Olga Sehat. Proses booking, pembayaran, dan penjadwalan lapangan bisa kami lakukan dari satu platform."
-                    </p>
-                </div>
             </div>
 
             <div class="flex items-center justify-between mt-6 pt-3 border-t border-gray-100">
-                <span id="testimonial-counter" class="text-sm font-bold text-blue-700 tracking-wider">01/03</span>
+                <span id="testimonial-counter" class="text-sm font-bold text-blue-700 tracking-wider">
+                    @if($reviews->count() > 0)
+                        01/{{ str_pad($reviews->count(), 2, '0', STR_PAD_LEFT) }}
+                    @else
+                        00/00
+                    @endif
+                </span>
 
                 <div class="flex space-x-3">
                     <button id="prev-btn" aria-label="Previous"
                             class="text-blue-700 hover:text-white w-8 h-8 flex items-center justify-center rounded-full bg-white border border-blue-700/50
-                                   hover:bg-blue-700 transition-all duration-200 shadow-md">
+                                   hover:bg-blue-700 transition-all duration-200 shadow-md {{ $reviews->count() <= 1 ? 'opacity-50 cursor-not-allowed' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                     </button>
                     <button id="next-btn" aria-label="Next"
                             class="text-blue-700 hover:text-white w-8 h-8 flex items-center justify-center rounded-full bg-white border border-blue-700/50
-                                   hover:bg-blue-700 transition-all duration-200 shadow-md">
+                                   hover:bg-blue-700 transition-all duration-200 shadow-md {{ $reviews->count() <= 1 ? 'opacity-50 cursor-not-allowed' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                         </svg>
@@ -393,5 +360,56 @@
   AOS.init({
     duration: 1000,
     once: true,
+  });
+
+  // Testimonial navigation
+  document.addEventListener('DOMContentLoaded', function() {
+    const testimonialItems = document.querySelectorAll('.testimonial-item');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const counter = document.getElementById('testimonial-counter');
+    let currentIndex = 0;
+
+    function updateTestimonials() {
+      testimonialItems.forEach((item, index) => {
+        if (index === currentIndex) {
+          item.classList.remove('opacity-0', 'pointer-events-none');
+          item.classList.add('opacity-100');
+        } else {
+          item.classList.remove('opacity-100');
+          item.classList.add('opacity-0', 'pointer-events-none');
+        }
+      });
+
+      // Update counter
+      const total = testimonialItems.length;
+      const current = (currentIndex + 1).toString().padStart(2, '0');
+      const totalStr = total.toString().padStart(2, '0');
+      counter.textContent = `${current}/${totalStr}`;
+    }
+
+    if (prevBtn && nextBtn) {
+      prevBtn.addEventListener('click', function() {
+        if (testimonialItems.length > 1) {
+          currentIndex = (currentIndex - 1 + testimonialItems.length) % testimonialItems.length;
+          updateTestimonials();
+        }
+      });
+
+      nextBtn.addEventListener('click', function() {
+        if (testimonialItems.length > 1) {
+          currentIndex = (currentIndex + 1) % testimonialItems.length;
+          updateTestimonials();
+        }
+      });
+    }
+
+    // Auto-rotate testimonials every 5 seconds if more than 1
+    if (testimonialItems.length > 1) {
+      setInterval(function() {
+        currentIndex = (currentIndex + 1) % testimonialItems.length;
+        updateTestimonials();
+      }, 5000);
+    }
   });
 </script>
