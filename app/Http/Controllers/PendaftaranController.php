@@ -265,17 +265,41 @@ class PendaftaranController extends Controller
         $slot = $lapangan->slots()->findOrFail($slotId);
 
         // Return JSON for AJAX request
-        if ($request->ajax() || $request->wantsJson()) {
+        if ($request->ajax() || $request->wantsJson() || $request->header('Accept') === 'application/json') {
+            // Format waktu ke HH:mm untuk input type="time"
+            $jamMulai = $slot->jam_mulai;
+            $jamSelesai = $slot->jam_selesai;
+            
+            // Jika format time dari database, pastikan format HH:mm
+            if ($jamMulai instanceof \DateTime || $jamMulai instanceof \Carbon\Carbon) {
+                $jamMulai = $jamMulai->format('H:i');
+            } elseif (is_string($jamMulai)) {
+                // Parse string time ke format HH:mm
+                $parts = explode(':', $jamMulai);
+                if (count($parts) >= 2) {
+                    $jamMulai = str_pad($parts[0], 2, '0', STR_PAD_LEFT) . ':' . str_pad($parts[1], 2, '0', STR_PAD_LEFT);
+                }
+            }
+            
+            if ($jamSelesai instanceof \DateTime || $jamSelesai instanceof \Carbon\Carbon) {
+                $jamSelesai = $jamSelesai->format('H:i');
+            } elseif (is_string($jamSelesai)) {
+                $parts = explode(':', $jamSelesai);
+                if (count($parts) >= 2) {
+                    $jamSelesai = str_pad($parts[0], 2, '0', STR_PAD_LEFT) . ':' . str_pad($parts[1], 2, '0', STR_PAD_LEFT);
+                }
+            }
+            
             return response()->json([
                 'success' => true,
                 'slot' => [
                     'id' => $slot->id,
-                    'jam_mulai' => $slot->jam_mulai,
-                    'jam_selesai' => $slot->jam_selesai,
-                    'harga' => $slot->harga,
+                    'jam_mulai' => $jamMulai,
+                    'jam_selesai' => $jamSelesai,
+                    'harga' => (int) $slot->harga,
                     'status' => $slot->status,
-                    'is_promo' => $slot->is_promo,
-                    'catatan' => $slot->catatan,
+                    'is_promo' => (bool) $slot->is_promo,
+                    'catatan' => $slot->catatan ?? '',
                 ]
             ]);
         }
