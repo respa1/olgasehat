@@ -5,12 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pendaftaran;
 use App\Models\VenueGallery;
+use App\Models\Mitra;
 use Illuminate\Support\Facades\Storage;
 
 class PendaftaranController extends Controller
 {
     public function informasi(){
-        return view('pemiliklapangan.Informasi.informasi');
+        $user = auth()->user();
+        $mitra = null;
+        
+        if ($user) {
+            $mitra = Mitra::where('user_id', $user->id)->first();
+        }
+        
+        return view('pemiliklapangan.Informasi.informasi', compact('mitra'));
     }
 
     public function detail($id = null){

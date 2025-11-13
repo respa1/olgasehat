@@ -195,8 +195,23 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">+62</span>
                                     </div>
+                                    @php
+                                        // Ambil nomor telepon dari mitra jika ada, atau dari old input
+                                        $defaultPhone = old('nomor_telepon');
+                                        if (!$defaultPhone && $mitra && $mitra->kontak_bisnis) {
+                                            $rawPhone = trim($mitra->kontak_bisnis);
+                                            // Hilangkan +62 atau 62 di depan jika ada
+                                            if (\Illuminate\Support\Str::startsWith($rawPhone, '+62')) {
+                                                $defaultPhone = substr($rawPhone, 3);
+                                            } elseif (\Illuminate\Support\Str::startsWith($rawPhone, '62')) {
+                                                $defaultPhone = substr($rawPhone, 2);
+                                            } else {
+                                                $defaultPhone = $rawPhone;
+                                            }
+                                        }
+                                    @endphp
                                     <input type="text" id="nomor_telepon" name="nomor_telepon" class="form-control @error('nomor_telepon') is-invalid @enderror" 
-                                           placeholder="81234567890" value="{{ old('nomor_telepon') }}">
+                                           placeholder="81234567890" value="{{ $defaultPhone }}">
                                 </div>
                                 @error('nomor_telepon')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -206,8 +221,15 @@
 
                             <div class="mb-3">
                                 <label for="email_venue" class="form-label">Email Venue <span class="text-danger">*</span></label>
+                                @php
+                                    // Ambil email dari mitra jika ada, atau dari old input
+                                    $defaultEmail = old('email_venue');
+                                    if (!$defaultEmail && $mitra && $mitra->email_bisnis) {
+                                        $defaultEmail = $mitra->email_bisnis;
+                                    }
+                                @endphp
                                 <input type="email" id="email_venue" name="email_venue" class="form-control @error('email_venue') is-invalid @enderror" 
-                                       placeholder="venue@example.com" value="{{ old('email_venue') }}">
+                                       placeholder="venue@example.com" value="{{ $defaultEmail }}">
                                 @error('email_venue')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
