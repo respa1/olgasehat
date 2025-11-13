@@ -63,7 +63,11 @@ class PendaftaranController extends Controller
         return view('pemiliklapangan.Papan.papan');
     }
 
-    public function fasilitas(Request $request){
+    public function venue(){
+        return view('pemiliklapangan.Fasilitas.venue');
+    }
+
+    public function detailvenue(Request $request){
         $venues = Pendaftaran::all();
         return view('pemiliklapangan.Fasilitas.detailvenue', compact('venues'));
     }

@@ -124,7 +124,8 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     Route::get('/papan', [PendaftaranController::class, 'papan'])->name('papan');
 
     // Route untuk halaman fasilitas
-    Route::get('/fasilitas', [PendaftaranController::class, 'fasilitas'])->name('fasilitas');
+    Route::get('/venue', [PendaftaranController::class, 'venue'])->name('venue');
+    Route::get('/detailvenue', [PendaftaranController::class, 'detailvenue'])->name('detailvenue');
     Route::get('/fasilitas/venue/{id}', [PendaftaranController::class, 'showVenue'])->name('fasilitas.detail');
         
     });

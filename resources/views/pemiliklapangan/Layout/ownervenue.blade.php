@@ -103,7 +103,7 @@
 
           <!-- Kelola Fasilitas -->
           <li class="nav-item">
-            <a href="/fasilitas" class="nav-link">
+            <a href="/venue" class="nav-link">
               <i class="nav-icon fas fa-home"></i>
               <p>Kelola Fasilitas</p>
             </a>
