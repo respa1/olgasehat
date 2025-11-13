@@ -14,23 +14,23 @@ use App\Http\Controllers\PendaftaranController;
 // ======================================================
 // PUBLIC ROUTES (No Authentication Required)
 // ======================================================
-Route::get('/', fn() => view('frontend.home'));
+Route::get('/', fn() => view('FRONTEND.home'));
 
 Route::get('/blog-news', [BeritaController::class, 'index'])->name('frontend.blog-news');
 Route::get('/blog-news-detail/{id}', [BeritaController::class, 'show'])->name('frontend.blog-news-detail');
-Route::get('/membership-detail', fn() => view('frontend.membership_detail'));
-Route::get('/community', fn() => view('frontend.community'));
-Route::get('/community-detail', fn() => view('frontend.community_detail'));
-Route::get('/confirm', fn() => view('frontend.confirm'));
-Route::get('/daftar-pemilik', fn() => view('frontend.daftar_pemilik'));
-Route::get('/daftar-pemilik-detail', fn() => view('frontend.daftar_pemilik_detail'));
-Route::get('/login-pemilik', fn() => view('frontend.login_pemilik'));
-Route::get('/payment', fn() => view('frontend.payment'));
-Route::get('/success', fn() => view('frontend.success'));
-Route::get('/venue', fn() => view('frontend.venue'));
-Route::get('/healthy', fn() => view('frontend.healthy'));
-Route::get('/venue-detail', fn() => view('frontend.venue_detail'));
-Route::get('/klinik', fn() => view('frontend.klinik'));
+Route::get('/membership-detail', fn() => view('FRONTEND.membership_detail'));
+Route::get('/community', fn() => view('FRONTEND.community'));
+Route::get('/community-detail', fn() => view('FRONTEND.community_detail'));
+Route::get('/confirm', fn() => view('FRONTEND.confirm'));
+Route::get('/daftar-pemilik', fn() => view('FRONTEND.daftar_pemilik'));
+Route::get('/daftar-pemilik-detail', fn() => view('FRONTEND.daftar_pemilik_detail'));
+Route::get('/login-pemilik', fn() => view('FRONTEND.login_pemilik'));
+Route::get('/payment', fn() => view('FRONTEND.payment'));
+Route::get('/success', fn() => view('FRONTEND.success'));
+Route::get('/venue', fn() => view('FRONTEND.venue'));
+Route::get('/healthy', fn() => view('FRONTEND.healthy'));
+Route::get('/venue-detail', fn() => view('FRONTEND.venue_detail'));
+Route::get('/klinik', fn() => view('FRONTEND.klinik'));
 
 // ======================================================
 // AUTHENTICATION ROUTES
@@ -126,7 +126,6 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     Route::get('/papan', [PendaftaranController::class, 'papan'])->name('papan');
 
     // Route untuk halaman fasilitas
-    Route::get('/venue', [PendaftaranController::class, 'venue'])->name('venue');
     Route::get('/fasilitas', [PendaftaranController::class, 'venue'])->name('fasilitas');
     Route::get('/fasilitas/venue/{id}', [PendaftaranController::class, 'showVenue'])->name('fasilitas.detail');
     Route::get('/fasilitas/venue/{id}/edit', [PendaftaranController::class, 'editVenue'])->name('fasilitas.edit');
