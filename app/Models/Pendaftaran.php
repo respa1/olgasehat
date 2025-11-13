@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Lapangan;
 
 class Pendaftaran extends Model
 {
@@ -23,5 +24,10 @@ class Pendaftaran extends Model
     public function mitra()
     {
         return $this->belongsTo(Mitra::class, 'user_id', 'user_id');
+    }
+
+    public function lapangans()
+    {
+        return $this->hasMany(Lapangan::class);
     }
 }

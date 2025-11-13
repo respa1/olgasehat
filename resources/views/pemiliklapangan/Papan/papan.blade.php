@@ -1,517 +1,197 @@
 @extends('pemiliklapangan.layout.ownervenue')
 
 @section('content')
+<div class="content-wrapper schedule-page bg-light">
+  <section class="content pt-4 pb-5">
+    <div class="container-fluid">
 
-<div class="content-wrapper papan-schedule">
-    <div class="content-header border-0 pb-0">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-sm-12">
-                    <div class="d-flex align-items-center mb-3">
-                        <a href="{{ route('fasilitas') }}" class="text-secondary mr-3 back-link">
-                            <i class="fas fa-arrow-left"></i>
-                        </a>
-                        <div>
-                            <p class="breadcrumb-papan mb-1 text-muted">Kelola Fasilitas &nbsp; • &nbsp; Gelora Senayan Court</p>
-                            <h1 class="page-title mb-0">Detail Lapangan</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="d-flex align-items-center mb-4">
+        <a href="{{ route('fasilitas.detail', $venue->id) }}" class="btn btn-light border rounded-circle mr-3">
+          <i class="fas fa-arrow-left"></i>
+        </a>
+        <div>
+          <p class="text-muted mb-1 small">Kelola Fasilitas &nbsp; • &nbsp; {{ $venue->namavenue }}</p>
+          <h3 class="mb-0 font-weight-bold text-dark">Detail Lapangan</h3>
         </div>
-    </div>
+      </div>
 
-    <div class="content pt-0">
-        <div class="container-fluid">
-            {{-- Header Card --}}
-            <div class="card shadow-sm border-0 detail-card mb-4">
-                <div class="card-body">
-                    <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between">
-                        <div class="d-flex align-items-center mb-4 mb-lg-0">
-                            <div class="facility-avatar mr-3">
-                                <img src="{{ asset('logovenue/phpmyadmin.png') }}" alt="Gelora Senayan Court">
-                            </div>
-                            <div>
-                                <p class="text-uppercase text-muted small mb-1">Gelora Senayan Court</p>
-                                <h4 class="mb-3 font-weight-bold">Gelora Senayan Court</h4>
-                                <div class="info-badges d-flex flex-wrap">
-                                    <div class="badge-pill-info mr-2 mb-2">
-                                        <span class="label">Jenis Lapangan</span>
-                                        <span class="value">Wood</span>
-                                    </div>
-                                    <div class="badge-pill-info mr-2 mb-2">
-                                        <span class="label">Ukuran Lapangan</span>
-                                        <span class="value">100 x 50</span>
-                                    </div>
-                                    <div class="badge-pill-info mb-2">
-                                        <span class="label">Olahraga</span>
-                                        <span class="value">Sepak Bola</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-lg-right">
-                            <a href="#" class="btn btn-outline-primary mr-2 btn-pill">Preview Lapangan</a>
-                            <button class="btn btn-light btn-icon" type="button">
-                                <i class="fas fa-ellipsis-h"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <p class="mt-4 text-muted small mb-0">Fasilitas premium di pusat kota Jakarta dengan akses mudah dan dukungan peralatan profesional.</p>
-                </div>
-                <div class="card-footer bg-white pt-3 pb-0">
-                    <ul class="nav nav-tabs detail-tabs border-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Skema Harga</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Jadwal</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Galeri</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Informasi Penting</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Pengaturan Lapangan Multi-fungsi</a>
-                        </li>
-                    </ul>
-                </div>
+      <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body d-flex flex-column flex-lg-row align-items-lg-center justify-content-between">
+          <div class="d-flex align-items-center mb-3 mb-lg-0">
+            <div class="lapangan-avatar mr-3">
+              <i class="fas fa-futbol"></i>
             </div>
-
-            {{-- Price Schedule --}}
-            <div class="card shadow-sm border-0 mb-4">
-                <div class="card-header d-flex flex-wrap align-items-center justify-content-between bg-white border-0">
-                    <div>
-                        <h5 class="mb-1">Harga Lapangan</h5>
-                        <span class="text-muted small">Pengaturan Harga Lapangan</span>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div class="dropdown mr-3">
-                            <button class="btn btn-white border dropdown-toggle btn-pill" type="button" data-toggle="dropdown">
-                                Default
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Default</a>
-                                <a class="dropdown-item" href="#">Promo Akhir Pekan</a>
-                            </div>
-                        </div>
-                        <button class="btn btn-outline-primary mr-2 btn-pill" type="button" data-toggle="modal" data-target="#modalTambahPeriode">
-                            <i class="fas fa-plus mr-1"></i> Tambah Periode Harga
-                        </button>
-                        <div class="switch-toggle">
-                            <input type="checkbox" id="toggle-harga" checked>
-                            <label for="toggle-harga"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body pt-0">
-                    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-                        <ul class="nav nav-pills nav-schedule mb-3 mb-md-0">
-                            <li class="nav-item"><a class="nav-link active" href="#">Senin</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Selasa</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Rabu</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Kamis</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Jumat</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Sabtu</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Minggu</a></li>
-                        </ul>
-                        <button class="btn btn-primary btn-pill" data-toggle="modal" data-target="#modalTambahHarga">
-                            <i class="fas fa-plus mr-1"></i> Tambah Harga
-                        </button>
-                    </div>
-
-                    <div class="table-responsive schedule-table">
-                        <table class="table mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Jam Awal</th>
-                                    <th>Jam Akhir</th>
-                                    <th>Harga Per-Slot</th>
-                                    <th>Interval</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>08:00</td>
-                                    <td>12:00</td>
-                                    <td>Rp 250.000</td>
-                                    <td>1 Jam</td>
-                                    <td><span class="status-pill status-active">Aktif</span></td>
-                                    <td class="text-right">
-                                        <button class="btn btn-sm btn-light btn-icon"><i class="fas fa-ellipsis-h"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>12:00</td>
-                                    <td>16:00</td>
-                                    <td>Rp 300.000</td>
-                                    <td>1 Jam</td>
-                                    <td><span class="status-pill status-active">Aktif</span></td>
-                                    <td class="text-right">
-                                        <button class="btn btn-sm btn-light btn-icon"><i class="fas fa-ellipsis-h"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>16:00</td>
-                                    <td>22:00</td>
-                                    <td>Rp 350.000</td>
-                                    <td>1 Jam</td>
-                                    <td><span class="status-pill status-inactive">Tidak Aktif</span></td>
-                                    <td class="text-right">
-                                        <button class="btn btn-sm btn-light btn-icon"><i class="fas fa-ellipsis-h"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div>
+              <span class="badge badge-pill badge-light text-primary font-weight-semibold px-3 py-2 mb-2">{{ $venue->kategori ?? 'Olahraga' }}</span>
+              <h4 class="text-dark font-weight-bold mb-1">{{ $lapangan->nama }}</h4>
+              <p class="text-muted mb-0 small">Bagikan jadwal dan kelola harga untuk lapangan ini.</p>
             </div>
-
-            {{-- Special Price --}}
-            <div class="card shadow-sm border-0 mb-5">
-                <div class="card-header bg-white border-0 d-flex align-items-center justify-content-between flex-wrap">
-                    <div>
-                        <h5 class="mb-1">Harga Khusus</h5>
-                        <span class="text-muted small">Rujukan Harga Lapangan</span>
-                    </div>
-                    <button class="btn btn-outline-primary btn-pill" data-toggle="modal" data-target="#modalTambahHarga">
-                        <i class="fas fa-plus mr-1"></i> Tambah Harga
-                    </button>
-                </div>
-                <div class="card-body pt-0">
-                    <div class="table-responsive schedule-table">
-                        <table class="table mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Tanggal</th>
-                                    <th>Harga Baru</th>
-                                    <th>Rujukan Harga Lapangan</th>
-                                    <th>Keterangan</th>
-                                    <th class="text-right"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>18 Nov 2025</td>
-                                    <td>Rp 450.000</td>
-                                    <td>Paket Weekend</td>
-                                    <td>Promo akhir pekan</td>
-                                    <td class="text-right">
-                                        <button class="btn btn-sm btn-light btn-icon"><i class="fas fa-ellipsis-h"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>25 Nov 2025</td>
-                                    <td>Rp 500.000</td>
-                                    <td>Komunitas</td>
-                                    <td>Turnamen internal</td>
-                                    <td class="text-right">
-                                        <button class="btn btn-sm btn-light btn-icon"><i class="fas fa-ellipsis-h"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="5" class="text-center text-muted py-4">
-                                        Tambahkan harga khusus untuk menampilkan data di sini.
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+          </div>
+          <div class="w-100 w-lg-auto d-flex align-items-center justify-content-lg-end flex-wrap">
+            <label class="text-muted small font-weight-semibold mr-2 mb-2 mb-lg-0" for="lapanganSelector">Pilih Lapangan</label>
+            <select id="lapanganSelector" class="form-control custom-select shadow-sm w-auto" onchange="window.location.href = this.value;">
+              @foreach($availableLapangans as $item)
+                <option value="{{ route('fasilitas.lapangan.jadwal', [$venue->id, $item->id]) }}" {{ $item->id === $lapangan->id ? 'selected' : '' }}>
+                  {{ $venue->namavenue }} - {{ $item->nama }}
+                </option>
+              @endforeach
+            </select>
+          </div>
         </div>
-    </div>
-</div>
+      </div>
 
-{{-- Modal Tambah Harga --}}
-<div class="modal fade" id="modalTambahHarga" tabindex="-1" role="dialog" aria-labelledby="modalTambahHargaLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title font-weight-bold" id="modalTambahHargaLabel">Tambah Harga</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Hari</label>
-                        <select class="form-control">
-                            <option>Senin</option>
-                            <option>Selasa</option>
-                            <option>Rabu</option>
-                            <option>Kamis</option>
-                            <option>Jumat</option>
-                            <option>Sabtu</option>
-                            <option>Minggu</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label d-flex align-items-center">Interval Slot <i class="fas fa-info-circle text-muted ml-2"></i></label>
-                        <select class="form-control">
-                            <option>1 Jam</option>
-                            <option>1.5 Jam</option>
-                            <option>2 Jam</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Jam Mulai <span class="text-danger">*</span></label>
-                        <input type="time" class="form-control" value="08:00">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Jam Selesai <span class="text-danger">*</span></label>
-                        <input type="time" class="form-control" value="22:00">
-                    </div>
-                    <div class="col-md-12 mb-3">
-                        <label class="form-label">Harga Per Slot <span class="text-danger">*</span></label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Rp</span>
-                            </div>
-                            <input type="number" class="form-control" value="0">
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-3">
-                        <label class="form-label d-flex align-items-center">Aktifkan Jadwal <span class="text-danger ml-1">*</span> <i class="fas fa-info-circle text-muted ml-2"></i></label>
-                        <div class="d-flex align-items-center">
-                            <div class="switch-toggle mr-3">
-                                <input type="checkbox" id="toggle-modal" checked>
-                                <label for="toggle-modal"></label>
-                            </div>
-                            <span class="text-muted">Aktif</span>
-                        </div>
-                    </div>
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body">
+          <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between mb-4">
+            <form action="{{ route('fasilitas.lapangan.jadwal', [$venue->id, $lapangan->id]) }}" method="GET" class="d-flex align-items-center flex-wrap">
+              <label for="datePicker" class="text-muted small font-weight-semibold mr-3 mb-2 mb-lg-0">Tanggal</label>
+              <div class="input-group date-picker shadow-sm border rounded">
+                <input
+                  type="date"
+                  id="datePicker"
+                  name="date"
+                  value="{{ $date->format('Y-m-d') }}"
+                  class="form-control border-0">
+                <div class="input-group-append">
+                  <span class="input-group-text bg-white border-0"><i class="far fa-calendar"></i></span>
                 </div>
-            </div>
-            <div class="modal-footer border-0 pt-0">
-                <button type="button" class="btn btn-light btn-pill" data-dismiss="modal">Kembali</button>
-                <button type="button" class="btn btn-primary btn-pill">Simpan</button>
-            </div>
-        </div>
-    </div>
-</div>
+              </div>
+            </form>
+            <button class="btn btn-primary font-weight-bold shadow-sm mt-3 mt-lg-0">
+              <i class="fas fa-plus mr-2"></i>Tambah Slot
+            </button>
+          </div>
 
-{{-- Modal Tambah Periode --}}
-<div class="modal fade" id="modalTambahPeriode" tabindex="-1" role="dialog" aria-labelledby="modalTambahPeriodeLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title font-weight-bold" id="modalTambahPeriodeLabel">Tambah Periode Harga</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Nama Periode</label>
-                    <input type="text" class="form-control" placeholder="Contoh: Periode Akhir Tahun">
-                </div>
-                <div class="form-group">
-                    <label>Deskripsi</label>
-                    <textarea class="form-control" rows="3" placeholder="Keterangan singkat periode harga"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Rentang Tanggal</label>
-                    <input type="text" class="form-control" placeholder="Pilih tanggal">
-                </div>
-            </div>
-            <div class="modal-footer border-0 pt-0">
-                <button type="button" class="btn btn-light btn-pill" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-primary btn-pill">Simpan</button>
-            </div>
+          <div class="d-flex flex-wrap schedule-slot-grid">
+            @foreach($timeslots as $slot)
+              @php
+                $statusClass = [
+                  'available' => 'slot-available',
+                  'booked' => 'slot-booked',
+                  'blocked' => 'slot-blocked',
+                ][$slot['status']] ?? 'slot-available';
+              @endphp
+              <div class="schedule-slot {{ $statusClass }}">
+                @if($slot['label'])
+                  <span class="slot-pill">{{ $slot['label'] }}</span>
+                @endif
+                <h6 class="slot-time mb-1">{{ $slot['start'] }} - {{ $slot['end'] }}</h6>
+                @if($slot['status'] === 'booked')
+                  <p class="slot-price text-muted text-decoration-line-through mb-1">Rp {{ number_format($slot['price'], 0, ',', '.') }}</p>
+                  <span class="slot-status">Booked</span>
+                @elseif($slot['status'] === 'blocked')
+                  <p class="slot-price text-muted mb-1">Rp {{ number_format($slot['price'], 0, ',', '.') }}</p>
+                  <span class="slot-status text-danger font-weight-bold">Blokir</span>
+                @else
+                  <p class="slot-price mb-1">Rp {{ number_format($slot['price'], 0, ',', '.') }}</p>
+                  <span class="slot-status text-success font-weight-bold">Tersedia</span>
+                @endif
+              </div>
+            @endforeach
+          </div>
         </div>
+      </div>
+
     </div>
+  </section>
 </div>
 
 <style>
-    .papan-schedule {
-        background: #f4f7fc;
-        min-height: 100vh;
+  .schedule-page {
+    min-height: 100vh;
+  }
+  .rounded-4 {
+    border-radius: 20px;
+  }
+  .font-weight-semibold {
+    font-weight: 600;
+  }
+  .lapangan-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: rgba(1, 61, 157, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #013d9d;
+    font-size: 26px;
+  }
+  .custom-select {
+    min-width: 260px;
+    border-radius: 12px;
+  }
+  .date-picker input {
+    border-radius: 12px 0 0 12px;
+    padding: 0.75rem 1rem;
+  }
+  .date-picker .input-group-text {
+    border-radius: 0 12px 12px 0;
+  }
+  .schedule-slot-grid {
+    gap: 16px;
+  }
+  .schedule-slot {
+    width: 160px;
+    border-radius: 16px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+    background: #f8faff;
+    border: 1px solid transparent;
+    box-shadow: 0 6px 14px rgba(1, 61, 157, 0.08);
+  }
+  .slot-available {
+    border-color: rgba(43, 138, 247, 0.18);
+  }
+  .slot-booked {
+    background: #f5f5f5;
+    border-color: #e0e0e0;
+  }
+  .slot-blocked {
+    background: #fdf3f3;
+    border-color: #f0c0c0;
+  }
+  .slot-pill {
+    position: absolute;
+    top: -10px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: #12d18e;
+    color: #fff;
+    font-weight: 700;
+  }
+  .schedule-slot .slot-time {
+    font-weight: 700;
+    color: #1d2c5b;
+  }
+  .slot-price {
+    font-weight: 700;
+    color: #1d2c5b;
+  }
+  .slot-status {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  @media (max-width: 575.98px) {
+    .schedule-slot {
+      width: calc(50% - 8px);
     }
-    .papan-schedule .content-wrapper {
-        background: transparent;
+  }
+  @media (max-width: 420px) {
+    .schedule-slot {
+      width: 100%;
     }
-    .breadcrumb-papan {
-        font-size: 0.85rem;
-        letter-spacing: 0.02em;
+    .custom-select {
+      min-width: 100%;
     }
-    .page-title {
-        font-weight: 700;
-        color: #1d2c5b;
-    }
-    .detail-card {
-        border-radius: 20px;
-    }
-    .facility-avatar {
-        width: 64px;
-        height: 64px;
-        border-radius: 12px;
-        overflow: hidden;
-        background: #eff4ff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .facility-avatar img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    .badge-pill-info {
-        display: flex;
-        flex-direction: column;
-        padding: 10px 16px;
-        border-radius: 999px;
-        background: #f2f7ff;
-    }
-    .badge-pill-info .label {
-        font-size: 0.75rem;
-        color: #8a94a6;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-    .badge-pill-info .value {
-        font-weight: 600;
-        color: #1d2c5b;
-    }
-    .btn-pill {
-        border-radius: 999px;
-        font-weight: 600;
-    }
-    .btn-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .detail-tabs .nav-link {
-        border: none;
-        padding: 12px 18px;
-        color: #6c7a99;
-        font-weight: 600;
-    }
-    .detail-tabs .nav-link.active {
-        color: #1d2c5b;
-        border-bottom: 3px solid #0d99ff;
-        background: transparent;
-    }
-    .card {
-        border-radius: 16px;
-    }
-    .btn-white {
-        background: #fff;
-    }
-    .nav-schedule .nav-link {
-        border-radius: 999px;
-        padding: 0.5rem 1.1rem;
-        color: #6c7a99;
-        font-weight: 600;
-    }
-    .nav-schedule .nav-link.active {
-        background: linear-gradient(90deg, #0096ff 0%, #00c6ff 100%);
-        color: #fff;
-    }
-    .schedule-table table {
-        border-collapse: separate;
-        border-spacing: 0 10px;
-    }
-    .schedule-table thead th {
-        border: none;
-        color: #6c7a99;
-        text-transform: uppercase;
-        font-size: 0.75rem;
-        letter-spacing: 0.05em;
-        background: transparent;
-    }
-    .schedule-table tbody tr {
-        background: #f7fbff;
-        border-radius: 14px;
-    }
-    .schedule-table tbody tr td {
-        border: none;
-        padding: 18px 20px;
-        font-weight: 600;
-        color: #1d2c5b;
-    }
-    .schedule-table tbody tr td:first-child {
-        border-top-left-radius: 14px;
-        border-bottom-left-radius: 14px;
-    }
-    .schedule-table tbody tr td:last-child {
-        border-top-right-radius: 14px;
-        border-bottom-right-radius: 14px;
-    }
-    .status-pill {
-        padding: 6px 14px;
-        border-radius: 999px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .status-active {
-        background: rgba(35, 183, 143, 0.15);
-        color: #23b78f;
-    }
-    .status-inactive {
-        background: rgba(255, 144, 108, 0.15);
-        color: #ef6e4e;
-    }
-    .switch-toggle {
-        position: relative;
-        width: 48px;
-        height: 24px;
-    }
-    .switch-toggle input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-    .switch-toggle label {
-        position: absolute;
-        cursor: pointer;
-        inset: 0;
-        background: #d0d8f1;
-        border-radius: 999px;
-        transition: all 0.3s ease;
-    }
-    .switch-toggle label::after {
-        content: "";
-        position: absolute;
-        height: 20px;
-        width: 20px;
-        left: 2px;
-        top: 2px;
-        border-radius: 50%;
-        background: #fff;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        transition: all 0.3s ease;
-    }
-    .switch-toggle input:checked + label {
-        background: linear-gradient(90deg, #0096ff 0%, #00c6ff 100%);
-    }
-    .switch-toggle input:checked + label::after {
-        transform: translateX(24px);
-    }
-    @media (max-width: 767.98px) {
-        .schedule-table table {
-            border-spacing: 0;
-        }
-        .schedule-table tbody tr {
-            border-radius: 0;
-            background: transparent;
-        }
-        .schedule-table tbody tr td {
-            padding: 12px 10px;
-        }
-    }
+  }
 </style>
 @endsection

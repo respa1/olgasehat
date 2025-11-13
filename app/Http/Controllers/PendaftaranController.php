@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Pendaftaran;
 use App\Models\VenueGallery;
 use App\Models\Mitra;
+use App\Models\Lapangan;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Carbon;
 
 class PendaftaranController extends Controller
 {
@@ -82,10 +84,6 @@ class PendaftaranController extends Controller
         return view('pemiliklapangan.Dashboard.end', compact('venue'));
     }
 
-    public function papan(){
-        return view('pemiliklapangan.Papan.papan');
-    }
-
     public function venue(){
         // Hanya tampilkan venue milik user yang login
         $venues = Pendaftaran::where('user_id', auth()->id())->get();
@@ -94,7 +92,7 @@ class PendaftaranController extends Controller
 
     public function showVenue($id)
     {
-         $venue = Pendaftaran::with('galleries')->where('user_id', auth()->id())->findOrFail($id);
+        $venue = Pendaftaran::with(['galleries', 'lapangans'])->where('user_id', auth()->id())->findOrFail($id);
         
         // Parse fasilitas jika ada
         $fasilitas = [];
@@ -103,6 +101,72 @@ class PendaftaranController extends Controller
         }
         
         return view('pemiliklapangan.Fasilitas.detailvenue', compact('venue', 'fasilitas'));
+    }
+
+    public function storeLapangan(Request $request, $id)
+    {
+        $venue = Pendaftaran::where('user_id', auth()->id())->findOrFail($id);
+
+        $validated = $request->validate([
+            'nama_lapangan' => 'required|string|max:255',
+        ]);
+
+        Lapangan::create([
+            'pendaftaran_id' => $venue->id,
+            'nama' => $validated['nama_lapangan'],
+        ]);
+
+        return redirect()
+            ->route('fasilitas.detail', $venue->id)
+            ->with('success', 'Lapangan berhasil ditambahkan!');
+    }
+
+    public function showLapanganSchedule($venueId, $lapanganId)
+    {
+        $venue = Pendaftaran::where('user_id', auth()->id())->findOrFail($venueId);
+        $lapangan = $venue->lapangans()->findOrFail($lapanganId);
+        $availableLapangans = $venue->lapangans()->get();
+
+        $date = request('date') ? Carbon::parse(request('date')) : now();
+
+        $timeslots = collect([
+            [
+                'start' => '06:00',
+                'end' => '07:00',
+                'price' => 125000,
+                'status' => 'booked',
+                'label' => null,
+            ],
+            [
+                'start' => '07:00',
+                'end' => '08:00',
+                'price' => 100000,
+                'status' => 'available',
+                'label' => 'PROMO',
+            ],
+            [
+                'start' => '08:00',
+                'end' => '09:00',
+                'price' => 125000,
+                'status' => 'available',
+                'label' => null,
+            ],
+            [
+                'start' => '09:00',
+                'end' => '10:00',
+                'price' => 125000,
+                'status' => 'blocked',
+                'label' => null,
+            ],
+        ]);
+
+        return view('pemiliklapangan.Papan.papan', compact(
+            'venue',
+            'lapangan',
+            'availableLapangans',
+            'date',
+            'timeslots'
+        ));
     }
 
     /**

@@ -188,13 +188,46 @@
                       <p class="text-muted small mb-3 px-2">
                         Anda dapat menambahkan lapangan di venue yang Anda miliki dengan menekan tombol tambah.
                       </p>
-                      <a href="#" class="btn btn-primary font-weight-bold px-4">
+                      <button type="button" class="btn btn-primary font-weight-bold px-4" data-toggle="modal" data-target="#modalTambahLapangan">
                         Tambah
-                      </a>
+                      </button>
                     </div>
                   </div>
                 </div>
-                {{-- TODO: Loop data lapangan --}}
+                @if($venue->lapangans->isNotEmpty())
+                  @foreach($venue->lapangans as $lapangan)
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                      <div class="card h-100 border-0 shadow-sm lapangan-card">
+                        <div class="card-body d-flex flex-column">
+                          <div class="lapangan-icon mb-3">
+                            <i class="fas fa-futbol"></i>
+                          </div>
+                          <h5 class="font-weight-bold text-dark mb-2">{{ $lapangan->nama }}</h5>
+                          <p class="text-muted small mb-4">Lapangan utama untuk kategori {{ $venue->kategori ?? '-' }}</p>
+                          <div class="mt-auto">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                              <span class="badge badge-light text-primary font-weight-bold px-3 py-2">
+                                {{ $venue->namavenue }}
+                              </span>
+                              <small class="text-muted">
+                                Ditambahkan {{ optional($lapangan->created_at)->format('d M Y') }}
+                              </small>
+                            </div>
+                            <a href="{{ route('fasilitas.lapangan.jadwal', [$venue->id, $lapangan->id]) }}" class="btn btn-outline-primary btn-block font-weight-bold">
+                              Kelola Jadwal
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  @endforeach
+                @else
+                  <div class="col-12 mt-3">
+                    <div class="alert alert-light border text-muted text-center">
+                      Belum ada lapangan yang ditambahkan. Mulai dengan menambahkan lapangan pertama Anda.
+                    </div>
+                  </div>
+                @endif
               </div>
             </div>
 
@@ -285,6 +318,44 @@
   </section>
 </div>
 
+<!-- Modal Tambah Lapangan -->
+<div class="modal fade" id="modalTambahLapangan" tabindex="-1" role="dialog" aria-labelledby="modalTambahLapanganLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h5 class="modal-title font-weight-bold" id="modalTambahLapanganLabel">Tambah Lapangan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{{ route('fasilitas.lapangan.store', $venue->id) }}" method="POST">
+        @csrf
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="nama_lapangan" class="font-weight-semibold">Nama Lapangan</label>
+            <input
+              type="text"
+              name="nama_lapangan"
+              id="nama_lapangan"
+              value="{{ old('nama_lapangan') }}"
+              class="form-control @error('nama_lapangan') is-invalid @enderror"
+              placeholder="Contoh: Lapangan A">
+            @error('nama_lapangan')
+              <div class="invalid-feedback">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary font-weight-bold">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <style>
   .venue-logo {
     width: 112px;
@@ -356,5 +427,33 @@
     border-radius: 8px;
     margin: 1rem 0;
   }
+  .lapangan-card {
+    border-radius: 16px;
+    background: #ffffff;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .lapangan-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 30px rgba(1, 61, 157, 0.12);
+  }
+  .lapangan-card .lapangan-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(43, 138, 247, 0.18);
+    color: #2b8af7;
+    font-size: 24px;
+  }
 </style>
+
+@if($errors->has('nama_lapangan'))
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      $('#modalTambahLapangan').modal('show');
+    });
+  </script>
+@endif
 @endsection

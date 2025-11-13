@@ -123,13 +123,14 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
 
     Route::get('/syarat', [PendaftaranController::class, 'syarat'])->name('syarat');
     Route::get('/end', [PendaftaranController::class, 'end'])->name('end');
-    Route::get('/papan', [PendaftaranController::class, 'papan'])->name('papan');
+    Route::get('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal', [PendaftaranController::class, 'showLapanganSchedule'])->name('fasilitas.lapangan.jadwal');
 
     // Route untuk halaman fasilitas
     Route::get('/fasilitas', [PendaftaranController::class, 'venue'])->name('fasilitas');
     Route::get('/fasilitas/venue/{id}', [PendaftaranController::class, 'showVenue'])->name('fasilitas.detail');
     Route::get('/fasilitas/venue/{id}/edit', [PendaftaranController::class, 'editVenue'])->name('fasilitas.edit');
     Route::post('/fasilitas/venue/{id}/update', [PendaftaranController::class, 'updateVenue'])->name('fasilitas.update');
+    Route::post('/fasilitas/venue/{id}/lapangan', [PendaftaranController::class, 'storeLapangan'])->name('fasilitas.lapangan.store');
     
     Route::prefix('keuangan')->group(function () {
         Route::get('/fasilitas', fn() => view('pemiliklapangan.Keuangan.fasilitas'))->name('keuangan.fasilitas');
