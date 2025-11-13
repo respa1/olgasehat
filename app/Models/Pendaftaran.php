@@ -14,4 +14,14 @@ class Pendaftaran extends Model
     {
         return $this->hasMany(VenueGallery::class)->orderBy('urutan');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function mitra()
+    {
+        return $this->belongsTo(Mitra::class, 'user_id', 'user_id');
+    }
 }

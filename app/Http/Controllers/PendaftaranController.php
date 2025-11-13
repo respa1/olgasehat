@@ -24,7 +24,9 @@ class PendaftaranController extends Controller
     public function detail($id = null){
         // Jika ada ID dari parameter URL, gunakan itu
         if ($id) {
-            $venue = Pendaftaran::with('galleries')->find($id);
+            $venue = Pendaftaran::with('galleries')
+                ->where('user_id', auth()->id())
+                ->find($id);
             if ($venue) {
                 // Simpan ke session juga
                 session(['venue_id' => $venue->id]);
@@ -35,7 +37,9 @@ class PendaftaranController extends Controller
         // Jika tidak ada ID, coba dari session
         $venueId = session('venue_id');
         if ($venueId) {
-            $venue = Pendaftaran::with('galleries')->find($venueId);
+            $venue = Pendaftaran::with('galleries')
+                ->where('user_id', auth()->id())
+                ->find($venueId);
             if ($venue) {
                 return view('pemiliklapangan.Detail.detail', compact('venue'));
             }
@@ -53,7 +57,12 @@ class PendaftaranController extends Controller
                              ->with('error', 'Silakan lengkapi informasi venue terlebih dahulu.');
         }
         
-        $venue = Pendaftaran::find($venueId);
+        $venue = Pendaftaran::where('user_id', auth()->id())->find($venueId);
+        if (!$venue) {
+            return redirect()->route('informasi')
+                             ->with('error', 'Venue tidak ditemukan atau tidak memiliki akses.');
+        }
+        
         return view('pemiliklapangan.Syarat.syarat', compact('venue'));
     }
 
@@ -64,7 +73,12 @@ class PendaftaranController extends Controller
                              ->with('error', 'Silakan lengkapi informasi venue terlebih dahulu.');
         }
         
-        $venue = Pendaftaran::find($venueId);
+        $venue = Pendaftaran::where('user_id', auth()->id())->find($venueId);
+        if (!$venue) {
+            return redirect()->route('informasi')
+                             ->with('error', 'Venue tidak ditemukan atau tidak memiliki akses.');
+        }
+        
         return view('pemiliklapangan.Dashboard.end', compact('venue'));
     }
 
@@ -73,13 +87,14 @@ class PendaftaranController extends Controller
     }
 
     public function venue(){
-        $venues = Pendaftaran::all();
+        // Hanya tampilkan venue milik user yang login
+        $venues = Pendaftaran::where('user_id', auth()->id())->get();
         return view('pemiliklapangan.Fasilitas.venue', compact('venues'));
     }
 
     public function showVenue($id)
     {
-         $venue = Pendaftaran::with('galleries')->findOrFail($id);
+         $venue = Pendaftaran::with('galleries')->where('user_id', auth()->id())->findOrFail($id);
         
         // Parse fasilitas jika ada
         $fasilitas = [];
@@ -111,7 +126,8 @@ class PendaftaranController extends Controller
      */
     public function updateVenue(Request $request, $id)
     {
-        $venue = Pendaftaran::findOrFail($id);
+        // Hanya bisa update venue milik user yang login
+        $venue = Pendaftaran::where('user_id', auth()->id())->findOrFail($id);
         
         // Validasi input
         $request->validate([
@@ -196,6 +212,7 @@ class PendaftaranController extends Controller
 
         // Simpan ke database
         $pendaftaran = new Pendaftaran();
+        $pendaftaran->user_id = auth()->id(); // Simpan user_id dari user yang login
         $pendaftaran->logo = $pathLogo;
         $pendaftaran->namavenue = $validatedData['namavenue'];
         $pendaftaran->provinsi = $validatedData['provinsi'];
@@ -233,12 +250,8 @@ class PendaftaranController extends Controller
         // Dapatkan ID venue dari request
         $venueId = $request->venue_id;
 
-        // Update record yang sudah ada
-        $pendaftaran = Pendaftaran::find($venueId);
-        
-        if (!$pendaftaran) {
-            return redirect()->back()->with('error', 'Data venue tidak ditemukan.');
-        }
+        // Pastikan venue milik user yang login
+        $pendaftaran = Pendaftaran::where('user_id', auth()->id())->findOrFail($venueId);
 
         // Update data
         $pendaftaran->video_review = $request->video_review;
