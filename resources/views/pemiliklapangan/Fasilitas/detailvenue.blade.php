@@ -22,6 +22,15 @@
         </div>
       </div>
 
+      @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      @endif
+
       <div class="card border-0 shadow-sm rounded-3">
         <div class="card-body p-4">
           <div class="row align-items-start">
@@ -35,9 +44,9 @@
               <div class="flex-grow-1">
                 <div class="d-flex align-items-center mb-2">
                   <h3 class="font-weight-bold text-dark mb-0 mr-2">{{ $venue->namavenue }}</h3>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">
-                    <i class="fas fa-pencil-alt"></i>
-                  </button>
+                  <a href="{{ route('fasilitas.edit', $venue->id) }}" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-pencil-alt mr-1"></i> Edit
+                  </a>
                 </div>
                 <p class="text-muted mb-3">
                   {{ $venue->lokasi ? $venue->lokasi : 'Lokasi belum diisi.' }}

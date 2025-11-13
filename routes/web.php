@@ -128,6 +128,8 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     // Route untuk halaman fasilitas
     Route::get('/fasilitas', [PendaftaranController::class, 'fasilitas'])->name('fasilitas');
     Route::get('/fasilitas/venue/{id}', [PendaftaranController::class, 'showVenue'])->name('fasilitas.detail');
+    Route::get('/fasilitas/venue/{id}/edit', [PendaftaranController::class, 'editVenue'])->name('fasilitas.edit');
+    Route::post('/fasilitas/venue/{id}/update', [PendaftaranController::class, 'updateVenue'])->name('fasilitas.update');
     
     Route::prefix('keuangan')->group(function () {
         Route::get('/fasilitas', fn() => view('pemiliklapangan.Keuangan.fasilitas'))->name('keuangan.fasilitas');
