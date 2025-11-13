@@ -170,18 +170,146 @@ class PendaftaranController extends Controller
             'tanggal' => ['required', 'date'],
             'jam_mulai' => ['required', 'date_format:H:i'],
             'jam_selesai' => ['required', 'date_format:H:i', 'after:jam_mulai'],
-            'harga' => ['nullable', 'integer', 'min:0'],
+            'harga' => ['required', 'integer', 'min:0'],
+            'status' => ['required', Rule::in(['available', 'booked', 'blocked'])],
+            'promo_status' => ['nullable', Rule::in(['none', 'promo'])],
+            'catatan' => ['nullable', 'string', 'max:255'],
+            'generate_multiple' => ['nullable', 'boolean'],
+        ]);
+
+        $generateMultiple = $request->has('generate_multiple') && $request->generate_multiple == '1';
+        $tanggal = Carbon::parse($validated['tanggal'])->toDateString();
+        $harga = $validated['harga'] ?? 0;
+        $status = $validated['status'];
+        $isPromo = ($validated['promo_status'] ?? 'none') === 'promo';
+        $catatan = $validated['catatan'] ?? null;
+
+        if ($generateMultiple) {
+            // Generate multiple slots per 1 jam
+            $jamMulai = Carbon::createFromFormat('H:i', $validated['jam_mulai']);
+            $jamSelesai = Carbon::createFromFormat('H:i', $validated['jam_selesai']);
+            
+            $slots = [];
+            $current = $jamMulai->copy();
+            
+            while ($current < $jamSelesai) {
+                $slotStart = $current->copy();
+                $slotEnd = $current->copy()->addHour();
+                
+                // Jika slotEnd melebihi jamSelesai, set ke jamSelesai dan break loop
+                if ($slotEnd > $jamSelesai) {
+                    $slotEnd = $jamSelesai->copy();
+                }
+                
+                $slots[] = [
+                    'lapangan_id' => $lapangan->id,
+                    'tanggal' => $tanggal,
+                    'jam_mulai' => $slotStart->format('H:i'),
+                    'jam_selesai' => $slotEnd->format('H:i'),
+                    'harga' => $harga,
+                    'status' => $status,
+                    'is_promo' => $isPromo,
+                    'catatan' => $catatan,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+                
+                // Update current untuk loop berikutnya
+                $current = $slotEnd->copy();
+                
+                // Jika sudah mencapai atau melebihi jamSelesai, break
+                if ($current >= $jamSelesai) {
+                    break;
+                }
+            }
+            
+            // Insert semua slots sekaligus
+            if (!empty($slots)) {
+                LapanganSlot::insert($slots);
+                $slotCount = count($slots);
+                return redirect()
+                    ->route('fasilitas.lapangan.jadwal', [
+                        $venue->id,
+                        $lapangan->id,
+                        'date' => Carbon::parse($validated['tanggal'])->format('Y-m-d'),
+                    ])
+                    ->with('success', "Berhasil membuat {$slotCount} slot jadwal secara otomatis.");
+            }
+        } else {
+            // Single slot (behavior lama)
+            LapanganSlot::create([
+                'lapangan_id' => $lapangan->id,
+                'tanggal' => $tanggal,
+                'jam_mulai' => $validated['jam_mulai'],
+                'jam_selesai' => $validated['jam_selesai'],
+                'harga' => $harga,
+                'status' => $status,
+                'is_promo' => $isPromo,
+                'catatan' => $catatan,
+            ]);
+
+            return redirect()
+                ->route('fasilitas.lapangan.jadwal', [
+                    $venue->id,
+                    $lapangan->id,
+                    'date' => Carbon::parse($validated['tanggal'])->format('Y-m-d'),
+                ])
+                ->with('success', 'Slot jadwal berhasil ditambahkan.');
+        }
+    }
+
+    public function editLapanganSlot(Request $request, $venueId, $lapanganId, $slotId)
+    {
+        $venue = Pendaftaran::where('user_id', auth()->id())->findOrFail($venueId);
+        $lapangan = $venue->lapangans()->findOrFail($lapanganId);
+        $slot = $lapangan->slots()->findOrFail($slotId);
+
+        // Return JSON for AJAX request
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'slot' => [
+                    'id' => $slot->id,
+                    'jam_mulai' => $slot->jam_mulai,
+                    'jam_selesai' => $slot->jam_selesai,
+                    'harga' => $slot->harga,
+                    'status' => $slot->status,
+                    'is_promo' => $slot->is_promo,
+                    'catatan' => $slot->catatan,
+                ]
+            ]);
+        }
+
+        // Fallback for non-AJAX requests
+        return redirect()
+            ->route('fasilitas.lapangan.jadwal', [
+                $venue->id,
+                $lapangan->id,
+                'date' => $slot->tanggal->format('Y-m-d'),
+            ]);
+    }
+
+    public function updateLapanganSlot(Request $request, $venueId, $lapanganId, $slotId)
+    {
+        $venue = Pendaftaran::where('user_id', auth()->id())->findOrFail($venueId);
+        $lapangan = $venue->lapangans()->findOrFail($lapanganId);
+        $slot = $lapangan->slots()->findOrFail($slotId);
+
+        $validated = $request->validate([
+            'tanggal' => ['required', 'date'],
+            'jam_mulai' => ['required', 'date_format:H:i'],
+            'jam_selesai' => ['required', 'date_format:H:i', 'after:jam_mulai'],
+            'harga' => ['required', 'integer', 'min:0'],
             'status' => ['required', Rule::in(['available', 'booked', 'blocked'])],
             'promo_status' => ['nullable', Rule::in(['none', 'promo'])],
             'catatan' => ['nullable', 'string', 'max:255'],
         ]);
 
-        LapanganSlot::create([
-            'lapangan_id' => $lapangan->id,
+        $slot->update([
             'tanggal' => Carbon::parse($validated['tanggal'])->toDateString(),
             'jam_mulai' => $validated['jam_mulai'],
             'jam_selesai' => $validated['jam_selesai'],
-            'harga' => $validated['harga'] ?? 0,
+            'harga' => $validated['harga'],
             'status' => $validated['status'],
             'is_promo' => ($validated['promo_status'] ?? 'none') === 'promo',
             'catatan' => $validated['catatan'] ?? null,
@@ -193,7 +321,25 @@ class PendaftaranController extends Controller
                 $lapangan->id,
                 'date' => Carbon::parse($validated['tanggal'])->format('Y-m-d'),
             ])
-            ->with('success', 'Slot jadwal berhasil ditambahkan.');
+            ->with('success', 'Slot jadwal berhasil diperbarui.');
+    }
+
+    public function deleteLapanganSlot(Request $request, $venueId, $lapanganId, $slotId)
+    {
+        $venue = Pendaftaran::where('user_id', auth()->id())->findOrFail($venueId);
+        $lapangan = $venue->lapangans()->findOrFail($lapanganId);
+        $slot = $lapangan->slots()->findOrFail($slotId);
+
+        $tanggal = $slot->tanggal->format('Y-m-d');
+        $slot->delete();
+
+        return redirect()
+            ->route('fasilitas.lapangan.jadwal', [
+                $venue->id,
+                $lapangan->id,
+                'date' => $tanggal,
+            ])
+            ->with('success', 'Slot jadwal berhasil dihapus.');
     }
 
     /**
