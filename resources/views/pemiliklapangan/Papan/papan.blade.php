@@ -112,7 +112,7 @@
                   @enderror
                 </div>
                 <div class="col-md-3 mb-3">
-                  <label class="small font-weight-semibold text-muted">Harga</label>
+                  <label class="small font-weight-semibold text-muted">Harga <span class="text-danger">*</span></label>
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text bg-white border-right-0">Rp</span>
@@ -122,6 +122,22 @@
                       <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                   </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <label class="small font-weight-semibold text-muted">
+                    Harga Awal (Sebelum Diskon)
+                    <span class="badge badge-pill badge-secondary">Optional</span>
+                  </label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-white border-right-0">Rp</span>
+                    </div>
+                    <input type="number" name="harga_awal" id="harga_awal" class="form-control border-left-0 rounded-right @error('harga_awal') is-invalid @enderror" value="{{ old('harga_awal') }}" placeholder="0" min="0">
+                    @error('harga_awal')
+                      <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                  </div>
+                  <small class="form-text text-muted">Harga awal akan ditampilkan dengan garis tercoret</small>
                 </div>
                 <div class="col-md-3 mb-3">
                   <label class="small font-weight-semibold text-muted">Status Ketersediaan</label>
@@ -205,7 +221,12 @@
                     <p class="slot-price text-muted mb-1">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
                     <span class="slot-status text-danger font-weight-bold">Blokir</span>
                   @else
-                    <p class="slot-price mb-1">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
+                    @if($slot->harga_awal && $slot->harga_awal > $slot->harga)
+                      <p class="slot-price text-muted text-decoration-line-through mb-1" style="font-size: 0.85rem;">Rp {{ number_format($slot->harga_awal, 0, ',', '.') }}</p>
+                      <p class="slot-price mb-1 text-primary font-weight-bold">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
+                    @else
+                      <p class="slot-price mb-1">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
+                    @endif
                     <span class="slot-status text-success font-weight-bold">Tersedia</span>
                   @endif
                   @if($slot->catatan)
@@ -249,13 +270,26 @@
               <input type="time" name="jam_selesai" id="edit_jam_selesai" class="form-control rounded-lg" required>
             </div>
             <div class="col-md-6 mb-3">
-              <label class="small font-weight-semibold text-muted">Harga</label>
+              <label class="small font-weight-semibold text-muted">Harga <span class="text-danger">*</span></label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text bg-white border-right-0">Rp</span>
                 </div>
                 <input type="number" name="harga" id="edit_harga" class="form-control border-left-0 rounded-right" min="0" required>
               </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="small font-weight-semibold text-muted">
+                Harga Awal (Sebelum Diskon)
+                <span class="badge badge-pill badge-secondary">Optional</span>
+              </label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-white border-right-0">Rp</span>
+                </div>
+                <input type="number" name="harga_awal" id="edit_harga_awal" class="form-control border-left-0 rounded-right" min="0">
+              </div>
+              <small class="form-text text-muted">Harga awal akan ditampilkan dengan garis tercoret</small>
             </div>
             <div class="col-md-6 mb-3">
               <label class="small font-weight-semibold text-muted">Status Ketersediaan</label>
@@ -621,26 +655,33 @@
         var slotId = this.getAttribute('data-slot-id');
         
         // Fetch slot data via AJAX
-        fetch(`{{ url('/pemiliklapangan/fasilitas/venue') }}/{{ $venue->id }}/lapangan/{{ $lapangan->id }}/jadwal/${slotId}/edit`, {
+        fetch(`{{ route('fasilitas.lapangan.jadwal.edit', [$venue->id, $lapangan->id, ':slotId']) }}`.replace(':slotId', slotId), {
           method: 'GET',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
-            'Accept': 'application/json'
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
           }
         })
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
         .then(data => {
           if (data.success) {
             var slot = data.slot;
             document.getElementById('edit_jam_mulai').value = slot.jam_mulai;
             document.getElementById('edit_jam_selesai').value = slot.jam_selesai;
             document.getElementById('edit_harga').value = slot.harga;
+            document.getElementById('edit_harga_awal').value = slot.harga_awal || '';
             document.getElementById('edit_status').value = slot.status;
             document.getElementById('edit_promo_status').value = slot.is_promo ? 'promo' : 'none';
             document.getElementById('edit_catatan').value = slot.catatan || '';
             
             // Update form action
-            editSlotForm.action = `{{ url('/pemiliklapangan/fasilitas/venue') }}/{{ $venue->id }}/lapangan/{{ $lapangan->id }}/jadwal/${slotId}`;
+            editSlotForm.action = `{{ route('fasilitas.lapangan.jadwal.update', [$venue->id, $lapangan->id, ':slotId']) }}`.replace(':slotId', slotId);
             
             // Show modal
             $(editSlotModal).modal('show');
@@ -658,17 +699,60 @@
     var deleteSlotForm = document.getElementById('deleteSlotForm');
     var deleteSlotModal = document.getElementById('deleteSlotModal');
     
-    deleteButtons.forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var slotId = this.getAttribute('data-slot-id');
-        
-        // Update form action
-        deleteSlotForm.action = `{{ url('/pemiliklapangan/fasilitas/venue') }}/{{ $venue->id }}/lapangan/{{ $lapangan->id }}/jadwal/${slotId}`;
-        
-        // Show modal
-        $(deleteSlotModal).modal('show');
+    if (deleteButtons.length > 0 && deleteSlotForm && deleteSlotModal) {
+      deleteButtons.forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          var slotId = this.getAttribute('data-slot-id');
+          
+          if (!slotId) {
+            console.error('Slot ID tidak ditemukan');
+            alert('Terjadi kesalahan: Slot ID tidak ditemukan.');
+            return false;
+          }
+          
+          // Build delete URL - menggunakan route yang benar
+          var deleteUrl = '/fasilitas/venue/{{ $venue->id }}/lapangan/{{ $lapangan->id }}/jadwal/' + slotId;
+          
+          // Update form action
+          if (deleteSlotForm) {
+            deleteSlotForm.action = deleteUrl;
+            console.log('Delete URL set to:', deleteUrl); // Debug log
+            console.log('Form action is now:', deleteSlotForm.action); // Debug log
+          } else {
+            console.error('Delete form tidak ditemukan');
+            return false;
+          }
+          
+          // Show modal
+          if (typeof $ !== 'undefined' && $.fn.modal) {
+            $(deleteSlotModal).modal('show');
+          } else {
+            deleteSlotModal.style.display = 'block';
+            deleteSlotModal.classList.add('show');
+          }
+          
+          return false;
+        });
       });
-    });
+      
+      // Ensure form submits correctly
+      if (deleteSlotForm) {
+        deleteSlotForm.addEventListener('submit', function(e) {
+          console.log('Form submitting to:', this.action);
+          // Let form submit normally - Laravel will handle method spoofing
+        });
+      }
+    } else {
+      console.warn('Delete button elements not found:', {
+        buttons: deleteButtons.length,
+        form: !!deleteSlotForm,
+        modal: !!deleteSlotModal
+      });
+    }
   });
 </script>
 @endsection
+
