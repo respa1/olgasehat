@@ -2,23 +2,107 @@
 
 @section('content')
 
-<section class="relative bg-cover bg-center h-[500px] md:h-[600px]" style="background-image: url('{{ asset('assets/banten-indonesia-august-02-2022-600nw-2455954305.webp') }}');" data-aos="fade-in">
-    <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center px-6">
+<style>
+    /* Animasi Banner Carousel */
+    .banner-slide {
+        transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    }
+    
+    .banner-image {
+        transition: transform 10s ease-in-out;
+    }
+    
+    .banner-slide.active .banner-image {
+        transform: scale(1.05);
+    }
+    
+    .banner-content {
+        transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+    }
+    
+    .banner-dot {
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .banner-dot:hover {
+        transform: scale(1.2);
+    }
+    
+    /* Smooth fade effect */
+    @keyframes fadeInZoom {
+        from {
+            opacity: 0;
+            transform: scale(1.05);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    .banner-slide.active {
+        animation: fadeInZoom 1s ease-in-out;
+    }
+</style>
 
-        <div class="container mx-auto text-white text-left" data-aos="fade-up-right" data-aos-delay="200">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4" data-translate>
-                Kini <span class="font-extrabold">Olga Sehat</span> Hadir<br />
-                Untuk Gaya Hidup Sehat
-            </h1>
-
-            <p class="text-base md:text-xl mb-4 max-w-3xl" data-translate>
-                Selamat datang di OLGA SEHAT<br />
-                Satu platform untuk booking lapangan, klinik, komunitas olahraga, dan cek kesehatan.
-            </p>
-            <p class="text-base md:text-xl font-semibold italic" data-translate>#HidupLebihAktif kini lebih mudah!</p>
+@if(isset($homeBanners) && $homeBanners->count() > 0)
+    <!-- Hero Section dengan Carousel Banner -->
+    <section class="relative h-[500px] md:h-[600px] overflow-hidden" data-aos="fade-in">
+        <div id="homeBannerCarousel" class="relative h-full">
+            <div class="carousel-container h-full relative overflow-hidden">
+                @foreach($homeBanners as $index => $banner)
+                    <div class="banner-slide absolute inset-0 transition-all duration-1000 ease-in-out {{ $index === 0 ? 'opacity-100 z-10 scale-100 active' : 'opacity-0 z-0 scale-105' }}" data-index="{{ $index }}">
+                        <div class="relative bg-cover bg-center h-full banner-image" style="background-image: url('{{ asset('fotogaleri/'.$banner->foto) }}');">
+                            <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center px-6">
+                                <div class="container mx-auto text-white text-left banner-content {{ $index === 0 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4' }}" data-aos="fade-up-right" data-aos-delay="200">
+                                    <h1 class="text-4xl md:text-5xl font-bold mb-4" data-translate>
+                                        Kini <span class="font-extrabold">Olga Sehat</span> Hadir<br />
+                                        Untuk Gaya Hidup Sehat
+                                    </h1>
+                                    <p class="text-base md:text-xl mb-4 max-w-3xl" data-translate>
+                                        Selamat datang di OLGA SEHAT<br />
+                                        Satu platform untuk booking lapangan, klinik, komunitas olahraga, dan cek kesehatan.
+                                    </p>
+                                    <p class="text-base md:text-xl font-semibold italic" data-translate>#HidupLebihAktif kini lebih mudah!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            @if($homeBanners->count() > 1)
+                <button id="bannerPrev" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/30 hover:bg-white/50 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110" aria-label="Previous">
+                    <i class="fas fa-chevron-left text-xl"></i>
+                </button>
+                <button id="bannerNext" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/30 hover:bg-white/50 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110" aria-label="Next">
+                    <i class="fas fa-chevron-right text-xl"></i>
+                </button>
+                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
+                    @foreach($homeBanners as $index => $banner)
+                        <button type="button" class="banner-dot w-3 h-3 rounded-full transition-all duration-300 {{ $index === 0 ? 'bg-white w-8' : 'bg-white/50 hover:bg-white/75' }}" data-index="{{ $index }}" aria-label="Slide {{ $index + 1 }}"></button>
+                    @endforeach
+                </div>
+            @endif
         </div>
-    </div>
-</section>
+    </section>
+@else
+    <!-- Fallback jika tidak ada banner -->
+    <section class="relative bg-cover bg-center h-[500px] md:h-[600px]" style="background-image: url('{{ asset('assets/banten-indonesia-august-02-2022-600nw-2455954305.webp') }}');" data-aos="fade-in">
+        <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center px-6">
+            <div class="container mx-auto text-white text-left" data-aos="fade-up-right" data-aos-delay="200">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4" data-translate>
+                    Kini <span class="font-extrabold">Olga Sehat</span> Hadir<br />
+                    Untuk Gaya Hidup Sehat
+                </h1>
+                <p class="text-base md:text-xl mb-4 max-w-3xl" data-translate>
+                    Selamat datang di OLGA SEHAT<br />
+                    Satu platform untuk booking lapangan, klinik, komunitas olahraga, dan cek kesehatan.
+                </p>
+                <p class="text-base md:text-xl font-semibold italic" data-translate>#HidupLebihAktif kini lebih mudah!</p>
+            </div>
+        </div>
+    </section>
+@endif
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
@@ -61,39 +145,84 @@
     </div>
 
     <div class="lg:w-1/2 grid grid-cols-2 gap-3 lg:gap-4 order-1 lg:order-2" id="imageContainerPemilikLapangan" data-aos="fade-up-left" data-aos-delay="200">
-        <img src="{{ asset('assets/MU Sport Center.jpeg') }}" alt="MU Sport Center"
-             class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
-        <img src="{{ asset('assets/Imbo Sport Center.webp') }}" alt="Imbo Sport Center"
-             class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
-        <img src="{{ asset('assets/DC Arena Bali.jpeg') }}" alt="DC Arena Bali"
-             class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
-        <img src="{{ asset('assets/Arena Sport.jpg') }}" alt="Arena Sport"
-             class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+        @if(isset($lapanganBanners) && $lapanganBanners->count() > 0)
+            @foreach($lapanganBanners as $index => $banner)
+                <img src="{{ asset('fotogaleri/'.$banner->foto) }}" alt="Lapangan Banner {{ $index + 1 }}"
+                     class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+            @endforeach
+            @if($lapanganBanners->count() < 4)
+                @for($i = $lapanganBanners->count(); $i < 4; $i++)
+                    <div class="rounded-xl shadow-xl bg-gray-200 h-36 md:h-48 w-full flex items-center justify-center">
+                        <span class="text-gray-400 text-sm">Gambar {{ $i + 1 }}</span>
+                    </div>
+                @endfor
+            @endif
+        @else
+            {{-- Fallback jika tidak ada data --}}
+            <img src="{{ asset('assets/MU Sport Center.jpeg') }}" alt="MU Sport Center"
+                 class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+            <img src="{{ asset('assets/Imbo Sport Center.webp') }}" alt="Imbo Sport Center"
+                 class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+            <img src="{{ asset('assets/DC Arena Bali.jpeg') }}" alt="DC Arena Bali"
+                 class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+            <img src="{{ asset('assets/Arena Sport.jpg') }}" alt="Arena Sport"
+                 class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+        @endif
     </div>
 
     <div class="lg:w-1/2 grid grid-cols-2 gap-3 lg:gap-4 hidden order-1 lg:order-2" id="imageContainerPenyewaLapangan">
-        <img src="{{ asset('assets/gambar-penyewa-1.jpg') }}" alt="Penyewa Lapangan 1"
-             class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
-        <img src="{{ asset('assets/gambar-penyewa-2.jpg') }}" alt="Penyewa Lapangan 2"
-             class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
-        <img src="{{ asset('assets/gambar-penyewa-3.jpg') }}" alt="Penyewa Lapangan 3"
-             class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
-        <img src="{{ asset('assets/gambar-penyewa-4.jpg') }}" alt="Penyewa Lapangan 4"
-             class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+        @if(isset($lapanganBanners) && $lapanganBanners->count() > 0)
+            @foreach($lapanganBanners as $index => $banner)
+                <img src="{{ asset('fotogaleri/'.$banner->foto) }}" alt="Lapangan Banner {{ $index + 1 }}"
+                     class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+            @endforeach
+            @if($lapanganBanners->count() < 4)
+                @for($i = $lapanganBanners->count(); $i < 4; $i++)
+                    <div class="rounded-xl shadow-xl bg-gray-200 h-36 md:h-48 w-full flex items-center justify-center">
+                        <span class="text-gray-400 text-sm">Gambar {{ $i + 1 }}</span>
+                    </div>
+                @endfor
+            @endif
+        @else
+            {{-- Fallback jika tidak ada data --}}
+            <img src="{{ asset('assets/gambar-penyewa-1.jpg') }}" alt="Penyewa Lapangan 1"
+                 class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+            <img src="{{ asset('assets/gambar-penyewa-2.jpg') }}" alt="Penyewa Lapangan 2"
+                 class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+            <img src="{{ asset('assets/gambar-penyewa-3.jpg') }}" alt="Penyewa Lapangan 3"
+                 class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+            <img src="{{ asset('assets/gambar-penyewa-4.jpg') }}" alt="Penyewa Lapangan 4"
+                 class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+        @endif
     </div>
 </section>
 
 <section class="container mx-auto px-6 py-12 md:py-16 flex flex-col lg:flex-row items-center lg:items-center lg:space-x-10 max-w-6xl" data-aos="fade-up">
 
     <div class="lg:w-1/2 grid grid-cols-2 gap-3 lg:gap-4 mb-8 lg:mb-0 order-1 lg:order-1" id="imageContainerPemilikKesehatan" data-aos="fade-up-left" data-aos-delay="100">
-        <img src="{{ asset('assets/MU Sport Center.jpeg') }}" alt="Klinik 1"
-             class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
-        <img src="{{ asset('assets/Imbo Sport Center.webp') }}" alt="Fisio 2"
-             class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
-        <img src="{{ asset('assets/DC Arena Bali.jpeg') }}" alt="Gym 3"
-             class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
-        <img src="{{ asset('assets/Arena Sport.jpg') }}" alt="Checkup 4"
-             class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+        @if(isset($kesehatanBanners) && $kesehatanBanners->count() > 0)
+            @foreach($kesehatanBanners as $index => $banner)
+                <img src="{{ asset('fotogaleri/'.$banner->foto) }}" alt="Kesehatan Banner {{ $index + 1 }}"
+                     class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+            @endforeach
+            @if($kesehatanBanners->count() < 4)
+                @for($i = $kesehatanBanners->count(); $i < 4; $i++)
+                    <div class="rounded-xl shadow-xl bg-gray-200 h-36 md:h-48 w-full flex items-center justify-center">
+                        <span class="text-gray-400 text-sm">Gambar {{ $i + 1 }}</span>
+                    </div>
+                @endfor
+            @endif
+        @else
+            {{-- Fallback jika tidak ada data --}}
+            <img src="{{ asset('assets/MU Sport Center.jpeg') }}" alt="Klinik 1"
+                 class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+            <img src="{{ asset('assets/Imbo Sport Center.webp') }}" alt="Fisio 2"
+                 class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+            <img src="{{ asset('assets/DC Arena Bali.jpeg') }}" alt="Gym 3"
+                 class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+            <img src="{{ asset('assets/Arena Sport.jpg') }}" alt="Checkup 4"
+                 class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+        @endif
     </div>
 
     <div class="lg:w-1/2 order-2 lg:order-2" data-aos="fade-up-right" data-aos-delay="200">
@@ -133,14 +262,29 @@
     </div>
 
     <div class="lg:w-1/2 grid grid-cols-2 gap-3 lg:gap-4 hidden order-1 lg:order-1" id="imageContainerPenyewaKesehatan">
-        <img src="{{ asset('assets/gambar-kesehatan-penyewa-1.jpg') }}" alt="Penyewa Kesehatan 1"
-             class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
-        <img src="{{ asset('assets/gambar-kesehatan-penyewa-2.jpg') }}" alt="Penyewa Kesehatan 2"
-             class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
-        <img src="{{ asset('assets/gambar-kesehatan-penyewa-3.jpg') }}" alt="Penyewa Kesehatan 3"
-             class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
-        <img src="{{ asset('assets/gambar-kesehatan-penyewa-4.jpg') }}" alt="Penyewa Kesehatan 4"
-             class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+        @if(isset($kesehatanBanners) && $kesehatanBanners->count() > 0)
+            @foreach($kesehatanBanners as $index => $banner)
+                <img src="{{ asset('fotogaleri/'.$banner->foto) }}" alt="Kesehatan Banner {{ $index + 1 }}"
+                     class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+            @endforeach
+            @if($kesehatanBanners->count() < 4)
+                @for($i = $kesehatanBanners->count(); $i < 4; $i++)
+                    <div class="rounded-xl shadow-xl bg-gray-200 h-36 md:h-48 w-full flex items-center justify-center">
+                        <span class="text-gray-400 text-sm">Gambar {{ $i + 1 }}</span>
+                    </div>
+                @endfor
+            @endif
+        @else
+            {{-- Fallback jika tidak ada data --}}
+            <img src="{{ asset('assets/gambar-kesehatan-penyewa-1.jpg') }}" alt="Penyewa Kesehatan 1"
+                 class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+            <img src="{{ asset('assets/gambar-kesehatan-penyewa-2.jpg') }}" alt="Penyewa Kesehatan 2"
+                 class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+            <img src="{{ asset('assets/gambar-kesehatan-penyewa-3.jpg') }}" alt="Penyewa Kesehatan 3"
+                 class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+            <img src="{{ asset('assets/gambar-kesehatan-penyewa-4.jpg') }}" alt="Penyewa Kesehatan 4"
+                 class="rounded-xl shadow-xl object-cover h-36 md:h-48 w-full transform transition duration-500 hover:scale-[1.03] hover:shadow-2xl" />
+        @endif
     </div>
 </section>
 
@@ -350,6 +494,110 @@
   AOS.init({
     duration: 1000,
     once: true,
+  });
+
+  // Home Banner Carousel dengan Animasi Smooth
+  document.addEventListener('DOMContentLoaded', function() {
+    const bannerSlides = document.querySelectorAll('.banner-slide');
+    const bannerDots = document.querySelectorAll('.banner-dot');
+    const bannerPrev = document.getElementById('bannerPrev');
+    const bannerNext = document.getElementById('bannerNext');
+    let bannerCurrentIndex = 0;
+    let bannerInterval;
+    let isTransitioning = false;
+
+    if (bannerSlides.length > 1) {
+      function updateBannerCarousel() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        bannerSlides.forEach((slide, index) => {
+          const content = slide.querySelector('.banner-content');
+          
+          if (index === bannerCurrentIndex) {
+            // Slide aktif
+            slide.classList.remove('opacity-0', 'z-0', 'scale-105');
+            slide.classList.add('opacity-100', 'z-10', 'scale-100', 'active');
+            
+            // Animasi konten masuk
+            if (content) {
+              setTimeout(() => {
+                content.classList.remove('opacity-0', 'translate-y-4');
+                content.classList.add('opacity-100', 'translate-y-0');
+              }, 200);
+            }
+          } else {
+            // Slide tidak aktif
+            slide.classList.remove('opacity-100', 'z-10', 'scale-100', 'active');
+            slide.classList.add('opacity-0', 'z-0', 'scale-105');
+            
+            // Reset konten
+            if (content) {
+              content.classList.remove('opacity-100', 'translate-y-0');
+              content.classList.add('opacity-0', 'translate-y-4');
+            }
+          }
+        });
+
+        // Update dots dengan animasi
+        bannerDots.forEach((dot, index) => {
+          if (index === bannerCurrentIndex) {
+            dot.classList.remove('bg-white/50', 'w-3');
+            dot.classList.add('bg-white', 'w-8');
+          } else {
+            dot.classList.remove('bg-white', 'w-8');
+            dot.classList.add('bg-white/50', 'w-3');
+          }
+        });
+
+        setTimeout(() => {
+          isTransitioning = false;
+        }, 1000);
+      }
+
+      function nextBanner() {
+        if (isTransitioning) return;
+        bannerCurrentIndex = (bannerCurrentIndex + 1) % bannerSlides.length;
+        updateBannerCarousel();
+      }
+
+      function prevBanner() {
+        if (isTransitioning) return;
+        bannerCurrentIndex = (bannerCurrentIndex - 1 + bannerSlides.length) % bannerSlides.length;
+        updateBannerCarousel();
+      }
+
+      if (bannerNext) {
+        bannerNext.addEventListener('click', () => {
+          nextBanner();
+          resetBannerInterval();
+        });
+      }
+
+      if (bannerPrev) {
+        bannerPrev.addEventListener('click', () => {
+          prevBanner();
+          resetBannerInterval();
+        });
+      }
+
+      bannerDots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          if (isTransitioning || index === bannerCurrentIndex) return;
+          bannerCurrentIndex = index;
+          updateBannerCarousel();
+          resetBannerInterval();
+        });
+      });
+
+      function resetBannerInterval() {
+        clearInterval(bannerInterval);
+        bannerInterval = setInterval(nextBanner, 5000); // 5 detik untuk melihat animasi lebih lama
+      }
+
+      // Auto-slide every 5 seconds
+      bannerInterval = setInterval(nextBanner, 5000);
+    }
   });
 
   // Testimonial navigation

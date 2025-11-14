@@ -72,12 +72,29 @@
                 <form action="/insertgaleri" method="post" enctype="multipart/form-data">
                   @csrf
                   <div class="mb-3">
+                    <label for="kategori" class="form-label">Kategori Banner</label>
+                    <select name="kategori" id="kategori" class="form-control" required>
+                        <option value="">-- Pilih Kategori --</option>
+                        <option value="home_banner" {{ old('kategori', isset($kategori) && $kategori == 'home_banner' ? 'home_banner' : '') == 'home_banner' ? 'selected' : '' }}>Home Banner</option>
+                        <option value="lapangan_banner" {{ old('kategori', isset($kategori) && $kategori == 'lapangan_banner' ? 'lapangan_banner' : '') == 'lapangan_banner' ? 'selected' : '' }}>Lapangan Banner</option>
+                        <option value="kesehatan_banner" {{ old('kategori', isset($kategori) && $kategori == 'kesehatan_banner' ? 'kesehatan_banner' : '') == 'kesehatan_banner' ? 'selected' : '' }}>Kesehatan Banner</option>
+                    </select>
+                    <small class="form-text text-muted">Home Banner: 4 gambar yang akan ditampilkan secara bergantian di halaman home</small>
+                </div>
+
+                  <div class="mb-3">
                     <label for="image" class="form-label">Gambar</label>
-                    <input type="file" id="image" name="foto" class="form-control">
+                    <input type="file" id="image" name="foto" class="form-control" required>
                     <div class="image-preview" id="thumbnailInput">
                         <img src="#" alt="Image Preview" id="previewImage" style="display: none;">
                         <span class="preview-text" id="previewText">No image selected</span>
                     </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="urutan" class="form-label">Urutan</label>
+                    <input type="number" name="urutan" id="urutan" class="form-control" value="{{ old('urutan', 0) }}" min="0">
+                    <small class="form-text text-muted">Urutan tampil (0 = pertama, semakin besar angka semakin akhir)</small>
                 </div>
                 
                 <div class="d-flex justify-content-end mt-4">
