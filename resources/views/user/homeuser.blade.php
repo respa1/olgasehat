@@ -42,7 +42,7 @@
             <p class="text-gray-700 max-w-lg text-base leading-relaxed">
                 Waktunya buat venue Anda lebih dari sekadar venue. Semuanya dimulai dengan pengelolaan yang simpel, fleksibel, dan profitable lewat OLGA SEHAT Venue Management.
             </p>
-            <a href="#" class="inline-flex items-center text-blue-700 font-bold hover:text-blue-900 text-base transition-colors group">
+            <a href="venue_management_user" class="inline-flex items-center text-blue-700 font-bold hover:text-blue-900 text-base transition-colors group">
                 Lihat Selengkapnya
                 <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
             </a>

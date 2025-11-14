@@ -1,9 +1,6 @@
-@extends('FRONTEND.layout.frontend')
-
-@section('title', 'Olga Sehat Venue Management - Kelola Venue Lebih Mudah')
+@extends('user.layout.frontenduser')
 
 @section('content')
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lily+Script+One&display=swap" rel="stylesheet">
@@ -248,14 +245,4 @@
         </div>
     </div>
 </section>
-
 @endsection
-
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-  AOS.init({
-    duration: 1000,
-    once: true,
-  });
-</script>
-
