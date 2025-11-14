@@ -49,6 +49,7 @@ Route::get('/venue', fn() => view('FRONTEND.venue'));
 Route::get('/healthy', fn() => view('FRONTEND.healthy'));
 Route::get('/venue-detail', fn() => view('FRONTEND.venue_detail'));
 Route::get('/klinik', fn() => view('FRONTEND.klinik'));
+Route::get('/venue-management', fn() => view('FRONTEND.venue_management'))->name('venue.management');
 
 // ======================================================
 // AUTHENTICATION ROUTES
