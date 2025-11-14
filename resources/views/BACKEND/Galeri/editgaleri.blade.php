@@ -71,12 +71,30 @@
               <div class="card-body">
                 <form action="/updategaleri/{{ $data->id }}" method="post" enctype="multipart/form-data">
                   @csrf
+                  <div class="mb-3">
+                    <label for="kategori" class="form-label">Kategori Banner</label>
+                    <select name="kategori" id="kategori" class="form-control" required>
+                        <option value="">-- Pilih Kategori --</option>
+                        <option value="home_banner" {{ old('kategori', $data->kategori) == 'home_banner' ? 'selected' : '' }}>Home Banner</option>
+                        <option value="lapangan_banner" {{ old('kategori', $data->kategori) == 'lapangan_banner' ? 'selected' : '' }}>Lapangan Banner</option>
+                        <option value="kesehatan_banner" {{ old('kategori', $data->kategori) == 'kesehatan_banner' ? 'selected' : '' }}>Kesehatan Banner</option>
+                    </select>
+                    <small class="form-text text-muted">Home Banner: 4 gambar yang akan ditampilkan secara bergantian di halaman home</small>
+                </div>
+
                  <div class="mb-3">
                     <label for="image" class="form-label">Gambar</label>
                     <input type="file" id="image" name="foto" class="form-control">
                     <div class="image-preview" id="thumbnailInput">
                         <img src="{{ asset('fotogaleri/' . $data->foto) }}" alt="Image Preview" id="previewImage" style="display: block;">
                     </div>
+                    <small class="form-text text-muted">Kosongkan jika tidak ingin mengubah gambar</small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="urutan" class="form-label">Urutan</label>
+                    <input type="number" name="urutan" id="urutan" class="form-control" value="{{ old('urutan', $data->urutan ?? 0) }}" min="0">
+                    <small class="form-text text-muted">Urutan tampil (0 = pertama, semakin besar angka semakin akhir)</small>
                 </div>
                 
                 <div class="d-flex justify-content-end mt-4">

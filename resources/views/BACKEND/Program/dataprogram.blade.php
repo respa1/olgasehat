@@ -53,8 +53,9 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th width="5%">No</th>
-                                    <th width="15%">Gambar</th>
-                                    <th>Judul</th>
+                                    <th width="20%">Judul</th>
+                                    <th width="15%">Icon</th>
+                                    <th width="40%">Deskripsi</th>
                                     <th width="15%">Aksi</th>
                                 </tr>
                             </thead>
@@ -62,13 +63,24 @@
                                 @foreach ($data as $index => $row)
                                 <tr>
                                     <td>{{ $index + $data->firstItem() }}</td>
-                                    <td>
-                                        <img src="{{ asset('fotoprogram/'.$row->foto) }}" alt="{{ $row->title }}" class="img-thumbnail" style="max-height: 60px;">
-                                    </td>
                                     <td>{{ $row->title }}</td>
-                                    
                                     <td>
-                                        <a href="/tampilkanprogram/{{ $row->id }}" type="button" class="btn btn-info">Edit</a>
+                                        @if($row->icon)
+                                            <i class="{{ $row->icon }}"></i> 
+                                            <small class="d-block text-muted">{{ $row->icon }}</small>
+                                        @else
+                                            <span class="text-muted">-</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($row->description)
+                                            {{ Str::limit($row->description, 50) }}
+                                        @else
+                                            <span class="text-muted">-</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="/tampilkanprogram/{{ $row->id }}" type="button" class="btn btn-info btn-sm">Edit</a>
                                         <a href="/deleteprogram/{{ $row->id }}" class="btn btn-danger btn-sm delete">Delete</a>
                                     </td>
                                 </tr>

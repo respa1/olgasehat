@@ -651,16 +651,26 @@
     var editSlotModal = document.getElementById('editSlotModal');
     
     editButtons.forEach(function(btn) {
-      btn.addEventListener('click', function() {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
         var slotId = this.getAttribute('data-slot-id');
+        var editUrl = `{{ route('fasilitas.lapangan.jadwal.edit', [$venue->id, $lapangan->id, ':slotId']) }}`.replace(':slotId', slotId);
+        
+        // Show loading state
+        var submitBtn = editSlotForm.querySelector('button[type="submit"]');
+        var originalText = submitBtn ? submitBtn.innerHTML : '';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Memuat...';
+        }
         
         // Fetch slot data via AJAX
-        fetch(`{{ route('fasilitas.lapangan.jadwal.edit', [$venue->id, $lapangan->id, ':slotId']) }}`.replace(':slotId', slotId), {
+        fetch(editUrl, {
           method: 'GET',
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'Accept': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').getAttribute('content') : ''
           }
         })
         .then(response => {
@@ -670,29 +680,70 @@
           return response.json();
         })
         .then(data => {
-          if (data.success) {
+          if (data.success && data.slot) {
             var slot = data.slot;
-            document.getElementById('edit_jam_mulai').value = slot.jam_mulai;
-            document.getElementById('edit_jam_selesai').value = slot.jam_selesai;
-            document.getElementById('edit_harga').value = slot.harga;
+            
+            // Format waktu untuk input type="time" (HH:mm)
+            var formatTime = function(timeStr) {
+              if (!timeStr) return '';
+              // Jika sudah format HH:mm, langsung return
+              if (timeStr.match(/^\d{2}:\d{2}$/)) {
+                return timeStr;
+              }
+              // Jika format lain, convert ke HH:mm
+              var parts = timeStr.split(':');
+              if (parts.length >= 2) {
+                return parts[0].padStart(2, '0') + ':' + parts[1].padStart(2, '0');
+              }
+              return timeStr;
+            };
+            
+            // Fill form fields
+            document.getElementById('edit_jam_mulai').value = formatTime(slot.jam_mulai);
+            document.getElementById('edit_jam_selesai').value = formatTime(slot.jam_selesai);
+            document.getElementById('edit_harga').value = slot.harga || 0;
             document.getElementById('edit_harga_awal').value = slot.harga_awal || '';
-            document.getElementById('edit_status').value = slot.status;
+            document.getElementById('edit_status').value = slot.status || 'available';
             document.getElementById('edit_promo_status').value = slot.is_promo ? 'promo' : 'none';
             document.getElementById('edit_catatan').value = slot.catatan || '';
             
             // Update form action
-            editSlotForm.action = `{{ route('fasilitas.lapangan.jadwal.update', [$venue->id, $lapangan->id, ':slotId']) }}`.replace(':slotId', slotId);
+            var updateUrl = `{{ route('fasilitas.lapangan.jadwal.update', [$venue->id, $lapangan->id, ':slotId']) }}`.replace(':slotId', slotId);
+            editSlotForm.action = updateUrl;
+            
+            // Reset submit button
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+            }
             
             // Show modal
             $(editSlotModal).modal('show');
+          } else {
+            throw new Error('Data tidak valid');
           }
         })
         .catch(error => {
           console.error('Error:', error);
-          alert('Terjadi kesalahan saat memuat data slot.');
+          alert('Terjadi kesalahan saat memuat data slot. Silakan coba lagi.');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+          }
         });
       });
     });
+    
+    // Handle form submission for edit
+    if (editSlotForm) {
+      editSlotForm.addEventListener('submit', function(e) {
+        var submitBtn = this.querySelector('button[type="submit"]');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Menyimpan...';
+        }
+      });
+    }
 
     // Handle Delete Slot
     var deleteButtons = document.querySelectorAll('.delete-slot-btn');
@@ -713,18 +764,9 @@
             return false;
           }
           
-          // Build delete URL - menggunakan route yang benar
-          var deleteUrl = '/fasilitas/venue/{{ $venue->id }}/lapangan/{{ $lapangan->id }}/jadwal/' + slotId;
-          
-          // Update form action
-          if (deleteSlotForm) {
-            deleteSlotForm.action = deleteUrl;
-            console.log('Delete URL set to:', deleteUrl); // Debug log
-            console.log('Form action is now:', deleteSlotForm.action); // Debug log
-          } else {
-            console.error('Delete form tidak ditemukan');
-            return false;
-          }
+          // Update form action using route helper
+          var deleteUrl = `{{ route('fasilitas.lapangan.jadwal.delete', [$venue->id, $lapangan->id, ':slotId']) }}`.replace(':slotId', slotId);
+          deleteSlotForm.action = deleteUrl;
           
           // Show modal
           if (typeof $ !== 'undefined' && $.fn.modal) {
@@ -738,10 +780,14 @@
         });
       });
       
-      // Ensure form submits correctly
+      // Handle form submission for delete
       if (deleteSlotForm) {
         deleteSlotForm.addEventListener('submit', function(e) {
-          console.log('Form submitting to:', this.action);
+          var submitBtn = this.querySelector('button[type="submit"]');
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Menghapus...';
+          }
           // Let form submit normally - Laravel will handle method spoofing
         });
       }

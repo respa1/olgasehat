@@ -92,10 +92,33 @@
 
           <!-- Gallery -->
           <li class="nav-item">
-            <a href="/galeri" class="nav-link">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-image"></i>
-              <p>Gallery</p>
+              <p>
+                Galeri
+                <i class="right fas fa-angle-left"></i>
+              </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/galeri/home-banner" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Home Banner</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/galeri/lapangan-banner" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Lapangan Banner</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/galeri/kesehatan-banner" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Kesehatan Banner</p>
+                </a>
+              </li>
+            </ul>
           </li>
 
           <!-- Program -->

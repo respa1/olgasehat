@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\Category;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 use Illuminate\Http\Request;
@@ -78,7 +79,7 @@ class BeritaController extends Controller
 public function tampilkandata($id){
 
     $data = Berita::find($id);
-    $categories = \App\Models\Category::all();
+    $categories = Category::all();
     return view('Backend.News.editberita', compact('data', 'categories'));
 
 }
