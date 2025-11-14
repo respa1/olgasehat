@@ -15,6 +15,7 @@ class LapanganSlot extends Model
         'jam_mulai',
         'jam_selesai',
         'harga',
+        'harga_awal',
         'status',
         'is_promo',
         'catatan',
