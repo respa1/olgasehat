@@ -10,6 +10,9 @@ use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ActivityTypeController;
 use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\SocialMediaController;
+use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\AboutUsController;
 
 // ======================================================
 // PUBLIC ROUTES (No Authentication Required)
@@ -242,6 +245,30 @@ Route::middleware(['auth'])->group(function () {
         // ACTIVITY TYPES
         Route::resource('activity-types', ActivityTypeController::class);
         Route::get('activity-types-daftar', [ActivityTypeController::class, 'daftar'])->name('activity-types.daftar');
+
+        // EXTRA - SOCIAL MEDIA
+        Route::get('/social-media', [SocialMediaController::class, 'index'])->name('social-media.index');
+        Route::get('/social-media/create', [SocialMediaController::class, 'create'])->name('social-media.create');
+        Route::post('/social-media', [SocialMediaController::class, 'store'])->name('social-media.store');
+        Route::get('/social-media/{id}/edit', [SocialMediaController::class, 'edit'])->name('social-media.edit');
+        Route::put('/social-media/{id}', [SocialMediaController::class, 'update'])->name('social-media.update');
+        Route::delete('/social-media/{id}', [SocialMediaController::class, 'destroy'])->name('social-media.destroy');
+
+        // EXTRA - CONTACT US
+        Route::get('/contact', [ContactUsController::class, 'index'])->name('contact-us.index');
+        Route::get('/contact/create', [ContactUsController::class, 'create'])->name('contact-us.create');
+        Route::post('/contact', [ContactUsController::class, 'store'])->name('contact-us.store');
+        Route::get('/contact/{id}/edit', [ContactUsController::class, 'edit'])->name('contact-us.edit');
+        Route::put('/contact/{id}', [ContactUsController::class, 'update'])->name('contact-us.update');
+        Route::delete('/contact/{id}', [ContactUsController::class, 'destroy'])->name('contact-us.destroy');
+
+        // EXTRA - ABOUT US
+        Route::get('/about', [AboutUsController::class, 'index'])->name('about-us.index');
+        Route::get('/about/create', [AboutUsController::class, 'create'])->name('about-us.create');
+        Route::post('/about', [AboutUsController::class, 'store'])->name('about-us.store');
+        Route::get('/about/{id}/edit', [AboutUsController::class, 'edit'])->name('about-us.edit');
+        Route::put('/about/{id}', [AboutUsController::class, 'update'])->name('about-us.update');
+        Route::delete('/about/{id}', [AboutUsController::class, 'destroy'])->name('about-us.destroy');
 
         // PAPAN JADWAL
 
