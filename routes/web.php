@@ -115,7 +115,29 @@ Route::get('/riwayatpayment', fn() => view('user.riwayatpayment'));
 Route::get('/registeremail', fn() => view('user.registeremail'));
 Route::get('/loginemail', fn() => view('user.loginemail'));
 Route::get('/resetpassword', fn() => view('user.resetpassword'));
-Route::get('/homeuser', fn() => view('user.homeuser'));
+Route::get('/homeuser', function() {
+    $programs = \App\Models\Program::orderBy('created_at', 'desc')->get();
+    $homeBanners = \App\Models\Galeri::where('kategori', 'home_banner')
+                                      ->orderBy('urutan', 'asc')
+                                      ->orderBy('created_at', 'desc')
+                                      ->limit(4)
+                                      ->get();
+    $lapanganBanners = \App\Models\Galeri::where('kategori', 'lapangan_banner')
+                                         ->orderBy('urutan', 'asc')
+                                         ->orderBy('created_at', 'desc')
+                                         ->limit(4)
+                                         ->get();
+    $kesehatanBanners = \App\Models\Galeri::where('kategori', 'kesehatan_banner')
+                                           ->orderBy('urutan', 'asc')
+                                           ->orderBy('created_at', 'desc')
+                                           ->limit(4)
+                                           ->get();
+    $activities = \App\Models\Activity::where('status', 'approved')
+                                      ->orderBy('created_at', 'desc')
+                                      ->limit(3)
+                                      ->get();
+    return view('user.homeuser', compact('programs', 'homeBanners', 'lapanganBanners', 'kesehatanBanners', 'activities'));
+});
 Route::get('/venueuser', fn() => view('user.venueuser'));
 Route::get('/venueuser_detail', fn() => view('user.venueuser_detail'));
 Route::get('/membership-user-detail', fn() => view('user.membershipuser_detail'));
