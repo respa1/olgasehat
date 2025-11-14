@@ -248,6 +248,34 @@ class ActivityController extends Controller
             ->with(['user', 'pemilik', 'activityType'])
             ->findOrFail($id);
 
-        return view('user.communityuser_detail', compact('activity'));
+        // Get related activities (same category, excluding current)
+        $relatedActivities = Activity::where('status', 'approved')
+            ->where('id', '!=', $id)
+            ->where('kategori', $activity->kategori)
+            ->with(['user', 'pemilik', 'activityType'])
+            ->limit(4)
+            ->get();
+
+        return view('user.communityuser_detail', compact('activity', 'relatedActivities'));
+    }
+
+    /**
+     * Show activity detail for frontend (non-logged in users)
+     */
+    public function showDetail($id)
+    {
+        $activity = Activity::where('status', 'approved')
+            ->with(['user', 'pemilik', 'activityType'])
+            ->findOrFail($id);
+
+        // Get related activities (same category, excluding current)
+        $relatedActivities = Activity::where('status', 'approved')
+            ->where('id', '!=', $id)
+            ->where('kategori', $activity->kategori)
+            ->with(['user', 'pemilik', 'activityType'])
+            ->limit(4)
+            ->get();
+
+        return view('FRONTEND.community_detail', compact('activity', 'relatedActivities'));
     }
 }

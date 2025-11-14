@@ -2,88 +2,324 @@
 
 @section('content')
 
-    <main class="container mx-auto px-6 py-24">
-    <div class="flex flex-col md:flex-row md:space-x-12">
+<style>
+    .detail-hero-image {
+        height: 400px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    
+    @media (max-width: 768px) {
+        .detail-hero-image {
+            height: 250px;
+        }
+    }
+    
+    .info-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .info-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .badge-custom {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        border-radius: 9999px;
+        display: inline-block;
+    }
+    
+    .description-text {
+        line-height: 1.8;
+        font-size: 1rem;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+    }
+    
+    .contact-box {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    
+    .contact-box a {
+        color: white;
+    }
+</style>
+
+<main class="container mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-16">
+    <!-- Breadcrumb -->
+    <nav class="mb-6 text-sm text-gray-600">
+        <a href="/homeuser" class="hover:text-blue-700">Home</a>
+        <span class="mx-2">/</span>
+        <a href="/communityuser" class="hover:text-blue-700">Komunitas & Aktivitas</a>
+        <span class="mx-2">/</span>
+        <span class="text-gray-800">{{ $activity->nama }}</span>
+    </nav>
+
+    <div class="flex flex-col lg:flex-row lg:space-x-8">
         
-        <div class="md:flex-1">
+        <!-- Main Content -->
+        <div class="lg:w-2/3 mb-8 lg:mb-0">
             
-            <img 
-                src="assets/venue-image.jpg" 
-                alt="Gambar Venue Komunitas" 
-                class="w-full h-64 object-cover rounded-xl shadow-lg mb-8" 
-            />
+            <!-- Hero Image -->
+            <div class="relative rounded-2xl overflow-hidden shadow-2xl mb-6">
+                @if($activity->banner)
+                    <img 
+                        src="{{ asset('fotoaktivitas/'.$activity->banner) }}" 
+                        alt="{{ $activity->nama }}" 
+                        class="detail-hero-image w-full" 
+                    />
+                @else
+                    <img 
+                        src="{{ asset('assets/komunitas.png') }}" 
+                        alt="{{ $activity->nama }}" 
+                        class="detail-hero-image w-full" 
+                    />
+                @endif
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-6">
+                    @if($activity->activityType)
+                        @if($activity->activityType->name == 'open-class')
+                            <span class="badge-custom bg-green-500 text-white mb-3">{{ $activity->activityType->title }}</span>
+                        @elseif($activity->activityType->name == 'klub')
+                            <span class="badge-custom bg-yellow-600 text-white mb-3">{{ $activity->activityType->title }}</span>
+                        @elseif($activity->activityType->name == 'event')
+                            <span class="badge-custom bg-blue-600 text-white mb-3">{{ $activity->activityType->title }}</span>
+                        @endif
+                    @else
+                        <span class="badge-custom bg-gray-500 text-white mb-3">{{ ucfirst($activity->jenis) }}</span>
+                    @endif
+                    <h1 class="text-3xl md:text-4xl font-bold text-white drop-shadow-lg">{{ $activity->nama }}</h1>
+                </div>
+            </div>
             
-            <div class="flex items-start space-x-5 mb-8">
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900">Kumpulan Pemuda Futsal Coach Bagus</h1>
-                    
-                    <div class="flex flex-wrap items-center text-gray-600 text-sm mt-2"> 
-                        <div class="flex items-center space-x-1 pr-4 border-r border-gray-300">
-                            <i class="fas fa-trophy text-blue-600"></i>
-                            <span>Futsal</span>
+            <!-- Info Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                <div class="info-card bg-white rounded-xl p-4 shadow-md border border-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-trophy text-blue-600 text-xl"></i>
                         </div>
-                        <div class="flex items-center space-x-1 px-4 border-r border-gray-300">
-                            <i class="fas fa-city text-blue-600"></i>
-                            <span>Kota Denpasar</span>
+                        <div>
+                            <p class="text-xs text-gray-500">Kategori</p>
+                            <p class="font-semibold text-gray-800">{{ $activity->kategori }}</p>
                         </div>
-                        <div class="flex items-center space-x-1 pl-4">
-                            <span class="inline-block bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2">KOMUNITAS</span>
+                    </div>
+                </div>
+                
+                @if($activity->lokasi)
+                <div class="info-card bg-white rounded-xl p-4 shadow-md border border-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-map-marker-alt text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Lokasi</p>
+                            <p class="font-semibold text-gray-800">{{ $activity->lokasi }}</p>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                
+                <div class="info-card bg-white rounded-xl p-4 shadow-md border border-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-wallet text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Biaya</p>
+                            <p class="font-semibold text-gray-800">
+                                @if($activity->biaya_bergabung == 'gratis')
+                                    Gratis
+                                @else
+                                    Berbayar
+                                @endif
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="mb-8">
-                <h2 class="text-xl font-semibold mb-3 border-b pb-1">Deskripsi Komunitas</h2>
-                <p class="text-gray-700 leading-relaxed">
-                Hai, bro! Selamat datang di <span class="font-semibold">Kumpulan Pemuda Futsal Coach Bagus</span>, komunitas olahraga futsal yang solid banget di Kota Denpasar. 
-                Kami sekelompok pemuda energik yang suka main futsal sambil have fun, bangun pertemanan, dan jaga badan fit. 
-                Dipimpin coach-coach handal, ini tempatnya sparing seru, latihan skill, dan turnamen mini – dari pemula sampe pro, semua welcome!
-                </p>
-
-                <p class="text-gray-700 leading-relaxed mt-3">
-                    Lokasi di pusat Denpasar, akses gampang ke lapangan top. Kami solid karena selalu gotong royong: sparing rutin, sharing tips, dan gathering santai. 
-                    Yang bikin beda, <span class="font-semibold">bergabung di komunitas ini 100% gratis!</span> 
-                    Cukup daftar, kamu langsung bisa ikut kegiatan dan gabung bareng member lain. 
-                    Kalau mau pakai fasilitas lapangan, tinggal pilih paket sparing sesuai kebutuhan:
-                </p>
-
-                <ul class="list-decimal list-inside text-gray-700 leading-relaxed mt-3">
-                    <li>
-                        <span class="font-semibold">Sparing Miring (fun cepat):</span> Rp. 150.000 / Rp. 95.000 (diskon member) – Cocok buat latihan ringan tanpa ribet.
-                    </li>
-                    <li>
-                        <span class="font-semibold">Komunitas Solid:</span> Rp. 245.000 – Full fasilitas, lampu malam oke buat sparing kompetitif.
-                    </li>
-                    <li>
-                        <span class="font-semibold">Lapangan + Air Minum:</span> Rp. 300.000 – Lengkap dengan air dingin, biar stay hydrated sepanjang sesi!
-                    </li>
-                </ul>
-
-                <p class="text-gray-700 leading-relaxed mt-3">
-                    Yuk, gabung komunitas solid ini! DM WA atau IG <span class="font-semibold">@kumpulanfutsalcoachbagus</span> buat jadwal dan daftar. 
-                    Bola gelinding, teman bertambah – have fun bareng kami! ⚽😎 
-                    <br>#FutsalSolidDenpasar #CoachBagus
-                </p>
+            <!-- Description Section -->
+            <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-6 overflow-hidden">
+                <div class="flex items-center space-x-3 mb-4 pb-4 border-b border-gray-200">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-info-circle text-blue-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-900 break-words">Tentang {{ $activity->activityType ? $activity->activityType->title : ucfirst($activity->jenis) }}</h2>
+                </div>
+                <div class="description-text text-gray-700 whitespace-pre-line break-words">
+                    {{ $activity->deskripsi }}
+                </div>
             </div>
+
+            <!-- Contact Section -->
+            @if($activity->link_kontak)
+            <div class="contact-box rounded-2xl shadow-xl p-6 md:p-8 mb-6">
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-phone-alt text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Kontak & Informasi</h3>
+                </div>
+                <a href="{{ $activity->link_kontak }}" target="_blank" class="inline-flex items-center space-x-2 text-white hover:text-blue-100 transition font-medium text-lg break-all max-w-full">
+                    <i class="fas fa-external-link-alt flex-shrink-0"></i>
+                    <span class="break-all">{{ $activity->link_kontak }}</span>
+                </a>
+            </div>
+            @endif
+
+            <!-- Creator Info -->
+            @if($activity->user || $activity->pemilik)
+            <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user text-blue-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 mb-1">Dibuat oleh</p>
+                        <p class="font-semibold text-gray-800 text-lg">
+                            @if($activity->user)
+                                {{ $activity->user->name }}
+                            @elseif($activity->pemilik)
+                                {{ $activity->pemilik->name }}
+                            @endif
+                        </p>
+                        <p class="text-xs text-gray-500 mt-1">
+                            <i class="fas fa-calendar mr-1"></i>{{ $activity->created_at->format('d M Y') }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            @endif
             
         </div>
 
-        <div class="md:w-80 mt-8 md:mt-0">
-            <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 shadow-lg">
-                <p class="text-3xl font-extrabold text-blue-800 mb-1">Gratis</p>
+        <!-- Sidebar -->
+        <div class="lg:w-1/3 lg:max-w-sm">
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-2xl p-6 shadow-xl sticky top-24">
+                <div class="text-center mb-6">
+                    @if($activity->biaya_bergabung == 'gratis')
+                        <div class="inline-block bg-green-500 text-white px-6 py-3 rounded-full mb-3">
+                            <p class="text-4xl font-extrabold mb-1">Gratis</p>
+                            <p class="text-sm opacity-90">Bergabung tanpa biaya</p>
+                        </div>
+                    @else
+                        <div class="inline-block bg-yellow-500 text-white px-6 py-3 rounded-full mb-3">
+                            <p class="text-3xl font-extrabold mb-1">Berbayar</p>
+                            <p class="text-sm opacity-90">Hubungi untuk info biaya</p>
+                        </div>
+                    @endif
+                </div>
                 
-                <button class="w-full bg-blue-700 text-white py-3 rounded-xl font-bold text-lg hover:bg-blue-600 transition mb-6 shadow-md">
-                    JOIN SEKARANG
+                @if($activity->link_kontak)
+                <a href="{{ $activity->link_kontak }}" target="_blank" class="w-full bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-4 rounded-xl font-bold text-lg hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 mb-6 block text-center">
+                    <i class="fas fa-paper-plane mr-2"></i> HUBUNGI SEKARANG
+                </a>
+                @else
+                <button class="w-full bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-4 rounded-xl font-bold text-lg hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 mb-6">
+                    <i class="fas fa-user-plus mr-2"></i> JOIN SEKARANG
                 </button>
-                
+                @endif
+
+                <div class="border-t border-blue-300 pt-6 mt-6">
+                    <h4 class="font-bold text-gray-800 mb-4 text-lg flex items-center">
+                        <i class="fas fa-info-circle text-blue-600 mr-2"></i>
+                        Informasi Detail
+                    </h4>
+                    <div class="space-y-3">
+                        <div class="flex items-start space-x-3 bg-white rounded-lg p-3 shadow-sm">
+                            <i class="fas fa-tag text-blue-600 mt-1"></i>
+                            <div>
+                                <p class="text-xs text-gray-500">Kategori Olahraga</p>
+                                <p class="font-semibold text-gray-800">{{ $activity->kategori }}</p>
+                            </div>
+                        </div>
+                        @if($activity->lokasi)
+                        <div class="flex items-start space-x-3 bg-white rounded-lg p-3 shadow-sm">
+                            <i class="fas fa-map-marker-alt text-green-600 mt-1"></i>
+                            <div>
+                                <p class="text-xs text-gray-500">Lokasi Kegiatan</p>
+                                <p class="font-semibold text-gray-800">{{ $activity->lokasi }}</p>
+                            </div>
+                        </div>
+                        @endif
+                        <div class="flex items-start space-x-3 bg-white rounded-lg p-3 shadow-sm">
+                            <i class="fas fa-calendar text-purple-600 mt-1"></i>
+                            <div>
+                                <p class="text-xs text-gray-500">Tanggal Dibuat</p>
+                                <p class="font-semibold text-gray-800">{{ $activity->created_at->format('d M Y') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <section class="mt-12">
-        <h2 class="text-2xl font-bold mb-6 text-gray-800">Komunitas Terkait Lainnya</h2>
-        </section>
+    <!-- Related Activities -->
+    @if(isset($relatedActivities) && $relatedActivities->count() > 0)
+    <section class="mt-16">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-3xl font-bold text-gray-900">Aktivitas Terkait Lainnya</h2>
+            <a href="/communityuser" class="text-blue-700 hover:text-blue-800 font-medium flex items-center space-x-2">
+                <span>Lihat Semua</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            @foreach($relatedActivities as $related)
+            <a href="/communityuser_detail/{{ $related->id }}" class="block group">
+                <article class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 relative">
+                    <div class="relative overflow-hidden">
+                        @if($related->banner)
+                            <img src="{{ asset('fotoaktivitas/'.$related->banner) }}" alt="{{ $related->nama }}" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500" />
+                        @else
+                            <img src="{{ asset('assets/komunitas.png') }}" alt="{{ $related->nama }}" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500" />
+                        @endif
+                        <div class="absolute top-3 left-3">
+                            @if($related->activityType)
+                                @if($related->activityType->name == 'open-class')
+                                    <span class="badge-custom bg-green-500 text-white">{{ $related->activityType->title }}</span>
+                                @elseif($related->activityType->name == 'klub')
+                                    <span class="badge-custom bg-yellow-600 text-white">{{ $related->activityType->title }}</span>
+                                @elseif($related->activityType->name == 'event')
+                                    <span class="badge-custom bg-blue-600 text-white">{{ $related->activityType->title }}</span>
+                                @endif
+                            @endif
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-2 text-gray-900 line-clamp-2 group-hover:text-blue-700 transition">{{ $related->nama }}</h3>
+                        @if($related->lokasi)
+                            <p class="text-sm text-gray-500 mb-2 flex items-center">
+                                <i class="fas fa-map-marker-alt mr-2 text-gray-400"></i>
+                                <span class="line-clamp-1">{{ $related->lokasi }}</span>
+                            </p>
+                        @endif
+                        <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+                            <span class="text-xs text-gray-500">
+                                @if($related->biaya_bergabung == 'gratis')
+                                    <i class="fas fa-check-circle text-green-500 mr-1"></i>Gratis
+                                @else
+                                    <i class="fas fa-dollar-sign text-yellow-500 mr-1"></i>Berbayar
+                                @endif
+                            </span>
+                            <span class="text-blue-600 text-sm font-medium group-hover:text-blue-700">
+                                Lihat Detail <i class="fas fa-arrow-right ml-1"></i>
+                            </span>
+                        </div>
+                    </div>
+                </article>
+            </a>
+            @endforeach
+        </div>
+    </section>
+    @endif
 </main>
 
-   @endsection
+@endsection

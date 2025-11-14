@@ -42,7 +42,7 @@ Route::get('/blog-news', [BeritaController::class, 'index'])->name('frontend.blo
 Route::get('/blog-news-detail/{id}', [BeritaController::class, 'show'])->name('frontend.blog-news-detail');
 Route::get('/membership-detail', fn() => view('FRONTEND.membership_detail'));
 Route::get('/community', [App\Http\Controllers\ActivityController::class, 'index'])->name('community');
-Route::get('/community-detail', fn() => view('FRONTEND.community_detail'));
+Route::get('/community-detail/{id}', [App\Http\Controllers\ActivityController::class, 'showDetail'])->name('community.detail');
 Route::get('/confirm', fn() => view('FRONTEND.confirm'));
 Route::get('/daftar-pemilik', fn() => view('FRONTEND.daftar_pemilik'));
 Route::get('/daftar-pemilik-detail', fn() => view('FRONTEND.daftar_pemilik_detail'));
@@ -117,8 +117,6 @@ Route::get('/resetpassword', fn() => view('user.resetpassword'));
 Route::get('/homeuser', fn() => view('user.homeuser'));
 Route::get('/venueuser', fn() => view('user.venueuser'));
 Route::get('/venueuser_detail', fn() => view('user.venueuser_detail'));
-Route::get('/communityuser', fn() => view('user.communityuser'));
-Route::get('/communityuser_detail', fn() => view('user.communityuser_detail'));
 Route::get('/membership-user-detail', fn() => view('user.membershipuser_detail'));
 Route::get('/healthyuser', fn() => view('user.healthyuser'));
 Route::get('/venue_management_user', fn() => view('user.venue_management_user'));
