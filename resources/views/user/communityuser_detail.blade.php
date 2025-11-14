@@ -218,7 +218,7 @@
                 
                 @if($activity->link_kontak)
                 <a href="{{ $activity->link_kontak }}" target="_blank" class="w-full bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-4 rounded-xl font-bold text-lg hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 mb-6 block text-center">
-                    <i class="fas fa-paper-plane mr-2"></i> HUBUNGI SEKARANG
+                    <i class="fas fa-paper-plane mr-2"></i> BERGABUNG SEKARANG
                 </a>
                 @else
                 <button class="w-full bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-4 rounded-xl font-bold text-lg hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 mb-6">

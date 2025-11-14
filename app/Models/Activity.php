@@ -14,6 +14,7 @@ class Activity extends Model
         'kategori',
         'lokasi',
         'biaya_bergabung',
+        'harga',
         'deskripsi',
         'link_kontak',
         'banner',

@@ -20,6 +20,7 @@ class ActivityController extends Controller
             'kategori' => 'required|string|max:255',
             'lokasi' => 'nullable|string|max:255',
             'biaya' => 'required|in:gratis,berbayar',
+            'harga' => 'nullable|integer|min:0|required_if:biaya,berbayar',
             'deskripsi' => 'required|string',
             'link' => 'nullable|string|max:500',
             'jenis' => 'required|in:komunitas,membership,event',
@@ -33,6 +34,7 @@ class ActivityController extends Controller
         $data->kategori = $request->kategori;
         $data->lokasi = $request->lokasi;
         $data->biaya_bergabung = $request->biaya;
+        $data->harga = $request->biaya === 'berbayar' ? $request->harga : null;
         $data->deskripsi = $request->deskripsi;
         $data->link_kontak = $request->link;
         $data->jenis = $request->jenis;
@@ -63,6 +65,7 @@ class ActivityController extends Controller
             'kategori' => 'required|string|max:255',
             'lokasi' => 'nullable|string|max:255',
             'biaya_bergabung' => 'required|in:gratis,berbayar',
+            'harga' => 'nullable|integer|min:0|required_if:biaya_bergabung,berbayar',
             'deskripsi' => 'required|string',
             'link_kontak' => 'nullable|string|max:500',
         ]);
@@ -75,6 +78,7 @@ class ActivityController extends Controller
         $data->kategori = $request->kategori;
         $data->lokasi = $request->lokasi;
         $data->biaya_bergabung = $request->biaya_bergabung;
+        $data->harga = $request->biaya_bergabung === 'berbayar' ? $request->harga : null;
         $data->deskripsi = $request->deskripsi;
         $data->link_kontak = $request->link_kontak;
         $data->jenis = 'komunitas';

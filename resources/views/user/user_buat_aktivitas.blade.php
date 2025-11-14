@@ -164,14 +164,18 @@
                         <label class="block text-sm font-semibold text-slate-700 mb-1">Biaya Bergabung</label>
                         <div class="flex items-center gap-4 mt-2 h-[48px]">
                             <label class="flex items-center gap-2">
-                                <input type="radio" name="biaya" value="gratis" class="form-radio text-sky-600" {{ old('biaya', 'gratis') == 'gratis' ? 'checked' : '' }}>
+                                <input type="radio" name="biaya" value="gratis" class="form-radio text-sky-600 biaya-radio" {{ old('biaya', 'gratis') == 'gratis' ? 'checked' : '' }}>
                                 <span class="text-sm text-slate-600">Gratis</span>
                             </label>
                             <label class="flex items-center gap-2">
-                                <input type="radio" name="biaya" value="berbayar" class="form-radio text-sky-600" {{ old('biaya') == 'berbayar' ? 'checked' : '' }}>
+                                <input type="radio" name="biaya" value="berbayar" class="form-radio text-sky-600 biaya-radio" {{ old('biaya') == 'berbayar' ? 'checked' : '' }}>
                                 <span class="text-sm text-slate-600">Berbayar (misal: iuran)</span>
                             </label>
                         </div>
+                    </div>
+                    <div id="harga-komunitas-container" class="{{ old('biaya') == 'berbayar' ? '' : 'hidden' }}">
+                        <label class="block text-sm font-semibold text-slate-700 mb-1">Harga (Rp) <span class="text-red-500">*</span></label>
+                        <input type="number" name="harga" class="w-full rounded-lg border border-slate-300 p-3 focus:border-sky-500 focus:ring-sky-500" placeholder="Contoh: 50000" min="0" value="{{ old('harga') }}" {{ old('biaya') == 'berbayar' ? 'required' : '' }}>
                     </div>
                     
                     <div class="md:col-span-2">
@@ -332,14 +336,18 @@
                         <label class="block text-sm font-semibold text-slate-700 mb-1">Biaya Bergabung</label>
                         <div class="flex items-center gap-4 mt-2 h-[48px]">
                             <label class="flex items-center gap-2">
-                                <input type="radio" name="biaya" value="gratis" class="form-radio text-sky-600" {{ old('biaya', 'gratis') == 'gratis' ? 'checked' : '' }}>
+                                <input type="radio" name="biaya" value="gratis" class="form-radio text-sky-600 biaya-radio-event" {{ old('biaya', 'gratis') == 'gratis' ? 'checked' : '' }}>
                                 <span class="text-sm text-slate-600">Gratis</span>
                             </label>
                             <label class="flex items-center gap-2">
-                                <input type="radio" name="biaya" value="berbayar" class="form-radio text-sky-600" {{ old('biaya') == 'berbayar' ? 'checked' : '' }}>
+                                <input type="radio" name="biaya" value="berbayar" class="form-radio text-sky-600 biaya-radio-event" {{ old('biaya') == 'berbayar' ? 'checked' : '' }}>
                                 <span class="text-sm text-slate-600">Berbayar</span>
                             </label>
                         </div>
+                    </div>
+                    <div id="harga-event-container" class="{{ old('biaya') == 'berbayar' ? '' : 'hidden' }}">
+                        <label class="block text-sm font-semibold text-slate-700 mb-1">Harga (Rp) <span class="text-red-500">*</span></label>
+                        <input type="number" name="harga" class="w-full rounded-lg border border-slate-300 p-3 focus:border-sky-500 focus:ring-sky-500" placeholder="Contoh: 100000" min="0" value="{{ old('harga') }}" {{ old('biaya') == 'berbayar' ? 'required' : '' }}>
                     </div>
 
                     <div class="md:col-span-2">
@@ -400,9 +408,21 @@
             hideAll();
             
             // Tampilkan form yang sesuai
-            if (t === 'komunitas') formKom.classList.remove('hidden');
+            if (t === 'komunitas') {
+                formKom.classList.remove('hidden');
+                // Initialize harga toggle setelah form ditampilkan
+                setTimeout(() => {
+                    initializeHargaToggle('komunitas');
+                }, 100);
+            }
             if (t === 'membership') formMem.classList.remove('hidden');
-            if (t === 'event') formEvt.classList.remove('hidden');
+            if (t === 'event') {
+                formEvt.classList.remove('hidden');
+                // Initialize harga toggle setelah form ditampilkan
+                setTimeout(() => {
+                    initializeHargaToggle('event');
+                }, 100);
+            }
             
             // Scroll ke form
             if (!formsSection.classList.contains('hidden')) {
@@ -487,8 +507,98 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Initialize
+        // --- Toggle Harga Input Based on Biaya Selection ---
+        function initializeHargaToggle(formType) {
+            if (formType === 'komunitas') {
+                const hargaKomunitasContainer = document.getElementById('harga-komunitas-container');
+                const hargaKomunitasInput = hargaKomunitasContainer?.querySelector('input[name="harga"]');
+                
+                // Add listeners to all radio buttons
+                document.querySelectorAll('#form-komunitas .biaya-radio').forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        if (this.value === 'berbayar') {
+                            hargaKomunitasContainer?.classList.remove('hidden');
+                            if (hargaKomunitasInput) {
+                                hargaKomunitasInput.required = true;
+                                hargaKomunitasInput.setAttribute('required', 'required');
+                            }
+                        } else {
+                            hargaKomunitasContainer?.classList.add('hidden');
+                            if (hargaKomunitasInput) {
+                                hargaKomunitasInput.required = false;
+                                hargaKomunitasInput.removeAttribute('required');
+                                hargaKomunitasInput.value = '';
+                            }
+                        }
+                    });
+                    
+                    // Check initial state immediately
+                    if (radio.checked && radio.value === 'berbayar') {
+                        hargaKomunitasContainer?.classList.remove('hidden');
+                        if (hargaKomunitasInput) {
+                            hargaKomunitasInput.required = true;
+                            hargaKomunitasInput.setAttribute('required', 'required');
+                        }
+                    }
+                });
+            } else if (formType === 'event') {
+                const hargaEventContainer = document.getElementById('harga-event-container');
+                const hargaEventInput = hargaEventContainer?.querySelector('input[name="harga"]');
+                
+                // Add listeners to all radio buttons
+                document.querySelectorAll('#form-event .biaya-radio-event').forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        if (this.value === 'berbayar') {
+                            hargaEventContainer?.classList.remove('hidden');
+                            if (hargaEventInput) {
+                                hargaEventInput.required = true;
+                                hargaEventInput.setAttribute('required', 'required');
+                            }
+                        } else {
+                            hargaEventContainer?.classList.add('hidden');
+                            if (hargaEventInput) {
+                                hargaEventInput.required = false;
+                                hargaEventInput.removeAttribute('required');
+                                hargaEventInput.value = '';
+                            }
+                        }
+                    });
+                    
+                    // Check initial state immediately
+                    if (radio.checked && radio.value === 'berbayar') {
+                        hargaEventContainer?.classList.remove('hidden');
+                        if (hargaEventInput) {
+                            hargaEventInput.required = true;
+                            hargaEventInput.setAttribute('required', 'required');
+                        }
+                    }
+                });
+            }
+        }
+
+        function toggleHargaInput() {
+            // Initialize for all forms on page load
+            initializeHargaToggle('komunitas');
+            initializeHargaToggle('event');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updatePreview();
+            toggleHargaInput();
+            
+            // Also check if form is already visible (e.g., after validation error)
+            if (!formKom.classList.contains('hidden')) {
+                initializeHargaToggle('komunitas');
+            }
+            if (!formEvt.classList.contains('hidden')) {
+                initializeHargaToggle('event');
+            }
+        });
+        
+        // Also initialize immediately (for cases where DOMContentLoaded already fired)
         updatePreview();
+        toggleHargaInput();
     </script>
 </body>
 </html>
