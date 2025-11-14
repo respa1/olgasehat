@@ -51,251 +51,398 @@
         </button>
     </form>
 </section>
+
 <body class="bg-gray-50 min-h-screen py-10">
 
-  <h1 class="text-3xl font-bold text-center mb-10 text-gray-800">Kalkulator Kesehatan</h1>
+<h1 class="text-3xl font-bold text-center mb-10 text-gray-800">Kalkulator Kesehatan</h1>
 
-  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
+<div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
 
-    <!-- === KALKULATOR KOLESTEROL === -->
-    <div class="bg-white shadow-md rounded-2xl p-6 border">
-      <h2 class="text-xl font-semibold mb-4 text-center">Kalkulator Kolesterol</h2>
-      <label class="block mb-2 font-medium">Masukkan kadar LDL (mg/dL)</label>
-      <input type="number" id="ldl" class="w-full border rounded p-2 mb-3" placeholder="contoh: 130">
 
-      <label class="block mb-2 font-medium">Masukkan kadar HDL (mg/dL)</label>
-      <input type="number" id="hdl" class="w-full border rounded p-2 mb-3" placeholder="contoh: 45">
+<!-- ====================================== -->
+<!-- === KALKULATOR KOLESTEROL ============ -->
+<!-- ====================================== -->
 
-      <button onclick="hitungKolesterol()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg">Hitung Kolesterol</button>
+<div class="bg-white shadow-md rounded-2xl p-6 border">
+  <h2 class="text-xl font-semibold mb-4 text-center">Kalkulator Kolesterol</h2>
 
-      <div id="hasilKolesterol" class="mt-4 p-4 rounded-lg border text-center bg-gray-50 text-gray-600">
-        <p class="text-3xl font-bold" id="kolesterolNilai">–</p>
-        <p class="font-semibold" id="kolesterolStatus">Belum ada hasil</p>
-        <div class="w-full h-3 rounded mt-3 flex overflow-hidden" id="barKolesterol">
-          <div class="w-1/4 h-3 bg-gray-200"></div>
-          <div class="w-1/4 h-3 bg-gray-200"></div>
-          <div class="w-1/4 h-3 bg-gray-200"></div>
-          <div class="w-1/4 h-3 bg-gray-200"></div>
-        </div>
-        <div class="flex justify-between text-xs text-gray-500 mt-1">
-          <span>Rendah</span><span>Normal</span><span>Tinggi</span><span>Sangat Tinggi</span>
-        </div>
-        <p class="text-sm mt-3" id="kolesterolSaran">Isi data dan klik "Hitung Kolesterol".</p>
-      </div>
+  <label class="block mb-2 font-medium">Masukkan kadar LDL (mg/dL)</label>
+  <input type="number" id="ldl" class="w-full border rounded p-2 mb-3" placeholder="contoh: 130">
+
+  <label class="block mb-2 font-medium">Masukkan kadar HDL (mg/dL)</label>
+  <input type="number" id="hdl" class="w-full border rounded p-2 mb-3" placeholder="contoh: 45">
+
+  <button onclick="hitungKolesterol()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg">
+    Hitung Kolesterol
+  </button>
+
+  <div id="hasilKolesterol" class="mt-4 p-4 rounded-lg border text-center bg-gray-50 text-gray-600">
+    <p class="text-3xl font-bold" id="kolesterolNilai">–</p>
+    <p class="font-semibold" id="kolesterolStatus">Belum ada hasil</p>
+
+    <div class="w-full h-3 rounded mt-3 flex overflow-hidden" id="barKolesterol">
+      <div class="w-1/4 h-3 bg-gray-200"></div>
+      <div class="w-1/4 h-3 bg-gray-200"></div>
+      <div class="w-1/4 h-3 bg-gray-200"></div>
+      <div class="w-1/4 h-3 bg-gray-200"></div>
     </div>
 
-    <!-- === KALKULATOR GULA DARAH === -->
-    <div class="bg-white shadow-md rounded-2xl p-6 border">
-      <h2 class="text-xl font-semibold mb-4 text-center">Kalkulator Gula Darah</h2>
-      <label class="block mb-2 font-medium">Total Gula Darah (mg/dL)</label>
-      <input type="number" id="gula" class="w-full border rounded p-2 mb-3" placeholder="contoh: 110">
-
-      <label class="block mb-2 font-medium">Waktu Pengukuran</label>
-      <select id="waktuGula" class="w-full border rounded p-2 mb-3">
-        <option value="puasa">Puasa</option>
-        <option value="2jam">2 Jam Setelah Makan</option>
-      </select>
-
-      <button onclick="hitungGula()" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg">Hitung Gula Darah</button>
-
-      <div id="hasilGula" class="mt-4 p-4 rounded-lg border text-center bg-gray-50 text-gray-600">
-        <p class="text-3xl font-bold" id="gulaNilai">–</p>
-        <p class="font-semibold" id="gulaStatus">Belum ada hasil</p>
-        <div class="w-full h-3 rounded mt-3 flex overflow-hidden" id="barGula">
-          <div class="w-1/4 h-3 bg-gray-200"></div>
-          <div class="w-1/4 h-3 bg-gray-200"></div>
-          <div class="w-1/4 h-3 bg-gray-200"></div>
-          <div class="w-1/4 h-3 bg-gray-200"></div>
-        </div>
-        <div class="flex justify-between text-xs text-gray-500 mt-1">
-          <span>Rendah</span><span>Normal</span><span>Tinggi</span><span>Sangat Tinggi</span>
-        </div>
-        <p class="text-sm mt-3" id="gulaSaran">Isi data dan klik "Hitung Gula Darah".</p>
-      </div>
+    <div class="flex justify-between text-xs text-gray-500 mt-1">
+      <span>Rendah</span><span>Normal</span><span>Tinggi</span><span>Sangat Tinggi</span>
     </div>
 
-    <!-- === KALKULATOR BMI === -->
-    <div class="bg-white shadow-md rounded-2xl p-6 border">
-      <h2 class="text-xl font-semibold mb-4 text-center">Kalkulator BMI</h2>
-      <label class="block mb-2 font-medium">Berat (kg)</label>
-      <input type="number" id="berat" class="w-full border rounded p-2 mb-3" placeholder="contoh: 70">
-
-      <label class="block mb-2 font-medium">Tinggi (cm)</label>
-      <input type="number" id="tinggi" class="w-full border rounded p-2 mb-3" placeholder="contoh: 170">
-
-      <button onclick="hitungBMI()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded-lg">Hitung BMI</button>
-
-      <div id="hasilBMI" class="mt-4 p-4 rounded-lg border text-center bg-gray-50 text-gray-600">
-        <p class="text-3xl font-bold" id="bmiNilai">–</p>
-        <p class="font-semibold" id="bmiStatus">Belum ada hasil</p>
-        <div class="w-full h-3 rounded mt-3 flex overflow-hidden" id="barBMI">
-          <div class="w-1/4 h-3 bg-gray-200"></div>
-          <div class="w-1/4 h-3 bg-gray-200"></div>
-          <div class="w-1/4 h-3 bg-gray-200"></div>
-          <div class="w-1/4 h-3 bg-gray-200"></div>
-        </div>
-        <div class="flex justify-between text-xs text-gray-500 mt-1">
-          <span>Rendah</span><span>Normal</span><span>Tinggi</span><span>Sangat Tinggi</span>
-        </div>
-        <p class="text-sm mt-3" id="bmiSaran">Isi data dan klik "Hitung BMI".</p>
-      </div>
+    <div class="text-sm mt-3" id="kolesterolSaran">
+      <p>Isi data dan klik "Hitung Kolesterol".</p>
     </div>
   </div>
+</div>
 
-  <script>
-    // Fungsi untuk mewarnai bar
-    function warnaiBar(barId, index, warna) {
-      const bar = document.getElementById(barId).children;
-      for (let i = 0; i < bar.length; i++) {
-        bar[i].className = "w-1/4 h-3 " + (i === index ? warna : "bg-gray-200");
-      }
+
+
+<!-- ====================================== -->
+<!-- === KALKULATOR GULA DARAH ============ -->
+<!-- ====================================== -->
+
+<div class="bg-white shadow-md rounded-2xl p-6 border">
+  <h2 class="text-xl font-semibold mb-4 text-center">Kalkulator Gula Darah</h2>
+
+  <label class="block mb-2 font-medium">Total Gula Darah (mg/dL)</label>
+  <input type="number" id="gula" class="w-full border rounded p-2 mb-3" placeholder="contoh: 110">
+
+  <label class="block mb-2 font-medium">Waktu Pengukuran</label>
+  <select id="waktuGula" class="w-full border rounded p-2 mb-3">
+    <option value="puasa">Puasa</option>
+    <option value="2jam">2 Jam Setelah Makan</option>
+  </select>
+
+  <button onclick="hitungGula()" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg">
+    Hitung Gula Darah
+  </button>
+
+  <div id="hasilGula" class="mt-4 p-4 rounded-lg border text-center bg-gray-50 text-gray-600">
+    <p class="text-3xl font-bold" id="gulaNilai">–</p>
+    <p class="font-semibold" id="gulaStatus">Belum ada hasil</p>
+
+    <div class="w-full h-3 rounded mt-3 flex overflow-hidden" id="barGula">
+      <div class="w-1/4 h-3 bg-gray-200"></div>
+      <div class="w-1/4 h-3 bg-gray-200"></div>
+      <div class="w-1/4 h-3 bg-gray-200"></div>
+      <div class="w-1/4 h-3 bg-gray-200"></div>
+    </div>
+
+    <div class="flex justify-between text-xs text-gray-500 mt-1">
+      <span>Rendah</span><span>Normal</span><span>Tinggi</span><span>Sangat Tinggi</span>
+    </div>
+
+    <div class="text-sm mt-3" id="gulaSaran">
+      <p>Isi data dan klik "Hitung Gula Darah".</p>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ====================================== -->
+<!-- ========== KALKULATOR BMI ============ -->
+<!-- ====================================== -->
+
+<div class="bg-white shadow-md rounded-2xl p-6 border">
+  <h2 class="text-xl font-semibold mb-4 text-center">Kalkulator BMI</h2>
+
+  <label class="block mb-2 font-medium">Berat (kg)</label>
+  <input type="number" id="berat" class="w-full border rounded p-2 mb-3" placeholder="contoh: 70">
+
+  <label class="block mb-2 font-medium">Tinggi (cm)</label>
+  <input type="number" id="tinggi" class="w-full border rounded p-2 mb-3" placeholder="contoh: 170">
+
+  <button onclick="hitungBMI()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded-lg">
+    Hitung BMI
+  </button>
+
+  <div id="hasilBMI" class="mt-4 p-4 rounded-lg border text-center bg-gray-50 text-gray-600">
+    <p class="text-3xl font-bold" id="bmiNilai">–</p>
+    <p class="font-semibold" id="bmiStatus">Belum ada hasil</p>
+
+    <div class="w-full h-3 rounded mt-3 flex overflow-hidden" id="barBMI">
+      <div class="w-1/4 h-3 bg-gray-200"></div>
+      <div class="w-1/4 h-3 bg-gray-200"></div>
+      <div class="w-1/4 h-3 bg-gray-200"></div>
+      <div class="w-1/4 h-3 bg-gray-200"></div>
+    </div>
+
+    <div class="flex justify-between text-xs text-gray-500 mt-1">
+      <span>Rendah</span><span>Normal</span><span>Tinggi</span><span>Sangat Tinggi</span>
+    </div>
+
+    <div class="text-sm mt-3" id="bmiSaran">
+      <p>Isi data dan klik "Hitung BMI".</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+
+
+<!-- ====================================== -->
+<!-- ============ SCRIPT ================== -->
+<!-- ====================================== -->
+
+<script>
+
+// === Fungsi membuat list saran ===
+function tampilkanSaran(id, list) {
+  let html = "<ul class='text-left space-y-1'>";
+  list.forEach(s => html += `<li>• ${s}</li>`);
+  html += "</ul>";
+  document.getElementById(id).innerHTML = html;
+}
+
+// === Fungsi warnai bar indikator ===
+function warnaiBar(barId, index, warna) {
+  const bar = document.getElementById(barId).children;
+  for (let i = 0; i < bar.length; i++) {
+    bar[i].className = "w-1/4 h-3 " + (i === index ? warna : "bg-gray-200");
+  }
+}
+
+
+/* ============================================================
+   ===================  KOLESTEROL  ============================
+   ============================================================ */
+
+function hitungKolesterol() {
+  const ldl = parseFloat(document.getElementById("ldl").value);
+  const hdl = parseFloat(document.getElementById("hdl").value);
+  const nilai = document.getElementById("kolesterolNilai");
+  const status = document.getElementById("kolesterolStatus");
+  const hasil = document.getElementById("hasilKolesterol");
+
+  if (isNaN(ldl) || isNaN(hdl)) {
+    nilai.textContent = "–";
+    status.textContent = "Data tidak valid";
+    tampilkanSaran("kolesterolSaran", ["Masukkan angka LDL dan HDL yang benar."]);
+    hasil.className = "mt-4 p-4 rounded-lg border text-center bg-red-50 border-red-300 text-red-700";
+    warnaiBar("barKolesterol", -1);
+    return;
+  }
+
+  let kategori, warnaKotak, warnaBar, index, saranList;
+
+  if (ldl < 100) {
+    kategori = "Normal";
+    warnaKotak = "bg-green-50 border-green-400 text-green-700";
+    warnaBar = "bg-green-500"; index = 1;
+    saranList = [
+      "Pertahankan pola makan sehat",
+      "Olahraga 3–4 kali per minggu",
+      "Kurangi makanan berlemak jenuh"
+    ];
+  } else if (ldl <= 159) {
+    kategori = "Tinggi";
+    warnaKotak = "bg-red-50 border-red-400 text-red-700";
+    warnaBar = "bg-red-500"; index = 3;
+    saranList = [
+      "Kurangi makanan berminyak dan gorengan",
+      "Tambahkan konsumsi sayur dan buah",
+      "Lakukan olahraga 30 menit setiap hari",
+      "Hindari makanan tinggi kolesterol"
+    ];
+  } else {
+    kategori = "Sangat Tinggi";
+    warnaKotak = "bg-red-100 border-red-400 text-red-700";
+    warnaBar = "bg-red-600"; index = 3;
+    saranList = [
+      "Segera konsultasi dengan dokter",
+      "Hentikan makanan berlemak tinggi",
+      "Olahraga intensitas sedang",
+      "Pantau kolesterol secara rutin"
+    ];
+  }
+
+  hasil.className = `mt-4 p-4 rounded-lg border text-center ${warnaKotak}`;
+  nilai.textContent = `${ldl} mg/dL`;
+  status.textContent = kategori;
+  tampilkanSaran("kolesterolSaran", saranList);
+  warnaiBar("barKolesterol", index, warnaBar);
+}
+
+
+
+/* ============================================================
+   ===================  GULA DARAH  ============================
+   ============================================================ */
+
+function hitungGula() {
+  const gula = parseFloat(document.getElementById("gula").value);
+  const waktu = document.getElementById("waktuGula").value;
+  const nilai = document.getElementById("gulaNilai");
+  const status = document.getElementById("gulaStatus");
+  const hasil = document.getElementById("hasilGula");
+
+  if (isNaN(gula)) {
+    nilai.textContent = "–";
+    status.textContent = "Data tidak valid";
+    tampilkanSaran("gulaSaran", ["Masukkan kadar gula darah yang benar."]);
+    hasil.className = "mt-4 p-4 rounded-lg border text-center bg-red-50 border-red-300 text-red-700";
+    warnaiBar("barGula", -1);
+    return;
+  }
+
+  let kategori, warnaKotak, warnaBar, index, saranList;
+
+  if (waktu === "puasa") {
+    if (gula < 70) {
+      kategori = "Rendah";
+      warnaKotak = "bg-blue-50 border-blue-400 text-blue-700";
+      warnaBar = "bg-blue-500"; index = 0;
+      saranList = [
+        "Konsumsi makanan manis (buah, madu, permen)",
+        "Periksa kembali gula darah setelah 15 menit",
+        "Makan teratur untuk mencegah hipoglikemia"
+      ];
     }
-
-    // === KOLESTEROL ===
-    function hitungKolesterol() {
-      const ldl = parseFloat(document.getElementById("ldl").value);
-      const hdl = parseFloat(document.getElementById("hdl").value);
-      const nilai = document.getElementById("kolesterolNilai");
-      const status = document.getElementById("kolesterolStatus");
-      const saran = document.getElementById("kolesterolSaran");
-      const hasil = document.getElementById("hasilKolesterol");
-
-      if (isNaN(ldl) || isNaN(hdl)) {
-        nilai.textContent = "–";
-        status.textContent = "Data tidak valid";
-        saran.textContent = "Masukkan angka LDL dan HDL yang benar.";
-        hasil.className = "mt-4 p-4 rounded-lg border text-center bg-red-50 border-red-300 text-red-700";
-        warnaiBar("barKolesterol", -1);
-        return;
-      }
-
-      let kategori, warnaKotak, warnaBar, index, pesan;
-
-      if (ldl < 100) {
-        kategori = "Normal"; warnaKotak = "bg-green-50 border-green-400 text-green-700";
-        warnaBar = "bg-green-500"; index = 1;
-        pesan = "Kolesterol normal. Pertahankan pola makan seimbang dan olahraga rutin.";
-      } else if (ldl <= 159) {
-        kategori = "Tinggi"; warnaKotak = "bg-red-50 border-red-400 text-red-700";
-        warnaBar = "bg-red-500"; index = 3;
-        pesan = "Kolesterol tinggi. Kurangi makanan berlemak dan olahraga rutin.";
-      } else {
-        kategori = "Sangat Tinggi"; warnaKotak = "bg-red-100 border-red-400 text-red-700";
-        warnaBar = "bg-red-600"; index = 3;
-        pesan = "Kolesterol sangat tinggi. Segera konsultasi dokter.";
-      }
-
-      hasil.className = `mt-4 p-4 rounded-lg border text-center ${warnaKotak}`;
-      nilai.textContent = `${ldl} mg/dL`;
-      status.textContent = kategori;
-      saran.textContent = pesan;
-      warnaiBar("barKolesterol", index, warnaBar);
+    else if (gula <= 125) {
+      kategori = "Normal";
+      warnaKotak = "bg-green-50 border-green-400 text-green-700";
+      warnaBar = "bg-green-500"; index = 1;
+      saranList = [
+        "Pertahankan pola makan sehat",
+        "Olahraga rutin",
+        "Kurangi makanan tinggi gula"
+      ];
     }
-
-    // === GULA DARAH ===
-    function hitungGula() {
-      const gula = parseFloat(document.getElementById("gula").value);
-      const waktu = document.getElementById("waktuGula").value;
-      const nilai = document.getElementById("gulaNilai");
-      const status = document.getElementById("gulaStatus");
-      const saran = document.getElementById("gulaSaran");
-      const hasil = document.getElementById("hasilGula");
-
-      if (isNaN(gula)) {
-        nilai.textContent = "–";
-        status.textContent = "Data tidak valid";
-        saran.textContent = "Masukkan kadar gula darah yang benar.";
-        hasil.className = "mt-4 p-4 rounded-lg border text-center bg-red-50 border-red-300 text-red-700";
-        warnaiBar("barGula", -1);
-        return;
-      }
-
-      let kategori, warnaKotak, warnaBar, index, pesan;
-      if (waktu === "puasa") {
-        if (gula < 70) {
-          kategori = "Rendah"; warnaKotak = "bg-blue-50 border-blue-400 text-blue-700";
-          warnaBar = "bg-blue-500"; index = 0;
-          pesan = "Kadar gula rendah. Konsumsi makanan manis dan periksa kembali.";
-        } else if (gula <= 125) {
-          kategori = "Normal"; warnaKotak = "bg-green-50 border-green-400 text-green-700";
-          warnaBar = "bg-green-500"; index = 1;
-          pesan = "Gula darah normal. Pertahankan pola hidup sehat.";
-        } else {
-          kategori = "Tinggi"; warnaKotak = "bg-red-50 border-red-400 text-red-700";
-          warnaBar = "bg-red-500"; index = 3;
-          pesan = "Gula darah tinggi. Kurangi gula dan karbohidrat olahan.";
-        }
-      } else {
-        if (gula < 140) {
-          kategori = "Normal"; warnaKotak = "bg-green-50 border-green-400 text-green-700";
-          warnaBar = "bg-green-500"; index = 1;
-          pesan = "Gula darah normal. Pertahankan pola makan sehat.";
-        } else if (gula <= 199) {
-          kategori = "Pra-Diabetes"; warnaKotak = "bg-yellow-50 border-yellow-400 text-yellow-700";
-          warnaBar = "bg-yellow-500"; index = 2;
-          pesan = "Waspada. Kurangi makanan manis dan perbanyak serat.";
-        } else {
-          kategori = "Tinggi"; warnaKotak = "bg-red-50 border-red-400 text-red-700";
-          warnaBar = "bg-red-500"; index = 3;
-          pesan = "Segera konsultasi dokter. Lakukan olahraga rutin.";
-        }
-      }
-
-      hasil.className = `mt-4 p-4 rounded-lg border text-center ${warnaKotak}`;
-      nilai.textContent = `${gula} mg/dL`;
-      status.textContent = kategori;
-      saran.textContent = pesan;
-      warnaiBar("barGula", index, warnaBar);
+    else {
+      kategori = "Tinggi";
+      warnaKotak = "bg-red-50 border-red-400 text-red-700";
+      warnaBar = "bg-red-500"; index = 3;
+      saranList = [
+        "Kurangi makanan manis dan karbohidrat olahan",
+        "Perbanyak konsumsi sayur dan makanan berserat",
+        "Olahraga 30 menit per hari"
+      ];
     }
+  }
 
-    // === BMI ===
-    function hitungBMI() {
-      const berat = parseFloat(document.getElementById("berat").value);
-      const tinggi = parseFloat(document.getElementById("tinggi").value) / 100;
-      const nilai = document.getElementById("bmiNilai");
-      const status = document.getElementById("bmiStatus");
-      const saran = document.getElementById("bmiSaran");
-      const hasil = document.getElementById("hasilBMI");
-
-      if (isNaN(berat) || isNaN(tinggi) || tinggi === 0) {
-        nilai.textContent = "–";
-        status.textContent = "Data tidak valid";
-        saran.textContent = "Masukkan berat dan tinggi yang benar.";
-        hasil.className = "mt-4 p-4 rounded-lg border text-center bg-red-50 border-red-300 text-red-700";
-        warnaiBar("barBMI", -1);
-        return;
-      }
-
-      const bmi = berat / (tinggi * tinggi);
-      const b = bmi.toFixed(1);
-      let kategori, warnaKotak, warnaBar, index, pesan;
-
-      if (bmi < 18.5) {
-        kategori = "Kurus"; warnaKotak = "bg-blue-50 border-blue-400 text-blue-700";
-        warnaBar = "bg-blue-500"; index = 0;
-        pesan = "BMI rendah. Tambahkan asupan kalori dan protein, serta latihan kekuatan.";
-      } else if (bmi < 25) {
-        kategori = "Normal"; warnaKotak = "bg-green-50 border-green-400 text-green-700";
-        warnaBar = "bg-green-500"; index = 1;
-        pesan = "BMI ideal. Pertahankan pola makan dan aktivitas rutin.";
-      } else if (bmi < 30) {
-        kategori = "Berlebih"; warnaKotak = "bg-yellow-50 border-yellow-400 text-yellow-700";
-        warnaBar = "bg-yellow-500"; index = 2;
-        pesan = "Berat berlebih. Kurangi makanan manis & gorengan.";
-      } else {
-        kategori = "Obesitas"; warnaKotak = "bg-red-50 border-red-400 text-red-700";
-        warnaBar = "bg-red-500"; index = 3;
-        pesan = "Obesitas. Konsultasi dokter dan lakukan olahraga teratur.";
-      }
-
-      hasil.className = `mt-4 p-4 rounded-lg border text-center ${warnaKotak}`;
-      nilai.textContent = b;
-      status.textContent = kategori;
-      saran.textContent = pesan;
-      warnaiBar("barBMI", index, warnaBar);
+  else {
+    if (gula < 140) {
+      kategori = "Normal";
+      warnaKotak = "bg-green-50 border-green-400 text-green-700";
+      warnaBar = "bg-green-500"; index = 1;
+      saranList = [
+        "Pertahankan pola makan sehat",
+        "Tetap aktif bergerak",
+        "Kurangi konsumsi gula"
+      ];
     }
-  </script>
+    else if (gula <= 199) {
+      kategori = "Pra-Diabetes";
+      warnaKotak = "bg-yellow-50 border-yellow-400 text-yellow-700";
+      warnaBar = "bg-yellow-500"; index = 2;
+      saranList = [
+        "Kurangi makanan manis",
+        "Tambah konsumsi serat & sayuran",
+        "Rutin berolahraga"
+      ];
+    }
+    else {
+      kategori = "Tinggi";
+      warnaKotak = "bg-red-50 border-red-400 text-red-700";
+      warnaBar = "bg-red-500"; index = 3;
+      saranList = [
+        "Segera konsultasi dokter",
+        "Kurangi makanan tinggi gula",
+        "Lakukan olahraga teratur"
+      ];
+    }
+  }
+
+  hasil.className = `mt-4 p-4 rounded-lg border text-center ${warnaKotak}`;
+  nilai.textContent = `${gula} mg/dL`;
+  status.textContent = kategori;
+  tampilkanSaran("gulaSaran", saranList);
+  warnaiBar("barGula", index, warnaBar);
+}
+
+
+
+/* ============================================================
+   ========================= BMI ==============================
+   ============================================================ */
+
+function hitungBMI() {
+  const berat = parseFloat(document.getElementById("berat").value);
+  const tinggi = parseFloat(document.getElementById("tinggi").value) / 100;
+  const nilai = document.getElementById("bmiNilai");
+  const status = document.getElementById("bmiStatus");
+  const hasil = document.getElementById("hasilBMI");
+
+  if (isNaN(berat) || isNaN(tinggi) || tinggi === 0) {
+    nilai.textContent = "–";
+    status.textContent = "Data tidak valid";
+    tampilkanSaran("bmiSaran", ["Masukkan berat dan tinggi yang benar."]);
+    hasil.className = "mt-4 p-4 rounded-lg border text-center bg-red-50 border-red-300 text-red-700";
+    warnaiBar("barBMI", -1);
+    return;
+  }
+
+  const bmi = berat / (tinggi * tinggi);
+  let kategori, warnaKotak, warnaBar, index, saranList;
+
+  if (bmi < 18.5) {
+    kategori = "Kurus";
+    warnaKotak = "bg-blue-50 border-blue-400 text-blue-700";
+    warnaBar = "bg-blue-500"; index = 0;
+    saranList = [
+      "Tambah asupan kalori harian",
+      "Konsumsi makanan berprotein tinggi",
+      "Lakukan latihan beban untuk meningkatkan massa otot"
+    ];
+  }
+  else if (bmi < 25) {
+    kategori = "Normal";
+    warnaKotak = "bg-green-50 border-green-400 text-green-700";
+    warnaBar = "bg-green-500"; index = 1;
+    saranList = [
+      "Pertahankan pola makan seimbang",
+      "Aktif bergerak minimal 30 menit",
+      "Hindari makanan tinggi gula"
+    ];
+  }
+  else if (bmi < 30) {
+    kategori = "Berlebih";
+    warnaKotak = "bg-yellow-50 border-yellow-400 text-yellow-700";
+    warnaBar = "bg-yellow-500"; index = 2;
+    saranList = [
+      "Kurangi makanan manis & berminyak",
+      "Tingkatkan aktivitas fisik harian",
+      "Perbanyak minum air putih"
+    ];
+  }
+  else {
+    kategori = "Obesitas";
+    warnaKotak = "bg-red-50 border-red-400 text-red-700";
+    warnaBar = "bg-red-500"; index = 3;
+    saranList = [
+      "Konsultasi dokter atau ahli gizi",
+      "Kurangi porsi makan secara bertahap",
+      "Olahraga teratur 4–5x seminggu",
+      "Hindari makanan cepat saji & gula berlebih"
+    ];
+  }
+
+  hasil.className = `mt-4 p-4 rounded-lg border text-center ${warnaKotak}`;
+  nilai.textContent = bmi.toFixed(1);
+  status.textContent = kategori;
+  tampilkanSaran("bmiSaran", saranList);
+  warnaiBar("barBMI", index, warnaBar);
+}
+
+</script>
+
 </body>
+
 
 <section class="container mx-auto px-6 py-16">
     <h2 class="font-bold text-2xl mb-8 text-gray-800">

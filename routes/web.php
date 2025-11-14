@@ -37,6 +37,7 @@ Route::get('/', function() {
     return view('FRONTEND.home', compact('programs', 'homeBanners', 'lapanganBanners', 'kesehatanBanners'));
 });
 
+Route::get('/tentang', fn() => view('FRONTEND.tentang'))->name('tentang');
 Route::get('/blog-news', [BeritaController::class, 'index'])->name('frontend.blog-news');
 Route::get('/blog-news-detail/{id}', [BeritaController::class, 'show'])->name('frontend.blog-news-detail');
 Route::get('/membership-detail', fn() => view('FRONTEND.membership_detail'));
@@ -119,7 +120,8 @@ Route::get('/communityuser', fn() => view('user.communityuser'));
 Route::get('/communityuser_detail', fn() => view('user.communityuser_detail'));
 Route::get('/membership-user-detail', fn() => view('user.membershipuser_detail'));
 Route::get('/healthyuser', fn() => view('user.healthyuser'));
-
+Route::get('/venue_management_user', fn() => view('user.venue_management_user'));
+Route::get('/tentang_user', fn() => view('user.tentang_user'));
 // ======================================================
 // PEMILIK / MITRA ROUTES
 // ======================================================
