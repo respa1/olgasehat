@@ -180,10 +180,10 @@
     <div>
       <h3 class="font-semibold text-lg mb-4 text-gray-800">Ekosistem</h3>
       <ul class="space-y-3 text-base">
-        <li><a href="/venue" class="hover:text-blue-700">Sewa Lapangan</a></li>
-        <li><a href="/healthyuser" class="hover:text-blue-700">Tempat Sehat</a></li>
-        <li><a href="/community" class="hover:text-blue-700">Komunitas & Aktivitas</a></li>
-        <li><a href="/blog-news" class="hover:text-blue-700">Blog & News</a></li>
+        <li><a href="/venueuser" class="hover:text-blue-700">Fasilitas Olahraga</a></li>
+        <li><a href="/healthyuser" class="hover:text-blue-700">Layanan Kesehatan</a></li>
+        <li><a href="/communityuser" class="hover:text-blue-700">Komunitas & Aktivitas</a></li>
+        <li><a href="/bloguser_news" class="hover:text-blue-700">News</a></li>
       </ul>
     </div>
     <div>
