@@ -13,7 +13,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Data Image Galeri</h1>
+                    <h1 class="m-0">Data Image Galeri @if(isset($kategoriLabel)) - {{ $kategoriLabel }} @endif</h1>
                 </div>
             </div>
         </div>
@@ -24,10 +24,55 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="/tambahgaleri" class="btn btn-success">
-                                <i class="fas fa-plus"></i> Tambah Data
-                            </a>
+                            @if(isset($kategori))
+                                <a href="/tambahgaleri/{{ $kategori }}" class="btn btn-success">
+                                    <i class="fas fa-plus"></i> Tambah Data
+                                </a>
+                            @else
+                                <a href="/tambahgaleri" class="btn btn-success">
+                                    <i class="fas fa-plus"></i> Tambah Data
+                                </a>
+                            @endif
                         </div>
+                        @if(!isset($kategori))
+                        <div class="col-md-6">
+                            <form action="/galeri" method="GET" class="form-inline">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <select name="kategori" class="form-control">
+                                            <option value="">-- Semua Kategori --</option>
+                                            <option value="home_banner" {{ request('kategori') == 'home_banner' ? 'selected' : '' }}>Home Banner</option>
+                                            <option value="lapangan_banner" {{ request('kategori') == 'lapangan_banner' ? 'selected' : '' }}>Lapangan Banner</option>
+                                            <option value="kesehatan_banner" {{ request('kategori') == 'kesehatan_banner' ? 'selected' : '' }}>Kesehatan Banner</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="search" name="search" class="form-control" placeholder="Cari..." value="{{ request('search') }}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-search"></i> Filter
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        @else
+                        <div class="col-md-6">
+                            <form action="/galeri/{{ $kategori == 'home_banner' ? 'home-banner' : ($kategori == 'lapangan_banner' ? 'lapangan-banner' : 'kesehatan-banner') }}" method="GET" class="form-inline">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <input type="search" name="search" class="form-control" placeholder="Cari..." value="{{ request('search') }}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-search"></i> Cari
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body">
@@ -35,9 +80,13 @@
                         <table class="table table-bordered table-hover">
                             <thead class="thead-light">
                                 <tr>
-                                    <th width="5%">ID</th>
-                                    <th width="15%">Gambar</th>
-                                    <th>Aksi</th>
+                                    <th width="5%">No</th>
+                                    <th width="20%">Gambar</th>
+                                    @if(!isset($kategori))
+                                    <th width="20%">Kategori</th>
+                                    @endif
+                                    <th width="10%">Urutan</th>
+                                    <th width="15%">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,8 +96,22 @@
                                     <td>
                                         <img src="{{ asset('fotogaleri/'.$row->foto) }}" alt="" class="img-thumbnail" style="max-height: 60px;">
                                     </td>
+                                    @if(!isset($kategori))
                                     <td>
-                                        <a href="/tampilkangaleri/{{ $row->id }}" type="button" class="btn btn-info">Edit</a>
+                                        @if($row->kategori == 'home_banner')
+                                            <span class="badge badge-primary">Home Banner</span>
+                                        @elseif($row->kategori == 'lapangan_banner')
+                                            <span class="badge badge-success">Lapangan Banner</span>
+                                        @elseif($row->kategori == 'kesehatan_banner')
+                                            <span class="badge badge-info">Kesehatan Banner</span>
+                                        @else
+                                            <span class="badge badge-secondary">-</span>
+                                        @endif
+                                    </td>
+                                    @endif
+                                    <td>{{ $row->urutan ?? 0 }}</td>
+                                    <td>
+                                        <a href="/tampilkangaleri/{{ $row->id }}" type="button" class="btn btn-info btn-sm">Edit</a>
                                         <a href="/deletegaleri/{{ $row->id }}" class="btn btn-danger btn-sm delete">Delete</a>
                                     </td>
                                 </tr>

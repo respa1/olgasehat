@@ -14,7 +14,25 @@ use App\Http\Controllers\PendaftaranController;
 // ======================================================
 // PUBLIC ROUTES (No Authentication Required)
 // ======================================================
-Route::get('/', fn() => view('FRONTEND.home'));
+Route::get('/', function() {
+    $programs = \App\Models\Program::orderBy('created_at', 'desc')->get();
+    $homeBanners = \App\Models\Galeri::where('kategori', 'home_banner')
+                                      ->orderBy('urutan', 'asc')
+                                      ->orderBy('created_at', 'desc')
+                                      ->limit(4)
+                                      ->get();
+    $lapanganBanners = \App\Models\Galeri::where('kategori', 'lapangan_banner')
+                                         ->orderBy('urutan', 'asc')
+                                         ->orderBy('created_at', 'desc')
+                                         ->limit(4)
+                                         ->get();
+    $kesehatanBanners = \App\Models\Galeri::where('kategori', 'kesehatan_banner')
+                                           ->orderBy('urutan', 'asc')
+                                           ->orderBy('created_at', 'desc')
+                                           ->limit(4)
+                                           ->get();
+    return view('FRONTEND.home', compact('programs', 'homeBanners', 'lapanganBanners', 'kesehatanBanners'));
+});
 
 Route::get('/blog-news', [BeritaController::class, 'index'])->name('frontend.blog-news');
 Route::get('/blog-news-detail/{id}', [BeritaController::class, 'show'])->name('frontend.blog-news-detail');
@@ -162,6 +180,10 @@ Route::middleware(['auth'])->group(function () {
 
         // GALERI
         Route::get('/galeri', [GaleriController::class, 'galeri'])->name('galeri');
+        Route::get('/galeri/home-banner', [GaleriController::class, 'homeBanner'])->name('galeri.home-banner');
+        Route::get('/galeri/lapangan-banner', [GaleriController::class, 'lapanganBanner'])->name('galeri.lapangan-banner');
+        Route::get('/galeri/kesehatan-banner', [GaleriController::class, 'kesehatanBanner'])->name('galeri.kesehatan-banner');
+        Route::get('/tambahgaleri/{kategori}', [GaleriController::class, 'tambahgaleri'])->name('tambahgaleri.kategori');
         Route::get('/tambahgaleri', [GaleriController::class, 'tambahgaleri'])->name('tambahgaleri');
         Route::post('/insertgaleri', [GaleriController::class, 'insertgaleri'])->name('insertgaleri');
         Route::get('/tampilkangaleri/{id}', [GaleriController::class, 'tampilkangaleri'])->name('tampilkangaleri');
