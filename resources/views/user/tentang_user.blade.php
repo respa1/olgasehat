@@ -100,18 +100,21 @@
     <div class="container mx-auto px-6 max-w-4xl">
         
        
-        <div class="max-w-md">
-            <div class="relative aspect-video rounded-xl shadow-xl overflow-hidden">
-                <iframe 
-                    class="absolute top-0 left-0 w-full h-full" 
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                    title="Olga Sehat Video" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
-            </div>
+    <div class="max-w-md">
+    <a href="https://youtu.be/EpXJbOcrp5A" target="_blank">
+        <div class="relative aspect-video rounded-xl shadow-xl overflow-hidden">
+            <iframe 
+                class="absolute top-0 left-0 w-full h-full" 
+                src="https://www.youtube.com/embed/EpXJbOcrp5A" 
+                title="Olga Sehat Video" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
         </div>
+    </a>
+</div>
+
 
     </div>
 </section>
