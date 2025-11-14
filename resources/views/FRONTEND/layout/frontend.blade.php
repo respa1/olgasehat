@@ -148,7 +148,7 @@
     <div>
       <h3 class="font-semibold text-lg mb-4 text-gray-800" data-translate>Perusahaan</h3>
       <ul class="space-y-3 text-base">
-        <li><a href="#" class="hover:text-blue-700" data-translate>Tentang</a></li>
+        <li><a href="{{ route('tentang') }}" class="hover:text-blue-700" data-translate>Tentang</a></li>
         <li><a href="#" class="hover:text-blue-700" data-translate>Kebijakan &amp; Privasi</a></li>
         <li><a href="#" class="hover:text-blue-700" data-translate>Syarat &amp; Ketentuan</a></li>
       </ul>

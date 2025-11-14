@@ -34,6 +34,7 @@ Route::get('/', function() {
     return view('FRONTEND.home', compact('programs', 'homeBanners', 'lapanganBanners', 'kesehatanBanners'));
 });
 
+Route::get('/tentang', fn() => view('FRONTEND.tentang'))->name('tentang');
 Route::get('/blog-news', [BeritaController::class, 'index'])->name('frontend.blog-news');
 Route::get('/blog-news-detail/{id}', [BeritaController::class, 'show'])->name('frontend.blog-news-detail');
 Route::get('/membership-detail', fn() => view('FRONTEND.membership_detail'));
