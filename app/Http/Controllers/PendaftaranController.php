@@ -171,15 +171,24 @@ class PendaftaranController extends Controller
             'jam_mulai' => ['required', 'date_format:H:i'],
             'jam_selesai' => ['required', 'date_format:H:i', 'after:jam_mulai'],
             'harga' => ['required', 'integer', 'min:0'],
+            'harga_awal' => ['nullable', 'integer', 'min:0'],
             'status' => ['required', Rule::in(['available', 'booked', 'blocked'])],
             'promo_status' => ['nullable', Rule::in(['none', 'promo'])],
             'catatan' => ['nullable', 'string', 'max:255'],
             'generate_multiple' => ['nullable', 'boolean'],
         ]);
 
+        // Custom validation: harga_awal harus lebih besar dari harga jika diisi
+        if ($request->filled('harga_awal') && $request->harga_awal <= $request->harga) {
+            return redirect()->back()
+                ->withErrors(['harga_awal' => 'Harga awal harus lebih besar dari harga setelah diskon.'])
+                ->withInput();
+        }
+
         $generateMultiple = $request->has('generate_multiple') && $request->generate_multiple == '1';
         $tanggal = Carbon::parse($validated['tanggal'])->toDateString();
         $harga = $validated['harga'] ?? 0;
+        $hargaAwal = $validated['harga_awal'] ?? null;
         $status = $validated['status'];
         $isPromo = ($validated['promo_status'] ?? 'none') === 'promo';
         $catatan = $validated['catatan'] ?? null;
@@ -207,6 +216,7 @@ class PendaftaranController extends Controller
                     'jam_mulai' => $slotStart->format('H:i'),
                     'jam_selesai' => $slotEnd->format('H:i'),
                     'harga' => $harga,
+                    'harga_awal' => $hargaAwal,
                     'status' => $status,
                     'is_promo' => $isPromo,
                     'catatan' => $catatan,
@@ -243,6 +253,7 @@ class PendaftaranController extends Controller
                 'jam_mulai' => $validated['jam_mulai'],
                 'jam_selesai' => $validated['jam_selesai'],
                 'harga' => $harga,
+                'harga_awal' => $hargaAwal,
                 'status' => $status,
                 'is_promo' => $isPromo,
                 'catatan' => $catatan,
@@ -297,6 +308,7 @@ class PendaftaranController extends Controller
                     'jam_mulai' => $jamMulai,
                     'jam_selesai' => $jamSelesai,
                     'harga' => (int) $slot->harga,
+                    'harga_awal' => $slot->harga_awal ? (int) $slot->harga_awal : null,
                     'status' => $slot->status,
                     'is_promo' => (bool) $slot->is_promo,
                     'catatan' => $slot->catatan ?? '',
@@ -324,16 +336,25 @@ class PendaftaranController extends Controller
             'jam_mulai' => ['required', 'date_format:H:i'],
             'jam_selesai' => ['required', 'date_format:H:i', 'after:jam_mulai'],
             'harga' => ['required', 'integer', 'min:0'],
+            'harga_awal' => ['nullable', 'integer', 'min:0'],
             'status' => ['required', Rule::in(['available', 'booked', 'blocked'])],
             'promo_status' => ['nullable', Rule::in(['none', 'promo'])],
             'catatan' => ['nullable', 'string', 'max:255'],
         ]);
+
+        // Custom validation: harga_awal harus lebih besar dari harga jika diisi
+        if ($request->filled('harga_awal') && $request->harga_awal <= $request->harga) {
+            return redirect()->back()
+                ->withErrors(['harga_awal' => 'Harga awal harus lebih besar dari harga setelah diskon.'])
+                ->withInput();
+        }
 
         $slot->update([
             'tanggal' => Carbon::parse($validated['tanggal'])->toDateString(),
             'jam_mulai' => $validated['jam_mulai'],
             'jam_selesai' => $validated['jam_selesai'],
             'harga' => $validated['harga'],
+            'harga_awal' => $validated['harga_awal'] ?? null,
             'status' => $validated['status'],
             'is_promo' => ($validated['promo_status'] ?? 'none') === 'promo',
             'catatan' => $validated['catatan'] ?? null,
