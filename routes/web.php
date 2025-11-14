@@ -14,7 +14,10 @@ use App\Http\Controllers\PendaftaranController;
 // ======================================================
 // PUBLIC ROUTES (No Authentication Required)
 // ======================================================
-Route::get('/', fn() => view('FRONTEND.home'));
+Route::get('/', function() {
+    $programs = \App\Models\Program::orderBy('created_at', 'desc')->get();
+    return view('FRONTEND.home', compact('programs'));
+});
 
 Route::get('/blog-news', [BeritaController::class, 'index'])->name('frontend.blog-news');
 Route::get('/blog-news-detail/{id}', [BeritaController::class, 'show'])->name('frontend.blog-news-detail');

@@ -38,17 +38,9 @@ class ProgramController extends Controller
 
         $data = new Program();
         $data->title = $request->input('title');
-    
-        // Proses upload gambar jika ada
-        if ($request->hasFile('foto')) {
-            // Pastikan folder tujuan sudah ada (gunakan public_path untuk keamanan)
-            $imageName = $request->file('foto')->getClientOriginalName();
-            $request->file('foto')->move(public_path('fotoprogram'), $imageName);
-    
-            // Simpan nama gambar ke database
-            $data->foto = $imageName;
-        }
-        $data->save();  // Simpan data setelah nama gambar ditambahkan
+        $data->description = $request->input('description');
+        $data->icon = $request->input('icon');
+        $data->save();
         
         // Redirect ke halaman berita dengan pesan sukses
         return redirect()->route('programs')->with('Success', 'Data berhasil ditambahkan!');
@@ -89,26 +81,12 @@ public function updateprogram(Request $request, $id){
     $config = HTMLPurifier_Config::createDefault();
     $purifier = new HTMLPurifier($config);
 
-    // Perbarui data selain konten dan gambar, pastikan untuk tidak memperbarui kolom 'id' dan 'image' secara langsung
+    // Perbarui data
     $data->update([
         'title' => $request->input('title'),
+        'description' => $request->input('description'),
+        'icon' => $request->input('icon'),
     ]);
-
-    // Proses upload gambar jika ada
-    if ($request->hasFile('foto')) {
-        // Hapus gambar lama (jika ada) sebelum menyimpan gambar baru
-        if ($data->foto && file_exists(public_path('fotoprogram/' . $data->foto))) {
-            unlink(public_path('fotoprogram/' . $data->foto));
-        }
-
-        // Simpan gambar baru
-        $imageName = $request->file('foto')->getClientOriginalName();
-        $request->file('foto')->move(public_path('fotoprogram'), $imageName);
-
-        // Update nama gambar di database
-        $data->foto= $imageName;
-        $data->save();  // Jangan lupa simpan setelah gambar diperbarui
-    }
 
     // Redirect setelah berhasil memperbarui
     return redirect()->route('programs')->with('update', 'Data Berhasil Diedit');

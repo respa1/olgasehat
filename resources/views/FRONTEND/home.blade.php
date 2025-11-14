@@ -223,45 +223,36 @@
 
         <div class="flex overflow-x-auto w-full pb-4 snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-5 max-w-full lg:max-w-none" data-aos="fade-up" data-aos-delay="200">
 
-            <div class="flex-shrink-0 w-72 md:min-w-72 lg:w-auto snap-center mr-4 lg:mr-0
-                        bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
-                        transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400" data-aos="fade-up" data-aos-delay="300">
-                <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl shadow-lg">
-                    <i class="fas fa-handshake"></i>
+            @if(isset($programs) && $programs->count() > 0)
+                @foreach($programs as $index => $program)
+                    <div class="flex-shrink-0 w-72 md:min-w-72 lg:w-auto snap-center mr-4 lg:mr-0
+                                bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
+                                transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400" data-aos="fade-up" data-aos-delay="{{ 300 + ($index * 100) }}">
+                        <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl shadow-lg">
+                            @if($program->icon)
+                                <i class="{{ $program->icon }}"></i>
+                            @else
+                                <i class="fas fa-star"></i>
+                            @endif
+                        </div>
+                        <p class="text-center font-bold text-base md:text-lg leading-snug" data-translate>{{ $program->title }}</p>
+                        @if($program->description)
+                            <p class="text-xs text-white/80" data-translate>{{ $program->description }}</p>
+                        @endif
+                    </div>
+                @endforeach
+            @else
+                {{-- Fallback jika tidak ada data --}}
+                <div class="flex-shrink-0 w-72 md:min-w-72 lg:w-auto snap-center mr-4 lg:mr-0
+                            bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
+                            transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl shadow-lg">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <p class="text-center font-bold text-base md:text-lg leading-snug" data-translate>Layanan Fasilitas Olahraga & Kesehatan Terintegrasi</p>
+                    <p class="text-xs text-white/80" data-translate>Temukan lapangan, studio, hingga layanan fisioterapi dalam satu platform.</p>
                 </div>
-                <p class="text-center font-bold text-base md:text-lg leading-snug" data-translate>Layanan Fasilitas Olahraga & Kesehatan Terintegrasi</p>
-                <p class="text-xs text-white/80" data-translate>Temukan lapangan, studio, hingga layanan fisioterapi dalam satu platform.</p>
-            </div>
-
-            <div class="flex-shrink-0 w-72 md:min-w-72 lg:w-auto snap-center mr-4 lg:mr-0
-                        bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
-                        transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400" data-aos="fade-up" data-aos-delay="400">
-                <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl shadow-lg">
-                    <i class="fas fa-map-marker-alt"></i>
-                </div>
-                <p class="text-center font-bold text-base md:text-lg leading-snug" data-translate>Dipilih Khusus Berdasarkan Lokasi Terdekat</p>
-                <p class="text-xs text-white/80" data-translate>Cari venue favorit di sekitar Anda dengan akurasi tinggi dan rekomendasi terbaik.</p>
-            </div>
-
-            <div class="flex-shrink-0 w-72 md:min-w-72 lg:w-auto snap-center mr-4 lg:mr-0
-                        bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
-                        transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400" data-aos="fade-up" data-aos-delay="500">
-                <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl shadow-lg">
-                    <i class="fas fa-mobile-alt"></i>
-                </div>
-                <p class="text-center font-bold text-base md:text-lg leading-snug" data-translate>Booking dan Pembayaran Jadi Praktis</p>
-                <p class="text-xs text-white/80" data-translate>Jadwalkan dan bayar sesi Anda secara online, kapan saja, 24/7 tanpa ribet.</p>
-            </div>
-
-            <div class="flex-shrink-0 w-72 md:min-w-72 lg:w-auto snap-center
-                        bg-white/10 backdrop-blur-sm rounded-xl p-5 md:p-6 flex flex-col items-center space-y-4 border border-white/30 shadow-xl
-                        transform transition-all duration-300 hover:bg-white/20 hover:scale-[1.03] hover:border-blue-400" data-aos="fade-up" data-aos-delay="600">
-                <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl shadow-lg">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <p class="text-center font-bold text-base md:text-lg leading-snug" data-translate>Pelayanan Terbaik dan Vendor Terverifikasi</p>
-                <p class="text-xs text-white/80" data-translate>Kami hanya bekerjasama dengan mitra yang terverifikasi untuk pengalaman terbaik Anda.</p>
-            </div>
+            @endif
 
         </div>
         </div>
