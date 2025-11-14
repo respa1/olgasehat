@@ -118,6 +118,7 @@ Route::get('/communityuser_detail', fn() => view('user.communityuser_detail'));
 Route::get('/membership-user-detail', fn() => view('user.membershipuser_detail'));
 Route::get('/healthyuser', fn() => view('user.healthyuser'));
 Route::get('/venue_management_user', fn() => view('user.venue_management_user'));
+Route::get('/tentang_user', fn() => view('user.tentang_user'));
 // ======================================================
 // PEMILIK / MITRA ROUTES
 // ======================================================
