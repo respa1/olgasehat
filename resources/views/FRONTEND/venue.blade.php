@@ -52,198 +52,131 @@
   <!-- Venue Cards Grid -->
   <section class="container mx-auto px-6 pb-12">
     <h2 class="font-bold text-xl mb-6 text-gray-800">
-      Nikmati <span class="text-blue-700">4 Venue</span> yang tersedia
+      Nikmati <span class="text-blue-700">{{ $venues->total() }} Venue</span> yang tersedia
     </h2>
+    @if($venues->count() > 0)
     <div
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
       aria-label="Daftar venue olahraga"
     >
-      <a href="/venue-detail" class="block group">
+      @foreach($venues as $venue)
+        <a href="{{ route('frontend.venue.detail', $venue->id) }}" class="block group">
             <article
                 class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:-translate-y-1 group-hover:shadow-xl transition duration-300"
             >
                 <img
-                    src="{{ asset('assets/MU Sport Center.jpeg') }}"
-                    alt="MU Sport Center"
+                    src="{{ $venue->logo ? asset('storage/' . $venue->logo) : asset('assets/olgasehat-icon.png') }}"
+                    alt="{{ $venue->namavenue }}"
                     class="w-full h-40 object-cover"
                 />
                 
                 <div class="p-4">
-                    <p class="text-xs text-gray-500 font-medium mb-0">Venue | Futsal</p>
-                    <h3 class="font-bold text-lg text-gray-900 mb-1">MU Sport Center</h3>
+                    <p class="text-xs text-gray-500 font-medium mb-0">Venue | {{ $venue->kategori }}</p>
+                    <h3 class="font-bold text-lg text-gray-900 mb-1">{{ $venue->namavenue }}</h3>
                     <p class="text-sm text-gray-600 mb-3 flex items-center">
-                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-1"></i> Kota Denpasar
+                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-1"></i> {{ $venue->kota }}
                     </p>
                     
                     <p class="font-bold text-gray-900 mb-3">
-                        Mulai <span class="text-xl">Rp250,000</span> /Sesi
+                        @if($venue->min_price > 0)
+                            Mulai <span class="text-xl">Rp{{ number_format($venue->min_price, 0, ',', '.') }}</span> /Sesi
+                        @else
+                            <span class="text-sm text-gray-500">Harga belum tersedia</span>
+                        @endif
                     </p>
                     
                     <div class="pt-2 border-t border-gray-100">
                     <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Tersedia</p>
                     <div class="flex flex-wrap gap-2">
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                        08.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                        18.00
-                        </button>
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                        20.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                        22.00
-                        </button>
+                        @php
+                            // Ambil beberapa slot available untuk preview
+                            $availableSlots = $venue->lapangans->flatMap(function($lapangan) {
+                                return $lapangan->slots->where('status', 'available')->take(4);
+                            })->take(4);
+                        @endphp
+                        @if($availableSlots->count() > 0)
+                            @foreach($availableSlots->take(4) as $slot)
+                                <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
+                                    {{ \Carbon\Carbon::parse($slot->jam_mulai)->format('H:i') }}
+                                </button>
+                            @endforeach
+                        @else
+                            <span class="text-xs text-gray-400">Belum ada jadwal tersedia</span>
+                        @endif
                     </div>
                 </div>
             </article>
         </a>
-
-        <a href="/venue-detail" class="block group">
-            <article
-                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:-translate-y-1 group-hover:shadow-xl transition duration-300"
-            >
-                <img
-                    src="{{ asset('assets/Imbo Sport Center.webp') }}"
-                    alt="Imbo Sport Center"
-                    class="w-full h-40 object-cover"
-                />
-                
-                <div class="p-4">
-                    <p class="text-xs text-gray-500 font-medium mb-0">Venue | Futsal</p>
-                    <h3 class="font-bold text-lg text-gray-900 mb-1">Imbo Sport Center</h3>
-                    <p class="text-sm text-gray-600 mb-3 flex items-center">
-                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-1"></i> Kota Denpasar
-                    </p>
-                    
-                    <p class="font-bold text-gray-900 mb-3">
-                        Mulai <span class="text-xl">Rp230,000</span> /Sesi
-                    </p>
-
-                    <div class="pt-2 border-t border-gray-100">
-                    <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Tersedia</p>
-                    <div class="flex flex-wrap gap-2">
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                        08.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                        18.00
-                        </button>
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                        20.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                        22.00
-                        </button>
-                    </div>
-                </div>
-            </article>
-        </a>
-
-        <a href="/venue-detail" class="block group">
-            <article
-                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:-translate-y-1 group-hover:shadow-xl transition duration-300"
-            >
-                <img
-                    src="{{ asset('assets/DC Arena Bali.jpeg') }}"
-                    alt="DC Arena Bali"
-                    class="w-full h-40 object-cover"
-                />
-                
-                <div class="p-4">
-                    <p class="text-xs text-gray-500 font-medium mb-0">Venue | Basketball</p>
-                    <h3 class="font-bold text-lg text-gray-900 mb-1">DC Arena Bali</h3>
-                    <p class="text-sm text-gray-600 mb-3 flex items-center">
-                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-1"></i> Kota Denpasar
-                    </p>
-                    
-                    <p class="font-bold text-gray-900 mb-3">
-                        Mulai <span class="text-xl">Rp180,000</span> /Sesi
-                    </p>
-                    
-                    <div class="pt-2 border-t border-gray-100">
-                    <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Tersedia</p>
-                    <div class="flex flex-wrap gap-2">
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                        08.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                        18.00
-                        </button>
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                        20.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                        22.00
-                        </button>
-                    </div>
-                </div>
-            </article>
-        </a>
-
-        <a href="/venue-detail" class="block group">
-            <article
-                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:-translate-y-1 group-hover:shadow-xl transition duration-300"
-            >
-                <img
-                    src="{{ asset('assets/Arena Sport.jpg') }}"
-                    alt="Arena Sport"
-                    class="w-full h-40 object-cover"
-                />
-                
-                <div class="p-4">
-                    <p class="text-xs text-gray-500 font-medium mb-0">Venue | Mini Soccer</p>
-                    <h3 class="font-bold text-lg text-gray-900 mb-1">Arena Sport</h3>
-                    <p class="text-sm text-gray-600 mb-3 flex items-center">
-                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-1"></i> Kota Denpasar
-                    </p>
-                    
-                    <p class="font-bold text-gray-900 mb-3">
-                        Mulai <span class="text-xl">Rp350,000</span> /Sesi
-                    </p>
-                    
-                    <div class="pt-2 border-t border-gray-100">
-                        
-                <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Tersedia</p>
-                <div class="flex flex-wrap gap-2">
-                    <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                    08.00
-                    </button>
-                    <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                    18.00
-                    </button>
-                    <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                    20.00
-                    </button>
-                    <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                    22.00
-                    </button>
-                </div>
-                </div>
-            </article>
-        </a>
+      @endforeach
     </div>
+    @else
+    <div class="text-center py-12">
+        <p class="text-gray-600 text-lg">Belum ada venue yang tersedia saat ini.</p>
+    </div>
+    @endif
 
+    @if($venues->hasPages())
     <section class="mt-8 mb-20 md:mt-12 md:mb-24">
-    <nav aria-label="Pagination" class="flex justify-center space-x-2 px-4">
-        <button aria-label="Previous page" class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-            <i class="fas fa-arrow-left"></i>
-        </button>
+        <nav aria-label="Pagination" class="flex justify-center space-x-2 px-4">
+            {{-- Previous Button --}}
+            @if($venues->onFirstPage())
+                <button aria-label="Previous page" class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+            @else
+                <a href="{{ $venues->previousPageUrl() }}" aria-label="Previous page" class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 flex items-center justify-center">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            @endif
 
-        <button class="w-10 h-10 rounded-lg bg-blue-700 text-white font-semibold">1</button>
-        <button class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 hidden sm:flex items-center justify-center">2</button>
-        <button class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 hidden sm:flex items-center justify-center">3</button>
-        
-        <span class="inline-flex items-center px-2 text-gray-700 select-none">...</span>
-        
-        <button class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 hidden sm:flex items-center justify-center">62</button>
-        <button class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200">63</button>
+            {{-- Page Numbers --}}
+            @php
+                $currentPage = $venues->currentPage();
+                $lastPage = $venues->lastPage();
+                $startPage = max(1, $currentPage - 2);
+                $endPage = min($lastPage, $currentPage + 2);
+            @endphp
 
-        <button aria-label="Next page" class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 flex items-center justify-center">
-            <i class="fas fa-arrow-right"></i>
-        </button>
-    </nav>
-</section>
+            {{-- First Page --}}
+            @if($startPage > 1)
+                <a href="{{ $venues->url(1) }}" class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 flex items-center justify-center {{ $currentPage == 1 ? 'bg-blue-700 text-white border-blue-700' : '' }}">
+                    1
+                </a>
+                @if($startPage > 2)
+                    <span class="inline-flex items-center px-2 text-gray-700 select-none">...</span>
+                @endif
+            @endif
+
+            {{-- Page Range --}}
+            @for($i = $startPage; $i <= $endPage; $i++)
+                <a href="{{ $venues->url($i) }}" class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 {{ $i == $currentPage ? 'bg-blue-700 text-white border-blue-700 font-semibold' : '' }} flex items-center justify-center {{ $i > 3 && $i < $lastPage - 2 ? 'hidden sm:flex' : '' }}">
+                    {{ $i }}
+                </a>
+            @endfor
+
+            {{-- Last Page --}}
+            @if($endPage < $lastPage)
+                @if($endPage < $lastPage - 1)
+                    <span class="inline-flex items-center px-2 text-gray-700 select-none">...</span>
+                @endif
+                <a href="{{ $venues->url($lastPage) }}" class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 flex items-center justify-center {{ $currentPage == $lastPage ? 'bg-blue-700 text-white border-blue-700' : '' }}">
+                    {{ $lastPage }}
+                </a>
+            @endif
+
+            {{-- Next Button --}}
+            @if($venues->hasMorePages())
+                <a href="{{ $venues->nextPageUrl() }}" aria-label="Next page" class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 flex items-center justify-center">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            @else
+                <button aria-label="Next page" class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            @endif
+        </nav>
+    </section>
+    @endif
 
 <section class="mx-auto px-4 sm:px-6 lg:px-8 mt-12 relative">
     <div class="overflow-hidden rounded-lg">

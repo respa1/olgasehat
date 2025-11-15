@@ -49,9 +49,10 @@ Route::get('/daftar-pemilik-detail', fn() => view('FRONTEND.daftar_pemilik_detai
 Route::get('/login-pemilik', fn() => view('FRONTEND.login_pemilik'));
 Route::get('/payment', fn() => view('FRONTEND.payment'));
 Route::get('/success', fn() => view('FRONTEND.success'));
-Route::get('/venue', fn() => view('FRONTEND.venue'));
+Route::get('/venue', [App\Http\Controllers\VenueFrontendController::class, 'index'])->name('frontend.venue');
 Route::get('/healthy', fn() => view('FRONTEND.healthy'));
-Route::get('/venue-detail', fn() => view('FRONTEND.venue_detail'));
+Route::get('/venue-detail/{id}', [App\Http\Controllers\VenueFrontendController::class, 'show'])->name('frontend.venue.detail');
+Route::get('/venue-detail/{id}/slots', [App\Http\Controllers\VenueFrontendController::class, 'getSlots'])->name('frontend.venue.slots');
 Route::get('/klinik', fn() => view('FRONTEND.klinik'));
 Route::get('/venue-management', fn() => view('FRONTEND.venue_management'))->name('venue.management');
 Route::get('/health-management', fn() => view('FRONTEND.health_management'))->name('health.management');
