@@ -17,6 +17,7 @@ class Mitra extends Model
         'nama_bisnis',
         'email_bisnis',
         'tipe_venue',
+        'tipe_mitra',
         'status',
         'kontak_bisnis',
     ];

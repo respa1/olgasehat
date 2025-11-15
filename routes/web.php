@@ -199,6 +199,21 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     });
 
 // ======================================================
+// PENGELOLA KESEHATAN ROUTES
+// ======================================================
+Route::get('/loginpengelolakesehatan', fn() => view('pemilikkesehatan.loginpengelolakesehatan'));
+Route::get('/regispengelolakesehatan', fn() => view('pemilikkesehatan.regispengelolakesehatan'));
+Route::get('/isidatakesehatan', [App\Http\Controllers\PengelolaKesehatanController::class, 'create'])->name('pengelolakesehatan.create');
+Route::post('/isidatakesehatan', [App\Http\Controllers\PengelolaKesehatanController::class, 'store'])->name('pengelolakesehatan.store');
+
+Route::middleware(['auth', 'role:pengelolakesehatan'])->group(function () {
+    Route::get('/pengelolakesehatan/dashboard', fn() => view('pemilikkesehatan.Dashboard.dashboard'))->name('pengelolakesehatan.dashboard');
+    Route::get('/pengelolakesehatan/analytics', fn() => view('pemilikkesehatan.Analytics.index'))->name('pengelolakesehatan.analytics');
+    Route::get('/pengelolakesehatan/pengaturan', [App\Http\Controllers\PengelolaKesehatanController::class, 'pengaturan'])->name('pengelolakesehatan.pengaturan');
+    Route::post('/pengelolakesehatan/pengaturan/update', [App\Http\Controllers\PengelolaKesehatanController::class, 'updatePengaturan'])->name('pengelolakesehatan.pengaturan.update');
+});
+
+// ======================================================
 // SUPERADMIN / BACKOFFICE ROUTES (Authenticated + Role: Superadmin)
 // ======================================================
 Route::middleware(['auth'])->group(function () {
@@ -267,6 +282,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/datapemiliklapangan', [App\Http\Controllers\MitraController::class, 'index'])->name('mitra.datapemiliklapangan');
         Route::get('/verifikasi-mitra/{id}', [App\Http\Controllers\MitraController::class, 'show'])->name('mitra.show');
         Route::delete('/verifikasi-mitra/{id}', [App\Http\Controllers\MitraController::class, 'destroy'])->name('mitra.destroy');
+
+        // TEMPAT SEHAT (Pengelola Kesehatan)
+        Route::get('/tempat-sehat', [App\Http\Controllers\TempatSehatController::class, 'index'])->name('tempat-sehat.index');
+        Route::get('/tempat-sehat/{id}', [App\Http\Controllers\TempatSehatController::class, 'show'])->name('tempat-sehat.show');
+        Route::put('/tempat-sehat/{id}/verify', [App\Http\Controllers\TempatSehatController::class, 'verify'])->name('tempat-sehat.verify');
+        Route::delete('/tempat-sehat/{id}', [App\Http\Controllers\TempatSehatController::class, 'destroy'])->name('tempat-sehat.destroy');
 
 
         // ACTIVITY TYPES

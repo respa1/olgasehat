@@ -68,10 +68,11 @@
       <div class="relative">
         <button id="registerBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none text-sm xl:text-base whitespace-nowrap" data-translate>Daftar</button>
         <div id="registerDropdown"
-          class="hidden absolute right-0 mt-2 w-44 xl:w-48 bg-white border rounded-md shadow-lg z-50
+          class="hidden absolute right-0 mt-2 w-56 xl:w-60 bg-white border rounded-md shadow-lg z-50
                  transform scale-95 opacity-0 transition-all duration-200 ease-out">
           <a href="/daftaruser" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100" data-translate>Akun User</a>
           <a href="/regispengelola" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100" data-translate>Akun Pengelola Venue</a>
+          <a href="/regispengelolakesehatan" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100" data-translate>Akun Pengelola Kesehatan</a>
         </div>
       </div>
 
@@ -86,6 +87,7 @@
                  transform scale-95 opacity-0 transition-all duration-200 ease-out">
           <a href="/loginuser" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100" data-translate>Masuk User</a>
           <a href="/loginpengelolavenue" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100" data-translate>Masuk Pengelola Venue</a>
+          <a href="/loginpengelolakesehatan" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100" data-translate>Masuk Pengelola Kesehatan</a>
         </div>
       </div>
     </div>
@@ -125,8 +127,18 @@
 
       <!-- Masuk and Daftar Buttons -->
       <div class="border-t pt-3 sm:pt-4 px-4 sm:px-6 pb-4">
-        <a href="/loginuser" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base text-blue-700 font-semibold border border-blue-700 rounded-md hover:bg-blue-50 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Masuk</a>
-        <a href="/daftaruser" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base bg-blue-700 text-white font-semibold rounded-md hover:bg-blue-800 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Daftar</a>
+        <div class="mb-3">
+          <p class="text-sm font-semibold text-gray-600 mb-2" data-translate>Masuk Sebagai:</p>
+          <a href="/loginuser" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base text-blue-700 font-medium border border-blue-700 rounded-md hover:bg-blue-50 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Masuk User</a>
+          <a href="/loginpengelolavenue" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base text-blue-700 font-medium border border-blue-700 rounded-md hover:bg-blue-50 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Masuk Pengelola Venue</a>
+          <a href="/loginpengelolakesehatan" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base text-blue-700 font-medium border border-blue-700 rounded-md hover:bg-blue-50 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Masuk Pengelola Kesehatan</a>
+        </div>
+        <div>
+          <p class="text-sm font-semibold text-gray-600 mb-2" data-translate>Daftar Sebagai:</p>
+          <a href="/daftaruser" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base bg-blue-700 text-white font-medium rounded-md hover:bg-blue-800 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Daftar User</a>
+          <a href="/regispengelola" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base bg-blue-700 text-white font-medium rounded-md hover:bg-blue-800 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Daftar Pengelola Venue</a>
+          <a href="/regispengelolakesehatan" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base bg-blue-700 text-white font-medium rounded-md hover:bg-blue-800 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Daftar Pengelola Kesehatan</a>
+        </div>
       </div>
     </nav>
 </header>
