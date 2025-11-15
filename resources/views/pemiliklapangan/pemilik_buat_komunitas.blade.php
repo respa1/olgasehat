@@ -93,6 +93,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row" id="harga-container" style="display: {{ old('biaya_bergabung') == 'berbayar' ? 'block' : 'none' }};">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="harga">Harga (Rp) <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Rp</span>
+                                                </div>
+                                                <input type="number" class="form-control" id="harga" name="harga" placeholder="Contoh: 50000" min="0" value="{{ old('harga') }}" {{ old('biaya_bergabung') == 'berbayar' ? 'required' : '' }}>
+                                            </div>
+                                            <small class="form-text text-muted">Masukkan harga untuk bergabung komunitas</small>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label for="deskripsi">Deskripsi Lengkap <span class="text-danger">*</span></label>
                                     <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" placeholder="Tulis ringkasan komunitas, jadwal, dan manfaatnya" required>{{ old('deskripsi') }}</textarea>
@@ -127,4 +141,35 @@
         </div>
     </section>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const gratisRadio = document.getElementById('gratis');
+        const berbayarRadio = document.getElementById('berbayar');
+        const hargaContainer = document.getElementById('harga-container');
+        const hargaInput = document.getElementById('harga');
+
+        function toggleHargaInput() {
+            if (berbayarRadio.checked) {
+                hargaContainer.style.display = 'block';
+                hargaInput.setAttribute('required', 'required');
+            } else {
+                hargaContainer.style.display = 'none';
+                hargaInput.removeAttribute('required');
+                hargaInput.value = '';
+            }
+        }
+
+        // Event listeners
+        if (gratisRadio) {
+            gratisRadio.addEventListener('change', toggleHargaInput);
+        }
+        if (berbayarRadio) {
+            berbayarRadio.addEventListener('change', toggleHargaInput);
+        }
+
+        // Initialize on page load
+        toggleHargaInput();
+    });
+</script>
 @endsection

@@ -667,17 +667,21 @@ class PendaftaranController extends Controller
             'catatan' => ['nullable', 'string', 'max:255'],
         ]);
 
-        // Custom validation: harga_awal harus lebih besar dari harga jika diisi
-        if ($request->filled('harga_awal') && $request->harga_awal <= $request->harga) {
+        // Jika harga_awal tidak ada, gunakan harga saat ini sebagai harga_awal
+        $hargaAwal = $validated['harga_awal'] ?? $slot->harga_awal ?? $slot->harga;
+        
+        // Custom validation: harga_awal harus lebih besar dari harga jika ada promo
+        $isPromo = ($validated['promo_status'] ?? 'none') === 'promo';
+        if ($isPromo && $hargaAwal && $hargaAwal <= $validated['harga']) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Harga awal harus lebih besar dari harga setelah diskon.',
-                    'errors' => ['harga_awal' => ['Harga awal harus lebih besar dari harga setelah diskon.']]
+                    'errors' => ['harga' => ['Harga awal harus lebih besar dari harga setelah diskon.']]
                 ], 422);
             }
             return redirect()->back()
-                ->withErrors(['harga_awal' => 'Harga awal harus lebih besar dari harga setelah diskon.'])
+                ->withErrors(['harga' => 'Harga awal harus lebih besar dari harga setelah diskon.'])
                 ->withInput();
         }
 
@@ -686,9 +690,9 @@ class PendaftaranController extends Controller
             'jam_mulai' => $validated['jam_mulai'],
             'jam_selesai' => $validated['jam_selesai'],
             'harga' => $validated['harga'],
-            'harga_awal' => $validated['harga_awal'] ?? null,
+            'harga_awal' => $hargaAwal,
             'status' => $validated['status'],
-            'is_promo' => ($validated['promo_status'] ?? 'none') === 'promo',
+            'is_promo' => $isPromo,
             'catatan' => $validated['catatan'] ?? null,
         ]);
 

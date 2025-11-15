@@ -345,14 +345,14 @@
                   @endif
                   <h6 class="slot-time mb-1">{{ \Illuminate\Support\Carbon::parse($slot->jam_mulai)->format('H:i') }} - {{ \Illuminate\Support\Carbon::parse($slot->jam_selesai)->format('H:i') }}</h6>
                   @if($slot->status === 'booked')
-                    <p class="slot-price text-muted text-decoration-line-through mb-1">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
+                    <p class="slot-price text-muted mb-1" style="text-decoration: line-through; text-decoration-color: #6c757d; text-decoration-thickness: 2px; opacity: 0.7;">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
                     <span class="slot-status">Booked</span>
                   @elseif($slot->status === 'blocked')
                     <p class="slot-price text-muted mb-1">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
                     <span class="slot-status text-danger font-weight-bold">Blokir</span>
                   @else
-                    @if($slot->harga_awal && $slot->harga_awal > $slot->harga)
-                      <p class="slot-price text-muted text-decoration-line-through mb-1" style="font-size: 0.85rem;">Rp {{ number_format($slot->harga_awal, 0, ',', '.') }}</p>
+                    @if(($slot->harga_awal && $slot->harga_awal > $slot->harga) || ($slot->is_promo && $slot->harga_awal && $slot->harga_awal >= $slot->harga))
+                      <p class="slot-price text-muted mb-1" style="font-size: 0.85rem; text-decoration: line-through; text-decoration-color: #6c757d; text-decoration-thickness: 2px; opacity: 0.7;">Rp {{ number_format($slot->harga_awal, 0, ',', '.') }}</p>
                       <p class="slot-price mb-1 text-primary font-weight-bold">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
                     @else
                       <p class="slot-price mb-1">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
@@ -401,26 +401,26 @@
               <input type="time" name="jam_selesai" id="edit_jam_selesai" class="form-control rounded-lg" required>
             </div>
             <div class="col-md-6 mb-3">
-              <label class="small font-weight-semibold text-muted">Harga <span class="text-danger">*</span></label>
+              <label class="small font-weight-semibold text-muted">
+                Harga Awal (Sebelum Diskon)
+              </label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-white border-right-0">Rp</span>
+                </div>
+                <input type="number" name="harga_awal" id="edit_harga_awal" class="form-control border-left-0 rounded-right" min="0" readonly style="background-color: #e9ecef;">
+              </div>
+              <small class="form-text text-muted">Harga awal tetap dan tidak dapat diubah</small>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="small font-weight-semibold text-muted">Harga Diskon <span class="text-danger">*</span></label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text bg-white border-right-0">Rp</span>
                 </div>
                 <input type="number" name="harga" id="edit_harga" class="form-control border-left-0 rounded-right" min="0" required>
               </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label class="small font-weight-semibold text-muted">
-                Harga Awal (Sebelum Diskon)
-                <span class="badge badge-pill badge-secondary">Optional</span>
-              </label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text bg-white border-right-0">Rp</span>
-                </div>
-                <input type="number" name="harga_awal" id="edit_harga_awal" class="form-control border-left-0 rounded-right" min="0">
-              </div>
-              <small class="form-text text-muted">Harga awal akan ditampilkan dengan garis tercoret</small>
+              <small class="form-text text-muted">Harga setelah diskon</small>
             </div>
             <div class="col-md-6 mb-3">
               <label class="small font-weight-semibold text-muted">Status Ketersediaan</label>
@@ -579,6 +579,12 @@
   .slot-price {
     font-weight: 700;
     color: #1d2c5b;
+  }
+  .slot-price[style*="line-through"] {
+    text-decoration: line-through !important;
+    text-decoration-color: #6c757d !important;
+    text-decoration-thickness: 2px !important;
+    opacity: 0.7;
   }
   .slot-status {
     font-size: 0.8rem;
@@ -920,9 +926,9 @@
         
         var priceHtml = '';
         if (slot.status === 'booked') {
-          priceHtml = '<p class="slot-price text-muted text-decoration-line-through mb-1">Rp ' + formatNumber(slot.harga) + '</p>';
-        } else if (slot.harga_awal && slot.harga_awal > slot.harga) {
-          priceHtml = '<p class="slot-price text-muted text-decoration-line-through mb-1" style="font-size: 0.85rem;">Rp ' + formatNumber(slot.harga_awal) + '</p>' +
+          priceHtml = '<p class="slot-price text-muted mb-1" style="text-decoration: line-through; text-decoration-color: #6c757d; text-decoration-thickness: 2px; opacity: 0.7;">Rp ' + formatNumber(slot.harga) + '</p>';
+        } else if ((slot.harga_awal && slot.harga_awal > slot.harga) || (slot.is_promo && slot.harga_awal && slot.harga_awal >= slot.harga)) {
+          priceHtml = '<p class="slot-price text-muted mb-1" style="font-size: 0.85rem; text-decoration: line-through; text-decoration-color: #6c757d; text-decoration-thickness: 2px; opacity: 0.7;">Rp ' + formatNumber(slot.harga_awal) + '</p>' +
                       '<p class="slot-price mb-1 text-primary font-weight-bold">Rp ' + formatNumber(slot.harga) + '</p>';
         } else {
           priceHtml = '<p class="slot-price mb-1">Rp ' + formatNumber(slot.harga) + '</p>';
@@ -1001,8 +1007,14 @@
               
               document.getElementById('edit_jam_mulai').value = formatTime(slot.jam_mulai);
               document.getElementById('edit_jam_selesai').value = formatTime(slot.jam_selesai);
+              
+              // Set harga_awal: jika ada gunakan, jika tidak gunakan harga sebagai harga_awal
+              var hargaAwal = slot.harga_awal || slot.harga || 0;
+              document.getElementById('edit_harga_awal').value = hargaAwal;
+              
+              // Set harga (diskon): jika ada harga_awal, gunakan harga, jika tidak kosongkan
               document.getElementById('edit_harga').value = slot.harga || 0;
-              document.getElementById('edit_harga_awal').value = slot.harga_awal || '';
+              
               document.getElementById('edit_status').value = slot.status || 'available';
               document.getElementById('edit_promo_status').value = slot.is_promo ? 'promo' : 'none';
               document.getElementById('edit_catatan').value = slot.catatan || '';
@@ -1657,8 +1669,14 @@
             // Fill form fields
             document.getElementById('edit_jam_mulai').value = formatTime(slot.jam_mulai);
             document.getElementById('edit_jam_selesai').value = formatTime(slot.jam_selesai);
+            
+            // Set harga_awal: jika ada gunakan, jika tidak gunakan harga sebagai harga_awal
+            var hargaAwal = slot.harga_awal || slot.harga || 0;
+            document.getElementById('edit_harga_awal').value = hargaAwal;
+            
+            // Set harga (diskon): jika ada harga_awal, gunakan harga, jika tidak kosongkan
             document.getElementById('edit_harga').value = slot.harga || 0;
-            document.getElementById('edit_harga_awal').value = slot.harga_awal || '';
+            
             document.getElementById('edit_status').value = slot.status || 'available';
             document.getElementById('edit_promo_status').value = slot.is_promo ? 'promo' : 'none';
             document.getElementById('edit_catatan').value = slot.catatan || '';
@@ -1751,23 +1769,44 @@
     // Handle form submission for edit - reload data after update
     if (editSlotForm) {
       editSlotForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
         var submitBtn = this.querySelector('button[type="submit"]');
+        var originalText = submitBtn ? submitBtn.innerHTML : 'Simpan Perubahan';
         if (submitBtn) {
           submitBtn.disabled = true;
           submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Menyimpan...';
         }
         
+        // Create FormData and ensure _method is set
+        var formData = new FormData(this);
+        formData.append('_method', 'PUT');
+        
+        // Ensure harga_awal is always sent (even if readonly)
+        var hargaAwalInput = document.getElementById('edit_harga_awal');
+        if (hargaAwalInput && hargaAwalInput.value) {
+          formData.set('harga_awal', hargaAwalInput.value);
+        }
+        
         // After successful update, reload slots for current date
         fetch(this.action, {
-          method: 'PUT',
+          method: 'POST',
           headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').getAttribute('content') : '',
             'X-Requested-With': 'XMLHttpRequest',
             'Accept': 'application/json',
           },
-          body: new FormData(this)
+          body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+          // Check if response is ok
+          if (!response.ok) {
+            return response.json().then(data => {
+              throw { response: data, status: response.status };
+            });
+          }
+          return response.json();
+        })
         .then(data => {
           if (data.success) {
             // Reload slots for current date
@@ -1777,20 +1816,36 @@
               $(editSlotModal).modal('hide');
             }
           } else {
-            alert('Terjadi kesalahan saat menyimpan perubahan.');
+            var errorMsg = data.message || 'Terjadi kesalahan saat menyimpan perubahan.';
+            if (data.errors) {
+              var errorList = Object.values(data.errors).flat().join('\n');
+              errorMsg = errorList || errorMsg;
+            }
+            alert(errorMsg);
             if (submitBtn) {
               submitBtn.disabled = false;
-              submitBtn.innerHTML = 'Simpan Perubahan';
+              submitBtn.innerHTML = originalText;
             }
           }
         })
         .catch(error => {
           console.error('Error:', error);
-          // Fallback to normal form submission
-          return true;
+          var errorMsg = 'Terjadi kesalahan saat menyimpan perubahan.';
+          if (error.response) {
+            if (error.response.errors) {
+              var errorList = Object.values(error.response.errors).flat().join('\n');
+              errorMsg = errorList || error.response.message || errorMsg;
+            } else if (error.response.message) {
+              errorMsg = error.response.message;
+            }
+          }
+          alert(errorMsg);
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+          }
         });
         
-        e.preventDefault();
         return false;
       });
     }
