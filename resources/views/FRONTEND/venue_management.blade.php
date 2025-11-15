@@ -225,7 +225,7 @@
 </section>
 
 <!-- Help/Contact Section -->
-<section class="bg-gray-50 py-12 md:py-16" data-aos="fade-up">
+a<section class="bg-gray-50 py-12 md:py-16" data-aos="fade-up">
     <div class="container mx-auto px-6 max-w-7xl">
         <div class="flex flex-col lg:flex-row items-center lg:items-center lg:space-x-12">
             <!-- Left: Image -->
@@ -240,10 +240,11 @@
                 <p class="text-gray-700 text-base md:text-lg mb-6 leading-relaxed" data-translate>
                     Kami siap menjawab setiap pertanyaan yang kamu ajukan mengenai kolaborasi bersama OlgaSehat. Jangan ragu untuk menghubungi kami!
                 </p>
-                <a href="#" class="inline-flex items-center text-blue-700 font-bold hover:text-blue-900 text-lg transition-colors group" data-translate>
-                    Hubungi Kami Sekarang!
-                    <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                <a href="https://wa.me/6287861834425?text=Halo%2C%20saya%20ingin%20bertanya%20mengenai%20layanan%20Anda" target="_blank"class="inline-flex items-center text-blue-700 font-bold hover:text-blue-900 text-lg transition-colors group"data-translate>
+                 Hubungi Kami Sekarang!
+                <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
                 </a>
+
             </div>
         </div>
     </div>

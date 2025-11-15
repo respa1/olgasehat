@@ -35,7 +35,7 @@
                     class="bg-transparent text-gray-700 text-sm font-semibold rounded-full px-4 py-1.5 transition-all duration-300 hover:bg-white hover:shadow-sm focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-opacity-50">
                 PENYEWA
             </button>
-        </div>xampp
+        </div>
 
         <div id="contentPemilikLapangan" role="tabpanel" aria-labelledby="btnPemilikLapangan" tabindex="0" class="space-y-4">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-snug">Kelola fasilitas lebih <span class="text-blue-700">praktis dan menguntungkan</span>.</h2>
