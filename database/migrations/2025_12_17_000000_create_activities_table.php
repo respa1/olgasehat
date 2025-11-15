@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('kategori'); // Kategori olahraga
             $table->string('lokasi')->nullable(); // Lokasi kegiatan
             $table->enum('biaya_bergabung', ['gratis', 'berbayar'])->default('gratis'); // Biaya bergabung
+            $table->unsignedBigInteger('harga')->nullable(); // Harga untuk aktivitas berbayar
             $table->text('deskripsi'); // Deskripsi lengkap
             $table->string('link_kontak')->nullable(); // Link grup/kontak (WhatsApp/IG)
             $table->string('banner')->nullable(); // Banner komunitas

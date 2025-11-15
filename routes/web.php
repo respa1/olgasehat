@@ -179,7 +179,9 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     Route::post('/fasilitas/venue/{id}/update', [PendaftaranController::class, 'updateVenue'])->name('fasilitas.update');
     Route::post('/fasilitas/venue/{id}/lapangan', [PendaftaranController::class, 'storeLapangan'])->name('fasilitas.lapangan.store');
     Route::get('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal', [PendaftaranController::class, 'showLapanganSchedule'])->name('fasilitas.lapangan.jadwal');
+    Route::get('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal/api', [PendaftaranController::class, 'getSlotsByDate'])->name('fasilitas.lapangan.jadwal.api');
     Route::post('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal', [PendaftaranController::class, 'storeLapanganSlot'])->name('fasilitas.lapangan.jadwal.store');
+    Route::post('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal/bulk', [PendaftaranController::class, 'storeBulkLapanganSlots'])->name('fasilitas.lapangan.jadwal.bulk');
     Route::get('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal/{slot}/edit', [PendaftaranController::class, 'editLapanganSlot'])->name('fasilitas.lapangan.jadwal.edit');
     Route::put('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal/{slot}', [PendaftaranController::class, 'updateLapanganSlot'])->name('fasilitas.lapangan.jadwal.update');
     Route::delete('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal/{slot}', [PendaftaranController::class, 'deleteLapanganSlot'])->name('fasilitas.lapangan.jadwal.delete');
