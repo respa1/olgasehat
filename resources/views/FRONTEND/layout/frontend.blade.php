@@ -35,115 +35,115 @@
 
 <!-- HEADER -->
 <header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 shadow-md bg-white transition-transform duration-300 ease-in-out">
-  <div class="container mx-auto flex items-center justify-between py-4 px-6">
+  <div class="container mx-auto flex items-center justify-between py-2 sm:py-3 md:py-4 px-3 sm:px-4 md:px-6">
     
     <!-- Logo -->
-    <a href="/" class="flex items-center space-x-2">
-      <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="h-10 w-auto" />
+    <a href="/" class="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
+      <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="h-8 sm:h-9 md:h-10 w-auto" />
     </a>
 
     <!-- Menu Desktop -->
-    <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
-      <a href="/venue" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Fasilitas Olahraga</a>
-      <a href="/healthy" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Layanan Kesehatan</a>
-      <a href="/community" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Komunitas & Aktivitas</a>
-      <a href="/blog-news" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>News</a>
+    <nav class="hidden lg:flex items-center space-x-3 xl:space-x-6 text-gray-700 font-medium text-sm xl:text-base">
+      <a href="/venue" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200 whitespace-nowrap" data-translate>Fasilitas Olahraga</a>
+      <a href="/healthy" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200 whitespace-nowrap" data-translate>Layanan Kesehatan</a>
+      <a href="/community" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200 whitespace-nowrap" data-translate>Komunitas & Aktivitas</a>
+      <a href="/blog-news" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200 whitespace-nowrap" data-translate>News</a>
     </nav>
 
     <!-- Aksi Desktop -->
-    <div class="hidden md:flex items-center space-x-4 relative">
+    <div class="hidden lg:flex items-center space-x-2 xl:space-x-4 relative">
       <!-- Language Selector -->
       <div class="relative">
-        <button id="languageBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none flex items-center space-x-2">
-          <i class="fas fa-globe fa-lg"></i>
-          <span id="currentLanguage">ID</span>
-          <i class="fas fa-chevron-down text-sm"></i>
+        <button id="languageBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none flex items-center space-x-1 xl:space-x-2 text-sm xl:text-base">
+          <i class="fas fa-globe text-base xl:text-lg"></i>
+          <span id="currentLanguage" class="hidden xl:inline">ID</span>
+          <i class="fas fa-chevron-down text-xs"></i>
         </button>
-        <div id="languageDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+        <div id="languageDropdown" class="hidden absolute right-0 mt-2 w-44 xl:w-48 bg-white border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
           <!-- Daftar bahasa akan diisi oleh JavaScript -->
         </div>
       </div>
 
       <!-- Register Dropdown -->
       <div class="relative">
-        <button id="registerBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none" data-translate>Daftar</button>
+        <button id="registerBtn" class="text-gray-700 hover:text-blue-700 focus:outline-none text-sm xl:text-base whitespace-nowrap" data-translate>Daftar</button>
         <div id="registerDropdown"
-          class="hidden absolute right-0 mt-2 w-56 bg-white border rounded-md shadow-lg z-50
+          class="hidden absolute right-0 mt-2 w-56 xl:w-60 bg-white border rounded-md shadow-lg z-50
                  transform scale-95 opacity-0 transition-all duration-200 ease-out">
-          <a href="/daftaruser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Akun User</a>
-          <a href="/regispengelola" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Akun Pengelola Venue</a>
-          <a href="/regispengelolakesehatan" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Akun Pengelola Kesehatan</a>
+          <a href="/daftaruser" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100" data-translate>Akun User</a>
+          <a href="/regispengelola" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100" data-translate>Akun Pengelola Venue</a>
+          <a href="/regispengelolakesehatan" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100" data-translate>Akun Pengelola Kesehatan</a>
         </div>
       </div>
 
       <!-- Login Dropdown -->
       <div class="relative">
         <button id="loginBtn"
-          class="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition focus:outline-none" data-translate>
+          class="bg-blue-700 text-white px-3 xl:px-4 py-1.5 xl:py-2 rounded-md hover:bg-blue-800 transition focus:outline-none text-sm xl:text-base whitespace-nowrap" data-translate>
           Masuk
         </button>
         <div id="loginDropdown"
-          class="hidden absolute right-0 mt-2 w-56 bg-white border rounded-md shadow-lg z-50
+          class="hidden absolute right-0 mt-2 w-52 xl:w-56 bg-white border rounded-md shadow-lg z-50
                  transform scale-95 opacity-0 transition-all duration-200 ease-out">
-          <a href="/loginuser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Masuk User</a>
-          <a href="/loginpengelolavenue" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Masuk Pengelola Venue</a>
-          <a href="/loginpengelolakesehatan" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Masuk Pengelola Kesehatan</a>
+          <a href="/loginuser" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100" data-translate>Masuk User</a>
+          <a href="/loginpengelolavenue" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100" data-translate>Masuk Pengelola Venue</a>
+          <a href="/loginpengelolakesehatan" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100" data-translate>Masuk Pengelola Kesehatan</a>
         </div>
       </div>
     </div>
 
-    <!-- Header Mobile -->
-    <div class="flex md:hidden items-center space-x-4 ml-auto">
+    <!-- Header Mobile & Tablet -->
+    <div class="flex lg:hidden items-center space-x-2 sm:space-x-3 md:space-x-4 ml-auto">
       <!-- Language Selector Mobile -->
       <div class="relative">
-        <button id="languageBtnMobile" class="text-gray-700 hover:text-blue-700 focus:outline-none flex items-center space-x-2">
-          <i class="fas fa-globe fa-lg"></i>
-          <span id="currentLanguageMobile">ID</span>
-          <i class="fas fa-chevron-down text-sm"></i>
+        <button id="languageBtnMobile" class="text-gray-700 hover:text-blue-700 focus:outline-none flex items-center space-x-1 sm:space-x-2">
+          <i class="fas fa-globe text-base sm:text-lg"></i>
+          <span id="currentLanguageMobile" class="text-xs sm:text-sm font-medium">ID</span>
+          <i class="fas fa-chevron-down text-xs"></i>
         </button>
-        <div id="languageDropdownMobile" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+        <div id="languageDropdownMobile" class="hidden absolute right-0 mt-2 w-40 sm:w-48 bg-white border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
           <!-- Daftar bahasa akan diisi oleh JavaScript -->
         </div>
       </div>
 
       <!-- Tombol Hamburger -->
       <button id="mobileMenuBtn"
-              class="text-gray-700 hover:text-blue-700 focus:outline-none"
+              class="text-gray-700 hover:text-blue-700 focus:outline-none p-1 sm:p-2"
               aria-label="Open menu">
-        <i class="fas fa-bars fa-lg"></i>
+        <i class="fas fa-bars text-lg sm:text-xl"></i>
       </button>
     </div>
 
     <!-- Menu Navigasi Mobile -->
     <nav id="mobileMenu"
-         class="hidden flex-col md:hidden bg-white border-t border-gray-200 shadow-md 
-                transition-all duration-300 ease-in-out absolute top-full left-0 w-full z-[50]">
+         class="hidden flex-col lg:hidden bg-white border-t border-gray-200 shadow-md 
+                transition-all duration-300 ease-in-out absolute top-full left-0 w-full z-[50] max-h-[calc(100vh-4rem)] overflow-y-auto">
 
       <!-- Link Navigasi -->
-      <a href="/venue" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Fasilitas Olahraga</a>
-      <a href="#" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Layanan Kesehatan</a>
-      <a href="/community" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Komunitas & Aktivitas</a>
-      <a href="/blog-news" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>News</a>
+      <a href="/venue" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Fasilitas Olahraga</a>
+      <a href="/healthy" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Layanan Kesehatan</a>
+      <a href="/community" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Komunitas & Aktivitas</a>
+      <a href="/blog-news" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>News</a>
 
       <!-- Masuk and Daftar Buttons -->
-      <div class="border-t pt-4">
+      <div class="border-t pt-3 sm:pt-4 px-4 sm:px-6 pb-4">
         <div class="mb-3">
-          <p class="text-sm font-semibold text-gray-600 mb-2 px-6" data-translate>Masuk Sebagai:</p>
-          <a href="/loginuser" class="block w-full px-6 py-3 text-center text-blue-700 font-medium border border-blue-700 rounded-md hover:bg-blue-50 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Masuk User</a>
-          <a href="/loginpengelolavenue" class="block w-full px-6 py-3 text-center text-blue-700 font-medium border border-blue-700 rounded-md hover:bg-blue-50 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Masuk Pengelola Venue</a>
-          <a href="/loginpengelolakesehatan" class="block w-full px-6 py-3 text-center text-blue-700 font-medium border border-blue-700 rounded-md hover:bg-blue-50 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Masuk Pengelola Kesehatan</a>
+          <p class="text-sm font-semibold text-gray-600 mb-2" data-translate>Masuk Sebagai:</p>
+          <a href="/loginuser" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base text-blue-700 font-medium border border-blue-700 rounded-md hover:bg-blue-50 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Masuk User</a>
+          <a href="/loginpengelolavenue" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base text-blue-700 font-medium border border-blue-700 rounded-md hover:bg-blue-50 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Masuk Pengelola Venue</a>
+          <a href="/loginpengelolakesehatan" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base text-blue-700 font-medium border border-blue-700 rounded-md hover:bg-blue-50 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Masuk Pengelola Kesehatan</a>
         </div>
         <div>
-          <p class="text-sm font-semibold text-gray-600 mb-2 px-6" data-translate>Daftar Sebagai:</p>
-          <a href="/daftaruser" class="block w-full px-6 py-3 text-center bg-blue-700 text-white font-medium rounded-md hover:bg-blue-800 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Daftar User</a>
-          <a href="/regispengelola" class="block w-full px-6 py-3 text-center bg-blue-700 text-white font-medium rounded-md hover:bg-blue-800 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Daftar Pengelola Venue</a>
-          <a href="/regispengelolakesehatan" class="block w-full px-6 py-3 text-center bg-blue-700 text-white font-medium rounded-md hover:bg-blue-800 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Daftar Pengelola Kesehatan</a>
+          <p class="text-sm font-semibold text-gray-600 mb-2" data-translate>Daftar Sebagai:</p>
+          <a href="/daftaruser" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base bg-blue-700 text-white font-medium rounded-md hover:bg-blue-800 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Daftar User</a>
+          <a href="/regispengelola" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base bg-blue-700 text-white font-medium rounded-md hover:bg-blue-800 mb-2 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Daftar Pengelola Venue</a>
+          <a href="/regispengelolakesehatan" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base bg-blue-700 text-white font-medium rounded-md hover:bg-blue-800 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Daftar Pengelola Kesehatan</a>
         </div>
       </div>
     </nav>
 </header>
 
-  <main class="pt-18">
+  <main class="pt-14 sm:pt-16 md:pt-18 lg:pt-20">
     @yield('content')
   </main>
 
@@ -362,7 +362,7 @@
         languageDropdown.innerHTML = '';
         languages.forEach(lang => {
           const li = document.createElement('li');
-          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+          li.className = 'px-3 xl:px-4 py-2 text-sm xl:text-base hover:bg-gray-100 cursor-pointer';
           li.textContent = `${lang.name} (${lang.code.toUpperCase()})`;
           li.addEventListener('click', () => {
             currentLanguage.textContent = lang.code.toUpperCase();
@@ -378,7 +378,7 @@
         languageDropdownMobile.innerHTML = '';
         languages.forEach(lang => {
           const li = document.createElement('li');
-          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+          li.className = 'px-3 sm:px-4 py-2 text-sm sm:text-base hover:bg-gray-100 cursor-pointer';
           li.textContent = `${lang.name} (${lang.code.toUpperCase()})`;
           li.addEventListener('click', () => {
             currentLanguageMobile.textContent = lang.code.toUpperCase();

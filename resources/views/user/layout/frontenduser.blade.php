@@ -35,127 +35,127 @@
 
 <!-- HEADER -->
 <header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 shadow-md bg-white transition-transform duration-300 ease-in-out">
-  <div class="container mx-auto flex items-center justify-between py-4 px-6">
+  <div class="container mx-auto flex items-center justify-between py-2 sm:py-3 md:py-4 px-3 sm:px-4 md:px-6">
 
     <!-- Logo -->
-    <a href="/homeuser" class="flex items-center space-x-2">
-      <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="h-10 w-auto" />
+    <a href="/homeuser" class="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
+      <img src="{{ asset('assets/olgasehat-icon.png') }}" alt="Olga Sehat Logo" class="h-8 sm:h-9 md:h-10 w-auto" />
     </a>
 
     <!-- Menu Desktop -->
-    <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
-      <a href="/venueuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200">Fasilitas Olahraga</a>
-      <a href="/healthyuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200">Layanan Kesehatan</a>
-      <a href="/communityuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200">Komunitas & Aktivitas</a>
-      <a href="/bloguser_news" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200">News</a>
+    <nav class="hidden lg:flex items-center space-x-3 xl:space-x-6 text-gray-700 font-medium text-sm xl:text-base">
+      <a href="/venueuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200 whitespace-nowrap">Fasilitas Olahraga</a>
+      <a href="/healthyuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200 whitespace-nowrap">Layanan Kesehatan</a>
+      <a href="/communityuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200 whitespace-nowrap">Komunitas & Aktivitas</a>
+      <a href="/bloguser_news" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200 whitespace-nowrap">News</a>
     </nav>
 
     <!-- Aksi Desktop -->
-    <div class="hidden md:flex items-center space-x-4 relative">
+    <div class="hidden lg:flex items-center space-x-2 xl:space-x-4 relative">
       <!-- Language Selector -->
       <div class="relative">
-        <button id="languageBtnUser" class="text-gray-700 hover:text-blue-700 focus:outline-none flex items-center space-x-2">
-          <i class="fas fa-globe fa-lg"></i>
-          <span id="currentLanguageUser">ID</span>
-          <i class="fas fa-chevron-down text-sm"></i>
+        <button id="languageBtnUser" class="text-gray-700 hover:text-blue-700 focus:outline-none flex items-center space-x-1 xl:space-x-2 text-sm xl:text-base">
+          <i class="fas fa-globe text-base xl:text-lg"></i>
+          <span id="currentLanguageUser" class="hidden xl:inline">ID</span>
+          <i class="fas fa-chevron-down text-xs"></i>
         </button>
-        <div id="languageDropdownUser" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+        <div id="languageDropdownUser" class="hidden absolute right-0 mt-2 w-44 xl:w-48 bg-white border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
           <!-- Daftar bahasa akan diisi oleh JavaScript -->
         </div>
       </div>
 
       <!-- Dropdown User -->
       <div class="relative">
-        <button id="userMenuBtn" class="flex items-center space-x-2 focus:outline-none">
+        <button id="userMenuBtn" class="flex items-center space-x-1 xl:space-x-2 focus:outline-none">
           @if(Auth::user()->image)
-              <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="User Avatar" class="w-8 h-8 rounded-full border object-cover" />
+              <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="User Avatar" class="w-7 h-7 xl:w-8 xl:h-8 rounded-full border object-cover" />
           @else
-              <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+              <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-7 h-7 xl:w-8 xl:h-8 rounded-full border" />
           @endif
-          <i class="fas fa-chevron-down text-gray-500 text-sm"></i>
+          <i class="fas fa-chevron-down text-gray-500 text-xs xl:text-sm"></i>
         </button>
         <!-- Dropdown menu -->
-        <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
-          <a href="/dashboarduser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
-          <a href="/riwayatpayment" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
-          <a href="/riwayat-komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Komunitas</a>
-          <a href="/riwayatmembership" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Membership</a>
-          <a href="/settings" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pengaturan</a>
+        <div id="userMenu" class="hidden absolute right-0 mt-2 w-44 xl:w-48 bg-white border rounded-md shadow-lg z-50">
+          <a href="/dashboarduser" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100">Profil</a>
+          <a href="/riwayatpayment" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
+          <a href="/riwayat-komunitas" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100">Komunitas</a>
+          <a href="/riwayatmembership" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100">Membership</a>
+          <a href="/settings" class="block px-3 xl:px-4 py-2 text-sm xl:text-base text-gray-700 hover:bg-gray-100">Pengaturan</a>
           
           <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="block border-t border-gray-200 mt-1">
             @csrf
-            <button type="submit" class="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 font-medium transition-colors">Logout</button>
+            <button type="submit" class="w-full text-left px-3 xl:px-4 py-2 xl:py-3 text-sm xl:text-base text-red-600 hover:bg-red-50 font-medium transition-colors">Logout</button>
           </form>
         </div>
       </div>
     </div>
 
-    <!-- Header Mobile -->
-    <div class="flex md:hidden items-center space-x-4 ml-auto">
+    <!-- Header Mobile & Tablet -->
+    <div class="flex lg:hidden items-center space-x-2 sm:space-x-3 md:space-x-4 ml-auto">
       <!-- Language Selector Mobile -->
       <div class="relative">
-        <button id="languageBtnUserMobile" class="text-gray-700 hover:text-blue-700 focus:outline-none flex items-center space-x-2">
-          <i class="fas fa-globe fa-lg"></i>
-          <span id="currentLanguageUserMobile">ID</span>
-          <i class="fas fa-chevron-down text-sm"></i>
+        <button id="languageBtnUserMobile" class="text-gray-700 hover:text-blue-700 focus:outline-none flex items-center space-x-1 sm:space-x-2">
+          <i class="fas fa-globe text-base sm:text-lg"></i>
+          <span id="currentLanguageUserMobile" class="text-xs sm:text-sm font-medium">ID</span>
+          <i class="fas fa-chevron-down text-xs"></i>
         </button>
-        <div id="languageDropdownUserMobile" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+        <div id="languageDropdownUserMobile" class="hidden absolute right-0 mt-2 w-40 sm:w-48 bg-white border rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
           <!-- Daftar bahasa akan diisi oleh JavaScript -->
         </div>
       </div>
 
       <!-- Dropdown User Mobile -->
       <div class="relative">
-        <button id="mobileUserBtn" class="flex items-center space-x-2 focus:outline-none">
+        <button id="mobileUserBtn" class="flex items-center space-x-1 sm:space-x-2 focus:outline-none">
           @if(Auth::user()->image)
-              <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="User Avatar" class="w-8 h-8 rounded-full border object-cover" />
+              <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="User Avatar" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border object-cover" />
           @else
-              <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+              <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border" />
           @endif
-          <i class="fas fa-chevron-down text-gray-500 text-sm"></i>
+          <i class="fas fa-chevron-down text-gray-500 text-xs sm:text-sm"></i>
         </button>
         <!-- Dropdown menu -->
-        <div id="mobileUserMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
-          <a href="/dashboarduser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
-          <a href="/riwayatpayment" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
-          <a href="/komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Komunitas</a>
-          <a href="/klub" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Klub</a>
-          <a href="/settings" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pengaturan</a>
+        <div id="mobileUserMenu" class="hidden absolute right-0 mt-2 w-40 sm:w-48 bg-white border rounded-md shadow-lg z-50">
+          <a href="/dashboarduser" class="block px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-700 hover:bg-gray-100">Profil</a>
+          <a href="/riwayatpayment" class="block px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
+          <a href="/komunitas" class="block px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-700 hover:bg-gray-100">Komunitas</a>
+          <a href="/klub" class="block px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-700 hover:bg-gray-100">Klub</a>
+          <a href="/settings" class="block px-3 sm:px-4 py-2 text-sm sm:text-base text-gray-700 hover:bg-gray-100">Pengaturan</a>
           
           <form id="mobile-logout-form" action="{{ route('user.logout') }}" method="POST" class="block border-t border-gray-200 mt-1">
             @csrf
-            <button type="submit" class="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 font-medium transition-colors">Logout</button>
+            <button type="submit" class="w-full text-left px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base text-red-600 hover:bg-red-50 font-medium transition-colors">Logout</button>
           </form>
         </div>
       </div>
 
       <!-- Tombol Hamburger -->
       <button id="mobileMenuBtn"
-              class="text-gray-700 hover:text-blue-700 focus:outline-none"
+              class="text-gray-700 hover:text-blue-700 focus:outline-none p-1 sm:p-2"
               aria-label="Open menu">
-        <i class="fas fa-bars fa-lg"></i>
+        <i class="fas fa-bars text-lg sm:text-xl"></i>
       </button>
     </div>
 
     <!-- Menu Navigasi Mobile -->
     <nav id="mobileMenu"
-         class="hidden flex-col md:hidden bg-white border-t border-gray-200 shadow-md
-                transition-all duration-300 ease-in-out absolute top-full left-0 w-full z-[50]">
+         class="hidden flex-col lg:hidden bg-white border-t border-gray-200 shadow-md
+                transition-all duration-300 ease-in-out absolute top-full left-0 w-full z-[50] max-h-[calc(100vh-4rem)] overflow-y-auto">
 
       <!-- Link Navigasi -->
-      <a href="/venueuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Fasilitas Olahraga</a>
-      <a href="/healthyuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Layanan Kesehatan</a>
-      <a href="/communityuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas & Aktivitas</a>
-      <a href="/bloguser_news" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">News</a>
+      <a href="/venueuser" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Fasilitas Olahraga</a>
+      <a href="/healthyuser" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Layanan Kesehatan</a>
+      <a href="/communityuser" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas & Aktivitas</a>
+      <a href="/bloguser_news" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">News</a>
 
       <!-- User Links -->
-      <div class="border-t pt-4">
-        <a href="/logout" class="block w-full px-6 py-4 text-center bg-red-600 text-white font-semibold rounded-md hover:bg-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Logout</a>
+      <div class="border-t pt-3 sm:pt-4 px-4 sm:px-6 pb-4">
+        <a href="/logout" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Logout</a>
       </div>
     </nav>
 </header>
 
-  <main class="pt-18">
+  <main class="pt-14 sm:pt-16 md:pt-18 lg:pt-20">
     @yield('content')
   </main>
 
@@ -377,7 +377,7 @@
         languageDropdownUser.innerHTML = '';
         languages.forEach(lang => {
           const li = document.createElement('li');
-          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+          li.className = 'px-3 xl:px-4 py-2 text-sm xl:text-base hover:bg-gray-100 cursor-pointer';
           li.textContent = `${lang.name} (${lang.code.toUpperCase()})`;
           li.addEventListener('click', () => {
             currentLanguageUser.textContent = lang.code.toUpperCase();
@@ -393,7 +393,7 @@
         languageDropdownUserMobile.innerHTML = '';
         languages.forEach(lang => {
           const li = document.createElement('li');
-          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+          li.className = 'px-3 sm:px-4 py-2 text-sm sm:text-base hover:bg-gray-100 cursor-pointer';
           li.textContent = `${lang.name} (${lang.code.toUpperCase()})`;
           li.addEventListener('click', () => {
             currentLanguageUserMobile.textContent = lang.code.toUpperCase();
