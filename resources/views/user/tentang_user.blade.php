@@ -136,9 +136,9 @@
                 <p class="text-gray-700 text-base md:text-lg mb-6 leading-relaxed" data-translate>
                     Kami siap menjawab setiap pertanyaan yang kamu ajukan mengenai kolaborasi bersama OlgaSehat. Jangan ragu untuk menghubungi kami!
                 </p>
-                <a href="#" class="inline-flex items-center text-blue-700 font-bold hover:text-blue-900 text-lg transition-colors group" data-translate>
-                    Hubungi Kami Sekarang!
-                    <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                <a href="https://wa.me/6287861834425?text=Halo%2C%20saya%20ingin%20bertanya%20mengenai%20layanan%20Anda" target="_blank"class="inline-flex items-center text-blue-700 font-bold hover:text-blue-900 text-lg transition-colors group"data-translate>
+                 Hubungi Kami Sekarang!
+                <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
                 </a>
             </div>
         </div>
