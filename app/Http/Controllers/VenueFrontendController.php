@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pendaftaran;
 use App\Models\LapanganSlot;
 use App\Models\Lapangan;
+use App\Models\Galeri;
 use Illuminate\Support\Carbon;
 
 class VenueFrontendController extends Controller
@@ -39,9 +40,15 @@ class VenueFrontendController extends Controller
             $venue->min_price = $minPrice ?? 0;
         }
         
+        // Ambil venue banner untuk ditampilkan
+        $venueBanners = Galeri::where('kategori', 'venue_banner')
+            ->orderBy('urutan', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
         // Return view sesuai route
         $viewName = $isUserView ? 'user.venueuser' : 'FRONTEND.venue';
-        return view($viewName, compact('venues'));
+        return view($viewName, compact('venues', 'venueBanners'));
     }
     
     /**

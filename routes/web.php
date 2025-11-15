@@ -229,6 +229,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/galeri/home-banner', [GaleriController::class, 'homeBanner'])->name('galeri.home-banner');
         Route::get('/galeri/lapangan-banner', [GaleriController::class, 'lapanganBanner'])->name('galeri.lapangan-banner');
         Route::get('/galeri/kesehatan-banner', [GaleriController::class, 'kesehatanBanner'])->name('galeri.kesehatan-banner');
+        Route::get('/galeri/venue-banner', [GaleriController::class, 'venueBanner'])->name('galeri.venue-banner');
         Route::get('/tambahgaleri/{kategori}', [GaleriController::class, 'tambahgaleri'])->name('tambahgaleri.kategori');
         Route::get('/tambahgaleri', [GaleriController::class, 'tambahgaleri'])->name('tambahgaleri');
         Route::post('/insertgaleri', [GaleriController::class, 'insertgaleri'])->name('insertgaleri');

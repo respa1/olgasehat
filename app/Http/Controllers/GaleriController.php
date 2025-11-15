@@ -74,6 +74,20 @@ class GaleriController extends Controller
         return view('backend.galeri.galeri', compact('data'))->with('kategori', 'kesehatan_banner')->with('kategoriLabel', 'Kesehatan Banner');
     }
 
+    public function venueBanner(Request $request) {
+        $query = Galeri::where('kategori', 'venue_banner');
+        
+        if($request->has('search') && $request->search != ''){
+            $query->where('foto', 'LIKE', '%'.$request->search.'%');
+        }
+        
+        $data = $query->orderBy('urutan', 'asc')
+                      ->orderBy('created_at', 'desc')
+                      ->paginate(10);
+    
+        return view('backend.galeri.galeri', compact('data'))->with('kategori', 'venue_banner')->with('kategoriLabel', 'Venue Banner');
+    }
+
     public function tambahgaleri($kategori = null){
         return view('backend.galeri.tambahgaleri', compact('kategori'));
     }
@@ -107,6 +121,8 @@ class GaleriController extends Controller
             return redirect()->route('galeri.lapangan-banner')->with('Success', 'Data berhasil ditambahkan!');
         } elseif($kategori == 'kesehatan_banner') {
             return redirect()->route('galeri.kesehatan-banner')->with('Success', 'Data berhasil ditambahkan!');
+        } elseif($kategori == 'venue_banner') {
+            return redirect()->route('galeri.venue-banner')->with('Success', 'Data berhasil ditambahkan!');
         }
         
         return redirect()->route('galeri')->with('Success', 'Data berhasil ditambahkan!');
@@ -174,6 +190,8 @@ class GaleriController extends Controller
         return redirect()->route('galeri.lapangan-banner')->with('update', 'Data Berhasil Diedit');
     } elseif($kategori == 'kesehatan_banner') {
         return redirect()->route('galeri.kesehatan-banner')->with('update', 'Data Berhasil Diedit');
+    } elseif($kategori == 'venue_banner') {
+        return redirect()->route('galeri.venue-banner')->with('update', 'Data Berhasil Diedit');
     }
     
     return redirect()->route('galeri')->with('update', 'Data Berhasil Diedit');
@@ -193,6 +211,8 @@ class GaleriController extends Controller
                 return redirect()->route('galeri.lapangan-banner')->with('delete', 'Data Berhasil Dihapus');
             } elseif($kategori == 'kesehatan_banner') {
                 return redirect()->route('galeri.kesehatan-banner')->with('delete', 'Data Berhasil Dihapus');
+            } elseif($kategori == 'venue_banner') {
+                return redirect()->route('galeri.venue-banner')->with('delete', 'Data Berhasil Dihapus');
             }
             
             return redirect()->route('galeri')->with('delete', 'Data Berhasil Dihapus');

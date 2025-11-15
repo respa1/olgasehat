@@ -78,8 +78,9 @@
                         <option value="home_banner" {{ old('kategori', $data->kategori) == 'home_banner' ? 'selected' : '' }}>Home Banner</option>
                         <option value="lapangan_banner" {{ old('kategori', $data->kategori) == 'lapangan_banner' ? 'selected' : '' }}>Lapangan Banner</option>
                         <option value="kesehatan_banner" {{ old('kategori', $data->kategori) == 'kesehatan_banner' ? 'selected' : '' }}>Kesehatan Banner</option>
+                        <option value="venue_banner" {{ old('kategori', $data->kategori) == 'venue_banner' ? 'selected' : '' }}>Venue Banner</option>
                     </select>
-                    <small class="form-text text-muted">Home Banner: 4 gambar yang akan ditampilkan secara bergantian di halaman home</small>
+                    <small class="form-text text-muted">Home Banner: 4 gambar yang akan ditampilkan secara bergantian di halaman home<br>Venue Banner: Banner yang akan ditampilkan di halaman /venue dan /venueuser</small>
                 </div>
 
                  <div class="mb-3">

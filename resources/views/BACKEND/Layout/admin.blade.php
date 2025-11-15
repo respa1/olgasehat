@@ -118,6 +118,12 @@
                   <p>Kesehatan Banner</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/galeri/venue-banner" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Venue Banner</p>
+                </a>
+              </li>
             </ul>
           </li>
 
