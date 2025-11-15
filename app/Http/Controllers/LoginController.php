@@ -40,6 +40,15 @@ class LoginController extends Controller
                         'email' => 'Akun Anda belum disetujui oleh Super Admin.',
                     ]);
                 }
+            } elseif ($user->role === 'pengelolakesehatan') {
+                if ($user->status === 'approved') {
+                    return redirect('/pengelolakesehatan/dashboard');
+                } else {
+                    Auth::logout();
+                    return back()->withErrors([
+                        'email' => 'Akun Anda belum disetujui oleh Super Admin.',
+                    ]);
+                }
             } else {
                 Auth::logout();
                 return back()->withErrors([
@@ -108,7 +117,7 @@ class LoginController extends Controller
         $user = Auth::user();
         $role = $user ? $user->role : null;
         Auth::logout();
-        if ($role === 'pemiliklapangan') {
+        if ($role === 'pemiliklapangan' || $role === 'pengelolakesehatan') {
             return redirect('/')->with('success', 'Anda Berhasil Log Out');
         } else {
             return redirect('login');
