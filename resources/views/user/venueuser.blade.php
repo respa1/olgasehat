@@ -52,198 +52,76 @@
   <!-- Venue Cards Grid -->
   <section class="container mx-auto px-6 pb-12">
     <h2 class="font-bold text-xl mb-6 text-gray-800">
-      Nikmati <span class="text-blue-700">4 Venue</span> yang tersedia
+      Nikmati <span class="text-blue-700">{{ $venues->total() }} Venue</span> yang tersedia
     </h2>
+    @if($venues->count() > 0)
     <div
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
       aria-label="Daftar venue olahraga"
     >
-      <a href="/venueuser_detail" class="block group">
+      @foreach($venues as $venue)
+        <a href="{{ route('user.venue.detail', $venue->id) }}" class="block group">
             <article
                 class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:-translate-y-1 group-hover:shadow-xl transition duration-300"
             >
                 <img
-                    src="{{ asset('assets/MU Sport Center.jpeg') }}"
-                    alt="MU Sport Center"
+                    src="{{ $venue->logo ? asset('storage/' . $venue->logo) : asset('assets/olgasehat-icon.png') }}"
+                    alt="{{ $venue->namavenue }}"
                     class="w-full h-40 object-cover"
                 />
                 
                 <div class="p-4">
-                    <p class="text-xs text-gray-500 font-medium mb-0">Venue | Futsal</p>
-                    <h3 class="font-bold text-lg text-gray-900 mb-1">MU Sport Center</h3>
+                    <p class="text-xs text-gray-500 font-medium mb-0">Venue | {{ $venue->kategori }}</p>
+                    <h3 class="font-bold text-lg text-gray-900 mb-1">{{ $venue->namavenue }}</h3>
                     <p class="text-sm text-gray-600 mb-3 flex items-center">
-                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-1"></i> Kota Denpasar
+                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-1"></i> {{ $venue->kota }}
                     </p>
                     
                     <p class="font-bold text-gray-900 mb-3">
-                        Mulai <span class="text-xl">Rp250,000</span> /Sesi
+                        @if($venue->min_price > 0)
+                            Mulai <span class="text-xl">Rp{{ number_format($venue->min_price, 0, ',', '.') }}</span> /Sesi
+                        @else
+                            <span class="text-sm text-gray-500">Harga belum tersedia</span>
+                        @endif
                     </p>
                     
                     <div class="pt-2 border-t border-gray-100">
                     <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Tersedia</p>
                     <div class="flex flex-wrap gap-2">
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                        08.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                        18.00
-                        </button>
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                        20.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                        22.00
-                        </button>
+                        @php
+                            // Ambil beberapa slot available untuk preview
+                            $availableSlots = $venue->lapangans->flatMap(function($lapangan) {
+                                return $lapangan->slots->where('status', 'available')->take(4);
+                            })->take(4);
+                        @endphp
+                        @if($availableSlots->count() > 0)
+                            @foreach($availableSlots->take(4) as $slot)
+                                <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
+                                    {{ \Carbon\Carbon::parse($slot->jam_mulai)->format('H:i') }}
+                                </button>
+                            @endforeach
+                        @else
+                            <span class="text-xs text-gray-400">Belum ada jadwal tersedia</span>
+                        @endif
                     </div>
                 </div>
             </article>
         </a>
-
-        <a href="/venueuser_detail" class="block group">
-            <article
-                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:-translate-y-1 group-hover:shadow-xl transition duration-300"
-            >
-                <img
-                    src="{{ asset('assets/Imbo Sport Center.webp') }}"
-                    alt="Imbo Sport Center"
-                    class="w-full h-40 object-cover"
-                />
-                
-                <div class="p-4">
-                    <p class="text-xs text-gray-500 font-medium mb-0">Venue | Futsal</p>
-                    <h3 class="font-bold text-lg text-gray-900 mb-1">Imbo Sport Center</h3>
-                    <p class="text-sm text-gray-600 mb-3 flex items-center">
-                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-1"></i> Kota Denpasar
-                    </p>
-                    
-                    <p class="font-bold text-gray-900 mb-3">
-                        Mulai <span class="text-xl">Rp230,000</span> /Sesi
-                    </p>
-
-                    <div class="pt-2 border-t border-gray-100">
-                    <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Tersedia</p>
-                    <div class="flex flex-wrap gap-2">
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                        08.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                        18.00
-                        </button>
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                        20.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                        22.00
-                        </button>
-                    </div>
-                </div>
-            </article>
-        </a>
-
-        <a href="/venueuser_detail" class="block group">
-            <article
-                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:-translate-y-1 group-hover:shadow-xl transition duration-300"
-            >
-                <img
-                    src="{{ asset('assets/DC Arena Bali.jpeg') }}"
-                    alt="DC Arena Bali"
-                    class="w-full h-40 object-cover"
-                />
-                
-                <div class="p-4">
-                    <p class="text-xs text-gray-500 font-medium mb-0">Venue | Basketball</p>
-                    <h3 class="font-bold text-lg text-gray-900 mb-1">DC Arena Bali</h3>
-                    <p class="text-sm text-gray-600 mb-3 flex items-center">
-                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-1"></i> Kota Denpasar
-                    </p>
-                    
-                    <p class="font-bold text-gray-900 mb-3">
-                        Mulai <span class="text-xl">Rp180,000</span> /Sesi
-                    </p>
-                    
-                    <div class="pt-2 border-t border-gray-100">
-                    <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Tersedia</p>
-                    <div class="flex flex-wrap gap-2">
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                        08.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                        18.00
-                        </button>
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                        20.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                        22.00
-                        </button>
-                    </div>
-                </div>
-            </article>
-        </a>
-
-        <a href="/venueuser_detail" class="block group">
-            <article
-                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:-translate-y-1 group-hover:shadow-xl transition duration-300"
-            >
-                <img
-                    src="{{ asset('assets/Arena Sport.jpg') }}"
-                    alt="Arena Sport"
-                    class="w-full h-40 object-cover"
-                />
-                
-                <div class="p-4">
-                    <p class="text-xs text-gray-500 font-medium mb-0">Venue | Mini Soccer</p>
-                    <h3 class="font-bold text-lg text-gray-900 mb-1">Arena Sport</h3>
-                    <p class="text-sm text-gray-600 mb-3 flex items-center">
-                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-1"></i> Kota Denpasar
-                    </p>
-                    
-                    <p class="font-bold text-gray-900 mb-3">
-                        Mulai <span class="text-xl">Rp350,000</span> /Sesi
-                    </p>
-                    
-                    <div class="pt-2 border-t border-gray-100">
-                        
-                <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Tersedia</p>
-                <div class="flex flex-wrap gap-2">
-                    <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                    08.00
-                    </button>
-                    <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                    18.00
-                    </button>
-                    <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                    20.00
-                    </button>
-                    <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                    22.00
-                    </button>
-                </div>
-                </div>
-            </article>
-        </a>
+      @endforeach
     </div>
+    @else
+    <div class="text-center py-12">
+        <p class="text-gray-600 text-lg">Belum ada venue yang tersedia saat ini.</p>
+    </div>
+    @endif
 
+    @if($venues->hasPages())
     <section class="mt-8 mb-20 md:mt-12 md:mb-24">
-    <nav aria-label="Pagination" class="flex justify-center space-x-2 px-4">
-        <button aria-label="Previous page" class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-            <i class="fas fa-arrow-left"></i>
-        </button>
-
-        <button class="w-10 h-10 rounded-lg bg-blue-700 text-white font-semibold">1</button>
-        <button class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 hidden sm:flex items-center justify-center">2</button>
-        <button class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 hidden sm:flex items-center justify-center">3</button>
-        
-        <span class="inline-flex items-center px-2 text-gray-700 select-none">...</span>
-        
-        <button class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 hidden sm:flex items-center justify-center">62</button>
-        <button class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200">63</button>
-
-        <button aria-label="Next page" class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 flex items-center justify-center">
-            <i class="fas fa-arrow-right"></i>
-        </button>
-    </nav>
-</section>
+        <div class="flex justify-center">
+            {{ $venues->links() }}
+        </div>
+    </section>
+    @endif
 
 <section class="mx-auto px-4 sm:px-6 lg:px-8 mt-12 relative">
     <div class="overflow-hidden rounded-lg">
@@ -556,4 +434,108 @@
   </div>
 </section>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('unifiedSearch');
+    const suggestionsDropdown = document.getElementById('suggestionsDropdown');
+    let searchTimeout;
+    let selectedIndex = -1;
+    
+    if (!searchInput || !suggestionsDropdown) return;
+    
+    // Search function
+    function performSearch(query) {
+        if (query.length < 2) {
+            suggestionsDropdown.classList.add('hidden');
+            return;
+        }
+        
+        fetch(`{{ route('frontend.venue.search') }}?q=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.results.length > 0) {
+                    displaySuggestions(data.results);
+                } else {
+                    suggestionsDropdown.innerHTML = '<div class="p-4 text-center text-gray-500">Tidak ada hasil ditemukan</div>';
+                    suggestionsDropdown.classList.remove('hidden');
+                }
+            })
+            .catch(error => {
+                console.error('Search error:', error);
+                suggestionsDropdown.classList.add('hidden');
+            });
+    }
+    
+    // Display suggestions
+    function displaySuggestions(results) {
+        suggestionsDropdown.innerHTML = results.map((venue, index) => `
+            <div class="p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0 suggestion-item" data-venue-id="${venue.id}" data-index="${index}">
+                <h4 class="font-semibold text-gray-900 text-sm mb-1">${venue.nama}</h4>
+                <p class="text-xs text-gray-600 mb-1">${venue.alamat}</p>
+                ${venue.lapangan ? `<p class="text-xs text-gray-500">Lapangan: ${venue.lapangan}</p>` : ''}
+            </div>
+        `).join('');
+        
+        suggestionsDropdown.classList.remove('hidden');
+        selectedIndex = -1;
+        
+        // Add click handlers
+        document.querySelectorAll('.suggestion-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const venueId = this.getAttribute('data-venue-id');
+                window.location.href = `{{ route('user.venue.detail', '') }}/${venueId}`;
+            });
+        });
+    }
+    
+    // Input event with debounce
+    searchInput.addEventListener('input', function(e) {
+        clearTimeout(searchTimeout);
+        const query = e.target.value.trim();
+        
+        searchTimeout = setTimeout(() => {
+            performSearch(query);
+        }, 300);
+    });
+    
+    // Keyboard navigation
+    searchInput.addEventListener('keydown', function(e) {
+        const items = document.querySelectorAll('.suggestion-item');
+        
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+            updateSelection(items);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            selectedIndex = Math.max(selectedIndex - 1, -1);
+            updateSelection(items);
+        } else if (e.key === 'Enter' && selectedIndex >= 0) {
+            e.preventDefault();
+            if (items[selectedIndex]) {
+                items[selectedIndex].click();
+            }
+        } else if (e.key === 'Escape') {
+            suggestionsDropdown.classList.add('hidden');
+        }
+    });
+    
+    function updateSelection(items) {
+        items.forEach((item, index) => {
+            if (index === selectedIndex) {
+                item.classList.add('bg-blue-50');
+            } else {
+                item.classList.remove('bg-blue-50');
+            }
+        });
+    }
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !suggestionsDropdown.contains(e.target)) {
+            suggestionsDropdown.classList.add('hidden');
+        }
+    });
+});
+</script>
   @endsection

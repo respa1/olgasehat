@@ -489,4 +489,108 @@
   </div>
 </section>
 
-  @endsection
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('unifiedSearch');
+    const suggestionsDropdown = document.getElementById('suggestionsDropdown');
+    let searchTimeout;
+    let selectedIndex = -1;
+    
+    if (!searchInput || !suggestionsDropdown) return;
+    
+    // Search function
+    function performSearch(query) {
+        if (query.length < 2) {
+            suggestionsDropdown.classList.add('hidden');
+            return;
+        }
+        
+        fetch(`{{ route('frontend.venue.search') }}?q=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.results.length > 0) {
+                    displaySuggestions(data.results);
+                } else {
+                    suggestionsDropdown.innerHTML = '<div class="p-4 text-center text-gray-500">Tidak ada hasil ditemukan</div>';
+                    suggestionsDropdown.classList.remove('hidden');
+                }
+            })
+            .catch(error => {
+                console.error('Search error:', error);
+                suggestionsDropdown.classList.add('hidden');
+            });
+    }
+    
+    // Display suggestions
+    function displaySuggestions(results) {
+        suggestionsDropdown.innerHTML = results.map((venue, index) => `
+            <div class="p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0 suggestion-item" data-venue-id="${venue.id}" data-index="${index}">
+                <h4 class="font-semibold text-gray-900 text-sm mb-1">${venue.nama}</h4>
+                <p class="text-xs text-gray-600 mb-1">${venue.alamat}</p>
+                ${venue.lapangan ? `<p class="text-xs text-gray-500">Lapangan: ${venue.lapangan}</p>` : ''}
+            </div>
+        `).join('');
+        
+        suggestionsDropdown.classList.remove('hidden');
+        selectedIndex = -1;
+        
+        // Add click handlers
+        document.querySelectorAll('.suggestion-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const venueId = this.getAttribute('data-venue-id');
+                window.location.href = `{{ route('frontend.venue.detail', '') }}/${venueId}`;
+            });
+        });
+    }
+    
+    // Input event with debounce
+    searchInput.addEventListener('input', function(e) {
+        clearTimeout(searchTimeout);
+        const query = e.target.value.trim();
+        
+        searchTimeout = setTimeout(() => {
+            performSearch(query);
+        }, 300);
+    });
+    
+    // Keyboard navigation
+    searchInput.addEventListener('keydown', function(e) {
+        const items = document.querySelectorAll('.suggestion-item');
+        
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+            updateSelection(items);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            selectedIndex = Math.max(selectedIndex - 1, -1);
+            updateSelection(items);
+        } else if (e.key === 'Enter' && selectedIndex >= 0) {
+            e.preventDefault();
+            if (items[selectedIndex]) {
+                items[selectedIndex].click();
+            }
+        } else if (e.key === 'Escape') {
+            suggestionsDropdown.classList.add('hidden');
+        }
+    });
+    
+    function updateSelection(items) {
+        items.forEach((item, index) => {
+            if (index === selectedIndex) {
+                item.classList.add('bg-blue-50');
+            } else {
+                item.classList.remove('bg-blue-50');
+            }
+        });
+    }
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !suggestionsDropdown.contains(e.target)) {
+            suggestionsDropdown.classList.add('hidden');
+        }
+    });
+});
+</script>
+@endsection

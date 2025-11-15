@@ -13,8 +13,11 @@ class VenueFrontendController extends Controller
     /**
      * Menampilkan list semua venue
      */
-    public function index()
+    public function index(Request $request)
     {
+        // Deteksi apakah request dari /venue atau /venueuser
+        $isUserView = $request->is('venueuser') || $request->routeIs('user.venue');
+        
         // Ambil venue yang sudah disetujui atau yang sudah memiliki data lengkap
         // Untuk testing, tampilkan semua venue yang sudah ada
         $venues = Pendaftaran::with(['lapangans.slots', 'galleries'])
@@ -36,15 +39,20 @@ class VenueFrontendController extends Controller
             $venue->min_price = $minPrice ?? 0;
         }
         
-        return view('FRONTEND.venue', compact('venues'));
+        // Return view sesuai route
+        $viewName = $isUserView ? 'user.venueuser' : 'FRONTEND.venue';
+        return view($viewName, compact('venues'));
     }
     
     /**
      * Menampilkan detail venue berdasarkan ID
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         try {
+            // Deteksi apakah request dari /venue-detail atau /venueuser_detail
+            $isUserView = $request->is('venueuser_detail/*') || $request->routeIs('user.venue.detail');
+            
             // Ambil venue - untuk testing tampilkan semua venue yang ada
             // Untuk production, bisa ditambahkan filter syarat_disetujui = true
             $venue = Pendaftaran::with(['galleries', 'lapangans.slots'])
@@ -94,7 +102,9 @@ class VenueFrontendController extends Controller
                     ->get();
             }
             
-            return view('FRONTEND.venue_detail', compact('venue', 'fasilitas', 'iconMap', 'defaultLapangan', 'defaultDate', 'timeslots'));
+            // Return view sesuai route
+            $viewName = $isUserView ? 'user.venueuser_detail' : 'FRONTEND.venue_detail';
+            return view($viewName, compact('venue', 'fasilitas', 'iconMap', 'defaultLapangan', 'defaultDate', 'timeslots'));
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             abort(404, 'Venue tidak ditemukan');
         }
@@ -156,5 +166,62 @@ class VenueFrontendController extends Controller
                 'timeslots' => []
             ], 500);
         }
+    }
+    
+    /**
+     * Search venue berdasarkan query (AJAX)
+     * Mencari berdasarkan: nama venue, kategori, kota, provinsi, nama lapangan
+     */
+    public function search(Request $request)
+    {
+        $query = $request->input('q', '');
+        $limit = $request->input('limit', 10);
+        
+        if (strlen($query) < 2) {
+            return response()->json([
+                'success' => true,
+                'results' => []
+            ]);
+        }
+        
+        $venues = Pendaftaran::with(['lapangans'])
+            ->where(function($q) use ($query) {
+                $q->where('namavenue', 'like', "%{$query}%")
+                  ->orWhere('kategori', 'like', "%{$query}%")
+                  ->orWhere('kota', 'like', "%{$query}%")
+                  ->orWhere('provinsi', 'like', "%{$query}%")
+                  ->orWhereHas('lapangans', function($lapanganQuery) use ($query) {
+                      $lapanganQuery->where('nama', 'like', "%{$query}%");
+                  });
+            })
+            ->where(function($query) {
+                $query->where('syarat_disetujui', true)
+                      ->orWhereNotNull('namavenue');
+            })
+            ->limit($limit)
+            ->get();
+        
+        $results = $venues->map(function($venue) {
+            // Ambil nama lapangan pertama jika ada
+            $lapanganNama = $venue->lapangans->first() ? $venue->lapangans->first()->nama : null;
+            
+            // Format alamat
+            $alamat = trim($venue->kota . ', ' . $venue->provinsi);
+            
+            return [
+                'id' => $venue->id,
+                'nama' => $venue->namavenue,
+                'kategori' => $venue->kategori,
+                'alamat' => $alamat,
+                'kota' => $venue->kota,
+                'provinsi' => $venue->provinsi,
+                'lapangan' => $lapanganNama,
+            ];
+        });
+        
+        return response()->json([
+            'success' => true,
+            'results' => $results
+        ]);
     }
 }

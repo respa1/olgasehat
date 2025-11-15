@@ -9,53 +9,67 @@
 
         <section class="lg:col-span-8 space-y-8">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 overflow-hidden rounded-xl shadow-lg">
-                <img
-                    src="{{ asset('assets/MU Sport Center.jpeg') }}"
-                    alt="MU Sport Center Main"
-                    class="col-span-1 sm:col-span-2 rounded-tl-xl rounded-bl-xl object-cover h-64 sm:h-96 w-full transition duration-300 hover:scale-105 cursor-pointer"
-                />
-                <div class="hidden sm:grid grid-rows-3 gap-3 md:gap-4 h-96">
+                @if($venue->galleries && $venue->galleries->count() > 0)
                     <img
-                        src="{{ asset('assets/DC Arena Bali.jpeg') }}"
-                        alt="MU Sport Center 1"
-                        class="rounded-tr-xl object-cover w-full h-full transition duration-300 hover:scale-105 cursor-pointer"
+                        src="{{ asset('storage/' . $venue->galleries->first()->foto) }}"
+                        alt="{{ $venue->namavenue }} Main"
+                        class="col-span-1 sm:col-span-2 rounded-tl-xl rounded-bl-xl object-cover h-64 sm:h-96 w-full transition duration-300 hover:scale-105 cursor-pointer"
                     />
-                    <img
-                        src="{{ asset('assets/Imbo Sport Center.webp') }}"
-                        alt="MU Sport Center 2"
-                        class="object-cover w-full h-full transition duration-300 hover:scale-105 cursor-pointer"
-                    />
-                    <div
-                        class="relative rounded-br-xl overflow-hidden cursor-pointer group"
-                        aria-label="Lihat semua foto"
-                    >
-                        <img
-                            src="{{ asset('assets/Arena Sport.jpg') }}"
-                            alt="MU Sport Center 3"
-                            class="object-cover w-full h-full brightness-50 transition duration-300 group-hover:brightness-75 group-hover:scale-105"
-                        />
-                        <div
-                            class="absolute inset-0 flex flex-col items-center justify-center text-white font-bold text-lg"
-                        >
-                            <i class="fas fa-camera text-2xl mb-1"></i>
-                            Lihat Semua
-                        </div>
+                    <div class="hidden sm:grid grid-rows-3 gap-3 md:gap-4 h-96">
+                        @foreach($venue->galleries->skip(1)->take(2) as $gallery)
+                            <img
+                                src="{{ asset('storage/' . $gallery->foto) }}"
+                                alt="{{ $venue->namavenue }} {{ $loop->iteration + 1 }}"
+                                class="object-cover w-full h-full transition duration-300 hover:scale-105 cursor-pointer"
+                            />
+                        @endforeach
+                        @if($venue->galleries->count() > 3)
+                            <div
+                                class="relative rounded-br-xl overflow-hidden cursor-pointer group"
+                                aria-label="Lihat semua foto"
+                            >
+                                <img
+                                    src="{{ asset('storage/' . $venue->galleries->skip(3)->first()->foto) }}"
+                                    alt="{{ $venue->namavenue }} Gallery"
+                                    class="object-cover w-full h-full brightness-50 transition duration-300 group-hover:brightness-75 group-hover:scale-105"
+                                />
+                                <div
+                                    class="absolute inset-0 flex flex-col items-center justify-center text-white font-bold text-lg"
+                                >
+                                    <i class="fas fa-camera text-2xl mb-1"></i>
+                                    Lihat Semua
+                                </div>
+                            </div>
+                        @else
+                            <div class="bg-gray-200 rounded-br-xl"></div>
+                        @endif
                     </div>
-                </div>
+                @else
+                    <img
+                        src="{{ $venue->logo ? asset('storage/' . $venue->logo) : asset('assets/olgasehat-icon.png') }}"
+                        alt="{{ $venue->namavenue }}"
+                        class="col-span-1 sm:col-span-2 rounded-tl-xl rounded-bl-xl object-cover h-64 sm:h-96 w-full transition duration-300 hover:scale-105 cursor-pointer"
+                    />
+                    <div class="hidden sm:grid grid-rows-3 gap-3 md:gap-4 h-96">
+                        <div class="bg-gray-200 rounded-tr-xl"></div>
+                        <div class="bg-gray-200"></div>
+                        <div class="bg-gray-200 rounded-br-xl"></div>
+                    </div>
+                @endif
             </div>
 
             <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl space-y-6">
                 
                 <div>
-                    <h1 class="text-3xl md:text-4xl font-bold mb-1 text-gray-900">MU Sport Center</h1>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-1 text-gray-900">{{ $venue->namavenue }}</h1>
                     <p class="text-lg text-gray-600 mb-3 flex items-center space-x-2">
                         <i class="fas fa-map-marker-alt text-blue-600"></i>
-                        <span>Kota Denpasar</span>
+                        <span>{{ $venue->kota }}</span>
                     </p>
                     <span
                         class="inline-block bg-blue-100 text-blue-700 text-sm font-semibold px-4 py-1.5 rounded-full shadow-sm"
                     >
-                        <i class="fas fa-futbol mr-2"></i> Futsal
+                        <i class="fas fa-futbol mr-2"></i> {{ $venue->kategori }}
                     </span>
                 </div>
 
@@ -64,29 +78,33 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
                         <h3 class="font-bold text-xl mb-3 text-gray-800">Detail Lapangan</h3>
-                        <p class="text-gray-700 leading-relaxed">
-                            MU Sport Center memiliki 1 Lapangan Futsal standar internasional dengan rumput sintetis terbaik. Cocok untuk pertandingan dan latihan tim.
-                        </p>
+                        @if($venue->detail)
+                            <div class="text-gray-700 leading-relaxed">
+                                {!! $venue->detail !!}
+                            </div>
+                        @else
+                            <p class="text-gray-500 italic">Detail lapangan belum tersedia.</p>
+                        @endif
                     </div>
 
                     <div>
                         <h3 class="font-bold text-xl mb-3 text-gray-800">Aturan Venue</h3>
-                        <div id="rulesText" class="text-sm text-gray-700 max-h-24 overflow-hidden transition-all duration-500 ease-in-out">
-                            <p class="font-semibold mb-2">Peraturan Lapangan MU Sport Center:</p>
-                            <ol class="list-decimal list-inside space-y-1 pl-2">
-                                <li>Pemain harus datang tepat waktu (tidak ada kompensasi waktu atas keterlambatan konsumen)</li>
-                                <li>Apabila terjadi hal teknis yang terjadi di Centro Padel Bintaro yang menyebabkan lapangan tidak bisa digunakan, kompensasi akan diberikan sesuai kebijakan manajemen.</li>
-                                <li>Dilarang membawa makanan dan minuman dari luar ke area lapangan.</li>
-                                <li>Wajib menggunakan sepatu olahraga yang sesuai.</li>
-                                <li>Jaga kebersihan dan ketertiban di lingkungan venue.</li>
-                            </ol>
-                        </div>
-                        <button
-                            id="toggleRulesBtn"
-                            class="text-blue-700 text-sm font-semibold mt-3 hover:text-blue-900 transition flex items-center"
-                        >
-                            Baca Selengkapnya <i class="fas fa-chevron-down ml-2 text-xs"></i>
-                        </button>
+                        @if($venue->aturan)
+                            <div id="rulesText" class="text-sm text-gray-700 max-h-24 overflow-hidden transition-all duration-500 ease-in-out">
+                                <p class="font-semibold mb-2">Peraturan Lapangan {{ $venue->namavenue }}:</p>
+                                <div>
+                                    {!! $venue->aturan !!}
+                                </div>
+                            </div>
+                            <button
+                                id="toggleRulesBtn"
+                                class="text-blue-700 text-sm font-semibold mt-3 hover:text-blue-900 transition flex items-center"
+                            >
+                                Baca Selengkapnya <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                            </button>
+                        @else
+                            <p class="text-gray-500 italic">Aturan venue belum tersedia.</p>
+                        @endif
                     </div>
                 </div>
                 
@@ -98,28 +116,34 @@
                         <h3 class="font-bold text-xl mb-3 text-gray-800">Lokasi Venue</h3>
                         <div class="bg-gray-50 p-4 rounded-lg flex flex-col space-y-3">
                             <p class="text-gray-600 leading-relaxed">
-                                Jl. Taman Makam Bahagia Parigi Pd. Aren Tangerang Selatan
+                                {{ $venue->lokasi ?? 'Alamat belum tersedia' }}
                             </p>
+                            @if($venue->lokasi)
                             <a
-                                href="#"
+                                href="https://www.google.com/maps/search/?api=1&query={{ urlencode($venue->lokasi) }}"
                                 class="text-blue-700 font-semibold hover:text-blue-900 transition flex items-center space-x-2 text-base"
                                 target="_blank"
                             >
                                 <i class="fas fa-map-marked-alt"></i>
                                 <span>Buka Peta (Google Maps)</span>
                             </a>
+                            @endif
                         </div>
                     </div>
 
                     <div>
                         <h3 class="font-bold text-xl mb-3 text-gray-800">Video Preview</h3>
+                        @if($venue->video_review)
                         <div class="relative bg-black rounded-lg overflow-hidden group shadow-md">
                             <img src="{{ asset('assets/Arena Sport.jpg') }}" alt="Video Preview" class="w-full h-32 object-cover opacity-70 group-hover:opacity-100 transition duration-300 cursor-pointer" />
-                            <a href="https://www.youtube.com/watch?v=EXAMPLE" target="_blank" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover:bg-opacity-10 transition">
+                            <a href="{{ $venue->video_review }}" target="_blank" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover:bg-opacity-10 transition">
                                 <i class="fab fa-youtube text-white text-5xl opacity-80 group-hover:opacity-100 transition duration-300"></i>
                             </a>
                             <p class="absolute bottom-2 left-3 text-white text-xs font-medium bg-black/50 px-2 py-0.5 rounded">Lihat Video Lapangan</p>
                         </div>
+                        @else
+                        <p class="text-gray-500 italic">Video preview belum tersedia.</p>
+                        @endif
                     </div>
                 </div>
 
@@ -127,86 +151,152 @@
                 
                 <div>
                     <h3 class="font-bold text-xl mb-4 text-gray-800">Fasilitas Tersedia</h3>
+                    @if(count($fasilitas) > 0)
                     <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 text-gray-700">
+                        @foreach($fasilitas as $fasilitasItem)
                         <li class="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg border border-gray-100">
-                            <i class="fas fa-shopping-basket text-blue-600 text-xl"></i>
-                            <span>Jual Minuman</span>
+                            <i class="fas {{ $iconMap[$fasilitasItem] ?? 'fa-check-circle' }} text-blue-600 text-xl"></i>
+                            <span>{{ $fasilitasItem }}</span>
                         </li>
-                        <li class="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg border border-gray-100">
-                            <i class="fas fa-mosque text-blue-600 text-xl"></i>
-                            <span>Musholla</span>
-                        </li>
-                        <li class="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg border border-gray-100">
-                            <i class="fas fa-car text-blue-600 text-xl"></i>
-                            <span>Parkir Mobil</span>
-                        </li>
-                        <li class="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg border border-gray-100">
-                            <i class="fas fa-motorcycle text-blue-600 text-xl"></i>
-                            <span>Parkir Motor</span>
-                        </li>
-                        <li class="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg border border-gray-100">
-                            <i class="fas fa-couch text-blue-600 text-xl"></i>
-                            <span>Ruang Ganti</span>
-                        </li>
-                        <li class="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg border border-gray-100">
-                            <i class="fas fa-toilet text-blue-600 text-xl"></i>
-                            <span>Toilet</span>
-                        </li>
+                        @endforeach
                     </ul>
-                    <button
-                        class="mt-6 px-5 py-2.5 bg-blue-50 border border-blue-200 rounded-lg text-blue-700 text-sm font-semibold hover:bg-blue-100 transition shadow-sm"
-                    >
-                        Lihat semua fasilitas (6)
-                    </button>
+                    @else
+                    <p class="text-gray-500 italic py-4">Belum ada fasilitas yang tersedia untuk venue ini.</p>
+                    @endif
                 </div>
             </div>
 
             <div class="mt-8 bg-white p-6 md:p-8 rounded-xl shadow-xl">
                 <h3 class="font-bold text-2xl mb-5 text-gray-900">Jadwal & Booking Lapangan</h3>
                 
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-4 sm:space-y-0 sm:space-x-4">
-                    <input
-                        type="date"
-                        class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-auto"
-                        value="2025-07-24"
-                    />
-                    <select
-                        class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-auto"
-                    >
-                        <option>MU Sport Center - Lapangan Futsal A</option>
-                        <option>MU Sport Center - Lapangan Futsal B</option>
-                        <option>Lapangan Basket B</option>
-                    </select>
+                @if($venue->lapangans && $venue->lapangans->count() > 0)
+                <div class="mb-6 space-y-4">
+                    {{-- Date Navigation --}}
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <label class="text-sm font-semibold text-gray-700">Tanggal:</label>
+                            <button 
+                                id="prevDate" 
+                                class="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-100 transition"
+                                aria-label="Tanggal sebelumnya"
+                            >
+                                <i class="fas fa-chevron-left text-gray-600"></i>
+                            </button>
+                            <button 
+                                id="btnToday" 
+                                class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition"
+                            >
+                                Hari Ini
+                            </button>
+                            <button 
+                                id="btnTomorrow" 
+                                class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-200 transition"
+                            >
+                                Besok
+                            </button>
+                            <input
+                                type="date"
+                                id="bookingDate"
+                                class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                                value="{{ $defaultDate->format('Y-m-d') }}"
+                            />
+                            <button 
+                                id="nextDate" 
+                                class="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-100 transition"
+                                aria-label="Tanggal selanjutnya"
+                            >
+                                <i class="fas fa-chevron-right text-gray-600"></i>
+                            </button>
+                        </div>
+                        <select
+                            id="bookingLapangan"
+                            class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        >
+                            @foreach($venue->lapangans as $lapangan)
+                                <option value="{{ $lapangan->id }}" {{ $defaultLapangan && $defaultLapangan->id == $lapangan->id ? 'selected' : '' }}>
+                                    {{ $venue->namavenue }} - {{ $lapangan->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4 overflow-x-auto pb-4" id="timeSlotsContainer">
-                    <button class="bg-gray-100 rounded-lg p-3 text-sm text-gray-500 cursor-not-allowed border border-gray-200 min-w-[110px] h-20 shadow-sm" disabled>
-                        06:00 - 07:00<br /><span class="font-semibold line-through">Rp 125,000</span><br /><span class="text-red-600 font-bold">Booked</span>
-                    </button>
-                    
-                    <button class="bg-white border-2 border-green-500 rounded-lg p-3 text-sm text-gray-700 hover:bg-blue-700 hover:text-white transition min-w-[110px] h-20 selectable relative overflow-hidden shadow-md" data-time="07:00 - 08:00" data-price="100000" data-promo="Promosi">
-                        <span class="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-2 rounded-bl-lg">PROMO</span>
-                        07:00 - 08:00<br /><span class="text-lg font-bold">Rp 100,000</span>
-                    </button>
-                    
-                    <button class="bg-blue-700 rounded-lg p-3 text-sm text-white min-w-[110px] h-20 hidden selectable-cancel relative shadow-xl" data-time="07:00 - 08:00" data-price="100000" data-promo="Batal">
-                        <span class="absolute top-0 right-0 bg-blue-900 text-white text-xs font-bold px-2 rounded-bl-lg">PILIH</span>
-                        07:00 - 08:00<br /><span class="text-lg font-bold">Batal Pilih</span>
-                    </button>
-                    
-                    <button class="bg-white border border-gray-300 rounded-lg p-3 text-sm text-gray-700 hover:bg-blue-700 hover:text-white transition min-w-[110px] h-20 selectable shadow-sm" data-time="08:00 - 09:00" data-price="125000">
-                        08:00 - 09:00<br /><span class="text-lg font-bold">Rp 125,000</span>
-                    </button>
-                    
-                    <button class="bg-blue-700 rounded-lg p-3 text-sm text-white min-w-[110px] h-20 hidden selectable-cancel relative shadow-xl" data-time="08:00 - 09:00" data-price="125000">
-                        <span class="absolute top-0 right-0 bg-blue-900 text-white text-xs font-bold px-2 rounded-bl-lg">PILIH</span>
-                        08:00 - 09:00<br /><span class="text-lg font-bold">Batal Pilih</span>
-                    </button>
-
-                    <button class="bg-gray-100 rounded-lg p-3 text-sm text-gray-500 cursor-not-allowed border border-gray-200 min-w-[110px] h-20 shadow-sm" disabled>
-                        09:00 - 10:00<br /><span class="font-semibold line-through">Rp 125,000</span><br /><span class="text-red-600 font-bold">Booked</span>
-                    </button>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 overflow-x-auto pb-4" id="timeSlotsContainer">
+                    @if($timeslots && $timeslots->count() > 0)
+                        @foreach($timeslots as $slot)
+                            @php
+                                $jamMulai = \Carbon\Carbon::parse($slot->jam_mulai)->format('H:i');
+                                $jamSelesai = \Carbon\Carbon::parse($slot->jam_selesai)->format('H:i');
+                                $timeRange = $jamMulai . ' - ' . $jamSelesai;
+                                $isPromo = $slot->is_promo && $slot->harga_awal && $slot->harga_awal > $slot->harga;
+                            @endphp
+                            
+                            @if($slot->status === 'booked')
+                                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 shadow-sm min-w-[140px]">
+                                    <h6 class="text-sm font-semibold text-gray-700 mb-2">{{ $timeRange }}</h6>
+                                    <p class="text-xs text-gray-500 line-through mb-1">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
+                                    <span class="text-xs font-bold text-red-600">Booked</span>
+                                </div>
+                            @elseif($slot->status === 'blocked')
+                                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 shadow-sm min-w-[140px]">
+                                    <h6 class="text-sm font-semibold text-gray-700 mb-2">{{ $timeRange }}</h6>
+                                    <p class="text-xs text-gray-600 mb-1">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
+                                    <span class="text-xs font-bold text-red-600">Blokir</span>
+                                </div>
+                            @else
+                                {{-- Available Slot --}}
+                                <button 
+                                    class="bg-white {{ $isPromo ? 'border-2 border-green-500' : 'border border-gray-200' }} rounded-xl p-4 shadow-sm min-w-[140px] selectable relative overflow-hidden text-left transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg" 
+                                    data-time="{{ $timeRange }}" 
+                                    data-price="{{ $slot->harga }}" 
+                                    data-slot-id="{{ $slot->id }}"
+                                    data-promo="{{ $isPromo ? 'Promosi' : '' }}"
+                                >
+                                    @if($isPromo)
+                                        <span class="absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-md shadow-sm z-10">PROMO</span>
+                                    @endif
+                                    <h6 class="text-sm font-semibold text-gray-800 mb-3">{{ $timeRange }}</h6>
+                                    <div class="mb-3">
+                                        @if($isPromo && $slot->harga_awal)
+                                            <p class="text-xs text-gray-400 line-through mb-1">Rp {{ number_format($slot->harga_awal, 0, ',', '.') }}</p>
+                                            <p class="text-base font-bold text-blue-600">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
+                                        @else
+                                            <p class="text-sm font-semibold text-gray-700">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
+                                        @endif
+                                    </div>
+                                    <span class="text-xs font-semibold text-green-600 block mb-2">Tersedia</span>
+                                    @if($slot->catatan)
+                                        <p class="text-xs text-gray-500 mt-2 mb-0">
+                                            <i class="fas fa-info-circle mr-1"></i>{{ $slot->catatan }}
+                                        </p>
+                                    @endif
+                                </button>
+                                
+                                {{-- Selected State (Hidden by default) --}}
+                                <button 
+                                    class="bg-blue-700 rounded-xl p-4 text-white min-w-[140px] hidden selectable-cancel relative shadow-xl text-left" 
+                                    data-time="{{ $timeRange }}" 
+                                    data-price="{{ $slot->harga }}"
+                                    data-slot-id="{{ $slot->id }}"
+                                >
+                                    <span class="absolute top-2 right-2 bg-blue-900 text-white text-xs font-bold px-2 py-1 rounded-md">PILIH</span>
+                                    <h6 class="text-sm font-semibold mb-2">{{ $timeRange }}</h6>
+                                    <p class="text-sm font-semibold mb-2">Rp {{ number_format($slot->harga, 0, ',', '.') }}</p>
+                                    <span class="text-xs font-bold">Batal Pilih</span>
+                                </button>
+                            @endif
+                        @endforeach
+                    @else
+                        <div class="col-span-full text-center py-8">
+                            <p class="text-gray-500">Belum ada jadwal tersedia untuk tanggal dan lapangan yang dipilih.</p>
+                        </div>
+                    @endif
                 </div>
+                @else
+                <div class="text-center py-8">
+                    <p class="text-gray-500">Belum ada lapangan yang tersedia untuk venue ini.</p>
+                </div>
+                @endif
             </div>
             
         </section>
@@ -220,7 +310,13 @@
 
                 <div id="initialPriceCard" class="text-center py-4">
                     <p class="text-sm text-gray-600">Mulai harga per jam</p>
-                    <p class="text-3xl font-extrabold text-blue-700">Rp 100,000 <span class="text-base font-normal text-gray-500">/ jam</span></p>
+                    <p class="text-3xl font-extrabold text-blue-700">
+                        @if($venue->min_price > 0)
+                            Rp {{ number_format($venue->min_price, 0, ',', '.') }} <span class="text-base font-normal text-gray-500">/ jam</span>
+                        @else
+                            <span class="text-base font-normal text-gray-500">Harga belum tersedia</span>
+                        @endif
+                    </p>
                     <p class="text-sm text-gray-500 mt-2">Pilih jadwal di sebelah kiri untuk memulai.</p>
                 </div>
                 
@@ -263,9 +359,10 @@
 
         // --- Global State & Element Selection ---
         let cart = [];
-        const venueName = 'MU Sport Center';
-        const fieldSelect = document.querySelector('select');
-        const dateInput = document.querySelector('input[type="date"]');
+        const venueName = '{{ $venue->namavenue }}';
+        const venueId = {{ $venue->id }};
+        const fieldSelect = document.getElementById('bookingLapangan');
+        const dateInput = document.getElementById('bookingDate');
         const timeSlotsContainer = document.getElementById('timeSlotsContainer');
         const cartContent = document.getElementById('cartContent'); // Kontainer utama cart
         const bookingSummary = document.getElementById('bookingSummary');
@@ -408,15 +505,133 @@
             });
         }
 
-        // Time slot selection
+        // Time slot selection - akan di-attach ulang setelah load slots
+        // Event listener akan di-attach di function attachSlotListeners()
+        
+        // Trigger mobile button check on resize
+        window.addEventListener('resize', () => updateSummary());
+
+        // Initial render
+        renderCart();
+        updateSummary();
+
+        // --- Load Slots Function ---
+        function loadSlots() {
+            if (!dateInput || !fieldSelect || !timeSlotsContainer) return;
+            
+            const date = dateInput.value;
+            const lapanganId = fieldSelect.value;
+            
+            // Show loading state
+            timeSlotsContainer.innerHTML = '<div class="col-span-full text-center py-8"><p class="text-gray-500">Memuat jadwal...</p></div>';
+            
+            // Fetch slots via AJAX
+            fetch(`/venue-detail/${venueId}/slots?date=${date}&lapangan_id=${lapanganId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.timeslots.length > 0) {
+                        renderSlots(data.timeslots);
+                    } else {
+                        timeSlotsContainer.innerHTML = '<div class="col-span-full text-center py-8"><p class="text-gray-500">Belum ada jadwal tersedia untuk tanggal dan lapangan yang dipilih.</p></div>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading slots:', error);
+                    timeSlotsContainer.innerHTML = '<div class="col-span-full text-center py-8"><p class="text-red-500">Terjadi kesalahan saat memuat jadwal.</p></div>';
+                });
+        }
+
+        // --- Render Slots Function ---
+        function renderSlots(slots) {
+            timeSlotsContainer.innerHTML = slots.map(slot => {
+                const timeRange = `${slot.jam_mulai} - ${slot.jam_selesai}`;
+                const isPromo = slot.is_promo && slot.harga_awal && slot.harga_awal > slot.harga;
+                const formattedPrice = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(slot.harga);
+                const formattedPriceAwal = slot.harga_awal ? new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(slot.harga_awal) : '';
+
+                if (slot.status === 'booked') {
+                    return `
+                        <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 shadow-sm min-w-[140px]">
+                            <h6 class="text-sm font-semibold text-gray-700 mb-2">${timeRange}</h6>
+                            <p class="text-xs text-gray-500 line-through mb-1">${formattedPrice}</p>
+                            <span class="text-xs font-bold text-red-600">Booked</span>
+                        </div>
+                    `;
+                } else if (slot.status === 'blocked') {
+                    return `
+                        <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 shadow-sm min-w-[140px]">
+                            <h6 class="text-sm font-semibold text-gray-700 mb-2">${timeRange}</h6>
+                            <p class="text-xs text-gray-600 mb-1">${formattedPrice}</p>
+                            <span class="text-xs font-bold text-red-600">Blokir</span>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <button 
+                            class="bg-white ${isPromo ? 'border-2 border-green-500' : 'border border-gray-200'} rounded-xl p-4 shadow-sm min-w-[140px] selectable relative overflow-hidden text-left transform transition-all duration-300 hover:-translate-y-2 hover:shadow-lg" 
+                            data-time="${timeRange}" 
+                            data-price="${slot.harga}" 
+                            data-slot-id="${slot.id}"
+                            data-promo="${isPromo ? 'Promosi' : ''}"
+                        >
+                            ${isPromo ? '<span class="absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-md">PROMO</span>' : ''}
+                            <h6 class="text-sm font-semibold text-gray-800 mb-2">${timeRange}</h6>
+                            <div class="mb-2">
+                                ${isPromo && formattedPriceAwal ? `
+                                    <p class="text-xs text-gray-400 line-through mb-1">${formattedPriceAwal}</p>
+                                    <p class="text-base font-bold text-blue-600">${formattedPrice}</p>
+                                ` : `
+                                    <p class="text-sm font-semibold text-gray-700">${formattedPrice}</p>
+                                `}
+                            </div>
+                            <span class="text-xs font-semibold text-green-600 block mb-2">Tersedia</span>
+                            ${slot.catatan ? `
+                                <p class="text-xs text-gray-500 mt-2 mb-0">
+                                    <i class="fas fa-info-circle mr-1"></i>${slot.catatan}
+                                </p>
+                            ` : ''}
+                        </button>
+                        <button 
+                            class="bg-blue-700 rounded-xl p-4 text-white min-w-[140px] hidden selectable-cancel relative shadow-xl text-left" 
+                            data-time="${timeRange}" 
+                            data-price="${slot.harga}"
+                            data-slot-id="${slot.id}"
+                        >
+                            <span class="absolute top-2 right-2 bg-blue-900 text-white text-xs font-bold px-2 py-1 rounded-md">PILIH</span>
+                            <h6 class="text-sm font-semibold mb-2">${timeRange}</h6>
+                            <p class="text-sm font-semibold mb-2">${formattedPrice}</p>
+                            <span class="text-xs font-bold">Batal Pilih</span>
+                        </button>
+                    `;
+                }
+            }).join('');
+            
+            // Event listeners sudah menggunakan event delegation, tidak perlu attach ulang
+        }
+
+        // --- Attach Slot Listeners (Event Delegation) ---
+        // Using event delegation so it works with dynamically loaded content
+        function attachSlotListeners() {
+            // Event listener sudah di-attach di level document atau container
+            // Tidak perlu attach ulang karena menggunakan event delegation
+        }
+        
+        // Global event listener untuk slot selection (event delegation)
         if (timeSlotsContainer) {
             timeSlotsContainer.addEventListener('click', (e) => {
                 const target = e.target.closest('button.selectable, button.selectable-cancel');
                 if (!target || target.disabled) return;
 
                 const time = target.dataset.time;
-                // Pastikan data-price diambil sebagai integer string
-                const price = target.dataset.price; 
+                const price = target.dataset.price;
                 
                 let normalBtn, cancelBtn;
                 if (target.classList.contains('selectable')) {
@@ -432,24 +647,118 @@
                 // Select slot
                 if (target.classList.contains('selectable') && target.classList.contains('hidden') === false) {
                     addToCart(time, price);
-                    cancelBtn.classList.remove('hidden');
-                    normalBtn.classList.add('hidden');
+                    if (cancelBtn) cancelBtn.classList.remove('hidden');
+                    if (normalBtn) normalBtn.classList.add('hidden');
                 } 
                 // Deselect slot
                 else if (target.classList.contains('selectable-cancel') && target.classList.contains('hidden') === false) {
                     removeFromCart(time);
-                    cancelBtn.classList.add('hidden');
-                    normalBtn.classList.remove('hidden');
+                    if (cancelBtn) cancelBtn.classList.add('hidden');
+                    if (normalBtn) normalBtn.classList.remove('hidden');
                 }
             });
         }
-        
-        // Trigger mobile button check on resize
-        window.addEventListener('resize', () => updateSummary());
 
-        // Initial render
-        renderCart();
-        updateSummary();
+        // --- Date Navigation Functions ---
+        function setDate(dateString) {
+            if (dateInput) {
+                dateInput.value = dateString;
+                loadSlots();
+            }
+        }
+
+        function getToday() {
+            const today = new Date();
+            return today.toISOString().split('T')[0];
+        }
+
+        function getTomorrow() {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            return tomorrow.toISOString().split('T')[0];
+        }
+
+        function changeDate(days) {
+            if (!dateInput) return;
+            const currentDate = new Date(dateInput.value);
+            currentDate.setDate(currentDate.getDate() + days);
+            setDate(currentDate.toISOString().split('T')[0]);
+        }
+
+        // --- Event Listeners for Date Navigation ---
+        const btnToday = document.getElementById('btnToday');
+        const btnTomorrow = document.getElementById('btnTomorrow');
+        const prevDateBtn = document.getElementById('prevDate');
+        const nextDateBtn = document.getElementById('nextDate');
+
+        if (btnToday) {
+            btnToday.addEventListener('click', () => {
+                setDate(getToday());
+                // Update button styles
+                btnToday.classList.remove('bg-gray-100', 'text-gray-700');
+                btnToday.classList.add('bg-blue-600', 'text-white');
+                btnTomorrow.classList.remove('bg-blue-600', 'text-white');
+                btnTomorrow.classList.add('bg-gray-100', 'text-gray-700');
+            });
+        }
+
+        if (btnTomorrow) {
+            btnTomorrow.addEventListener('click', () => {
+                setDate(getTomorrow());
+                // Update button styles
+                btnTomorrow.classList.remove('bg-gray-100', 'text-gray-700');
+                btnTomorrow.classList.add('bg-blue-600', 'text-white');
+                btnToday.classList.remove('bg-blue-600', 'text-white');
+                btnToday.classList.add('bg-gray-100', 'text-gray-700');
+            });
+        }
+
+        if (prevDateBtn) {
+            prevDateBtn.addEventListener('click', () => changeDate(-1));
+        }
+
+        if (nextDateBtn) {
+            nextDateBtn.addEventListener('click', () => changeDate(1));
+        }
+
+        // Update button styles based on current date
+        function updateDateButtonStyles() {
+            if (!dateInput || !btnToday || !btnTomorrow) return;
+            const currentDate = dateInput.value;
+            const today = getToday();
+            const tomorrow = getTomorrow();
+
+            if (currentDate === today) {
+                btnToday.classList.remove('bg-gray-100', 'text-gray-700');
+                btnToday.classList.add('bg-blue-600', 'text-white');
+                btnTomorrow.classList.remove('bg-blue-600', 'text-white');
+                btnTomorrow.classList.add('bg-gray-100', 'text-gray-700');
+            } else if (currentDate === tomorrow) {
+                btnTomorrow.classList.remove('bg-gray-100', 'text-gray-700');
+                btnTomorrow.classList.add('bg-blue-600', 'text-white');
+                btnToday.classList.remove('bg-blue-600', 'text-white');
+                btnToday.classList.add('bg-gray-100', 'text-gray-700');
+            } else {
+                btnToday.classList.remove('bg-blue-600', 'text-white');
+                btnToday.classList.add('bg-gray-100', 'text-gray-700');
+                btnTomorrow.classList.remove('bg-blue-600', 'text-white');
+                btnTomorrow.classList.add('bg-gray-100', 'text-gray-700');
+            }
+        }
+
+        // --- Event Listeners for Date and Lapangan Change ---
+        if (dateInput) {
+            dateInput.addEventListener('change', () => {
+                updateDateButtonStyles();
+                loadSlots();
+            });
+        }
+        if (fieldSelect) {
+            fieldSelect.addEventListener('change', loadSlots);
+        }
+
+        // Initialize button styles
+        updateDateButtonStyles();
     });
 </script>
 @endsection

@@ -53,6 +53,7 @@ Route::get('/venue', [App\Http\Controllers\VenueFrontendController::class, 'inde
 Route::get('/healthy', fn() => view('FRONTEND.healthy'));
 Route::get('/venue-detail/{id}', [App\Http\Controllers\VenueFrontendController::class, 'show'])->name('frontend.venue.detail');
 Route::get('/venue-detail/{id}/slots', [App\Http\Controllers\VenueFrontendController::class, 'getSlots'])->name('frontend.venue.slots');
+Route::get('/venue/search', [App\Http\Controllers\VenueFrontendController::class, 'search'])->name('frontend.venue.search');
 Route::get('/klinik', fn() => view('FRONTEND.klinik'));
 Route::get('/venue-management', fn() => view('FRONTEND.venue_management'))->name('venue.management');
 Route::get('/health-management', fn() => view('FRONTEND.health_management'))->name('health.management');
@@ -95,8 +96,8 @@ Route::get('/registeremail', function () {return view('user.registeremail');});
 Route::get('/loginemail', function () { return view('user.loginemail');});
 Route::get('/resetpassword', function () {return view('user.resetpassword'); });
 Route::get('/homeuser', function () {return view('user.homeuser'); });
-Route::get('/venueuser', function () {return view('user.venueuser'); });
-Route::get('/venueuser_detail', function () {return view('user.venueuser_detail'); });
+Route::get('/venueuser', [App\Http\Controllers\VenueFrontendController::class, 'index'])->name('user.venue');
+Route::get('/venueuser_detail/{id}', [App\Http\Controllers\VenueFrontendController::class, 'show'])->name('user.venue.detail');
 Route::get('/buat-aktivitas', fn() => view('user.user_buat_aktivitas'));
 Route::post('/buat-aktivitas', [App\Http\Controllers\ActivityController::class, 'storeFromUser'])->name('activities.store.user');
 Route::get('/communityuser', [App\Http\Controllers\ActivityController::class, 'indexUser'])->name('user.community');
@@ -139,8 +140,7 @@ Route::get('/homeuser', function() {
                                       ->get();
     return view('user.homeuser', compact('programs', 'homeBanners', 'lapanganBanners', 'kesehatanBanners', 'activities'));
 });
-Route::get('/venueuser', fn() => view('user.venueuser'));
-Route::get('/venueuser_detail', fn() => view('user.venueuser_detail'));
+// Route venueuser sudah diupdate di atas menggunakan controller
 Route::get('/membership-user-detail', fn() => view('user.membershipuser_detail'));
 Route::get('/healthyuser', fn() => view('user.healthyuser'));
 Route::get('/venue_management_user', fn() => view('user.venue_management_user'));
