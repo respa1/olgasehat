@@ -27,14 +27,30 @@
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('template/plugins/summernote/summernote-bs4.min.css') }}">
   <style>
+    .nav-sidebar .nav-link {
+      position: relative;
+    }
     .nav-sidebar .nav-link.active {
-      background-color: transparent !important;
+      background-color: rgba(255, 255, 255, 0.1) !important;
       color: #ffffff !important;
       font-weight: 600;
     }
     .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active,
     .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active:hover {
-      box-shadow: inset 3px 0 0 0 #00a6ff;
+      background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background-color: #007bff;
+      z-index: 1;
+    }
+    .nav-sidebar .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.05) !important;
     }
     .owner-topbar .owner-avatar-sm,
     .owner-topbar .owner-avatar-lg {
@@ -322,6 +338,42 @@
 <script src="{{ asset('template/dist/js/demo.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('template/dist/js/pages/dashboard.js') }}"></script>
+
+<!-- Auto-detect active menu -->
+<script>
+  $(document).ready(function() {
+    var currentUrl = window.location.href;
+    var currentPath = window.location.pathname;
+    
+    // Remove active class from all nav links
+    $('.nav-sidebar .nav-link').removeClass('active');
+    
+    // Find and activate the matching nav link
+    $('.nav-sidebar .nav-link').each(function() {
+      var linkUrl = $(this).attr('href');
+      if (linkUrl) {
+        // Check if current path matches the link
+        if (currentPath === linkUrl || currentUrl.indexOf(linkUrl) !== -1) {
+          $(this).addClass('active');
+          // Also activate parent if it's a treeview
+          $(this).closest('.nav-item').addClass('menu-open');
+          $(this).closest('.nav-treeview').siblings('.nav-link').addClass('active');
+        }
+      }
+    });
+    
+    // For routes that might have dynamic segments, check if path starts with
+    $('.nav-sidebar .nav-link').each(function() {
+      var linkUrl = $(this).attr('href');
+      if (linkUrl && linkUrl !== '#' && linkUrl !== '/') {
+        // Check if current path starts with the link path
+        if (currentPath.startsWith(linkUrl) && linkUrl !== '/pengelolakesehatan/dashboard') {
+          $(this).addClass('active');
+        }
+      }
+    });
+  });
+</script>
 </body>
 </html>
 
