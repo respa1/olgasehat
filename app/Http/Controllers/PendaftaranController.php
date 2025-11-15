@@ -152,13 +152,302 @@ class PendaftaranController extends Controller
             ->orderBy('jam_mulai')
             ->get();
 
+        // Get dates that have slots (for calendar indicator)
+        $datesWithSlots = $lapangan->slots()
+            ->selectRaw('DATE(tanggal) as date, COUNT(*) as slot_count')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get()
+            ->pluck('slot_count', 'date')
+            ->toArray();
+
+        // If AJAX request, return JSON
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'date' => $date->format('Y-m-d'),
+                'date_formatted' => $date->format('d/m/Y'),
+                'timeslots' => $timeslots->map(function($slot) {
+                    return [
+                        'id' => $slot->id,
+                        'jam_mulai' => \Carbon\Carbon::parse($slot->jam_mulai)->format('H:i'),
+                        'jam_selesai' => \Carbon\Carbon::parse($slot->jam_selesai)->format('H:i'),
+                        'harga' => (int) $slot->harga,
+                        'harga_awal' => $slot->harga_awal ? (int) $slot->harga_awal : null,
+                        'status' => $slot->status,
+                        'is_promo' => (bool) $slot->is_promo,
+                        'catatan' => $slot->catatan ?? '',
+                    ];
+                }),
+                'dates_with_slots' => $datesWithSlots,
+            ]);
+        }
+
         return view('pemiliklapangan.Papan.papan', compact(
             'venue',
             'lapangan',
             'availableLapangans',
             'date',
-            'timeslots'
+            'timeslots',
+            'datesWithSlots'
         ));
+    }
+
+    /**
+     * API endpoint untuk get slots by date (AJAX)
+     */
+    public function getSlotsByDate(Request $request, $venueId, $lapanganId)
+    {
+        $venue = Pendaftaran::where('user_id', auth()->id())->findOrFail($venueId);
+        $lapangan = $venue->lapangans()->findOrFail($lapanganId);
+
+        // Parse date from request
+        $dateInput = $request->input('date');
+        if ($dateInput) {
+            try {
+                $date = Carbon::parse($dateInput)->startOfDay();
+            } catch (\Exception $e) {
+                $date = now()->startOfDay();
+            }
+        } else {
+            $date = now()->startOfDay();
+        }
+
+        // Use whereDate with proper date format
+        $dateString = $date->format('Y-m-d');
+        
+        // Query slots for the specific date
+        // Try multiple query methods for better compatibility
+        $timeslots = $lapangan->slots()
+            ->whereDate('tanggal', $dateString)
+            ->orderBy('jam_mulai')
+            ->get();
+        
+        // Debug: Log query if no results found
+        if ($timeslots->isEmpty()) {
+            \Log::info('No slots found for date', [
+                'date' => $dateString,
+                'lapangan_id' => $lapangan->id,
+                'total_slots' => $lapangan->slots()->count(),
+                'sample_dates' => $lapangan->slots()->select('tanggal')->distinct()->limit(5)->pluck('tanggal')->toArray()
+            ]);
+        }
+
+        // Get dates that have slots (for calendar indicator)
+        $datesWithSlots = $lapangan->slots()
+            ->selectRaw('DATE(tanggal) as date, COUNT(*) as slot_count')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get()
+            ->pluck('slot_count', 'date')
+            ->toArray();
+
+        return response()->json([
+            'success' => true,
+            'date' => $date->format('Y-m-d'),
+            'date_formatted' => $date->format('d/m/Y'),
+            'date_input' => $dateInput ?? null,
+            'timeslots' => $timeslots->map(function($slot) {
+                return [
+                    'id' => $slot->id,
+                    'tanggal' => $slot->tanggal ? \Carbon\Carbon::parse($slot->tanggal)->format('Y-m-d') : null,
+                    'jam_mulai' => \Carbon\Carbon::parse($slot->jam_mulai)->format('H:i'),
+                    'jam_selesai' => \Carbon\Carbon::parse($slot->jam_selesai)->format('H:i'),
+                    'harga' => (int) $slot->harga,
+                    'harga_awal' => $slot->harga_awal ? (int) $slot->harga_awal : null,
+                    'status' => $slot->status,
+                    'is_promo' => (bool) $slot->is_promo,
+                    'catatan' => $slot->catatan ?? '',
+                ];
+            }),
+            'dates_with_slots' => $datesWithSlots,
+            'debug' => [
+                'query_date' => $dateString,
+                'total_slots_found' => $timeslots->count(),
+                'lapangan_id' => $lapangan->id,
+            ],
+        ]);
+    }
+
+    public function storeBulkLapanganSlots(Request $request, $venueId, $lapanganId)
+    {
+        $venue = Pendaftaran::where('user_id', auth()->id())->findOrFail($venueId);
+        $lapangan = $venue->lapangans()->findOrFail($lapanganId);
+
+        $validated = $request->validate([
+            'tanggal_mulai' => ['required', 'date'],
+            'tanggal_akhir' => ['required', 'date', 'after_or_equal:tanggal_mulai'],
+            'jam_mulai' => ['required', 'date_format:H:i'],
+            'jam_selesai' => ['required', 'date_format:H:i', 'after:jam_mulai'],
+            'harga' => ['required', 'integer', 'min:0'],
+            'status' => ['required', Rule::in(['available', 'booked', 'blocked'])],
+            'skip_days' => ['nullable', 'array'],
+            'skip_days.*' => ['nullable', 'string'],
+        ]);
+
+        $tanggalMulai = Carbon::parse($validated['tanggal_mulai']);
+        $tanggalAkhir = Carbon::parse($validated['tanggal_akhir']);
+        
+        // Check if range is more than 1 year
+        $daysDiff = $tanggalMulai->diffInDays($tanggalAkhir);
+        if ($daysDiff > 365) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Rentang tanggal maksimal 1 tahun (365 hari).',
+                    'errors' => ['tanggal_akhir' => ['Rentang tanggal maksimal 1 tahun (365 hari).']]
+                ], 422);
+            }
+            return redirect()->back()
+                ->withErrors(['tanggal_akhir' => 'Rentang tanggal maksimal 1 tahun (365 hari).'])
+                ->withInput();
+        }
+
+        // Parse jam operasional
+        $jamMulai = Carbon::createFromFormat('H:i', $validated['jam_mulai']);
+        $jamSelesai = Carbon::createFromFormat('H:i', $validated['jam_selesai']);
+        
+        // Calculate slots per day (1 hour intervals)
+        $startTime = $jamMulai->copy();
+        $slotsPerDay = [];
+        while ($startTime < $jamSelesai) {
+            $slotStart = $startTime->copy();
+            $slotEnd = $startTime->copy()->addHour();
+            
+            if ($slotEnd > $jamSelesai) {
+                $slotEnd = $jamSelesai->copy();
+            }
+            
+            $slotsPerDay[] = [
+                'start' => $slotStart->format('H:i'),
+                'end' => $slotEnd->format('H:i'),
+            ];
+            
+            $startTime = $slotEnd->copy();
+            
+            if ($startTime >= $jamSelesai) {
+                break;
+            }
+        }
+
+        // Get skip days
+        $skipDays = [];
+        $skipDaysArray = $validated['skip_days'] ?? [];
+        
+        if (in_array('weekend', $skipDaysArray)) {
+            $skipDays = [0, 6]; // Sunday and Saturday
+        } else {
+            foreach ($skipDaysArray as $day) {
+                if ($day === '0' || $day === '6' || is_numeric($day)) {
+                    $skipDays[] = (int) $day;
+                }
+            }
+        }
+        $skipDays = array_unique($skipDays);
+
+        // Generate slots for all dates
+        $allSlots = [];
+        $currentDate = $tanggalMulai->copy();
+        $harga = $validated['harga'];
+        $status = $validated['status'];
+        $isPromo = false; // Default no promo for bulk
+        $catatan = 'Generated via Bulk Schedule';
+
+        while ($currentDate <= $tanggalAkhir) {
+            // Carbon dayOfWeek: 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+            $dayOfWeek = $currentDate->dayOfWeek;
+            
+            // Skip if day is in skip list
+            if (!in_array($dayOfWeek, $skipDays)) {
+                // Ensure date is in Y-m-d format (start of day to avoid timezone issues)
+                $tanggal = $currentDate->copy()->startOfDay()->format('Y-m-d');
+                
+                // Create slots for this day
+                foreach ($slotsPerDay as $slot) {
+                    // Check if slot already exists using whereDate for date comparison
+                    $existingSlot = LapanganSlot::where('lapangan_id', $lapangan->id)
+                        ->whereDate('tanggal', $tanggal)
+                        ->where('jam_mulai', $slot['start'])
+                        ->where('jam_selesai', $slot['end'])
+                        ->first();
+                    
+                    // Skip if slot already exists
+                    if (!$existingSlot) {
+                        $allSlots[] = [
+                            'lapangan_id' => $lapangan->id,
+                            'tanggal' => $tanggal,
+                            'jam_mulai' => $slot['start'],
+                            'jam_selesai' => $slot['end'],
+                            'harga' => $harga,
+                            'harga_awal' => null,
+                            'status' => $status,
+                            'is_promo' => $isPromo,
+                            'catatan' => $catatan,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+                    }
+                }
+            }
+            
+            $currentDate->addDay();
+        }
+
+        // Insert all slots in batches (to avoid memory issues with large datasets)
+        $batchSize = 500;
+        $totalCreated = 0;
+        
+        if (!empty($allSlots)) {
+            foreach (array_chunk($allSlots, $batchSize) as $chunk) {
+                LapanganSlot::insert($chunk);
+                $totalCreated += count($chunk);
+            }
+        }
+
+        $validDays = $tanggalMulai->copy();
+        $dayCount = 0;
+        while ($validDays <= $tanggalAkhir) {
+            if (!in_array($validDays->dayOfWeek, $skipDays)) {
+                $dayCount++;
+            }
+            $validDays->addDay();
+        }
+
+        // Get list of dates that were created (for display)
+        $createdDates = [];
+        $checkDate = $tanggalMulai->copy();
+        while ($checkDate <= $tanggalAkhir) {
+            if (!in_array($checkDate->dayOfWeek, $skipDays)) {
+                $createdDates[] = $checkDate->format('Y-m-d');
+            }
+            $checkDate->addDay();
+        }
+
+        $message = "Berhasil membuat {$totalCreated} slot jadwal untuk {$dayCount} hari ({$tanggalMulai->format('d M Y')} - {$tanggalAkhir->format('d M Y')}).";
+
+        // If AJAX request, return JSON
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+                'created' => $totalCreated,
+                'days' => $dayCount,
+                'date' => $tanggalMulai->format('Y-m-d'), // Return first date for reload
+                'date_range' => [
+                    'start' => $tanggalMulai->format('Y-m-d'),
+                    'end' => $tanggalAkhir->format('Y-m-d'),
+                ],
+                'created_dates' => $createdDates, // List of all dates that have slots now
+            ]);
+        }
+
+        return redirect()
+            ->route('fasilitas.lapangan.jadwal', [
+                $venue->id,
+                $lapangan->id,
+                'date' => $tanggalMulai->format('Y-m-d'),
+            ])
+            ->with('success', $message);
     }
 
     public function storeLapanganSlot(Request $request, $venueId, $lapanganId)
@@ -180,6 +469,13 @@ class PendaftaranController extends Controller
 
         // Custom validation: harga_awal harus lebih besar dari harga jika diisi
         if ($request->filled('harga_awal') && $request->harga_awal <= $request->harga) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Harga awal harus lebih besar dari harga setelah diskon.',
+                    'errors' => ['harga_awal' => ['Harga awal harus lebih besar dari harga setelah diskon.']]
+                ], 422);
+            }
             return redirect()->back()
                 ->withErrors(['harga_awal' => 'Harga awal harus lebih besar dari harga setelah diskon.'])
                 ->withInput();
@@ -237,6 +533,16 @@ class PendaftaranController extends Controller
             if (!empty($slots)) {
                 LapanganSlot::insert($slots);
                 $slotCount = count($slots);
+                
+                // If AJAX request, return JSON
+                if ($request->ajax() || $request->wantsJson()) {
+                    return response()->json([
+                        'success' => true,
+                        'message' => "Berhasil membuat {$slotCount} slot jadwal secara otomatis.",
+                        'date' => Carbon::parse($validated['tanggal'])->format('Y-m-d'),
+                    ]);
+                }
+                
                 return redirect()
                     ->route('fasilitas.lapangan.jadwal', [
                         $venue->id,
@@ -247,7 +553,7 @@ class PendaftaranController extends Controller
             }
         } else {
             // Single slot (behavior lama)
-            LapanganSlot::create([
+            $slot = LapanganSlot::create([
                 'lapangan_id' => $lapangan->id,
                 'tanggal' => $tanggal,
                 'jam_mulai' => $validated['jam_mulai'],
@@ -258,6 +564,25 @@ class PendaftaranController extends Controller
                 'is_promo' => $isPromo,
                 'catatan' => $catatan,
             ]);
+
+            // If AJAX request, return JSON
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Slot jadwal berhasil ditambahkan.',
+                    'date' => Carbon::parse($validated['tanggal'])->format('Y-m-d'),
+                    'slot' => [
+                        'id' => $slot->id,
+                        'jam_mulai' => $slot->jam_mulai,
+                        'jam_selesai' => $slot->jam_selesai,
+                        'harga' => (int) $slot->harga,
+                        'harga_awal' => $slot->harga_awal ? (int) $slot->harga_awal : null,
+                        'status' => $slot->status,
+                        'is_promo' => (bool) $slot->is_promo,
+                        'catatan' => $slot->catatan ?? '',
+                    ]
+                ]);
+            }
 
             return redirect()
                 ->route('fasilitas.lapangan.jadwal', [
@@ -344,6 +669,13 @@ class PendaftaranController extends Controller
 
         // Custom validation: harga_awal harus lebih besar dari harga jika diisi
         if ($request->filled('harga_awal') && $request->harga_awal <= $request->harga) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Harga awal harus lebih besar dari harga setelah diskon.',
+                    'errors' => ['harga_awal' => ['Harga awal harus lebih besar dari harga setelah diskon.']]
+                ], 422);
+            }
             return redirect()->back()
                 ->withErrors(['harga_awal' => 'Harga awal harus lebih besar dari harga setelah diskon.'])
                 ->withInput();
@@ -359,6 +691,15 @@ class PendaftaranController extends Controller
             'is_promo' => ($validated['promo_status'] ?? 'none') === 'promo',
             'catatan' => $validated['catatan'] ?? null,
         ]);
+
+        // If AJAX request, return JSON
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Slot jadwal berhasil diperbarui.',
+                'date' => Carbon::parse($validated['tanggal'])->format('Y-m-d'),
+            ]);
+        }
 
         return redirect()
             ->route('fasilitas.lapangan.jadwal', [
@@ -377,6 +718,15 @@ class PendaftaranController extends Controller
 
         $tanggal = $slot->tanggal->format('Y-m-d');
         $slot->delete();
+
+        // If AJAX request, return JSON
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Slot jadwal berhasil dihapus.',
+                'date' => $tanggal,
+            ]);
+        }
 
         return redirect()
             ->route('fasilitas.lapangan.jadwal', [

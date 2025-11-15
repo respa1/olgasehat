@@ -72,10 +72,45 @@ class MitraController extends Controller
         return redirect()->back()->with('success', 'Data bisnis berhasil diperbarui.');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $mitras = Mitra::all();
-        return view('BACKEND.Verifikasi Mitra.datapemiliklapangan', compact('mitras'));
+        $status = $request->get('status', 'pending'); // Default pending
+        
+        $query = Mitra::with('user');
+        
+        // Filter berdasarkan status
+        if ($status == 'pending') {
+            $query->where('status', 'pending');
+        } elseif ($status == 'approved') {
+            $query->where('status', 'approved');
+        } elseif ($status == 'rejected') {
+            $query->where('status', 'rejected');
+        } elseif ($status == 'all') {
+            // Tampilkan semua
+        } else {
+            $query->where('status', 'pending');
+        }
+        
+        // Search functionality
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama_bisnis', 'LIKE', '%' . $search . '%')
+                  ->orWhere('email_bisnis', 'LIKE', '%' . $search . '%')
+                  ->orWhere('tipe_venue', 'LIKE', '%' . $search . '%')
+                  ->orWhere('nama_anda', 'LIKE', '%' . $search . '%');
+            });
+        }
+        
+        $mitras = $query->orderBy('created_at', 'desc')->paginate(10);
+        
+        // Count untuk statistik
+        $countPending = Mitra::where('status', 'pending')->count();
+        $countApproved = Mitra::where('status', 'approved')->count();
+        $countRejected = Mitra::where('status', 'rejected')->count();
+        $countAll = Mitra::count();
+        
+        return view('BACKEND.Verifikasi Mitra.datapemiliklapangan', compact('mitras', 'status', 'countPending', 'countApproved', 'countRejected', 'countAll'));
     }
 
     public function verify($id)

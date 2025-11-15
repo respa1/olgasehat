@@ -56,28 +56,157 @@
       <div class="card border-0 shadow-sm rounded-4">
         <div class="card-body">
           <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between mb-4">
-            <form action="{{ route('fasilitas.lapangan.jadwal', [$venue->id, $lapangan->id]) }}" method="GET" class="d-flex align-items-center flex-wrap">
-              <label for="datePicker" class="text-muted small font-weight-semibold mr-3 mb-2 mb-lg-0">Tanggal</label>
-              <div class="input-group date-picker shadow-sm border rounded">
-                <input
-                  type="date"
-                  id="datePicker"
-                  name="date"
-                  value="{{ $date->format('Y-m-d') }}"
-                  class="form-control border-0">
-                <div class="input-group-append">
-                  <span class="input-group-text bg-white border-0"><i class="far fa-calendar"></i></span>
+            <div class="d-flex align-items-center flex-wrap mb-3 mb-lg-0">
+              <label for="datePicker" class="text-muted small font-weight-semibold mr-2 mr-lg-3 mb-2 mb-lg-0">Tanggal</label>
+              
+              {{-- Navigation Buttons --}}
+              <div class="btn-group mr-2 mb-2 mb-lg-0" role="group">
+                <button type="button" class="btn btn-outline-secondary btn-sm" id="prevDayBtn" title="Hari Sebelumnya">
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" id="nextDayBtn" title="Hari Selanjutnya">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+              
+              {{-- Quick Jump Buttons --}}
+              <div class="btn-group mr-2 mb-2 mb-lg-0" role="group">
+                <button type="button" class="btn btn-outline-primary btn-sm" id="todayBtn" title="Hari Ini">Hari Ini</button>
+                <button type="button" class="btn btn-outline-primary btn-sm" id="tomorrowBtn" title="Besok">Besok</button>
+              </div>
+              
+              {{-- Date Picker --}}
+              <form action="{{ route('fasilitas.lapangan.jadwal', [$venue->id, $lapangan->id]) }}" method="GET" id="dateForm" class="d-flex align-items-center mb-2 mb-lg-0">
+                <div class="input-group date-picker shadow-sm border rounded">
+                  <input
+                    type="date"
+                    id="datePicker"
+                    name="date"
+                    value="{{ $date->format('Y-m-d') }}"
+                    class="form-control border-0">
+                  <div class="input-group-append">
+                    <span class="input-group-text bg-white border-0"><i class="far fa-calendar"></i></span>
+                  </div>
+                </div>
+              </form>
+              
+              {{-- Loading Indicator --}}
+              <div id="dateLoading" class="ml-2 d-none">
+                <i class="fas fa-spinner fa-spin text-primary"></i>
+              </div>
+            </div>
+            <div class="d-flex flex-column flex-sm-row gap-2">
+              <button type="button" id="toggleBulkForm" class="btn btn-success font-weight-bold shadow-sm">
+                <i class="fas fa-calendar-alt mr-2"></i><span class="d-none d-sm-inline">Generate Jadwal Bulk</span><span class="d-sm-none">Bulk</span>
+              </button>
+              <button type="button" id="toggleSlotForm" class="btn btn-primary font-weight-bold shadow-sm">
+                <i class="fas fa-plus mr-2"></i>Tambah Slot
+              </button>
+            </div>
+          </div>
+
+          {{-- Form Generate Jadwal Bulk --}}
+          <form action="{{ route('fasilitas.lapangan.jadwal.bulk', [$venue->id, $lapangan->id]) }}" method="POST" id="bulkForm" class="card border-0 shadow-sm rounded-4 bg-light slot-form-wrapper mb-4 d-none">
+            @csrf
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0 font-weight-bold text-dark">Generate Jadwal Bulk (1 Bulan - 1 Tahun)</h6>
+                <span class="badge badge-pill badge-success">Auto Generate</span>
+              </div>
+              <div class="alert alert-info border-0 rounded-lg mb-3">
+                <i class="fas fa-info-circle mr-2"></i>
+                <strong>Fitur Generate Bulk:</strong> Sistem akan otomatis membuat slot per 1 jam untuk setiap hari dalam rentang tanggal yang dipilih. Sangat cocok untuk membuat jadwal 1 bulan hingga 1 tahun sekaligus.
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="small font-weight-semibold text-muted">Tanggal Mulai <span class="text-danger">*</span></label>
+                  <input type="date" name="tanggal_mulai" id="bulk_tanggal_mulai" class="form-control rounded-lg @error('tanggal_mulai') is-invalid @enderror" value="{{ old('tanggal_mulai', $date->format('Y-m-d')) }}" required>
+                  @error('tanggal_mulai')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="small font-weight-semibold text-muted">Tanggal Akhir <span class="text-danger">*</span></label>
+                  <input type="date" name="tanggal_akhir" id="bulk_tanggal_akhir" class="form-control rounded-lg @error('tanggal_akhir') is-invalid @enderror" value="{{ old('tanggal_akhir') }}" required>
+                  @error('tanggal_akhir')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
+                  <small class="form-text text-muted">Maksimal 1 tahun dari tanggal mulai</small>
+                  <small class="form-text text-danger d-none" id="bulk_tanggal_akhir_error">Tanggal akhir tidak boleh lebih dari 1 tahun dari tanggal mulai</small>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="small font-weight-semibold text-muted">Jam Operasional Mulai <span class="text-danger">*</span></label>
+                  <input type="time" name="jam_mulai" id="bulk_jam_mulai" class="form-control rounded-lg @error('jam_mulai') is-invalid @enderror" value="{{ old('jam_mulai', '08:00') }}" required>
+                  @error('jam_mulai')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="small font-weight-semibold text-muted">Jam Operasional Selesai <span class="text-danger">*</span></label>
+                  <input type="time" name="jam_selesai" id="bulk_jam_selesai" class="form-control rounded-lg @error('jam_selesai') is-invalid @enderror" value="{{ old('jam_selesai', '22:00') }}" required>
+                  @error('jam_selesai')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="small font-weight-semibold text-muted">Harga Default (Rp) <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text bg-white border-right-0">Rp</span>
+                    </div>
+                    <input type="number" name="harga" id="bulk_harga" class="form-control border-left-0 rounded-right @error('harga') is-invalid @enderror" value="{{ old('harga', '225000') }}" min="0" required>
+                    @error('harga')
+                      <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="small font-weight-semibold text-muted">Skip Hari Tertentu</label>
+                  <div class="d-flex flex-wrap gap-2">
+                    <div class="form-check">
+                      <input type="checkbox" name="skip_days[]" value="0" class="form-check-input" id="skipSunday">
+                      <label class="form-check-label" for="skipSunday">Minggu</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="checkbox" name="skip_days[]" value="6" class="form-check-input" id="skipSaturday">
+                      <label class="form-check-label" for="skipSaturday">Sabtu</label>
+                    </div>
+                    <div class="form-check">
+                      <input type="checkbox" name="skip_days[]" value="weekend" class="form-check-input" id="skipWeekend">
+                      <label class="form-check-label" for="skipWeekend">Weekend (Sabtu & Minggu)</label>
+                    </div>
+                  </div>
+                  <small class="form-text text-muted">Pilih hari yang ingin di-skip dari jadwal</small>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="small font-weight-semibold text-muted">Status Default</label>
+                  <select name="status" id="bulk_status" class="form-control rounded-lg @error('status') is-invalid @enderror">
+                    <option value="available" {{ old('status', 'available') === 'available' ? 'selected' : '' }}>Tersedia</option>
+                    <option value="blocked" {{ old('status') === 'blocked' ? 'selected' : '' }}>Blokir</option>
+                  </select>
+                  @error('status')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
-            </form>
-            <button type="button" id="toggleSlotForm" class="btn btn-primary font-weight-bold shadow-sm mt-3 mt-lg-0">
-              <i class="fas fa-plus mr-2"></i>Tambah Slot
-            </button>
-          </div>
+              <div class="mb-3" id="bulkPreviewSlots" style="display: none;">
+                <label class="small font-weight-semibold text-muted mb-2 d-block">Preview:</label>
+                <div class="bg-white border rounded-lg p-3" id="bulkPreviewContent">
+                  <p class="text-muted small mb-0">Isi semua field untuk melihat preview</p>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-secondary mr-2" id="cancelBulkForm">Batal</button>
+                <button type="submit" class="btn btn-success font-weight-bold">
+                  <i class="fas fa-magic mr-2"></i>Generate Jadwal
+                </button>
+              </div>
+            </div>
+          </form>
 
           <form action="{{ route('fasilitas.lapangan.jadwal.store', [$venue->id, $lapangan->id]) }}" method="POST" id="slotForm" class="card border-0 shadow-sm rounded-4 bg-light slot-form-wrapper mb-4 d-none">
             @csrf
-            <input type="hidden" name="tanggal" value="{{ $date->format('Y-m-d') }}">
+            <input type="hidden" name="tanggal" id="slotFormTanggal" value="{{ $date->format('Y-m-d') }}">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-3">
                 <h6 class="mb-0 font-weight-bold text-dark">Tambah Jadwal Slot</h6>
@@ -181,19 +310,20 @@
             </div>
           </form>
 
-          @if($timeslots->isEmpty())
-            <div class="empty-state border-0 rounded-4 text-center py-5">
-              <div class="empty-icon mx-auto mb-3">
-                <i class="fas fa-calendar-plus"></i>
+          <div id="slotsContainer">
+            @if($timeslots->isEmpty())
+              <div class="empty-state border-0 rounded-4 text-center py-5">
+                <div class="empty-icon mx-auto mb-3">
+                  <i class="fas fa-calendar-plus"></i>
+                </div>
+                <h5 class="font-weight-bold text-dark mb-2">Jadwal lapangan belum tersedia</h5>
+                <p class="text-muted small mb-0 px-4">
+                  Klik tombol <strong>Tambah Slot</strong> untuk membuat jadwal pertama Anda. Tentukan rentang waktu, harga, status ketersediaan, dan promo bila diperlukan.
+                </p>
               </div>
-              <h5 class="font-weight-bold text-dark mb-2">Jadwal lapangan belum tersedia</h5>
-              <p class="text-muted small mb-0 px-4">
-                Klik tombol <strong>Tambah Slot</strong> untuk membuat jadwal pertama Anda. Tentukan rentang waktu, harga, status ketersediaan, dan promo bila diperlukan.
-              </p>
-            </div>
-          @else
-            <div class="d-flex flex-wrap schedule-slot-grid">
-              @foreach($timeslots as $slot)
+            @else
+              <div class="d-flex flex-wrap schedule-slot-grid">
+                @foreach($timeslots as $slot)
                 @php
                   $statusClass = [
                     'available' => 'slot-available',
@@ -235,9 +365,10 @@
                     </p>
                   @endif
                 </div>
-              @endforeach
-            </div>
-          @endif
+                @endforeach
+              </div>
+            @endif
+          </div>
         </div>
       </div>
 
@@ -500,6 +631,117 @@
   .gap-2 {
     gap: 0.5rem;
   }
+  
+  /* Responsive Alert Styles */
+  .alert-bulk-success,
+  .alert-bulk-dates {
+    padding: 0.875rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .alert-bulk-success i {
+    font-size: 1.1rem;
+  }
+  
+  .alert-bulk-dates {
+    padding: 1rem;
+  }
+  
+  .alert-bulk-dates strong {
+    font-size: 0.95rem;
+  }
+  
+  .date-badges-container {
+    gap: 0.375rem;
+  }
+  
+  .date-badges-container .badge {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.625rem;
+    font-weight: 500;
+  }
+  
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .alert-bulk-success,
+    .alert-bulk-dates {
+      padding: 0.75rem;
+      font-size: 0.85rem;
+    }
+    
+    .alert-bulk-dates strong {
+      font-size: 0.9rem;
+    }
+    
+    .date-badges-container .badge {
+      font-size: 0.7rem;
+      padding: 0.3rem 0.5rem;
+    }
+    
+    .alert-bulk-dates .d-flex {
+      flex-direction: column;
+    }
+    
+    .alert-bulk-dates i {
+      margin-bottom: 0.5rem;
+    }
+    
+    .date-picker {
+      min-width: 160px;
+    }
+    
+    .date-picker input {
+      font-size: 0.875rem;
+      padding: 0.5rem 0.75rem;
+    }
+    
+    .btn-group .btn-sm {
+      padding: 0.375rem 0.5rem;
+      font-size: 0.8rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .alert-bulk-success,
+    .alert-bulk-dates {
+      padding: 0.625rem;
+      font-size: 0.8rem;
+    }
+    
+    .date-badges-container {
+      gap: 0.25rem;
+    }
+    
+    .date-badges-container .badge {
+      font-size: 0.65rem;
+      padding: 0.25rem 0.4rem;
+    }
+    
+    .date-picker {
+      min-width: 140px;
+    }
+    
+    .date-picker input {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.6rem;
+    }
+    
+    .btn-group .btn-sm {
+      padding: 0.3rem 0.4rem;
+      font-size: 0.75rem;
+    }
+    
+    #toggleBulkForm,
+    #toggleSlotForm {
+      font-size: 0.875rem;
+      padding: 0.5rem 0.75rem;
+    }
+    
+    #toggleBulkForm i,
+    #toggleSlotForm i {
+      margin-right: 0.5rem !important;
+    }
+  }
 </style>
 
 <script>
@@ -514,6 +756,349 @@
     var harga = document.getElementById('harga');
     var previewSlots = document.getElementById('previewSlots');
     var previewContent = document.getElementById('previewContent');
+    
+    // Bulk Form Elements
+    var toggleBulkButton = document.getElementById('toggleBulkForm');
+    var cancelBulkButton = document.getElementById('cancelBulkForm');
+    var bulkForm = document.getElementById('bulkForm');
+    var bulkTanggalMulai = document.getElementById('bulk_tanggal_mulai');
+    var bulkTanggalAkhir = document.getElementById('bulk_tanggal_akhir');
+    var bulkJamMulai = document.getElementById('bulk_jam_mulai');
+    var bulkJamSelesai = document.getElementById('bulk_jam_selesai');
+    var bulkHarga = document.getElementById('bulk_harga');
+    var bulkPreviewSlots = document.getElementById('bulkPreviewSlots');
+    var bulkPreviewContent = document.getElementById('bulkPreviewContent');
+    
+    // Date Navigation Variables
+    var datePicker = document.getElementById('datePicker');
+    var dateForm = document.getElementById('dateForm');
+    var dateLoading = document.getElementById('dateLoading');
+    var slotsContainer = document.getElementById('slotsContainer');
+    var prevDayBtn = document.getElementById('prevDayBtn');
+    var nextDayBtn = document.getElementById('nextDayBtn');
+    var todayBtn = document.getElementById('todayBtn');
+    var tomorrowBtn = document.getElementById('tomorrowBtn');
+    var currentDate = new Date(datePicker.value);
+    
+    // API URL
+    var apiUrl = '{{ route("fasilitas.lapangan.jadwal.api", [$venue->id, $lapangan->id]) }}';
+    
+    // Function to format date to Y-m-d
+    function formatDate(date) {
+      var year = date.getFullYear();
+      var month = String(date.getMonth() + 1).padStart(2, '0');
+      var day = String(date.getDate()).padStart(2, '0');
+      return year + '-' + month + '-' + day;
+    }
+    
+    // Function to load slots via AJAX
+    function loadSlotsByDate(date, updateUrl = true) {
+      if (dateLoading) dateLoading.classList.remove('d-none');
+      
+      // Ensure date is a Date object
+      if (!(date instanceof Date)) {
+        if (typeof date === 'string') {
+          date = new Date(date);
+        } else {
+          console.error('Invalid date format:', date);
+          if (dateLoading) dateLoading.classList.add('d-none');
+          return;
+        }
+      }
+      
+      // Check if date is valid
+      if (isNaN(date.getTime())) {
+        console.error('Invalid date:', date);
+        if (dateLoading) dateLoading.classList.add('d-none');
+        return;
+      }
+      
+      var dateStr = formatDate(date);
+      
+      // Debug log
+      console.log('Loading slots for date:', dateStr);
+      
+      fetch(apiUrl + '?date=' + dateStr, {
+        method: 'GET',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Accept': 'application/json',
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Slots loaded:', data);
+        console.log('Debug info:', data.debug);
+        console.log('Date input:', data.date_input);
+        console.log('Query date:', data.date);
+        console.log('Total slots found:', data.timeslots ? data.timeslots.length : 0);
+        
+        if (data.success) {
+          // Update date picker
+          if (datePicker) {
+            datePicker.value = dateStr;
+          }
+          currentDate = new Date(date);
+          
+          // Update URL without reload
+          if (updateUrl) {
+            var newUrl = new URL(window.location.href);
+            newUrl.searchParams.set('date', dateStr);
+            window.history.pushState({path: newUrl.href}, '', newUrl.href);
+          }
+          
+          // Update form tanggal field
+          var slotFormTanggal = document.getElementById('slotFormTanggal');
+          if (slotFormTanggal) {
+            slotFormTanggal.value = dateStr;
+          }
+          
+          // Update bulk form tanggal field
+          var bulkTanggalMulai = document.getElementById('bulk_tanggal_mulai');
+          if (bulkTanggalMulai && !bulkTanggalMulai.value) {
+            bulkTanggalMulai.value = dateStr;
+          }
+          
+          // Render slots
+          if (data.timeslots && data.timeslots.length > 0) {
+            console.log('Rendering', data.timeslots.length, 'slots');
+            renderSlots(data.timeslots);
+          } else {
+            console.warn('No slots found for date:', dateStr);
+            renderSlots([]);
+          }
+        } else {
+          console.error('Failed to load slots:', data);
+          renderSlots([]);
+        }
+      })
+      .catch(error => {
+        console.error('Error loading slots:', error);
+        alert('Terjadi kesalahan saat memuat jadwal. Silakan refresh halaman.');
+      })
+      .finally(() => {
+        if (dateLoading) dateLoading.classList.add('d-none');
+      });
+    }
+    
+    // Function to render slots
+    function renderSlots(timeslots) {
+      if (!slotsContainer) return;
+      
+      if (timeslots.length === 0) {
+        slotsContainer.innerHTML = `
+          <div class="empty-state border-0 rounded-4 text-center py-5">
+            <div class="empty-icon mx-auto mb-3">
+              <i class="fas fa-calendar-plus"></i>
+            </div>
+            <h5 class="font-weight-bold text-dark mb-2">Jadwal lapangan belum tersedia</h5>
+            <p class="text-muted small mb-0 px-4">
+              Klik tombol <strong>Tambah Slot</strong> untuk membuat jadwal pertama Anda.
+            </p>
+          </div>
+        `;
+        return;
+      }
+      
+      var html = '<div class="d-flex flex-wrap schedule-slot-grid">';
+      timeslots.forEach(function(slot) {
+        var statusClass = {
+          'available': 'slot-available',
+          'booked': 'slot-booked',
+          'blocked': 'slot-blocked'
+        }[slot.status] || 'slot-available';
+        
+        var promoBadge = slot.is_promo ? '<span class="slot-pill">Promo</span>' : '';
+        var statusText = slot.status === 'booked' ? 'Booked' : 
+                        slot.status === 'blocked' ? '<span class="text-danger font-weight-bold">Blokir</span>' : 
+                        '<span class="text-success font-weight-bold">Tersedia</span>';
+        
+        var priceHtml = '';
+        if (slot.status === 'booked') {
+          priceHtml = '<p class="slot-price text-muted text-decoration-line-through mb-1">Rp ' + formatNumber(slot.harga) + '</p>';
+        } else if (slot.harga_awal && slot.harga_awal > slot.harga) {
+          priceHtml = '<p class="slot-price text-muted text-decoration-line-through mb-1" style="font-size: 0.85rem;">Rp ' + formatNumber(slot.harga_awal) + '</p>' +
+                      '<p class="slot-price mb-1 text-primary font-weight-bold">Rp ' + formatNumber(slot.harga) + '</p>';
+        } else {
+          priceHtml = '<p class="slot-price mb-1">Rp ' + formatNumber(slot.harga) + '</p>';
+        }
+        
+        var noteHtml = slot.catatan ? '<p class="slot-note text-muted small mt-2 mb-0"><i class="fas fa-info-circle mr-1"></i>' + slot.catatan + '</p>' : '';
+        
+        html += `
+          <div class="schedule-slot ${statusClass}">
+            <div class="slot-actions">
+              <button type="button" class="btn btn-sm btn-light edit-slot-btn" data-slot-id="${slot.id}" data-toggle="modal" data-target="#editSlotModal" title="Edit Slot">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-light delete-slot-btn" data-slot-id="${slot.id}" title="Hapus Slot">
+                <i class="fas fa-trash text-danger"></i>
+              </button>
+            </div>
+            ${promoBadge}
+            <h6 class="slot-time mb-1">${slot.jam_mulai} - ${slot.jam_selesai}</h6>
+            ${priceHtml}
+            <span class="slot-status">${statusText}</span>
+            ${noteHtml}
+          </div>
+        `;
+      });
+      html += '</div>';
+      
+      slotsContainer.innerHTML = html;
+      
+      // Re-attach event listeners for edit/delete buttons
+      attachSlotEventListeners();
+    }
+    
+    // Function to format number
+    function formatNumber(num) {
+      return new Intl.NumberFormat('id-ID').format(num);
+    }
+    
+    // Function to attach event listeners for slot buttons
+    function attachSlotEventListeners() {
+      // Re-attach edit button listeners
+      var editButtons = document.querySelectorAll('.edit-slot-btn');
+      editButtons.forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var slotId = this.getAttribute('data-slot-id');
+          var editUrl = `{{ route('fasilitas.lapangan.jadwal.edit', [$venue->id, $lapangan->id, ':slotId']) }}`.replace(':slotId', slotId);
+          
+          var submitBtn = editSlotForm.querySelector('button[type="submit"]');
+          var originalText = submitBtn ? submitBtn.innerHTML : '';
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Memuat...';
+          }
+          
+          fetch(editUrl, {
+            method: 'GET',
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'Accept': 'application/json',
+            }
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success && data.slot) {
+              var slot = data.slot;
+              var formatTime = function(timeStr) {
+                if (!timeStr) return '';
+                if (timeStr.match(/^\d{2}:\d{2}$/)) return timeStr;
+                var parts = timeStr.split(':');
+                if (parts.length >= 2) {
+                  return parts[0].padStart(2, '0') + ':' + parts[1].padStart(2, '0');
+                }
+                return timeStr;
+              };
+              
+              document.getElementById('edit_jam_mulai').value = formatTime(slot.jam_mulai);
+              document.getElementById('edit_jam_selesai').value = formatTime(slot.jam_selesai);
+              document.getElementById('edit_harga').value = slot.harga || 0;
+              document.getElementById('edit_harga_awal').value = slot.harga_awal || '';
+              document.getElementById('edit_status').value = slot.status || 'available';
+              document.getElementById('edit_promo_status').value = slot.is_promo ? 'promo' : 'none';
+              document.getElementById('edit_catatan').value = slot.catatan || '';
+              
+              var updateUrl = `{{ route('fasilitas.lapangan.jadwal.update', [$venue->id, $lapangan->id, ':slotId']) }}`.replace(':slotId', slotId);
+              editSlotForm.action = updateUrl;
+              
+              if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+              }
+              
+              if (typeof $ !== 'undefined' && $.fn.modal) {
+                $(editSlotModal).modal('show');
+              }
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat memuat data slot.');
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+            }
+          });
+        });
+      });
+      
+      // Re-attach delete button listeners
+      var deleteButtons = document.querySelectorAll('.delete-slot-btn');
+      deleteButtons.forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          var slotId = this.getAttribute('data-slot-id');
+          if (!slotId) {
+            console.error('Slot ID tidak ditemukan');
+            return false;
+          }
+          
+          var deleteUrl = `{{ route('fasilitas.lapangan.jadwal.delete', [$venue->id, $lapangan->id, ':slotId']) }}`.replace(':slotId', slotId);
+          deleteSlotForm.action = deleteUrl;
+          
+          if (typeof $ !== 'undefined' && $.fn.modal) {
+            $(deleteSlotModal).modal('show');
+          }
+          
+          return false;
+        });
+      });
+    }
+    
+    // Date picker change event - Auto submit via AJAX
+    if (datePicker) {
+      datePicker.addEventListener('change', function() {
+        var selectedDate = new Date(this.value);
+        if (!isNaN(selectedDate.getTime())) {
+          loadSlotsByDate(selectedDate);
+        }
+      });
+    }
+    
+    // Previous day button
+    if (prevDayBtn) {
+      prevDayBtn.addEventListener('click', function() {
+        var prevDate = new Date(currentDate);
+        prevDate.setDate(prevDate.getDate() - 1);
+        loadSlotsByDate(prevDate);
+      });
+    }
+    
+    // Next day button
+    if (nextDayBtn) {
+      nextDayBtn.addEventListener('click', function() {
+        var nextDate = new Date(currentDate);
+        nextDate.setDate(nextDate.getDate() + 1);
+        loadSlotsByDate(nextDate);
+      });
+    }
+    
+    // Today button
+    if (todayBtn) {
+      todayBtn.addEventListener('click', function() {
+        loadSlotsByDate(new Date());
+      });
+    }
+    
+    // Tomorrow button
+    if (tomorrowBtn) {
+      tomorrowBtn.addEventListener('click', function() {
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        loadSlotsByDate(tomorrow);
+      });
+    }
 
     function toggleForm(show) {
       if (!slotForm) return;
@@ -645,11 +1230,382 @@
       toggleForm(true);
     @endif
 
-    // Handle Edit Slot
-    var editButtons = document.querySelectorAll('.edit-slot-btn');
+    // Bulk Form Toggle
+    function toggleBulkForm(show) {
+      if (show) {
+        bulkForm.classList.remove('d-none');
+        slotForm.classList.add('d-none');
+      } else {
+        bulkForm.classList.add('d-none');
+      }
+    }
+
+    if (toggleBulkButton) {
+      toggleBulkButton.addEventListener('click', function () {
+        var isHidden = bulkForm.classList.contains('d-none');
+        toggleBulkForm(isHidden);
+        if (isHidden) {
+          slotForm.classList.add('d-none');
+        }
+      });
+    }
+
+    if (cancelBulkButton) {
+      cancelBulkButton.addEventListener('click', function () {
+        toggleBulkForm(false);
+      });
+    }
+
+    // Calculate and preview bulk slots
+    function calculateBulkPreview() {
+      if (!bulkTanggalMulai || !bulkTanggalAkhir || !bulkJamMulai || !bulkJamSelesai) {
+        return;
+      }
+
+      var tanggalMulai = bulkTanggalMulai.value;
+      var tanggalAkhir = bulkTanggalAkhir.value;
+      var jamMulai = bulkJamMulai.value;
+      var jamSelesai = bulkJamSelesai.value;
+
+      if (!tanggalMulai || !tanggalAkhir || !jamMulai || !jamSelesai) {
+        bulkPreviewSlots.style.display = 'none';
+        return;
+      }
+
+      var startDate = new Date(tanggalMulai + 'T00:00:00');
+      var endDate = new Date(tanggalAkhir + 'T00:00:00');
+      
+      if (endDate < startDate) {
+        bulkPreviewContent.innerHTML = '<p class="text-danger small mb-0"><i class="fas fa-exclamation-triangle mr-1"></i>Tanggal akhir harus setelah tanggal mulai</p>';
+        bulkPreviewSlots.style.display = 'block';
+        return;
+      }
+
+      // Check if range is more than 1 year
+      var daysDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+      if (daysDiff > 365) {
+        bulkPreviewContent.innerHTML = '<p class="text-danger small mb-0"><i class="fas fa-exclamation-triangle mr-1"></i>Rentang tanggal maksimal 1 tahun (365 hari)</p>';
+        bulkPreviewSlots.style.display = 'block';
+        return;
+      }
+
+      // Parse time
+      var [startHour, startMin] = jamMulai.split(':').map(Number);
+      var [endHour, endMin] = jamSelesai.split(':').map(Number);
+      var startTime = startHour * 60 + startMin;
+      var endTime = endHour * 60 + endMin;
+
+      if (endTime <= startTime) {
+        bulkPreviewContent.innerHTML = '<p class="text-danger small mb-0"><i class="fas fa-exclamation-triangle mr-1"></i>Jam selesai harus setelah jam mulai</p>';
+        bulkPreviewSlots.style.display = 'block';
+        return;
+      }
+
+      // Get skip days
+      var skipDays = [];
+      var skipWeekend = document.getElementById('skipWeekend');
+      var skipSaturday = document.getElementById('skipSaturday');
+      var skipSunday = document.getElementById('skipSunday');
+      
+      if (skipWeekend && skipWeekend.checked) {
+        skipDays.push(0, 6); // Sunday and Saturday
+      } else {
+        if (skipSaturday && skipSaturday.checked) skipDays.push(6);
+        if (skipSunday && skipSunday.checked) skipDays.push(0);
+      }
+
+      // Calculate slots per day (1 hour intervals)
+      var slotsPerDay = Math.floor((endTime - startTime) / 60);
+
+      // Count valid days
+      var validDays = 0;
+      var currentDate = new Date(startDate);
+      while (currentDate <= endDate) {
+        var dayOfWeek = currentDate.getDay();
+        if (!skipDays.includes(dayOfWeek)) {
+          validDays++;
+        }
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+
+      var totalSlots = validDays * slotsPerDay;
+      var harga = bulkHarga ? parseInt(bulkHarga.value) || 0 : 0;
+
+      bulkPreviewContent.innerHTML = `
+        <div class="row">
+          <div class="col-6">
+            <p class="small mb-1"><strong>Total Hari:</strong> ${validDays} hari</p>
+            <p class="small mb-1"><strong>Slot per Hari:</strong> ${slotsPerDay} slot</p>
+          </div>
+          <div class="col-6">
+            <p class="small mb-1"><strong>Total Slot:</strong> <span class="badge badge-primary">${totalSlots}</span></p>
+            <p class="small mb-0"><strong>Harga Total:</strong> Rp ${harga.toLocaleString('id-ID')}</p>
+          </div>
+        </div>
+        <hr class="my-2">
+        <p class="small text-muted mb-0">
+          <i class="fas fa-info-circle mr-1"></i>
+          Sistem akan membuat ${slotsPerDay} slot per hari (${jamMulai} - ${jamSelesai}) untuk ${validDays} hari.
+        </p>
+      `;
+      bulkPreviewSlots.style.display = 'block';
+    }
+
+    // Attach preview calculation listeners
+    if (bulkTanggalMulai) {
+      bulkTanggalMulai.addEventListener('change', function() {
+        // Set max date to 1 year from start date
+        if (this.value) {
+          var startDate = new Date(this.value);
+          var maxDate = new Date(startDate);
+          maxDate.setFullYear(maxDate.getFullYear() + 1);
+          var maxDateStr = maxDate.toISOString().split('T')[0];
+          
+          if (bulkTanggalAkhir) {
+            bulkTanggalAkhir.setAttribute('min', this.value);
+            bulkTanggalAkhir.setAttribute('max', maxDateStr);
+            
+            // Validate current end date
+            if (bulkTanggalAkhir.value && new Date(bulkTanggalAkhir.value) > maxDate) {
+              bulkTanggalAkhir.value = maxDateStr;
+            }
+          }
+        }
+        calculateBulkPreview();
+      });
+      bulkTanggalMulai.addEventListener('input', function() {
+        if (this.value) {
+          var startDate = new Date(this.value);
+          var maxDate = new Date(startDate);
+          maxDate.setFullYear(maxDate.getFullYear() + 1);
+          var maxDateStr = maxDate.toISOString().split('T')[0];
+          
+          if (bulkTanggalAkhir) {
+            bulkTanggalAkhir.setAttribute('min', this.value);
+            bulkTanggalAkhir.setAttribute('max', maxDateStr);
+          }
+        }
+        calculateBulkPreview();
+      });
+    }
+    if (bulkTanggalAkhir) {
+      bulkTanggalAkhir.addEventListener('change', function() {
+        // Validate against start date
+        if (bulkTanggalMulai && bulkTanggalMulai.value) {
+          var startDate = new Date(bulkTanggalMulai.value);
+          var endDate = new Date(this.value);
+          var maxDate = new Date(startDate);
+          maxDate.setFullYear(maxDate.getFullYear() + 1);
+          
+          var errorMsg = document.getElementById('bulk_tanggal_akhir_error');
+          if (endDate > maxDate) {
+            this.classList.add('is-invalid');
+            if (errorMsg) errorMsg.classList.remove('d-none');
+            this.setCustomValidity('Tanggal akhir tidak boleh lebih dari 1 tahun dari tanggal mulai');
+          } else {
+            this.classList.remove('is-invalid');
+            if (errorMsg) errorMsg.classList.add('d-none');
+            this.setCustomValidity('');
+          }
+        }
+        calculateBulkPreview();
+      });
+      bulkTanggalAkhir.addEventListener('input', calculateBulkPreview);
+    }
+    if (bulkJamMulai) {
+      bulkJamMulai.addEventListener('change', calculateBulkPreview);
+      bulkJamMulai.addEventListener('input', calculateBulkPreview);
+    }
+    if (bulkJamSelesai) {
+      bulkJamSelesai.addEventListener('change', calculateBulkPreview);
+      bulkJamSelesai.addEventListener('input', calculateBulkPreview);
+    }
+    if (bulkHarga) {
+      bulkHarga.addEventListener('change', calculateBulkPreview);
+      bulkHarga.addEventListener('input', calculateBulkPreview);
+    }
+
+    // Listen to skip days checkboxes
+    var skipCheckboxes = document.querySelectorAll('input[name="skip_days[]"]');
+    skipCheckboxes.forEach(function(checkbox) {
+      checkbox.addEventListener('change', function() {
+        // Handle weekend checkbox
+        if (this.value === 'weekend' && this.checked) {
+          var skipSat = document.getElementById('skipSaturday');
+          var skipSun = document.getElementById('skipSunday');
+          if (skipSat) skipSat.checked = false;
+          if (skipSun) skipSun.checked = false;
+        } else if ((this.value === '0' || this.value === '6') && this.checked) {
+          var skipWeekend = document.getElementById('skipWeekend');
+          if (skipWeekend) skipWeekend.checked = false;
+        }
+        calculateBulkPreview();
+      });
+    });
+
+    // Handle Bulk Form Submission
+    if (bulkForm) {
+      bulkForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        var submitBtn = this.querySelector('button[type="submit"]');
+        var originalText = submitBtn ? submitBtn.innerHTML : '';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Membuat Jadwal...';
+        }
+        
+        var formData = new FormData(this);
+        
+        fetch(this.action, {
+          method: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').getAttribute('content') : '',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json',
+          },
+          body: formData
+        })
+        .then(response => {
+          const contentType = response.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            return response.json();
+          } else {
+            window.location.reload();
+            return null;
+          }
+        })
+        .then(data => {
+          if (!data) return;
+          
+          if (data.success) {
+            // Show success message (compact version)
+            if (data.message) {
+              var successAlert = document.createElement('div');
+              successAlert.className = 'alert alert-success border-0 shadow-sm rounded-lg mb-3 alert-bulk-success';
+              successAlert.innerHTML = `
+                <div class="d-flex align-items-center flex-wrap">
+                  <i class="fas fa-check-circle mr-2"></i>
+                  <span class="flex-grow-1">${data.message}</span>
+                </div>
+              `;
+              var cardBody = document.querySelector('.card-body');
+              if (cardBody) {
+                cardBody.insertBefore(successAlert, cardBody.firstChild);
+                setTimeout(() => successAlert.remove(), 5000);
+              }
+            }
+            
+            // Show information about created dates (compact and responsive)
+            if (data.created_dates && data.created_dates.length > 0) {
+              console.log('Generated slots for dates:', data.created_dates);
+              console.log('Total dates with slots:', data.created_dates.length);
+              
+              // Create compact info box showing which dates were created
+              var datesInfo = document.createElement('div');
+              datesInfo.className = 'alert alert-info border-0 shadow-sm rounded-lg mb-3 alert-bulk-dates';
+              datesInfo.innerHTML = `
+                <div class="d-flex align-items-start">
+                  <i class="fas fa-calendar-check mr-2 mt-1 flex-shrink-0"></i>
+                  <div class="flex-grow-1">
+                    <strong class="d-block mb-2">Jadwal berhasil dibuat untuk ${data.days} hari</strong>
+                    <div class="mb-2">
+                      <small class="text-muted d-block mb-1">Tanggal yang sudah di-generate:</small>
+                      <div class="d-flex flex-wrap date-badges-container">
+                        ${data.created_dates.slice(0, 7).map(function(date) {
+                          var d = new Date(date + 'T00:00:00');
+                          return '<span class="badge badge-primary mr-1 mb-1">' + 
+                                 d.toLocaleDateString('id-ID', {day: '2-digit', month: 'short', year: 'numeric'}) + 
+                                 '</span>';
+                        }).join('')}
+                        ${data.created_dates.length > 7 ? '<span class="badge badge-secondary mr-1 mb-1">+ ' + (data.created_dates.length - 7) + ' lainnya</span>' : ''}
+                      </div>
+                    </div>
+                    <small class="text-muted d-block">
+                      <i class="fas fa-info-circle mr-1"></i>
+                      Gunakan navigasi tanggal di atas untuk melihat jadwal.
+                    </small>
+                  </div>
+                </div>
+              `;
+              var cardBody = document.querySelector('.card-body');
+              if (cardBody) {
+                var existingAlert = cardBody.querySelector('.alert-success');
+                if (existingAlert && existingAlert.nextSibling) {
+                  cardBody.insertBefore(datesInfo, existingAlert.nextSibling);
+                } else {
+                  cardBody.insertBefore(datesInfo, cardBody.firstChild);
+                }
+                setTimeout(() => datesInfo.remove(), 8000);
+              }
+            }
+            
+            // Reload slots for the first date
+            if (data.date) {
+              // Parse date string (Y-m-d format) to Date object
+              var dateParts = data.date.split('-');
+              var reloadDate = new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1, parseInt(dateParts[2]));
+              
+              // Update date picker
+              if (datePicker) {
+                datePicker.value = data.date;
+              }
+              
+              // Update currentDate
+              currentDate = reloadDate;
+              
+              // Load slots for this date
+              loadSlotsByDate(reloadDate, true);
+            }
+            
+            // Hide form
+            toggleBulkForm(false);
+            
+            // Reset form
+            this.reset();
+            bulkPreviewSlots.style.display = 'none';
+          } else {
+            // Show error message
+            if (data.message) {
+              alert(data.message);
+            }
+            if (data.errors) {
+              // Handle validation errors
+              var errorMsg = 'Terjadi kesalahan:\n';
+              for (var field in data.errors) {
+                errorMsg += '- ' + data.errors[field][0] + '\n';
+              }
+              alert(errorMsg);
+            }
+            
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Terjadi kesalahan saat membuat jadwal bulk.');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+          }
+        });
+      });
+    }
+
+    // Handle Edit Slot - Initialize on page load
     var editSlotForm = document.getElementById('editSlotForm');
     var editSlotModal = document.getElementById('editSlotModal');
+    var deleteSlotForm = document.getElementById('deleteSlotForm');
+    var deleteSlotModal = document.getElementById('deleteSlotModal');
     
+    // Initial attach for edit/delete buttons
+    attachSlotEventListeners();
+    
+    // Original edit button handlers (for initial page load)
+    var editButtons = document.querySelectorAll('.edit-slot-btn');
     editButtons.forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         e.preventDefault();
@@ -745,57 +1701,184 @@
       });
     }
 
-    // Handle Delete Slot
-    var deleteButtons = document.querySelectorAll('.delete-slot-btn');
-    var deleteSlotForm = document.getElementById('deleteSlotForm');
-    var deleteSlotModal = document.getElementById('deleteSlotModal');
-    
-    if (deleteButtons.length > 0 && deleteSlotForm && deleteSlotModal) {
-      deleteButtons.forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          
-          var slotId = this.getAttribute('data-slot-id');
-          
-          if (!slotId) {
-            console.error('Slot ID tidak ditemukan');
-            alert('Terjadi kesalahan: Slot ID tidak ditemukan.');
-            return false;
-          }
-          
-          // Update form action using route helper
-          var deleteUrl = `{{ route('fasilitas.lapangan.jadwal.delete', [$venue->id, $lapangan->id, ':slotId']) }}`.replace(':slotId', slotId);
-          deleteSlotForm.action = deleteUrl;
-          
-          // Show modal
-          if (typeof $ !== 'undefined' && $.fn.modal) {
-            $(deleteSlotModal).modal('show');
+    // Handle form submission for delete - reload data after delete
+    if (deleteSlotForm) {
+      deleteSlotForm.addEventListener('submit', function(e) {
+        var submitBtn = this.querySelector('button[type="submit"]');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Menghapus...';
+        }
+        
+        // After successful delete, reload slots for current date
+        fetch(this.action, {
+          method: 'DELETE',
+          headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').getAttribute('content') : '',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json',
+          },
+          body: new FormData(this)
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Reload slots for current date
+            loadSlotsByDate(currentDate);
+            // Close modal
+            if (typeof $ !== 'undefined' && $.fn.modal) {
+              $(deleteSlotModal).modal('hide');
+            }
           } else {
-            deleteSlotModal.style.display = 'block';
-            deleteSlotModal.classList.add('show');
+            alert('Terjadi kesalahan saat menghapus slot.');
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = 'Hapus';
+            }
           }
-          
-          return false;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // Fallback to normal form submission
+          return true;
         });
+        
+        e.preventDefault();
+        return false;
       });
-      
-      // Handle form submission for delete
-      if (deleteSlotForm) {
-        deleteSlotForm.addEventListener('submit', function(e) {
-          var submitBtn = this.querySelector('button[type="submit"]');
-          if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Menghapus...';
+    }
+    
+    // Handle form submission for edit - reload data after update
+    if (editSlotForm) {
+      editSlotForm.addEventListener('submit', function(e) {
+        var submitBtn = this.querySelector('button[type="submit"]');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Menyimpan...';
+        }
+        
+        // After successful update, reload slots for current date
+        fetch(this.action, {
+          method: 'PUT',
+          headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').getAttribute('content') : '',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json',
+          },
+          body: new FormData(this)
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Reload slots for current date
+            loadSlotsByDate(currentDate);
+            // Close modal
+            if (typeof $ !== 'undefined' && $.fn.modal) {
+              $(editSlotModal).modal('hide');
+            }
+          } else {
+            alert('Terjadi kesalahan saat menyimpan perubahan.');
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = 'Simpan Perubahan';
+            }
           }
-          // Let form submit normally - Laravel will handle method spoofing
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // Fallback to normal form submission
+          return true;
         });
-      }
-    } else {
-      console.warn('Delete button elements not found:', {
-        buttons: deleteButtons.length,
-        form: !!deleteSlotForm,
-        modal: !!deleteSlotModal
+        
+        e.preventDefault();
+        return false;
+      });
+    }
+    
+    // Handle form submission for add slot - reload data after add
+    if (slotForm) {
+      slotForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        var submitBtn = this.querySelector('button[type="submit"]');
+        var originalText = submitBtn ? submitBtn.innerHTML : '';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Menyimpan...';
+        }
+        
+        var formData = new FormData(this);
+        
+        fetch(this.action, {
+          method: 'POST',
+          headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').getAttribute('content') : '',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json',
+          },
+          body: formData
+        })
+        .then(response => {
+          // Check if response is JSON
+          const contentType = response.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            return response.json();
+          } else {
+            // If not JSON, might be validation error - reload page
+            window.location.reload();
+            return null;
+          }
+        })
+        .then(data => {
+          if (!data) return; // If reload was triggered
+          
+          if (data.success) {
+            // Show success message
+            if (data.message) {
+              // Show success alert
+              var successAlert = document.createElement('div');
+              successAlert.className = 'alert alert-success border-0 shadow-sm rounded-4 mb-4 d-flex align-items-center';
+              successAlert.innerHTML = '<i class="fas fa-check-circle text-success mr-2"></i><span>' + data.message + '</span>';
+              var cardBody = document.querySelector('.card-body');
+              if (cardBody) {
+                cardBody.insertBefore(successAlert, cardBody.firstChild);
+                setTimeout(() => successAlert.remove(), 3000);
+              }
+            }
+            
+            // Reload slots for current date
+            loadSlotsByDate(currentDate);
+            
+            // Reset form
+            this.reset();
+            toggleForm(false);
+            
+            // Update hidden tanggal field
+            var tanggalInput = document.getElementById('slotFormTanggal');
+            if (tanggalInput) {
+              tanggalInput.value = formatDate(currentDate);
+            }
+          } else {
+            var errorMsg = data.message || 'Terjadi kesalahan saat menyimpan slot.';
+            if (data.errors) {
+              errorMsg = Object.values(data.errors).flat().join('\n');
+            }
+            alert(errorMsg);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // If error, reload page to show validation errors
+          window.location.reload();
+        })
+        .finally(() => {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+          }
+        });
+        
+        return false;
       });
     }
   });

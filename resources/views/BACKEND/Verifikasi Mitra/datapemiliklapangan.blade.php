@@ -1,130 +1,249 @@
-@extends('backend.layout.admin')
-
-@push('css')
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Toastr CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-@endpush
+@extends('BACKEND.Layout.admin')
 
 @section('content')
+<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Verifikasi Mitra Pemilik Lapangan</h1>
-                </div>
-            </div>
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Daftar Pemilik Lapangan</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Daftar Pemilik Lapangan</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{ session('success') }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-    </div>
+      @endif
 
-    <!-- Main Content -->
-    <section class="content">
-        <div class="container-fluid">
-            <!-- Notifikasi -->
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            @endif
-
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">Daftar Aplikasi Mitra</h5>
-                </div>
-
-                <div class="card-body">
-                    @if($mitras->isEmpty())
-                        <div class="text-center py-5 text-muted">
-                            <i class="fas fa-info-circle fa-2x mb-3"></i>
-                            <p>Belum ada aplikasi mitra yang diajukan.</p>
-                        </div>
-                    @else
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover align-middle">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Bisnis</th>
-                                        <th>Email</th>
-                                        <th>Tipe Venue</th>
-                                        <th>Status</th>
-                                        <th width="15%">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($mitras as $index => $mitra)
-                                    <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $mitra->nama_bisnis }}</td>
-                                        <td>{{ $mitra->email_bisnis }}</td>
-                                        <td>{{ $mitra->tipe_venue }}</td>
-                                        <td>
-                                            @if($mitra->status === 'pending')
-                                                <span class="badge bg-warning text-dark">Pending</span>
-                                            @else
-                                                <span class="badge bg-success">Terverifikasi</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('mitra.show', $mitra->id) }}" class="btn btn-info btn-sm">
-                                                <i class="fas fa-eye"></i> Detail
-                                            </a>
-                                            @if($mitra->status === 'pending')
-                                            <form action="{{ route('mitra.verify', $mitra->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin verifikasi mitra ini?');">
-                                                @csrf
-                                                @method('PUT')
-                                                <button type="submit" class="btn btn-success btn-sm">
-                                                    <i class="fas fa-check"></i> Verifikasi
-                                                </button>
-                                            </form>
-                                            @endif
-                                            <form action="{{ route('mitra.destroy', $mitra->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus mitra ini?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-trash"></i> Hapus
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    @endif
-                </div>
+      <!-- Statistik Cards -->
+      <div class="row mb-3">
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h3>{{ $countPending ?? 0 }}</h3>
+              <p>Menunggu Verifikasi</p>
             </div>
+            <div class="icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <a href="{{ route('mitra.datapemiliklapangan', ['status' => 'pending']) }}" class="small-box-footer">
+              Lihat Detail <i class="fas fa-arrow-circle-right"></i>
+            </a>
+          </div>
         </div>
-    </section>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h3>{{ $countApproved ?? 0 }}</h3>
+              <p>Sudah Diverifikasi</p>
+            </div>
+            <div class="icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <a href="{{ route('mitra.datapemiliklapangan', ['status' => 'approved']) }}" class="small-box-footer">
+              Lihat Detail <i class="fas fa-arrow-circle-right"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-danger">
+            <div class="inner">
+              <h3>{{ $countRejected ?? 0 }}</h3>
+              <p>Ditolak</p>
+            </div>
+            <div class="icon">
+              <i class="fas fa-times-circle"></i>
+            </div>
+            <a href="{{ route('mitra.datapemiliklapangan', ['status' => 'rejected']) }}" class="small-box-footer">
+              Lihat Detail <i class="fas fa-arrow-circle-right"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-info">
+            <div class="inner">
+              <h3>{{ $countAll ?? 0 }}</h3>
+              <p>Total Pemilik Lapangan</p>
+            </div>
+            <div class="icon">
+              <i class="fas fa-list"></i>
+            </div>
+            <a href="{{ route('mitra.datapemiliklapangan', ['status' => 'all']) }}" class="small-box-footer">
+              Lihat Semua <i class="fas fa-arrow-circle-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-6">
+              <h3 class="card-title">
+                @if($status == 'pending')
+                  Data Pemilik Lapangan Menunggu Verifikasi
+                @elseif($status == 'approved')
+                  Data Pemilik Lapangan Sudah Diverifikasi
+                @elseif($status == 'rejected')
+                  Data Pemilik Lapangan Ditolak
+                @else
+                  Semua Data Pemilik Lapangan
+                @endif
+              </h3>
+            </div>
+            <div class="col-md-6">
+              <div class="row justify-content-end">
+                <div class="col-auto">
+                  <!-- Tab Filter Status -->
+                  <div class="btn-group mb-2" role="group">
+                    <a href="{{ route('mitra.datapemiliklapangan', ['status' => 'pending']) }}" 
+                       class="btn btn-sm {{ $status == 'pending' ? 'btn-warning' : 'btn-outline-warning' }}">
+                      <i class="fas fa-clock"></i> Pending ({{ $countPending ?? 0 }})
+                    </a>
+                    <a href="{{ route('mitra.datapemiliklapangan', ['status' => 'approved']) }}" 
+                       class="btn btn-sm {{ $status == 'approved' ? 'btn-success' : 'btn-outline-success' }}">
+                      <i class="fas fa-check"></i> Approved ({{ $countApproved ?? 0 }})
+                    </a>
+                    <a href="{{ route('mitra.datapemiliklapangan', ['status' => 'rejected']) }}" 
+                       class="btn btn-sm {{ $status == 'rejected' ? 'btn-danger' : 'btn-outline-danger' }}">
+                      <i class="fas fa-times"></i> Rejected ({{ $countRejected ?? 0 }})
+                    </a>
+                    <a href="{{ route('mitra.datapemiliklapangan', ['status' => 'all']) }}" 
+                       class="btn btn-sm {{ $status == 'all' ? 'btn-info' : 'btn-outline-info' }}">
+                      <i class="fas fa-list"></i> Semua
+                    </a>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <form action="{{ route('mitra.datapemiliklapangan') }}" method="GET" class="form-inline">
+                    <input type="hidden" name="status" value="{{ $status }}">
+                    <div class="input-group">
+                      <input type="search" name="search" class="form-control form-control-sm" placeholder="Cari pemilik lapangan..." value="{{ request('search') }}">
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+          <table class="table table-hover text-nowrap">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama Bisnis</th>
+                <th>Nama Pemilik</th>
+                <th>Email</th>
+                <th>Tipe Venue</th>
+                <th>Kontak</th>
+                <th>Tanggal Dibuat</th>
+                <th>Status</th>
+                <th class="text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              @forelse($mitras as $index => $mitra)
+              <tr>
+                <td>{{ ($mitras->currentPage() - 1) * $mitras->perPage() + $index + 1 }}</td>
+                <td>{{ $mitra->nama_bisnis }}</td>
+                <td>{{ $mitra->nama_anda }}</td>
+                <td>{{ $mitra->email_bisnis }}</td>
+                <td>{{ $mitra->tipe_venue }}</td>
+                <td>{{ $mitra->kontak_bisnis ?? '-' }}</td>
+                <td>{{ $mitra->created_at->format('d M Y') }}</td>
+                <td>
+                  @if($mitra->status == 'pending')
+                    <span class="badge badge-warning">Menunggu Verifikasi</span>
+                  @elseif($mitra->status == 'approved')
+                    <span class="badge badge-success">Disetujui</span>
+                  @elseif($mitra->status == 'rejected')
+                    <span class="badge badge-danger">Ditolak</span>
+                  @else
+                    <span class="badge badge-secondary">{{ ucfirst($mitra->status) }}</span>
+                  @endif
+                </td>
+                <td class="text-center">
+                  <a href="{{ route('mitra.show', $mitra->id) }}" class="btn btn-sm btn-info" title="Detail">
+                    <i class="fas fa-eye"></i>
+                  </a>
+                  @if($mitra->status == 'pending')
+                    <form action="{{ route('mitra.verify', $mitra->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menyetujui mitra ini?');">
+                      @csrf
+                      @method('PUT')
+                      <button type="submit" class="btn btn-sm btn-success" title="Setujui">
+                        <i class="fas fa-check"></i>
+                      </button>
+                    </form>
+                  @elseif($mitra->status == 'approved')
+                    <span class="badge badge-success">
+                      <i class="fas fa-check-circle"></i> Sudah Disetujui
+                    </span>
+                  @endif
+                  <form action="{{ route('mitra.destroy', $mitra->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus mitra ini?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              @empty
+              <tr>
+                <td colspan="9" class="text-center py-4">
+                  @if($status == 'pending')
+                    Tidak ada pemilik lapangan yang menunggu verifikasi.
+                  @elseif($status == 'approved')
+                    Tidak ada pemilik lapangan yang sudah diverifikasi.
+                  @elseif($status == 'rejected')
+                    Tidak ada pemilik lapangan yang ditolak.
+                  @else
+                    Tidak ada data pemilik lapangan.
+                  @endif
+                </td>
+              </tr>
+              @endforelse
+            </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+        @if($mitras->hasPages())
+        <div class="card-footer">
+          <div class="d-flex justify-content-center">
+            {{ $mitras->appends(request()->query())->links() }}
+          </div>
+        </div>
+        @endif
+      </div>
+      <!-- /.card -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
 </div>
+<!-- /.content-wrapper -->
 @endsection
-
-@push('scripts')
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<!-- Toastr -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Toastr Alerts -->
-<script>
-  @if (Session::has('success'))
-    toastr.success("{{ Session::get('success') }}");
-  @endif
-
-  @if (Session::has('error'))
-    toastr.error("{{ Session::get('error') }}");
-  @endif
-</script>
-@endpush
