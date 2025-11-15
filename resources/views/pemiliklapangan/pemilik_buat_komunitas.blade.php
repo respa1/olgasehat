@@ -26,13 +26,36 @@
                         <div class="card-header">
                             <h3 class="card-title">Detail Komunitas Baru</h3>
                         </div>
-                        <form>
+                        <form action="{{ route('activities.store.pemilik') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
                             <div class="card-body">
+                                @if(session('success'))
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {{ session('success') }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
+
+                                @if($errors->any())
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <ul class="mb-0">
+                                            @foreach($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="nama">Nama Komunitas <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Contoh: Kumpulan Pemuda Futsal" required>
+                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Contoh: Kumpulan Pemuda Futsal" required value="{{ old('nama') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -40,11 +63,11 @@
                                             <label for="kategori">Kategori Olahraga <span class="text-danger">*</span></label>
                                             <select class="form-control" id="kategori" name="kategori" required>
                                                 <option value="">Pilih Kategori</option>
-                                                <option>Futsal</option>
-                                                <option>Basket</option>
-                                                <option>Yoga</option>
-                                                <option>Gym</option>
-                                                <option>Lainnya</option>
+                                                <option value="Futsal" {{ old('kategori') == 'Futsal' ? 'selected' : '' }}>Futsal</option>
+                                                <option value="Basket" {{ old('kategori') == 'Basket' ? 'selected' : '' }}>Basket</option>
+                                                <option value="Yoga" {{ old('kategori') == 'Yoga' ? 'selected' : '' }}>Yoga</option>
+                                                <option value="Gym" {{ old('kategori') == 'Gym' ? 'selected' : '' }}>Gym</option>
+                                                <option value="Lainnya" {{ old('kategori') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                                             </select>
                                         </div>
                                     </div>
@@ -53,18 +76,18 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="lokasi">Lokasi Kegiatan</label>
-                                            <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Kota Denpasar, Bali">
+                                            <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Kota Denpasar, Bali" value="{{ old('lokasi') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Biaya Bergabung</label>
                                             <div class="icheck-primary d-inline">
-                                                <input type="radio" id="gratis" name="biaya" value="gratis" checked>
+                                                <input type="radio" id="gratis" name="biaya_bergabung" value="gratis" {{ old('biaya_bergabung', 'gratis') == 'gratis' ? 'checked' : '' }}>
                                                 <label for="gratis">Gratis</label>
                                             </div>
                                             <div class="icheck-primary d-inline ml-3">
-                                                <input type="radio" id="berbayar" name="biaya" value="berbayar">
+                                                <input type="radio" id="berbayar" name="biaya_bergabung" value="berbayar" {{ old('biaya_bergabung') == 'berbayar' ? 'checked' : '' }}>
                                                 <label for="berbayar">Berbayar (misal: iuran)</label>
                                             </div>
                                         </div>
@@ -72,11 +95,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="deskripsi">Deskripsi Lengkap <span class="text-danger">*</span></label>
-                                    <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" placeholder="Tulis ringkasan komunitas, jadwal, dan manfaatnya" required></textarea>
+                                    <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" placeholder="Tulis ringkasan komunitas, jadwal, dan manfaatnya" required>{{ old('deskripsi') }}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="link">Link Grup / Kontak (WhatsApp / IG)</label>
-                                    <input type="url" class="form-control" id="link" name="link" placeholder="https://wa.me/.. atau @akuninstagram">
+                                    <input type="text" class="form-control" id="link" name="link_kontak" placeholder="https://wa.me/.. atau @akuninstagram" value="{{ old('link_kontak') }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="banner">Upload Banner Komunitas (Max 2MB)</label>

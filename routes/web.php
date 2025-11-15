@@ -41,8 +41,8 @@ Route::get('/tentang', fn() => view('FRONTEND.tentang'))->name('tentang');
 Route::get('/blog-news', [BeritaController::class, 'index'])->name('frontend.blog-news');
 Route::get('/blog-news-detail/{id}', [BeritaController::class, 'show'])->name('frontend.blog-news-detail');
 Route::get('/membership-detail', fn() => view('FRONTEND.membership_detail'));
-Route::get('/community', fn() => view('FRONTEND.community'));
-Route::get('/community-detail', fn() => view('FRONTEND.community_detail'));
+Route::get('/community', [App\Http\Controllers\ActivityController::class, 'index'])->name('community');
+Route::get('/community-detail/{id}', [App\Http\Controllers\ActivityController::class, 'showDetail'])->name('community.detail');
 Route::get('/confirm', fn() => view('FRONTEND.confirm'));
 Route::get('/daftar-pemilik', fn() => view('FRONTEND.daftar_pemilik'));
 Route::get('/daftar-pemilik-detail', fn() => view('FRONTEND.daftar_pemilik_detail'));
@@ -54,6 +54,7 @@ Route::get('/healthy', fn() => view('FRONTEND.healthy'));
 Route::get('/venue-detail', fn() => view('FRONTEND.venue_detail'));
 Route::get('/klinik', fn() => view('FRONTEND.klinik'));
 Route::get('/venue-management', fn() => view('FRONTEND.venue_management'))->name('venue.management');
+Route::get('/health-management', fn() => view('FRONTEND.health_management'))->name('health.management');
 
 // ======================================================
 // AUTHENTICATION ROUTES
@@ -96,8 +97,9 @@ Route::get('/homeuser', function () {return view('user.homeuser'); });
 Route::get('/venueuser', function () {return view('user.venueuser'); });
 Route::get('/venueuser_detail', function () {return view('user.venueuser_detail'); });
 Route::get('/buat-aktivitas', fn() => view('user.user_buat_aktivitas'));
-Route::get('/communityuser', function () {return view('user.communityuser'); });
-Route::get('/communityuser_detail', function () {return view('user.communityuser_detail'); });
+Route::post('/buat-aktivitas', [App\Http\Controllers\ActivityController::class, 'storeFromUser'])->name('activities.store.user');
+Route::get('/communityuser', [App\Http\Controllers\ActivityController::class, 'indexUser'])->name('user.community');
+Route::get('/communityuser_detail/{id}', [App\Http\Controllers\ActivityController::class, 'showUser'])->name('user.community.detail');
 Route::get('/bloguser_news', [BeritaController::class, 'indexUser'])->name('user.bloguser_news');
 Route::get('/bloguser_detail/{id}', [BeritaController::class, 'showUser'])->name('user.bloguser_detail');
 Route::get('/confirmuser', function () {return view('user.confirmuser'); });
@@ -113,11 +115,31 @@ Route::get('/riwayatpayment', fn() => view('user.riwayatpayment'));
 Route::get('/registeremail', fn() => view('user.registeremail'));
 Route::get('/loginemail', fn() => view('user.loginemail'));
 Route::get('/resetpassword', fn() => view('user.resetpassword'));
-Route::get('/homeuser', fn() => view('user.homeuser'));
+Route::get('/homeuser', function() {
+    $programs = \App\Models\Program::orderBy('created_at', 'desc')->get();
+    $homeBanners = \App\Models\Galeri::where('kategori', 'home_banner')
+                                      ->orderBy('urutan', 'asc')
+                                      ->orderBy('created_at', 'desc')
+                                      ->limit(4)
+                                      ->get();
+    $lapanganBanners = \App\Models\Galeri::where('kategori', 'lapangan_banner')
+                                         ->orderBy('urutan', 'asc')
+                                         ->orderBy('created_at', 'desc')
+                                         ->limit(4)
+                                         ->get();
+    $kesehatanBanners = \App\Models\Galeri::where('kategori', 'kesehatan_banner')
+                                           ->orderBy('urutan', 'asc')
+                                           ->orderBy('created_at', 'desc')
+                                           ->limit(4)
+                                           ->get();
+    $activities = \App\Models\Activity::where('status', 'approved')
+                                      ->orderBy('created_at', 'desc')
+                                      ->limit(3)
+                                      ->get();
+    return view('user.homeuser', compact('programs', 'homeBanners', 'lapanganBanners', 'kesehatanBanners', 'activities'));
+});
 Route::get('/venueuser', fn() => view('user.venueuser'));
 Route::get('/venueuser_detail', fn() => view('user.venueuser_detail'));
-Route::get('/communityuser', fn() => view('user.communityuser'));
-Route::get('/communityuser_detail', fn() => view('user.communityuser_detail'));
 Route::get('/membership-user-detail', fn() => view('user.membershipuser_detail'));
 Route::get('/healthyuser', fn() => view('user.healthyuser'));
 Route::get('/venue_management_user', fn() => view('user.venue_management_user'));
@@ -135,6 +157,7 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     Route::get('/pemiliklapangan/analytics', fn() => view('pemiliklapangan.Analytics.index'))->name('pemilik.analytics');
     Route::get('/analytics', fn() => view('pemiliklapangan.Analytics.index'))->name('pemilik.analytics.short');
     Route::get('/pemiliklapangan/komunitas', fn() => view('pemiliklapangan.pemilik_buat_komunitas'))->name('pemilik.komunitas');
+    Route::post('/pemiliklapangan/komunitas', [App\Http\Controllers\ActivityController::class, 'storeFromPemilik'])->name('activities.store.pemilik');
     Route::get('/pemiliklapangan/membership', fn() => view('pemiliklapangan.pemilik_buat_membership'))->name('pemilik.membership');
     Route::get('/pemiliklapangan/event', fn() => view('pemiliklapangan.pemilik_buat_event'))->name('pemilik.event');
     // Route untuk proses pendaftaran venue
@@ -156,7 +179,9 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     Route::post('/fasilitas/venue/{id}/update', [PendaftaranController::class, 'updateVenue'])->name('fasilitas.update');
     Route::post('/fasilitas/venue/{id}/lapangan', [PendaftaranController::class, 'storeLapangan'])->name('fasilitas.lapangan.store');
     Route::get('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal', [PendaftaranController::class, 'showLapanganSchedule'])->name('fasilitas.lapangan.jadwal');
+    Route::get('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal/api', [PendaftaranController::class, 'getSlotsByDate'])->name('fasilitas.lapangan.jadwal.api');
     Route::post('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal', [PendaftaranController::class, 'storeLapanganSlot'])->name('fasilitas.lapangan.jadwal.store');
+    Route::post('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal/bulk', [PendaftaranController::class, 'storeBulkLapanganSlots'])->name('fasilitas.lapangan.jadwal.bulk');
     Route::get('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal/{slot}/edit', [PendaftaranController::class, 'editLapanganSlot'])->name('fasilitas.lapangan.jadwal.edit');
     Route::put('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal/{slot}', [PendaftaranController::class, 'updateLapanganSlot'])->name('fasilitas.lapangan.jadwal.update');
     Route::delete('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal/{slot}', [PendaftaranController::class, 'deleteLapanganSlot'])->name('fasilitas.lapangan.jadwal.delete');
@@ -246,7 +271,12 @@ Route::middleware(['auth'])->group(function () {
 
         // ACTIVITY TYPES
         Route::resource('activity-types', ActivityTypeController::class);
-        Route::get('activity-types-daftar', [ActivityTypeController::class, 'daftar'])->name('activity-types.daftar');
+        Route::get('activity-types-daftar', [App\Http\Controllers\ActivityController::class, 'daftar'])->name('activity-types.daftar');
+        
+        // ACTIVITIES (Verifikasi)
+        Route::get('activities/{id}', [App\Http\Controllers\ActivityController::class, 'show'])->name('activities.show');
+        Route::put('activities/{id}/approve', [App\Http\Controllers\ActivityController::class, 'approve'])->name('activities.approve');
+        Route::put('activities/{id}/reject', [App\Http\Controllers\ActivityController::class, 'reject'])->name('activities.reject');
 
         // EXTRA - SOCIAL MEDIA
         Route::get('/social-media', [SocialMediaController::class, 'index'])->name('social-media.index');
