@@ -14,6 +14,7 @@
                         src="{{ asset('storage/' . $venue->galleries->first()->foto) }}"
                         alt="{{ $venue->namavenue }} Main"
                         class="col-span-1 sm:col-span-2 rounded-tl-xl rounded-bl-xl object-cover h-64 sm:h-96 w-full transition duration-300 hover:scale-105 cursor-pointer"
+                        onclick="openGalleryModal()"
                     />
                     <div class="hidden sm:grid grid-rows-3 gap-3 md:gap-4 h-96">
                         @foreach($venue->galleries->skip(1)->take(2) as $gallery)
@@ -21,12 +22,14 @@
                                 src="{{ asset('storage/' . $gallery->foto) }}"
                                 alt="{{ $venue->namavenue }} {{ $loop->iteration + 1 }}"
                                 class="object-cover w-full h-full transition duration-300 hover:scale-105 cursor-pointer"
+                                onclick="openGalleryModal()"
                             />
                         @endforeach
                         @if($venue->galleries->count() > 3)
                             <div
                                 class="relative rounded-br-xl overflow-hidden cursor-pointer group"
                                 aria-label="Lihat semua foto"
+                                onclick="openGalleryModal()"
                             >
                                 <img
                                     src="{{ asset('storage/' . $venue->galleries->skip(3)->first()->foto) }}"
@@ -358,6 +361,84 @@
         LANJUT PEMBAYARAN
       </button>
     </a>
+</div>
+
+{{-- Gallery Modal --}}
+<div id="galleryModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden overflow-y-auto">
+    <div class="min-h-screen px-4 py-8">
+        <div class="max-w-7xl mx-auto">
+            {{-- Header --}}
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl md:text-3xl font-bold text-white">{{ $venue->namavenue }} - Galeri Foto</h2>
+                <button 
+                    onclick="closeGalleryModal()" 
+                    class="text-white hover:text-gray-300 transition p-2"
+                    aria-label="Tutup galeri"
+                >
+                    <i class="fas fa-times text-3xl"></i>
+                </button>
+            </div>
+            
+            {{-- Gallery Grid --}}
+            @if($venue->galleries && $venue->galleries->count() > 0)
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                @foreach($venue->galleries as $gallery)
+                <div class="group relative overflow-hidden rounded-lg cursor-pointer transform transition-all duration-300 hover:scale-105">
+                    <img
+                        src="{{ asset('storage/' . $gallery->foto) }}"
+                        alt="{{ $venue->namavenue }} Gallery {{ $loop->iteration }}"
+                        class="w-full h-48 md:h-64 object-cover"
+                        onclick="openImageModal('{{ asset('storage/' . $gallery->foto) }}', {{ $loop->iteration }}, {{ $venue->galleries->count() }})"
+                    />
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-search-plus text-white text-2xl opacity-0 group-hover:opacity-100 transition duration-300"></i>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            @else
+            <div class="text-center py-12">
+                <p class="text-white text-lg">Belum ada foto galeri untuk venue ini.</p>
+            </div>
+            @endif
+        </div>
+    </div>
+</div>
+
+{{-- Image Lightbox Modal --}}
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-95 z-[60] hidden flex items-center justify-center">
+    <button 
+        onclick="closeImageModal()" 
+        class="absolute top-4 right-4 text-white hover:text-gray-300 transition p-2"
+        aria-label="Tutup gambar"
+    >
+        <i class="fas fa-times text-3xl"></i>
+    </button>
+    <button 
+        onclick="previousImage()" 
+        class="absolute left-4 text-white hover:text-gray-300 transition p-3 bg-black bg-opacity-50 rounded-full"
+        aria-label="Gambar sebelumnya"
+        id="prevImageBtn"
+    >
+        <i class="fas fa-chevron-left text-2xl"></i>
+    </button>
+    <button 
+        onclick="nextImage()" 
+        class="absolute right-4 text-white hover:text-gray-300 transition p-3 bg-black bg-opacity-50 rounded-full"
+        aria-label="Gambar selanjutnya"
+        id="nextImageBtn"
+    >
+        <i class="fas fa-chevron-right text-2xl"></i>
+    </button>
+    <div class="max-w-7xl mx-auto px-4">
+        <img 
+            id="modalImage" 
+            src="" 
+            alt="Gallery Image" 
+            class="max-h-[90vh] max-w-full mx-auto object-contain"
+        />
+        <p class="text-white text-center mt-4" id="imageCounter"></p>
+    </div>
 </div>
 
 <script>
@@ -765,6 +846,122 @@
 
         // Initialize button styles
         updateDateButtonStyles();
+    });
+
+    // Gallery Modal Functions
+    function openGalleryModal() {
+        const modal = document.getElementById('galleryModal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeGalleryModal() {
+        const modal = document.getElementById('galleryModal');
+        if (modal) {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        closeImageModal();
+    }
+
+    // Image Lightbox Functions
+    let currentImageIndex = 0;
+    let totalImages = 0;
+    let imageSources = [];
+
+    function openImageModal(src, index, total) {
+        currentImageIndex = index - 1;
+        totalImages = total;
+        
+        // Collect all image sources
+        imageSources = [];
+        @if($venue->galleries && $venue->galleries->count() > 0)
+            @foreach($venue->galleries as $gallery)
+                imageSources.push('{{ asset('storage/' . $gallery->foto) }}');
+            @endforeach
+        @endif
+        
+        const imageModal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const imageCounter = document.getElementById('imageCounter');
+        
+        if (imageModal && modalImage) {
+            modalImage.src = src;
+            imageCounter.textContent = `${index} / ${total}`;
+            imageModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeImageModal() {
+        const imageModal = document.getElementById('imageModal');
+        if (imageModal) {
+            imageModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    function previousImage() {
+        if (currentImageIndex > 0) {
+            currentImageIndex--;
+        } else {
+            currentImageIndex = totalImages - 1;
+        }
+        updateImageModal();
+    }
+
+    function nextImage() {
+        if (currentImageIndex < totalImages - 1) {
+            currentImageIndex++;
+        } else {
+            currentImageIndex = 0;
+        }
+        updateImageModal();
+    }
+
+    function updateImageModal() {
+        const modalImage = document.getElementById('modalImage');
+        const imageCounter = document.getElementById('imageCounter');
+        
+        if (modalImage && imageSources.length > 0) {
+            modalImage.src = imageSources[currentImageIndex];
+            imageCounter.textContent = `${currentImageIndex + 1} / ${totalImages}`;
+        }
+    }
+
+    // Close modals on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeImageModal();
+            closeGalleryModal();
+        }
+        if (e.key === 'ArrowLeft') {
+            const imageModal = document.getElementById('imageModal');
+            if (imageModal && !imageModal.classList.contains('hidden')) {
+                previousImage();
+            }
+        }
+        if (e.key === 'ArrowRight') {
+            const imageModal = document.getElementById('imageModal');
+            if (imageModal && !imageModal.classList.contains('hidden')) {
+                nextImage();
+            }
+        }
+    });
+
+    // Close modal when clicking outside
+    document.getElementById('galleryModal')?.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeGalleryModal();
+        }
+    });
+
+    document.getElementById('imageModal')?.addEventListener('click', function(e) {
+        if (e.target === this || e.target.id === 'modalImage') {
+            closeImageModal();
+        }
     });
 </script>
 @endsection
