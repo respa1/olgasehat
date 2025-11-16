@@ -122,7 +122,11 @@
                 />
                 
                 <div class="p-4">
-                    <p class="text-xs text-gray-500 font-medium mb-0">Venue | {{ $venue->kategori }}</p>
+                    @php
+                      $kategoriList = is_array($venue->kategori) ? $venue->kategori : ($venue->kategori ? [$venue->kategori] : []);
+                      $kategoriDisplay = !empty($kategoriList) ? implode(', ', $kategoriList) : 'Olahraga';
+                    @endphp
+                    <p class="text-xs text-gray-500 font-medium mb-0">Venue | {{ $kategoriDisplay }}</p>
                     <h3 class="font-bold text-lg text-gray-900 mb-1">{{ $venue->namavenue }}</h3>
                     <p class="text-sm text-gray-600 mb-3 flex items-center">
                         <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-1"></i> {{ $venue->kota }}
@@ -645,7 +649,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         <div class="ml-3 flex-shrink-0">
                             <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                ${venue.kategori || 'Olahraga'}
+                                ${Array.isArray(venue.kategori) ? venue.kategori.join(', ') : (venue.kategori || 'Olahraga')}
                             </span>
                         </div>
                     </div>

@@ -11,6 +11,11 @@ class Pendaftaran extends Model
     use HasFactory;
     protected $guarded = [];
 
+    protected $casts = [
+        'kategori' => 'array',
+        'fasilitas' => 'array',
+    ];
+
     public function galleries()
     {
         return $this->hasMany(VenueGallery::class)->orderBy('urutan');

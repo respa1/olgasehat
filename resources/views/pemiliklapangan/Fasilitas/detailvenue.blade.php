@@ -153,7 +153,12 @@
 
           <div class="tab-content pt-4">
             <div class="tab-pane fade show active" id="tab-lapangan" role="tabpanel">
-              @if($venue->kategori)
+              @if($venue->kategori && !empty($venue->kategori))
+                @php
+                  // Handle both array and string format
+                  $kategoriList = is_array($venue->kategori) ? $venue->kategori : [$venue->kategori];
+                  $kategoriDisplay = implode(', ', $kategoriList);
+                @endphp
                 <div class="mb-4">
                   <h5 class="font-weight-bold mb-3">Informasi Lapangan</h5>
                   <div class="card border-0 shadow-sm">
@@ -164,12 +169,14 @@
                             <i class="fas fa-futbol text-primary mr-2"></i>
                             Cabang Olahraga
                           </h6>
-                          <p class="text-muted mb-0">{{ $venue->kategori }}</p>
+                          <p class="text-muted mb-0">{{ $kategoriDisplay }}</p>
                         </div>
                         <div class="col-md-4 text-right">
-                          <span class="badge badge-primary badge-pill px-3 py-2">
-                            {{ $venue->kategori }}
-                          </span>
+                          @foreach($kategoriList as $kat)
+                            <span class="badge badge-primary badge-pill px-3 py-2 mr-1 mb-1">
+                              {{ $kat }}
+                            </span>
+                          @endforeach
                         </div>
                       </div>
                     </div>
@@ -203,7 +210,11 @@
                             <i class="fas fa-futbol"></i>
                           </div>
                           <h5 class="font-weight-bold text-dark mb-2">{{ $lapangan->nama }}</h5>
-                          <p class="text-muted small mb-4">Lapangan utama untuk kategori {{ $venue->kategori ?? '-' }}</p>
+                          @php
+                            $kategoriList = is_array($venue->kategori) ? $venue->kategori : ($venue->kategori ? [$venue->kategori] : []);
+                            $kategoriDisplay = !empty($kategoriList) ? implode(', ', $kategoriList) : '-';
+                          @endphp
+                          <p class="text-muted small mb-4">Lapangan utama untuk kategori {{ $kategoriDisplay }}</p>
                           <div class="mt-auto">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                               <span class="badge badge-light text-primary font-weight-bold px-3 py-2">

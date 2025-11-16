@@ -770,7 +770,10 @@ class PendaftaranController extends Controller
             'namavenue' => 'required|string|max:255',
             'provinsi' => 'required|string|max:100',
             'kota' => 'required|string|max:100',
-            'kategori' => 'required|string|max:100',
+            'kategori' => 'required|array|min:1|max:5',
+            'kategori.*' => 'required|string|max:100',
+            'custom_olahraga' => 'nullable|array|max:5',
+            'custom_olahraga.*' => 'nullable|string|max:100',
             'nomor_telepon' => 'required|string|max:20',
             'email_venue' => 'required|email|max:255',
             'logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -779,9 +782,31 @@ class PendaftaranController extends Controller
             'aturan' => 'nullable|string',
             'lokasi' => 'nullable|string',
             'fasilitas_venue' => 'nullable|array',
+            'custom_fasilitas' => 'nullable|array',
+            'custom_fasilitas.*' => 'nullable|string|max:255',
             'galeri_foto' => 'nullable|array',
             'galeri_foto.*' => 'image|mimes:jpg,jpeg,png|max:2048',
         ]);
+
+        // Handle kategori: gabungkan kategori[] dan custom_olahraga[]
+        $allKategori = [];
+        if ($request->has('kategori') && is_array($request->kategori)) {
+            $allKategori = array_merge($allKategori, $request->kategori);
+        }
+        if ($request->has('custom_olahraga') && is_array($request->custom_olahraga)) {
+            // Filter out empty values
+            $customOlahraga = array_filter($request->custom_olahraga, function($value) {
+                return !empty(trim($value));
+            });
+            $allKategori = array_merge($allKategori, $customOlahraga);
+        }
+
+        // Validate total kategori (1-5)
+        if (empty($allKategori) || count($allKategori) > 5) {
+            return redirect()->back()
+                ->withErrors(['kategori' => 'Pilih 1-5 cabang olahraga'])
+                ->withInput();
+        }
 
         // Update logo jika ada file baru
         if ($request->hasFile('logo')) {
@@ -797,16 +822,29 @@ class PendaftaranController extends Controller
         $venue->namavenue = $request->namavenue;
         $venue->provinsi = $request->provinsi;
         $venue->kota = $request->kota;
-        $venue->kategori = $request->kategori;
+        $venue->kategori = $allKategori; // Array of kategori
         $venue->nomor_telepon = $request->nomor_telepon;
         $venue->email_venue = $request->email_venue;
+
+        // Handle fasilitas: gabungkan fasilitas_venue dan custom_fasilitas
+        $allFasilitas = [];
+        if ($request->has('fasilitas_venue') && is_array($request->fasilitas_venue)) {
+            $allFasilitas = array_merge($allFasilitas, $request->fasilitas_venue);
+        }
+        if ($request->has('custom_fasilitas') && is_array($request->custom_fasilitas)) {
+            // Filter out empty values
+            $customFasilitas = array_filter($request->custom_fasilitas, function($value) {
+                return !empty(trim($value));
+            });
+            $allFasilitas = array_merge($allFasilitas, $customFasilitas);
+        }
 
         // Update data detail
         $venue->video_review = $request->video_review;
         $venue->detail = $request->detail;
         $venue->aturan = $request->aturan;
         $venue->lokasi = $request->lokasi;
-        $venue->fasilitas = $request->fasilitas_venue ? json_encode($request->fasilitas_venue) : null;
+        $venue->fasilitas = !empty($allFasilitas) ? json_encode($allFasilitas) : null;
         
         $venue->save();
 
@@ -838,10 +876,33 @@ class PendaftaranController extends Controller
             'namavenue' => 'required|string|max:255',
             'provinsi' => 'required|string|max:100',
             'kota' => 'required|string|max:100',
-            'kategori' => 'required|string|max:100',
+            'kategori' => 'required|array|min:1|max:5',
+            'kategori.*' => 'required|string|max:100',
+            'custom_olahraga' => 'nullable|array|max:5',
+            'custom_olahraga.*' => 'nullable|string|max:100',
             'nomor_telepon' => 'required|string|max:20',
             'email_venue' => 'required|email|max:255',
         ]);
+
+        // Handle kategori: gabungkan kategori[] dan custom_olahraga[]
+        $allKategori = [];
+        if ($request->has('kategori') && is_array($request->kategori)) {
+            $allKategori = array_merge($allKategori, $request->kategori);
+        }
+        if ($request->has('custom_olahraga') && is_array($request->custom_olahraga)) {
+            // Filter out empty values
+            $customOlahraga = array_filter($request->custom_olahraga, function($value) {
+                return !empty(trim($value));
+            });
+            $allKategori = array_merge($allKategori, $customOlahraga);
+        }
+
+        // Validate total kategori (1-5)
+        if (empty($allKategori) || count($allKategori) > 5) {
+            return redirect()->back()
+                ->withErrors(['kategori' => 'Pilih 1-5 cabang olahraga'])
+                ->withInput();
+        }
 
         // Upload logo (banner)
         $pathLogo = $request->file('logo')->store('logovenue', 'public');
@@ -853,7 +914,7 @@ class PendaftaranController extends Controller
         $pendaftaran->namavenue = $validatedData['namavenue'];
         $pendaftaran->provinsi = $validatedData['provinsi'];
         $pendaftaran->kota = $validatedData['kota'];
-        $pendaftaran->kategori = $validatedData['kategori'];
+        $pendaftaran->kategori = $allKategori; // Array of kategori
         $pendaftaran->nomor_telepon = $validatedData['nomor_telepon'];
         $pendaftaran->email_venue = $validatedData['email_venue'];
         $pendaftaran->save();
@@ -879,6 +940,8 @@ class PendaftaranController extends Controller
             'aturan' => 'nullable|string',
             'lokasi' => 'nullable|string',
             'fasilitas_venue' => 'nullable|array',
+            'custom_fasilitas' => 'nullable|array',
+            'custom_fasilitas.*' => 'nullable|string|max:255',
             'galeri_foto' => 'nullable|array',
             'galeri_foto.*' => 'image|mimes:jpg,jpeg,png|max:2048',
         ]);
@@ -889,12 +952,25 @@ class PendaftaranController extends Controller
         // Pastikan venue milik user yang login
         $pendaftaran = Pendaftaran::where('user_id', auth()->id())->findOrFail($venueId);
 
+        // Handle fasilitas: gabungkan fasilitas_venue dan custom_fasilitas
+        $allFasilitas = [];
+        if ($request->has('fasilitas_venue') && is_array($request->fasilitas_venue)) {
+            $allFasilitas = array_merge($allFasilitas, $request->fasilitas_venue);
+        }
+        if ($request->has('custom_fasilitas') && is_array($request->custom_fasilitas)) {
+            // Filter out empty values
+            $customFasilitas = array_filter($request->custom_fasilitas, function($value) {
+                return !empty(trim($value));
+            });
+            $allFasilitas = array_merge($allFasilitas, $customFasilitas);
+        }
+
         // Update data
         $pendaftaran->video_review = $request->video_review;
         $pendaftaran->detail = $request->detail;
         $pendaftaran->aturan = $request->aturan;
         $pendaftaran->lokasi = $request->lokasi;
-        $pendaftaran->fasilitas = $request->fasilitas_venue ? json_encode($request->fasilitas_venue) : null;
+        $pendaftaran->fasilitas = !empty($allFasilitas) ? json_encode($allFasilitas) : null;
         $pendaftaran->save();
 
         // Handle upload galeri foto multiple

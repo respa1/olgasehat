@@ -186,10 +186,18 @@
                                             'Area Registrasi/Lobi', 'Keamanan (Security) & P3K'
                                         ];
                                         $selectedFasilitas = [];
+                                        $customFasilitas = [];
                                         if (old('fasilitas_venue')) {
                                             $selectedFasilitas = old('fasilitas_venue');
                                         } elseif (isset($venue) && $venue->fasilitas) {
-                                            $selectedFasilitas = json_decode($venue->fasilitas, true);
+                                            $allSelected = json_decode($venue->fasilitas, true);
+                                            foreach ($allSelected as $fas) {
+                                                if (in_array($fas, $fasilitas)) {
+                                                    $selectedFasilitas[] = $fas;
+                                                } else {
+                                                    $customFasilitas[] = $fas;
+                                                }
+                                            }
                                         }
                                     @endphp
 
@@ -207,6 +215,30 @@
                                             </div>
                                         </div>
                                     @endforeach
+                                </div>
+                                
+                                {{-- Custom Fasilitas --}}
+                                <div class="mt-3">
+                                    <label class="form-label">Fasilitas Lainnya (Custom)</label>
+                                    <div id="custom-fasilitas-container">
+                                        @if(!empty($customFasilitas))
+                                            @foreach($customFasilitas as $index => $customFas)
+                                                <div class="custom-fasilitas-item mb-2">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" name="custom_fasilitas[]" 
+                                                               value="{{ $customFas }}" placeholder="Nama fasilitas lainnya">
+                                                        <button type="button" class="btn btn-outline-danger remove-custom-fasilitas" type="button">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="add-custom-fasilitas">
+                                        <i class="fas fa-plus"></i> Tambah Fasilitas Lainnya
+                                    </button>
+                                    <small class="text-muted d-block mt-1">Tambahkan fasilitas yang tidak ada dalam daftar di atas</small>
                                 </div>
                             </div>
 
@@ -352,6 +384,34 @@ document.addEventListener('DOMContentLoaded', function () {
                 };
                 reader.readAsDataURL(file);
             });
+        });
+    }
+
+    // Handle custom fasilitas
+    const addCustomFasilitasBtn = document.getElementById('add-custom-fasilitas');
+    const customFasilitasContainer = document.getElementById('custom-fasilitas-container');
+
+    if (addCustomFasilitasBtn && customFasilitasContainer) {
+        addCustomFasilitasBtn.addEventListener('click', function() {
+            const newItem = document.createElement('div');
+            newItem.className = 'custom-fasilitas-item mb-2';
+            newItem.innerHTML = `
+                <div class="input-group">
+                    <input type="text" class="form-control" name="custom_fasilitas[]" 
+                           placeholder="Nama fasilitas lainnya">
+                    <button type="button" class="btn btn-outline-danger remove-custom-fasilitas" type="button">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            customFasilitasContainer.appendChild(newItem);
+        });
+
+        // Remove custom fasilitas
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.remove-custom-fasilitas')) {
+                e.target.closest('.custom-fasilitas-item').remove();
+            }
         });
     }
 });

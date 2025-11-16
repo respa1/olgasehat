@@ -92,20 +92,88 @@
             </div>
 
             <div class="row">
-              <div class="col-md-6 mb-3">
+              <div class="col-md-12 mb-3">
                 <label class="form-label">Cabang Olahraga <span class="text-danger">*</span></label>
-                <select class="form-control" name="kategori" required>
-                  <option value="">-- Pilih Cabang Olahraga --</option>
-                  <option value="Sepak Bola" {{ old('kategori', $venue->kategori) == 'Sepak Bola' ? 'selected' : '' }}>Sepak Bola</option>
-                  <option value="Futsal" {{ old('kategori', $venue->kategori) == 'Futsal' ? 'selected' : '' }}>Futsal</option>
-                  <option value="Bola Basket" {{ old('kategori', $venue->kategori) == 'Bola Basket' ? 'selected' : '' }}>Bola Basket</option>
-                  <option value="Bola Voli" {{ old('kategori', $venue->kategori) == 'Bola Voli' ? 'selected' : '' }}>Bola Voli</option>
-                  <option value="Bola Tangan" {{ old('kategori', $venue->kategori) == 'Bola Tangan' ? 'selected' : '' }}>Bola Tangan</option>
-                  <option value="Rugby" {{ old('kategori', $venue->kategori) == 'Rugby' ? 'selected' : '' }}>Rugby</option>
-                  <option value="Baseball" {{ old('kategori', $venue->kategori) == 'Baseball' ? 'selected' : '' }}>Baseball</option>
-                  <option value="Softball" {{ old('kategori', $venue->kategori) == 'Softball' ? 'selected' : '' }}>Softball</option>
-                </select>
+                <small class="text-muted d-block mb-2">Pilih 1-5 cabang olahraga (maksimal 5 pilihan)</small>
+                <div class="row border rounded p-3" style="max-height: 300px; overflow-y: auto;">
+                  @php
+                    $olahragaOptions = [
+                      'Sepak Bola', 'Futsal', 'Bola Basket', 'Bola Voli', 'Bola Tangan',
+                      'Badminton', 'Tennis', 'Table Tennis', 'Squash', 'Rugby',
+                      'Baseball', 'Softball', 'Sepak Takraw', 'Pencak Silat', 'Karate',
+                      'Taekwondo', 'Judo', 'Muay Thai', 'Boxing', 'Bola Bowling',
+                      'Billiard', 'Snooker', 'Sepakbola Pantai', 'Voli Pantai', 'Swimming',
+                      'Fitness', 'Gymnastics', 'Cycling', 'Running Track'
+                    ];
+                    // Handle both old format (string) and new format (array)
+                    $selectedKategori = old('kategori', $venue->kategori ?? []);
+                    if (!is_array($selectedKategori)) {
+                      if (!empty($selectedKategori)) {
+                        $selectedKategori = [$selectedKategori];
+                      } else {
+                        $selectedKategori = [];
+                      }
+                    }
+                    // Get custom olahraga (not in standard list)
+                    $customOlahraga = [];
+                    $standardKategori = [];
+                    foreach ($selectedKategori as $kat) {
+                      if (!in_array($kat, $olahragaOptions)) {
+                        $customOlahraga[] = $kat;
+                      } else {
+                        $standardKategori[] = $kat;
+                      }
+                    }
+                  @endphp
+                  @foreach($olahragaOptions as $olahraga)
+                    <div class="col-md-4 col-sm-6 mb-2">
+                      <div class="form-check">
+                        <input class="form-check-input kategori-checkbox-edit" 
+                               type="checkbox" 
+                               name="kategori[]" 
+                               value="{{ $olahraga }}" 
+                               id="kategori-edit-{{ Str::slug($olahraga) }}"
+                               {{ in_array($olahraga, $standardKategori) ? 'checked' : '' }}>
+                        <label class="form-check-label" for="kategori-edit-{{ Str::slug($olahraga) }}">
+                          {{ $olahraga }}
+                        </label>
+                      </div>
+                    </div>
+                  @endforeach
+                </div>
+                <div class="mt-2">
+                  <small class="text-muted" id="kategori-count-edit">Terpilih: {{ count($selectedKategori) }}/5</small>
+                </div>
+                
+                {{-- Custom Olahraga --}}
+                <div class="mt-3">
+                  <label class="form-label">Olahraga Lainnya (Custom)</label>
+                  <div id="custom-olahraga-container-edit">
+                    @if(!empty($customOlahraga))
+                      @foreach($customOlahraga as $index => $customOlah)
+                        <div class="custom-olahraga-item mb-2">
+                          <div class="input-group">
+                            <input type="text" class="form-control custom-olahraga-input-edit" 
+                                   name="custom_olahraga[]" 
+                                   value="{{ $customOlah }}" 
+                                   placeholder="Masukkan nama olahraga lainnya">
+                            <button type="button" class="btn btn-outline-danger remove-custom-olahraga-edit" type="button">
+                              <i class="fas fa-times"></i>
+                            </button>
+                          </div>
+                        </div>
+                      @endforeach
+                    @endif
+                  </div>
+                  <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="add-custom-olahraga-edit">
+                    <i class="fas fa-plus"></i> Tambah Olahraga Lainnya
+                  </button>
+                  <small class="text-muted d-block mt-1">Tambahkan olahraga yang tidak ada dalam daftar</small>
+                </div>
               </div>
+            </div>
+
+            <div class="row">
               <div class="col-md-6 mb-3">
                 <label class="form-label">Nomor Telepon <span class="text-danger">*</span></label>
                 <div class="input-group">
@@ -190,6 +258,15 @@
                     'Area Registrasi/Lobi', 'Keamanan (Security) & P3K'
                   ];
                   $selectedFasilitas = $fasilitas ?? [];
+                  $customFasilitas = [];
+                  if (isset($venue) && $venue->fasilitas) {
+                    $allSelected = json_decode($venue->fasilitas, true) ?? [];
+                    foreach ($allSelected as $fas) {
+                      if (!in_array($fas, $allFasilitas)) {
+                        $customFasilitas[] = $fas;
+                      }
+                    }
+                  }
                 @endphp
                 @foreach ($allFasilitas as $item)
                   <div class="col-md-4 col-sm-6 mb-2">
@@ -205,6 +282,30 @@
                     </div>
                   </div>
                 @endforeach
+              </div>
+              
+              {{-- Custom Fasilitas --}}
+              <div class="mt-3">
+                <label class="form-label">Fasilitas Lainnya (Custom)</label>
+                <div id="custom-fasilitas-container">
+                  @if(!empty($customFasilitas))
+                    @foreach($customFasilitas as $index => $customFas)
+                      <div class="custom-fasilitas-item mb-2">
+                        <div class="input-group">
+                          <input type="text" class="form-control" name="custom_fasilitas[]" 
+                                 value="{{ $customFas }}" placeholder="Nama fasilitas lainnya">
+                          <button type="button" class="btn btn-outline-danger remove-custom-fasilitas" type="button">
+                            <i class="fas fa-times"></i>
+                          </button>
+                        </div>
+                      </div>
+                    @endforeach
+                  @endif
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="add-custom-fasilitas">
+                  <i class="fas fa-plus"></i> Tambah Fasilitas Lainnya
+                </button>
+                <small class="text-muted d-block mt-1">Tambahkan fasilitas yang tidak ada dalam daftar di atas</small>
               </div>
             </div>
 
@@ -321,6 +422,143 @@ document.addEventListener('DOMContentLoaded', function () {
         const provinsi = this.value;
         populateKota(provinsi);
     });
+
+    // Handle kategori checkbox - maksimal 5 pilihan (Edit)
+    const kategoriCheckboxesEdit = document.querySelectorAll('.kategori-checkbox-edit');
+    const kategoriCountEdit = document.getElementById('kategori-count-edit');
+    
+    function updateKategoriCountEdit() {
+        const checked = document.querySelectorAll('.kategori-checkbox-edit:checked').length;
+        const customCount = document.querySelectorAll('.custom-olahraga-input-edit').length;
+        const total = checked + customCount;
+        if (kategoriCountEdit) {
+            kategoriCountEdit.textContent = `Terpilih: ${total}/5`;
+        }
+        
+        if (total >= 5) {
+            // Disable unchecked checkboxes
+            kategoriCheckboxesEdit.forEach(cb => {
+                if (!cb.checked) {
+                    cb.disabled = true;
+                }
+            });
+        } else {
+            // Enable all checkboxes
+            kategoriCheckboxesEdit.forEach(cb => {
+                cb.disabled = false;
+            });
+        }
+    }
+    
+    kategoriCheckboxesEdit.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const checked = document.querySelectorAll('.kategori-checkbox-edit:checked').length;
+            const customCount = document.querySelectorAll('.custom-olahraga-input-edit').length;
+            const total = checked + customCount;
+            
+            if (this.checked && total > 5) {
+                this.checked = false;
+                alert('Maksimal 5 cabang olahraga yang dapat dipilih!');
+                return;
+            }
+            
+            updateKategoriCountEdit();
+        });
+    });
+
+    // Handle custom olahraga (Edit)
+    const customOlahragaContainerEdit = document.getElementById('custom-olahraga-container-edit');
+    const addCustomOlahragaBtnEdit = document.getElementById('add-custom-olahraga-edit');
+
+    if (addCustomOlahragaBtnEdit && customOlahragaContainerEdit) {
+        addCustomOlahragaBtnEdit.addEventListener('click', function() {
+            const checked = document.querySelectorAll('.kategori-checkbox-edit:checked').length;
+            const customCount = document.querySelectorAll('.custom-olahraga-input-edit').length;
+            const total = checked + customCount;
+            
+            if (total >= 5) {
+                alert('Maksimal 5 cabang olahraga yang dapat dipilih!');
+                return;
+            }
+            
+            const newItem = document.createElement('div');
+            newItem.className = 'custom-olahraga-item mb-2';
+            newItem.innerHTML = `
+                <div class="input-group">
+                    <input type="text" class="form-control custom-olahraga-input-edit" 
+                           name="custom_olahraga[]" 
+                           placeholder="Masukkan nama olahraga lainnya">
+                    <button type="button" class="btn btn-outline-danger remove-custom-olahraga-edit" type="button">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            customOlahragaContainerEdit.appendChild(newItem);
+            updateKategoriCountEdit();
+        });
+
+        // Remove custom olahraga
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.remove-custom-olahraga-edit')) {
+                e.target.closest('.custom-olahraga-item').remove();
+                updateKategoriCountEdit();
+            }
+        });
+    }
+
+    // Update count on page load
+    updateKategoriCountEdit();
+
+    // Form validation (Edit)
+    const formEdit = document.querySelector('form[action*="fasilitas.update"]');
+    if (formEdit) {
+        formEdit.addEventListener('submit', function(e) {
+            const checked = document.querySelectorAll('.kategori-checkbox-edit:checked').length;
+            const customInputs = document.querySelectorAll('.custom-olahraga-input-edit');
+            const customCount = Array.from(customInputs).filter(input => input.value.trim() !== '').length;
+            const total = checked + customCount;
+            
+            if (total === 0) {
+                e.preventDefault();
+                alert('Pilih minimal 1 cabang olahraga!');
+                return false;
+            }
+            
+            if (total > 5) {
+                e.preventDefault();
+                alert('Maksimal 5 cabang olahraga yang dapat dipilih!');
+                return false;
+            }
+        });
+    }
+
+    // Handle custom fasilitas
+    const addCustomFasilitasBtn = document.getElementById('add-custom-fasilitas');
+    const customFasilitasContainer = document.getElementById('custom-fasilitas-container');
+
+    if (addCustomFasilitasBtn && customFasilitasContainer) {
+        addCustomFasilitasBtn.addEventListener('click', function() {
+            const newItem = document.createElement('div');
+            newItem.className = 'custom-fasilitas-item mb-2';
+            newItem.innerHTML = `
+                <div class="input-group">
+                    <input type="text" class="form-control" name="custom_fasilitas[]" 
+                           placeholder="Nama fasilitas lainnya">
+                    <button type="button" class="btn btn-outline-danger remove-custom-fasilitas" type="button">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            customFasilitasContainer.appendChild(newItem);
+        });
+
+        // Remove custom fasilitas
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.remove-custom-fasilitas')) {
+                e.target.closest('.custom-fasilitas-item').remove();
+            }
+        });
+    }
 
     // Preview galeri foto multiple
     const galeriInput = document.getElementById('galeri_foto');

@@ -48,9 +48,9 @@ class VenueFrontendController extends Controller
             $venues->where('kota', 'like', "%{$kota}%");
         }
         
-        // Filter berdasarkan kategori
+        // Filter berdasarkan kategori (kategori sekarang JSON array)
         if (!empty($kategori) && $kategori !== 'all') {
-            $venues->where('kategori', $kategori);
+            $venues->whereJsonContains('kategori', $kategori);
         }
         
         // Filter berdasarkan tanggal (jika ada slot available pada tanggal tersebut)
@@ -100,10 +100,11 @@ class VenueFrontendController extends Controller
             $venue = Pendaftaran::with(['galleries', 'lapangans.slots'])
                 ->findOrFail($id);
             
-            // Parse fasilitas dari JSON
-            $fasilitas = [];
-            if ($venue->fasilitas) {
-                $fasilitas = json_decode($venue->fasilitas, true) ?? [];
+            // Parse fasilitas (sudah array karena cast di model)
+            $fasilitas = $venue->fasilitas ?? [];
+            if (!is_array($fasilitas) && !empty($fasilitas)) {
+                // Fallback untuk data lama yang masih JSON string
+                $fasilitas = json_decode($fasilitas, true) ?? [];
             }
             
             // Mapping icon fasilitas
@@ -229,9 +230,9 @@ class VenueFrontendController extends Controller
         $venues = Pendaftaran::with(['lapangans'])
             ->where(function($q) use ($query) {
                 $q->where('namavenue', 'like', "%{$query}%")
-                  ->orWhere('kategori', 'like', "%{$query}%")
                   ->orWhere('kota', 'like', "%{$query}%")
                   ->orWhere('provinsi', 'like', "%{$query}%")
+                  ->orWhereJsonContains('kategori', $query) // Search in JSON array
                   ->orWhereHas('lapangans', function($lapanganQuery) use ($query) {
                       $lapanganQuery->where('nama', 'like', "%{$query}%");
                   });
@@ -273,15 +274,28 @@ class VenueFrontendController extends Controller
      */
     public function getCategories()
     {
-        $categories = Pendaftaran::where(function($query) {
+        // Ambil semua venue
+        $venues = Pendaftaran::where(function($query) {
                 $query->where('syarat_disetujui', true)
                       ->orWhereNotNull('namavenue');
             })
-            ->distinct()
-            ->orderBy('kategori', 'asc')
-            ->pluck('kategori')
-            ->filter()
-            ->values();
+            ->whereNotNull('kategori')
+            ->get();
+        
+        // Extract semua kategori dari array dan flatten
+        $allCategories = collect();
+        foreach ($venues as $venue) {
+            $kategori = $venue->kategori;
+            // Handle both array (new format) and string (old format)
+            if (is_array($kategori)) {
+                $allCategories = $allCategories->merge($kategori);
+            } elseif (is_string($kategori) && !empty($kategori)) {
+                $allCategories->push($kategori);
+            }
+        }
+        
+        // Get unique categories, filter empty, sort, and get values
+        $categories = $allCategories->unique()->filter()->sort()->values();
         
         return response()->json([
             'success' => true,
@@ -322,9 +336,9 @@ class VenueFrontendController extends Controller
             $venues->where('kota', 'like', "%{$kota}%");
         }
         
-        // Filter berdasarkan kategori
+        // Filter berdasarkan kategori (kategori sekarang JSON array)
         if (!empty($kategori) && $kategori !== 'all') {
-            $venues->where('kategori', $kategori);
+            $venues->whereJsonContains('kategori', $kategori);
         }
         
         // Filter berdasarkan tanggal (jika ada slot available pada tanggal tersebut)

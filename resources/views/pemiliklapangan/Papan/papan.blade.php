@@ -22,7 +22,11 @@
               <i class="fas fa-futbol"></i>
             </div>
             <div>
-              <span class="badge badge-pill badge-light text-primary font-weight-semibold px-3 py-2 mb-2">{{ $venue->kategori ?? 'Olahraga' }}</span>
+              @php
+                $kategoriList = is_array($venue->kategori) ? $venue->kategori : ($venue->kategori ? [$venue->kategori] : []);
+                $kategoriDisplay = !empty($kategoriList) ? implode(', ', $kategoriList) : 'Olahraga';
+              @endphp
+              <span class="badge badge-pill badge-light text-primary font-weight-semibold px-3 py-2 mb-2">{{ $kategoriDisplay }}</span>
               <h4 class="text-dark font-weight-bold mb-1">{{ $lapangan->nama }}</h4>
               <p class="text-muted mb-0 small">Bagikan jadwal dan kelola harga untuk lapangan ini.</p>
             </div>

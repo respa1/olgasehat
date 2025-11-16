@@ -172,21 +172,74 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="category_venue" class="form-label">Cabang Olahraga</label>
-                                <select class="form-control @error('kategori') is-invalid @enderror" name="kategori" id="kategori">
-                                    <option value="">-- Pilih Cabang Olahraga --</option>
-                                    <option value="Sepak Bola" {{ old('kategori') == 'Sepak Bola' ? 'selected' : '' }}>Sepak Bola</option>
-                                    <option value="Futsal" {{ old('kategori') == 'Futsal' ? 'selected' : '' }}>Futsal</option>
-                                    <option value="Bola Basket" {{ old('kategori') == 'Bola Basket' ? 'selected' : '' }}>Bola Basket</option>
-                                    <option value="Bola Voli" {{ old('kategori') == 'Bola Voli' ? 'selected' : '' }}>Bola Voli</option>
-                                    <option value="Bola Tangan" {{ old('kategori') == 'Bola Tangan' ? 'selected' : '' }}>Bola Tangan</option>
-                                    <option value="Rugby" {{ old('kategori') == 'Rugby' ? 'selected' : '' }}>Rugby</option>
-                                    <option value="Baseball" {{ old('kategori') == 'Baseball' ? 'selected' : '' }}>Baseball</option>
-                                    <option value="Softball" {{ old('kategori') == 'Softball' ? 'selected' : '' }}>Softball</option>
-                                </select>
+                                <label class="form-label">Cabang Olahraga <span class="text-danger">*</span></label>
+                                <small class="text-muted d-block mb-2">Pilih 1-5 cabang olahraga (maksimal 5 pilihan)</small>
+                                <div class="row border rounded p-3" style="max-height: 300px; overflow-y: auto;">
+                                    @php
+                                        $olahragaOptions = [
+                                            'Sepak Bola', 'Futsal', 'Bola Basket', 'Bola Voli', 'Bola Tangan',
+                                            'Badminton', 'Tennis', 'Table Tennis', 'Squash', 'Rugby',
+                                            'Baseball', 'Softball', 'Sepak Takraw', 'Pencak Silat', 'Karate',
+                                            'Taekwondo', 'Judo', 'Muay Thai', 'Boxing', 'Bola Bowling',
+                                            'Billiard', 'Snooker', 'Sepakbola Pantai', 'Voli Pantai', 'Swimming',
+                                            'Fitness', 'Gymnastics', 'Cycling', 'Running Track'
+                                        ];
+                                        $selectedKategori = old('kategori', []);
+                                        if (!is_array($selectedKategori)) {
+                                            $selectedKategori = [];
+                                        }
+                                    @endphp
+                                    @foreach($olahragaOptions as $olahraga)
+                                        <div class="col-md-4 col-sm-6 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input kategori-checkbox" 
+                                                       type="checkbox" 
+                                                       name="kategori[]" 
+                                                       value="{{ $olahraga }}" 
+                                                       id="kategori-{{ Str::slug($olahraga) }}"
+                                                       {{ in_array($olahraga, $selectedKategori) ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="kategori-{{ Str::slug($olahraga) }}">
+                                                    {{ $olahraga }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="mt-2">
+                                    <small class="text-muted" id="kategori-count">Terpilih: 0/5</small>
+                                </div>
                                 @error('kategori')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="text-danger small">{{ $message }}</div>
                                 @enderror
+                                @error('kategori.*')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                                
+                                {{-- Custom Olahraga --}}
+                                <div class="mt-3">
+                                    <label class="form-label">Olahraga Lainnya (Custom)</label>
+                                    <div id="custom-olahraga-container">
+                                        @if(old('custom_olahraga'))
+                                            @foreach(old('custom_olahraga') as $index => $customOlahraga)
+                                                <div class="custom-olahraga-item mb-2">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control custom-olahraga-input" 
+                                                               name="custom_olahraga[]" 
+                                                               value="{{ $customOlahraga }}" 
+                                                               placeholder="Masukkan nama olahraga lainnya">
+                                                        <button type="button" class="btn btn-outline-danger remove-custom-olahraga" type="button">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="add-custom-olahraga">
+                                        <i class="fas fa-plus"></i> Tambah Olahraga Lainnya
+                                    </button>
+                                    <small class="text-muted d-block mt-1">Tambahkan olahraga yang tidak ada dalam daftar</small>
+                                </div>
                             </div>
 
                             <div class="mb-3">
@@ -314,6 +367,113 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     });
+
+    // Handle kategori checkbox - maksimal 5 pilihan
+    const kategoriCheckboxes = document.querySelectorAll('.kategori-checkbox');
+    const kategoriCount = document.getElementById('kategori-count');
+    
+    function updateKategoriCount() {
+        const checked = document.querySelectorAll('.kategori-checkbox:checked').length;
+        const customCount = document.querySelectorAll('.custom-olahraga-input').length;
+        const total = checked + customCount;
+        kategoriCount.textContent = `Terpilih: ${total}/5`;
+        
+        if (total >= 5) {
+            // Disable unchecked checkboxes
+            kategoriCheckboxes.forEach(cb => {
+                if (!cb.checked) {
+                    cb.disabled = true;
+                }
+            });
+        } else {
+            // Enable all checkboxes
+            kategoriCheckboxes.forEach(cb => {
+                cb.disabled = false;
+            });
+        }
+    }
+    
+    kategoriCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const checked = document.querySelectorAll('.kategori-checkbox:checked').length;
+            const customCount = document.querySelectorAll('.custom-olahraga-input').length;
+            const total = checked + customCount;
+            
+            if (this.checked && total > 5) {
+                this.checked = false;
+                alert('Maksimal 5 cabang olahraga yang dapat dipilih!');
+                return;
+            }
+            
+            updateKategoriCount();
+        });
+    });
+
+    // Handle custom olahraga
+    const customOlahragaContainer = document.getElementById('custom-olahraga-container');
+    const addCustomOlahragaBtn = document.getElementById('add-custom-olahraga');
+
+    if (addCustomOlahragaBtn && customOlahragaContainer) {
+        addCustomOlahragaBtn.addEventListener('click', function() {
+            const checked = document.querySelectorAll('.kategori-checkbox:checked').length;
+            const customCount = document.querySelectorAll('.custom-olahraga-input').length;
+            const total = checked + customCount;
+            
+            if (total >= 5) {
+                alert('Maksimal 5 cabang olahraga yang dapat dipilih!');
+                return;
+            }
+            
+            const newItem = document.createElement('div');
+            newItem.className = 'custom-olahraga-item mb-2';
+            newItem.innerHTML = `
+                <div class="input-group">
+                    <input type="text" class="form-control custom-olahraga-input" 
+                           name="custom_olahraga[]" 
+                           placeholder="Masukkan nama olahraga lainnya">
+                    <button type="button" class="btn btn-outline-danger remove-custom-olahraga" type="button">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            customOlahragaContainer.appendChild(newItem);
+            updateKategoriCount();
+        });
+
+        // Remove custom olahraga
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.remove-custom-olahraga')) {
+                e.target.closest('.custom-olahraga-item').remove();
+                updateKategoriCount();
+            }
+        });
+    }
+
+    // Update count on page load
+    updateKategoriCount();
+
+    // Form validation
+    const form = document.querySelector('form[action="{{ route('insertinform') }}"]');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            const checked = document.querySelectorAll('.kategori-checkbox:checked').length;
+            const customInputs = document.querySelectorAll('.custom-olahraga-input');
+            const customCount = Array.from(customInputs).filter(input => input.value.trim() !== '').length;
+            const total = checked + customCount;
+            
+            if (total === 0) {
+                e.preventDefault();
+                alert('Pilih minimal 1 cabang olahraga!');
+                return false;
+            }
+            
+            if (total > 5) {
+                e.preventDefault();
+                alert('Maksimal 5 cabang olahraga yang dapat dipilih!');
+                return false;
+            }
+        });
+    }
 });
 </script>
 

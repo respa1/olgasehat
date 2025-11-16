@@ -69,10 +69,14 @@
                         <i class="fas fa-map-marker-alt text-blue-600"></i>
                         <span>{{ $venue->kota }}</span>
                     </p>
+                    @php
+                      $kategoriList = is_array($venue->kategori) ? $venue->kategori : ($venue->kategori ? [$venue->kategori] : []);
+                      $kategoriDisplay = !empty($kategoriList) ? implode(', ', $kategoriList) : 'Olahraga';
+                    @endphp
                     <span
                         class="inline-block bg-blue-100 text-blue-700 text-sm font-semibold px-4 py-1.5 rounded-full shadow-sm"
                     >
-                        <i class="fas fa-futbol mr-2"></i> {{ $venue->kategori }}
+                        <i class="fas fa-futbol mr-2"></i> {{ $kategoriDisplay }}
                     </span>
                 </div>
 
