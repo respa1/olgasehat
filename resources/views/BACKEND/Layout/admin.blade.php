@@ -168,6 +168,16 @@
             </ul>
           </li>
 
+          <!-- Manajemen Venue -->
+          <li class="nav-item">
+            <a href="{{ route('admin.venue.list') }}" class="nav-link">
+              <i class="nav-icon fas fa-map-marker-alt"></i>
+              <p>
+                Data Venue
+              </p>
+            </a>
+          </li>
+
           <!-- Blog & News -->
           <li class="nav-item">
             <a href="#" class="nav-link">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Pendaftaran;
 
 class AdminController extends Controller
 {
@@ -51,5 +52,137 @@ class AdminController extends Controller
         }
 
         return redirect()->back()->with('error', 'Gagal menolak mitra.');
+    }
+
+    /**
+     * Menampilkan daftar semua venue untuk admin
+     */
+    public function listVenue(Request $request)
+    {
+        $status = $request->get('status', 'all');
+        $search = $request->get('search', '');
+
+        $query = Pendaftaran::with(['user', 'lapangans']);
+
+        // Filter berdasarkan status
+        if ($status !== 'all') {
+            $query->where('syarat_disetujui', $status === 'approved' ? true : false);
+        }
+
+        // Search
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('namavenue', 'like', "%{$search}%")
+                  ->orWhere('kota', 'like', "%{$search}%")
+                  ->orWhere('provinsi', 'like', "%{$search}%")
+                  ->orWhereHas('user', function($userQuery) use ($search) {
+                      $userQuery->where('name', 'like', "%{$search}%")
+                                ->orWhere('email', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        $venues = $query->orderBy('created_at', 'desc')->paginate(15);
+
+        // Hitung statistik
+        $countPending = Pendaftaran::where('syarat_disetujui', false)->count();
+        $countApproved = Pendaftaran::where('syarat_disetujui', true)->count();
+        $countAll = Pendaftaran::count();
+
+        return view('BACKEND.Venue.datavenue', compact('venues', 'status', 'countPending', 'countApproved', 'countAll'));
+    }
+
+    /**
+     * Menampilkan detail venue untuk admin
+     */
+    public function showVenue($id)
+    {
+        $venue = Pendaftaran::with(['user', 'lapangans', 'galleries'])->findOrFail($id);
+        
+        // Fasilitas sudah di-cast sebagai array di model
+        $fasilitas = $venue->fasilitas;
+        if (!is_array($fasilitas)) {
+            if (empty($fasilitas)) {
+                $fasilitas = [];
+            } elseif (is_string($fasilitas)) {
+                $decoded = json_decode($fasilitas, true);
+                $fasilitas = is_array($decoded) ? $decoded : [];
+            } else {
+                $fasilitas = [];
+            }
+        }
+
+        return view('BACKEND.Venue.detailvenue', compact('venue', 'fasilitas'));
+    }
+
+    /**
+     * Menampilkan form edit venue untuk admin
+     */
+    public function editVenue($id)
+    {
+        $venue = Pendaftaran::with('galleries')->findOrFail($id);
+        
+        // Fasilitas sudah di-cast sebagai array di model
+        $fasilitas = $venue->fasilitas;
+        if (!is_array($fasilitas)) {
+            if (empty($fasilitas)) {
+                $fasilitas = [];
+            } elseif (is_string($fasilitas)) {
+                $decoded = json_decode($fasilitas, true);
+                $fasilitas = is_array($decoded) ? $decoded : [];
+            } else {
+                $fasilitas = [];
+            }
+        }
+
+        return view('BACKEND.Venue.editvenue', compact('venue', 'fasilitas'));
+    }
+
+    /**
+     * Update venue dari admin
+     */
+    public function updateVenue(Request $request, $id)
+    {
+        $venue = Pendaftaran::findOrFail($id);
+
+        $validated = $request->validate([
+            'namavenue' => 'required|string|max:255',
+            'provinsi' => 'required|string|max:255',
+            'kota' => 'required|string|max:255',
+            'nomor_telepon' => 'nullable|string|max:20',
+            'email_venue' => 'nullable|email|max:255',
+            'video_review' => 'nullable|url|max:500',
+            'detail' => 'nullable|string',
+            'aturan' => 'nullable|string',
+            'lokasi' => 'nullable|url|max:500',
+            'syarat_disetujui' => 'nullable|boolean',
+        ]);
+
+        $venue->update($validated);
+
+        return redirect()->route('admin.venue.list')
+            ->with('success', 'Venue berhasil diupdate.');
+    }
+
+    /**
+     * Hapus venue
+     */
+    public function deleteVenue($id)
+    {
+        $venue = Pendaftaran::findOrFail($id);
+        
+        // Hapus lapangan dan slot terkait
+        foreach ($venue->lapangans as $lapangan) {
+            $lapangan->slots()->delete();
+            $lapangan->delete();
+        }
+
+        // Hapus gallery terkait
+        $venue->galleries()->delete();
+
+        $venue->delete();
+
+        return redirect()->route('admin.venue.list')
+            ->with('success', 'Venue berhasil dihapus.');
     }
 }

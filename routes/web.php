@@ -288,6 +288,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/verifikasi-mitra/{id}', [App\Http\Controllers\MitraController::class, 'show'])->name('mitra.show');
         Route::delete('/verifikasi-mitra/{id}', [App\Http\Controllers\MitraController::class, 'destroy'])->name('mitra.destroy');
 
+        // MANAJEMEN VENUE (ADMIN)
+        Route::get('/data-venue', [App\Http\Controllers\AdminController::class, 'listVenue'])->name('admin.venue.list');
+        Route::get('/data-venue/{id}', [App\Http\Controllers\AdminController::class, 'showVenue'])->name('admin.venue.show');
+        Route::get('/data-venue/{id}/edit', [App\Http\Controllers\AdminController::class, 'editVenue'])->name('admin.venue.edit');
+        Route::put('/data-venue/{id}', [App\Http\Controllers\AdminController::class, 'updateVenue'])->name('admin.venue.update');
+        Route::delete('/data-venue/{id}', [App\Http\Controllers\AdminController::class, 'deleteVenue'])->name('admin.venue.delete');
+
         // TEMPAT SEHAT (Pengelola Kesehatan)
         Route::get('/tempat-sehat', [App\Http\Controllers\TempatSehatController::class, 'index'])->name('tempat-sehat.index');
         Route::get('/tempat-sehat/{id}', [App\Http\Controllers\TempatSehatController::class, 'show'])->name('tempat-sehat.show');
