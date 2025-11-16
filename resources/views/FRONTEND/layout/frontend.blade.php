@@ -47,7 +47,7 @@
       <a href="/venue" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Fasilitas Olahraga</a>
       <a href="/healthy" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Layanan Kesehatan</a>
       <a href="/community" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Komunitas & Aktivitas</a>
-      <a href="/blog-news" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>News</a>
+      <a href="/blog-news" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Info Sehat</a>
     </nav>
 
     <!-- Aksi Desktop -->
@@ -123,7 +123,7 @@
       <a href="/venue" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Fasilitas Olahraga</a>
       <a href="/healthy" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Layanan Kesehatan</a>
       <a href="/community" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Komunitas & Aktivitas</a>
-      <a href="/blog-news" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>News</a>
+      <a href="/blog-news" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Info Sehat</a>
 
       <!-- Masuk and Daftar Buttons -->
       <div class="border-t pt-3 sm:pt-4 px-4 sm:px-6 pb-4">
@@ -171,7 +171,7 @@
         <li><a href="/venue" class="hover:text-blue-700" data-translate>Fasilitas Olahraga</a></li>
         <li><a href="/healthy" class="hover:text-blue-700" data-translate>Layanan Kesehatan</a></li>
         <li><a href="/community" class="hover:text-blue-700" data-translate>Komunitas & Aktivitas</a></li>
-        <li><a href="/blog-news" class="hover:text-blue-700" data-translate>News</a></li>
+        <li><a href="/blog-news" class="hover:text-blue-700" data-translate>Info Sehat</a></li>
       </ul>
     </div>
     <div>

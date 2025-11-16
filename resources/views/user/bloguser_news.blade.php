@@ -17,7 +17,7 @@ $categoryColors = [
     
     <div class="container mx-auto px-6 text-center relative z-10">
         <h1 class="text-3xl md:text-4xl font-extrabold tracking-wide mt-10">
-            ARTIKEL & TIPS SEPUTAR OLAHRAGA
+            INFO & TIPS SEPUTAR OLGASEHAT
         </h1>
         <div class="mt-6 max-w-xl mx-auto shadow-lg">
             <form method="GET" action="{{ route('user.bloguser_news') }}">
@@ -38,29 +38,30 @@ $categoryColors = [
     </div>
 </section>
 
-<section class="container mx-auto px-4 sm:px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-10 max-w-7xl">
-    
-    <aside class="md:col-span-1 space-y-6">
-        <h2 class="text-lg font-bold text-gray-900 uppercase border-b-2 border-blue-500 pb-2">
-            🔥 Trending Post
-        </h2>
-        <ol class="space-y-4">
-            @forelse($trendingBeritas as $trending)
-            <li class="border-b border-gray-200 pb-3 last:border-b-0 last:pb-0">
-                <a href="{{ route('user.bloguser_detail', $trending->id) }}" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
-                    {{ $trending->title }}
-                </a>
-                <p class="text-xs text-gray-500 mt-1">
-                    <span class="text-{{ $trending->category ? ($categoryColors[strtolower($trending->category->title)] ?? 'blue') : 'blue' }}-600 font-medium">{{ $trending->category ? $trending->category->title : 'OLAHRAGA' }}</span> - {{ $trending->created_at->format('d M Y') }}
-                </p>
-            </li>
-            @empty
-            <li class="text-sm text-gray-500">Belum ada artikel trending.</li>
-            @endforelse
-        </ol>
-    </aside>
+<section class="container mx-auto px-6 py-12">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-10">
+        
+        <aside class="lg:col-span-1 space-y-6">
+            <h2 class="text-lg font-bold text-gray-900 uppercase border-b-2 border-blue-500 pb-2">
+                🔥 Trending Post
+            </h2>
+            <ol class="space-y-4">
+                @forelse($trendingBeritas as $trending)
+                <li class="border-b border-gray-200 pb-3 last:border-b-0 last:pb-0">
+                    <a href="{{ route('user.bloguser_detail', $trending->id) }}" class="text-base font-semibold text-gray-800 hover:text-blue-700 transition block">
+                        {{ $trending->title }}
+                    </a>
+                    <p class="text-xs text-gray-500 mt-1">
+                        <span class="text-{{ $trending->category ? ($categoryColors[strtolower($trending->category->title)] ?? 'blue') : 'blue' }}-600 font-medium">{{ $trending->category ? $trending->category->title : 'OLAHRAGA' }}</span> - {{ $trending->created_at->format('d M Y') }}
+                    </p>
+                </li>
+                @empty
+                <li class="text-sm text-gray-500">Belum ada artikel trending.</li>
+                @endforelse
+            </ol>
+        </aside>
 
-    <main class="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <main class="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-8">
         @forelse($beritas as $berita)
         <a href="{{ route('user.bloguser_detail', $berita->id) }}" class="block">
             <article class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-[1.02] hover:shadow-xl transition duration-300 group">
@@ -89,11 +90,14 @@ $categoryColors = [
         @empty
         <p class="col-span-full text-center text-gray-500">Tidak ada artikel ditemukan.</p>
         @endforelse
-    </main>
+        </main>
+    </div>
 </section>
 
-<section class="pb-10 md:pb-16">
-    {{ $beritas->links() }}
+<section class="container mx-auto px-6 pb-10 md:pb-16">
+    <div class="max-w-7xl mx-auto">
+        {{ $beritas->links() }}
+    </div>
 </section>
 
 @endsection
