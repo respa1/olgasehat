@@ -288,6 +288,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/verifikasi-mitra/{id}', [App\Http\Controllers\MitraController::class, 'show'])->name('mitra.show');
         Route::delete('/verifikasi-mitra/{id}', [App\Http\Controllers\MitraController::class, 'destroy'])->name('mitra.destroy');
 
+        // MANAJEMEN USER (ADMIN)
+        Route::get('/users', [AdminController::class, 'listUsers'])->name('admin.users.list');
+        Route::get('/users/{id}', [AdminController::class, 'showUser'])->name('admin.users.show');
+        Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+
         // MANAJEMEN VENUE (ADMIN)
         Route::get('/data-venue', [App\Http\Controllers\AdminController::class, 'listVenue'])->name('admin.venue.list');
         Route::get('/data-venue/{id}', [App\Http\Controllers\AdminController::class, 'showVenue'])->name('admin.venue.show');

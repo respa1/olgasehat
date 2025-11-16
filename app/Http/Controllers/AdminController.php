@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Pendaftaran;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -208,5 +209,59 @@ class AdminController extends Controller
 
         return redirect()->route('admin.venue.list')
             ->with('success', 'Venue berhasil ditolak dan tidak muncul di frontend.');
+    }
+
+    /**
+     * Menampilkan daftar user dengan role 'user'
+     */
+    public function listUsers(Request $request)
+    {
+        $search = $request->get('search', '');
+
+        $query = User::where('role', 'user');
+
+        // Search
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        $users = $query->orderBy('created_at', 'desc')->paginate(15);
+
+        return view('BACKEND.User.list_users', compact('users', 'search'));
+    }
+
+    /**
+     * Menampilkan detail user
+     */
+    public function showUser($id)
+    {
+        $user = User::where('role', 'user')->findOrFail($id);
+        return view('BACKEND.User.show_user', compact('user'));
+    }
+
+    /**
+     * Hapus user
+     */
+    public function deleteUser($id)
+    {
+        try {
+            $user = User::where('role', 'user')->findOrFail($id);
+
+            // Prevent deleting the currently logged in user
+            if ($user->id === Auth::id()) {
+                return redirect()->route('admin.users.list')
+                    ->with('error', 'Tidak dapat menghapus akun yang sedang digunakan!');
+            }
+
+            $user->delete();
+            return redirect()->route('admin.users.list')
+                ->with('success', 'User berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.users.list')
+                ->with('error', 'Gagal menghapus user: ' . $e->getMessage());
+        }
     }
 }
