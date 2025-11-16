@@ -293,6 +293,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/data-venue/{id}', [App\Http\Controllers\AdminController::class, 'showVenue'])->name('admin.venue.show');
         Route::get('/data-venue/{id}/edit', [App\Http\Controllers\AdminController::class, 'editVenue'])->name('admin.venue.edit');
         Route::put('/data-venue/{id}', [App\Http\Controllers\AdminController::class, 'updateVenue'])->name('admin.venue.update');
+        Route::put('/data-venue/{id}/verify', [App\Http\Controllers\AdminController::class, 'verifyVenue'])->name('admin.venue.verify');
+        Route::put('/data-venue/{id}/reject', [App\Http\Controllers\AdminController::class, 'rejectVenue'])->name('admin.venue.reject');
         Route::delete('/data-venue/{id}', [App\Http\Controllers\AdminController::class, 'deleteVenue'])->name('admin.venue.delete');
 
         // TEMPAT SEHAT (Pengelola Kesehatan)

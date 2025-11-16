@@ -185,4 +185,28 @@ class AdminController extends Controller
         return redirect()->route('admin.venue.list')
             ->with('success', 'Venue berhasil dihapus.');
     }
+
+    /**
+     * Verifikasi venue (setujui venue)
+     */
+    public function verifyVenue($id)
+    {
+        $venue = Pendaftaran::findOrFail($id);
+        $venue->update(['syarat_disetujui' => true]);
+
+        return redirect()->route('admin.venue.list')
+            ->with('success', 'Venue berhasil diverifikasi dan sudah muncul di frontend.');
+    }
+
+    /**
+     * Tolak venue (ubah status menjadi tidak disetujui)
+     */
+    public function rejectVenue($id)
+    {
+        $venue = Pendaftaran::findOrFail($id);
+        $venue->update(['syarat_disetujui' => false]);
+
+        return redirect()->route('admin.venue.list')
+            ->with('success', 'Venue berhasil ditolak dan tidak muncul di frontend.');
+    }
 }

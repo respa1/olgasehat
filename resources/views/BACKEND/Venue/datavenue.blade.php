@@ -195,6 +195,23 @@
                   <a href="{{ route('admin.venue.edit', $venue->id) }}" class="btn btn-sm btn-warning" title="Edit">
                     <i class="fas fa-edit"></i>
                   </a>
+                  @if(!$venue->syarat_disetujui)
+                    <form action="{{ route('admin.venue.verify', $venue->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menyetujui venue ini? Venue akan muncul di frontend setelah disetujui.');">
+                      @csrf
+                      @method('PUT')
+                      <button type="submit" class="btn btn-sm btn-success" title="Setujui">
+                        <i class="fas fa-check"></i>
+                      </button>
+                    </form>
+                  @else
+                    <form action="{{ route('admin.venue.reject', $venue->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menolak venue ini? Venue tidak akan muncul di frontend setelah ditolak.');">
+                      @csrf
+                      @method('PUT')
+                      <button type="submit" class="btn btn-sm btn-danger" title="Tolak">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    </form>
+                  @endif
                   <form action="{{ route('admin.venue.delete', $venue->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus venue ini? Semua data terkait (lapangan, jadwal, dll) akan ikut terhapus.');">
                     @csrf
                     @method('DELETE')

@@ -26,10 +26,7 @@ class VenueFrontendController extends Controller
         $tanggal = $request->input('tanggal', '');
         
         $venues = Pendaftaran::with(['lapangans.slots', 'galleries'])
-            ->where(function($q) {
-                $q->where('syarat_disetujui', true)
-                  ->orWhereNotNull('namavenue');
-            });
+            ->where('syarat_disetujui', true); // Hanya venue yang sudah diverifikasi
         
         // Filter berdasarkan query (nama venue, provinsi, nama lapangan)
         if (!empty($query)) {
@@ -95,9 +92,9 @@ class VenueFrontendController extends Controller
             // Deteksi apakah request dari /venue-detail atau /venueuser_detail
             $isUserView = $request->is('venueuser_detail/*') || $request->routeIs('user.venue.detail');
             
-            // Ambil venue - untuk testing tampilkan semua venue yang ada
-            // Untuk production, bisa ditambahkan filter syarat_disetujui = true
+            // Hanya tampilkan venue yang sudah diverifikasi
             $venue = Pendaftaran::with(['galleries', 'lapangans.slots'])
+                ->where('syarat_disetujui', true)
                 ->findOrFail($id);
             
             // Parse fasilitas (sudah array karena cast di model)
@@ -237,10 +234,7 @@ class VenueFrontendController extends Controller
                       $lapanganQuery->where('nama', 'like', "%{$query}%");
                   });
             })
-            ->where(function($query) {
-                $query->where('syarat_disetujui', true)
-                      ->orWhereNotNull('namavenue');
-            })
+            ->where('syarat_disetujui', true) // Hanya venue yang sudah diverifikasi
             ->limit($limit)
             ->get();
         
@@ -314,10 +308,7 @@ class VenueFrontendController extends Controller
         $tanggal = $request->input('tanggal', '');
         
         $venues = Pendaftaran::with(['lapangans.slots', 'galleries'])
-            ->where(function($q) {
-                $q->where('syarat_disetujui', true)
-                  ->orWhereNotNull('namavenue');
-            });
+            ->where('syarat_disetujui', true); // Hanya venue yang sudah diverifikasi
         
         // Filter berdasarkan query (nama venue, provinsi, nama lapangan)
         if (!empty($query)) {

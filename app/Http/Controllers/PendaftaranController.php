@@ -933,6 +933,7 @@ class PendaftaranController extends Controller
         $pendaftaran->kategori = $allKategori; // Array of kategori
         $pendaftaran->nomor_telepon = $validatedData['nomor_telepon'];
         $pendaftaran->email_venue = $validatedData['email_venue'];
+        $pendaftaran->syarat_disetujui = false; // Default menunggu verifikasi admin
         $pendaftaran->save();
 
         // Simpan ID venue di session untuk step berikutnya
