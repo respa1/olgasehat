@@ -182,21 +182,35 @@
         <li><a href="#" class="hover:text-blue-700" data-translate>Contact Us</a></li>
       </ul>
       <div class="flex space-x-4 mt-6">
-        <a
-          href="#"
-          class="w-10 h-10 flex items-center justify-center bg-blue-700 text-white rounded-full hover:bg-blue-800 transition text-lg"
-          ><i class="fab fa-facebook-f"></i
-        ></a>
-        <a
-          href="#"
-          class="w-10 h-10 flex items-center justify-center bg-blue-700 text-white rounded-full hover:bg-blue-800 transition text-lg"
-          ><i class="fab fa-youtube"></i
-        ></a>
-        <a
-          href="#"
-          class="w-10 h-10 flex items-center justify-center bg-blue-700 text-white rounded-full hover:bg-blue-800 transition text-lg"
-          ><i class="fab fa-instagram"></i
-        ></a>
+        @php
+          $socialMedia = \App\Models\SocialMedia::orderBy('created_at', 'asc')->get();
+        @endphp
+        @forelse($socialMedia as $media)
+          <a
+            href="{{ $media->url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-10 h-10 flex items-center justify-center bg-blue-700 text-white rounded-full hover:bg-blue-800 transition text-lg"
+            aria-label="{{ $media->title ?? 'Social Media' }}"
+            ><i class="{{ $media->icon }}"></i
+          ></a>
+        @empty
+          <a
+            href="#"
+            class="w-10 h-10 flex items-center justify-center bg-blue-700 text-white rounded-full hover:bg-blue-800 transition text-lg"
+            ><i class="fab fa-facebook-f"></i
+          ></a>
+          <a
+            href="#"
+            class="w-10 h-10 flex items-center justify-center bg-blue-700 text-white rounded-full hover:bg-blue-800 transition text-lg"
+            ><i class="fab fa-youtube"></i
+          ></a>
+          <a
+            href="#"
+            class="w-10 h-10 flex items-center justify-center bg-blue-700 text-white rounded-full hover:bg-blue-800 transition text-lg"
+            ><i class="fab fa-instagram"></i
+          ></a>
+        @endforelse
       </div>
     </div>
   </div>

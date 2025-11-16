@@ -49,14 +49,14 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="title" class="form-label fw-bold">Title</label>
+                        <label for="title" class="form-label fw-bold">Title (Opsional)</label>
                         <input type="text" 
                                name="title" 
                                id="title" 
                                class="form-control" 
-                               placeholder="Masukkan title social media"
-                               value="{{ old('title') }}" 
-                               required>
+                               placeholder="Masukkan title social media (opsional)"
+                               value="{{ old('title') }}">
+                        <small class="form-text text-muted">Title tidak akan ditampilkan di frontend, hanya untuk referensi admin</small>
                     </div>
 
                     <div class="mb-3">

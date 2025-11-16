@@ -54,7 +54,6 @@
                             <tr>
                                 <th style="width: 50px">No</th>
                                 <th>Icon</th>
-                                <th>Title</th>
                                 <th>URL</th>
                                 <th style="width: 150px">Aksi</th>
                             </tr>
@@ -65,7 +64,6 @@
                             <tr>
                                 <td>{{ $no++ }}</td>
                                 <td><i class="{{ $row->icon }}"></i> {{ $row->icon }}</td>
-                                <td>{{ $row->title }}</td>
                                 <td><a href="{{ $row->url }}" target="_blank">{{ $row->url }}</a></td>
                                 <td>
                                     <a href="{{ route('social-media.edit', $row->id) }}" 
@@ -81,7 +79,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5" class="text-center text-muted py-4">
+                                <td colspan="4" class="text-center text-muted py-4">
                                     Belum ada data Social Media
                                 </td>
                             </tr>

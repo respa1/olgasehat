@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             SuperAdminSeeder::class,
             ActivityTypeSeeder::class,
             ProgramSeeder::class,
+            SocialMediaSeeder::class,
         ]);
     }
 }
