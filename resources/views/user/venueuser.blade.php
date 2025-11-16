@@ -2,54 +2,14 @@
 
 @section('content')
 
-  @if(isset($venueBanners) && $venueBanners->count() > 0)
-    <!-- Venue Banner Carousel -->
-    <section class="relative h-[300px] md:h-[400px] overflow-hidden">
-      <div id="venueBannerCarousel" class="relative h-full">
-        <div class="carousel-container h-full relative overflow-hidden">
-          @foreach($venueBanners as $index => $banner)
-            <div class="banner-slide absolute inset-0 transition-all duration-1000 ease-in-out {{ $index === 0 ? 'opacity-100 z-10 scale-100 active' : 'opacity-0 z-0 scale-105' }}" data-index="{{ $index }}">
-              <div class="relative bg-cover bg-center h-full banner-image" style="background-image: url('{{ asset('fotogaleri/'.$banner->foto) }}');">
-                <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center px-6">
-                  <div class="container mx-auto text-white text-center banner-content {{ $index === 0 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4' }}">
-                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-wide mb-4">
-                      BOOKING VENUE OLAHRAGA TERDEKAT 
-                    </h1>
-                  </div>
-                </div>
-              </div>
-            </div>
-          @endforeach
-        </div>
-        
-        <!-- Navigation Dots -->
-        @if($venueBanners->count() > 1)
-        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
-          @foreach($venueBanners as $index => $banner)
-            <button class="banner-dot w-3 h-3 rounded-full {{ $index === 0 ? 'bg-white' : 'bg-white bg-opacity-50' }} transition-all duration-300" data-index="{{ $index }}" aria-label="Slide {{ $index + 1 }}"></button>
-          @endforeach
-        </div>
-        
-        <!-- Navigation Arrows -->
-        <button id="venueBannerPrev" class="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white bg-opacity-30 hover:bg-opacity-50 text-white p-2 rounded-full transition duration-300" aria-label="Previous slide">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <button id="venueBannerNext" class="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white bg-opacity-30 hover:bg-opacity-50 text-white p-2 rounded-full transition duration-300" aria-label="Next slide">
-          <i class="fas fa-chevron-right"></i>
-        </button>
-        @endif
-      </div>
-    </section>
-  @else
-    <!-- Fallback Banner -->
-    <section class="bg-[url('assets/blue-banner.png')] bg-no-repeat text-white relative overflow-hidden h-[300px] flex items-center justify-center" style="background-size: 1910px 300px;">
-      <div class="container mx-auto px-6 text-center w-full">
-        <h1 class="text-3xl md:text-4xl font-bold tracking-wide mt-10">
-          BOOKING VENUE OLAHRAGA TERDEKAT 
-        </h1>
-      </div>
-    </section>
-  @endif
+  <!-- Blue Banner - Tetap Tampil -->
+  <section class="bg-[url('assets/blue-banner.png')] bg-no-repeat text-white relative overflow-hidden h-[300px] flex items-center justify-center" style="background-size: 1910px 300px;">
+    <div class="container mx-auto px-6 text-center w-full">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-wide mt-10">
+        BOOKING VENUE OLAHRAGA TERDEKAT 
+      </h1>
+    </div>
+  </section>
 
   <section class="container mx-auto px-6 py-6">
     <form id="venueSearchForm" class="bg-white rounded-lg border border-gray-200 shadow-sm">
@@ -178,17 +138,16 @@
     </section>
     @endif
 
+@if(isset($venueBanners) && $venueBanners->count() > 0)
 <section class="mx-auto px-4 sm:px-6 lg:px-8 mt-12 relative">
     <div class="overflow-hidden rounded-lg">
         <div class="flex transition-transform duration-500 ease-in-out" id="carousel" style="transform: translateX(0%)">
-            {{-- PERUBAHAN: height dan max-height diubah dari 300 menjadi 400 --}}
-            <img alt="Mahakarya Udaya Sport Club & Lifestyle banner with green grass and sport equipment" class="w-full flex-shrink-0 object-cover rounded-lg" height="400" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 400px" width="900"/>
-            <img alt="Second carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="400" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 400px" width="900"/>
-            <img alt="Third carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="400" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 400px" width="900"/>
-            <img alt="Fourth carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="400" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 400px" width="900"/>
-            <img alt="Fifth carousel image placeholder" class="w-full flex-shrink-0 object-cover rounded-lg" height="400" src="{{ asset('assets/OIP (1).webp') }}" style="max-height: 400px" width="900"/>
+            @foreach($venueBanners as $index => $banner)
+                <img alt="Venue Banner {{ $index + 1 }}" class="w-full flex-shrink-0 object-cover rounded-lg" height="400" src="{{ asset('fotogaleri/'.$banner->foto) }}" style="max-height: 400px" width="900"/>
+            @endforeach
         </div>
     </div>
+    @if($venueBanners->count() > 1)
     <button aria-label="Previous slide" class="absolute top-1/2 left-6 -translate-y-1/2 bg-gray-500 bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full" id="prev" style="user-select:none">
         <i class="fas fa-chevron-left"></i>
     </button>
@@ -196,14 +155,15 @@
         <i class="fas fa-chevron-right"></i>
     </button>
     <div class="flex justify-center space-x-2 mt-3 text-gray-600 text-xs select-none" id="dots">
-        <button aria-label="Slide 1" class="w-2 h-2 rounded-full bg-gray-600" data-index="0"></button>
-        <button aria-label="Slide 2" class="w-2 h-2 rounded-full bg-gray-300" data-index="1"></button>
-        <button aria-label="Slide 3" class="w-2 h-2 rounded-full bg-gray-300" data-index="2"></button>
-        <button aria-label="Slide 4" class="w-2 h-2 rounded-full bg-gray-300" data-index="3"></button>
-        <button aria-label="Slide 5" class="w-2 h-2 rounded-full bg-gray-300" data-index="4"></button>
+        @foreach($venueBanners as $index => $banner)
+            <button aria-label="Slide {{ $index + 1 }}" class="w-2 h-2 rounded-full {{ $index === 0 ? 'bg-gray-600' : 'bg-gray-300' }}" data-index="{{ $index }}"></button>
+        @endforeach
     </div>
+    @endif
 </section>
+@endif
 
+@if(isset($venueBanners) && $venueBanners->count() > 1)
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const carousel = document.getElementById('carousel');
@@ -211,7 +171,9 @@
     const next = document.getElementById('next');
     const dots = document.querySelectorAll('#dots button');
     let currentIndex = 0;
-    const totalSlides = 5;
+    const totalSlides = {{ $venueBanners->count() }};
+
+    if (!carousel || totalSlides <= 1) return;
 
     function updateCarousel() {
       carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
@@ -226,19 +188,27 @@
       });
     }
 
-    prev.addEventListener('click', () => {
-      if (currentIndex > 0) {
-        currentIndex--;
+    if (prev) {
+      prev.addEventListener('click', () => {
+        if (currentIndex > 0) {
+          currentIndex--;
+        } else {
+          currentIndex = totalSlides - 1;
+        }
         updateCarousel();
-      }
-    });
+      });
+    }
 
-    next.addEventListener('click', () => {
-      if (currentIndex < totalSlides - 1) {
-        currentIndex++;
+    if (next) {
+      next.addEventListener('click', () => {
+        if (currentIndex < totalSlides - 1) {
+          currentIndex++;
+        } else {
+          currentIndex = 0;
+        }
         updateCarousel();
-      }
-    });
+      });
+    }
 
     dots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
@@ -247,17 +217,18 @@
       });
     });
 
-    // Auto-slide every 5 seconds (optional)
-    // setInterval(() => {
-    //   if (currentIndex < totalSlides - 1) {
-    //     currentIndex++;
-    //   } else {
-    //     currentIndex = 0;
-    //   }
-    //   updateCarousel();
-    // }, 5000);
+    // Auto-slide every 5 seconds
+    setInterval(() => {
+      if (currentIndex < totalSlides - 1) {
+        currentIndex++;
+      } else {
+        currentIndex = 0;
+      }
+      updateCarousel();
+    }, 5000);
   });
 </script>
+@endif
 
 {{-- PERUBAHAN: Tambahkan mt-16 dan sesuaikan mx-auto dan px-6 agar sejalan dengan carousel --}}
 <section class="container mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-16">
@@ -690,99 +661,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Venue Banner Carousel
-@if(isset($venueBanners) && $venueBanners->count() > 1)
-document.addEventListener('DOMContentLoaded', function() {
-    const bannerSlides = document.querySelectorAll('#venueBannerCarousel .banner-slide');
-    const bannerDots = document.querySelectorAll('#venueBannerCarousel .banner-dot');
-    const bannerPrev = document.getElementById('venueBannerPrev');
-    const bannerNext = document.getElementById('venueBannerNext');
-    let bannerCurrentIndex = 0;
-    let bannerInterval;
-    let isTransitioning = false;
-
-    if (bannerSlides.length > 1) {
-        function updateBannerCarousel() {
-            if (isTransitioning) return;
-            isTransitioning = true;
-
-            bannerSlides.forEach((slide, index) => {
-                const content = slide.querySelector('.banner-content');
-                
-                if (index === bannerCurrentIndex) {
-                    slide.classList.remove('opacity-0', 'z-0', 'scale-105');
-                    slide.classList.add('opacity-100', 'z-10', 'scale-100', 'active');
-                    
-                    if (content) {
-                        setTimeout(() => {
-                            content.classList.remove('opacity-0', 'translate-y-4');
-                            content.classList.add('opacity-100', 'translate-y-0');
-                        }, 200);
-                    }
-                } else {
-                    slide.classList.remove('opacity-100', 'z-10', 'scale-100', 'active');
-                    slide.classList.add('opacity-0', 'z-0', 'scale-105');
-                    
-                    if (content) {
-                        content.classList.remove('opacity-100', 'translate-y-0');
-                        content.classList.add('opacity-0', 'translate-y-4');
-                    }
-                }
-            });
-
-            bannerDots.forEach((dot, index) => {
-                if (index === bannerCurrentIndex) {
-                    dot.classList.remove('bg-opacity-50');
-                    dot.classList.add('bg-white');
-                } else {
-                    dot.classList.remove('bg-white');
-                    dot.classList.add('bg-opacity-50');
-                }
-            });
-
-            setTimeout(() => {
-                isTransitioning = false;
-            }, 1000);
-        }
-
-        function nextBanner() {
-            bannerCurrentIndex = (bannerCurrentIndex + 1) % bannerSlides.length;
-            updateBannerCarousel();
-        }
-
-        function prevBanner() {
-            bannerCurrentIndex = (bannerCurrentIndex - 1 + bannerSlides.length) % bannerSlides.length;
-            updateBannerCarousel();
-        }
-
-        if (bannerNext) {
-            bannerNext.addEventListener('click', nextBanner);
-        }
-
-        if (bannerPrev) {
-            bannerPrev.addEventListener('click', prevBanner);
-        }
-
-        bannerDots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                bannerCurrentIndex = index;
-                updateBannerCarousel();
-            });
-        });
-
-        // Auto-slide every 5 seconds
-        bannerInterval = setInterval(nextBanner, 5000);
-
-        // Pause on hover
-        const carousel = document.getElementById('venueBannerCarousel');
-        if (carousel) {
-            carousel.addEventListener('mouseenter', () => clearInterval(bannerInterval));
-            carousel.addEventListener('mouseleave', () => {
-                bannerInterval = setInterval(nextBanner, 5000);
-            });
-        }
-    }
-});
-@endif
 </script>
   @endsection
