@@ -52,11 +52,10 @@
     </form>
 </section>
 
-<body class="bg-gray-50 min-h-screen py-10">
+<section class="container mx-auto px-6 py-10">
+    <h1 class="text-3xl font-bold text-center mb-10 text-gray-800">Kalkulator Kesehatan</h1>
 
-<h1 class="text-3xl font-bold text-center mb-10 text-gray-800">Kalkulator Kesehatan</h1>
-
-<div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
 
 
 <!-- ====================================== -->
@@ -180,7 +179,8 @@
   </div>
 </div>
 
-</div>
+    </div>
+</section>
 
 
 
@@ -440,9 +440,6 @@ function hitungBMI() {
 }
 
 </script>
-
-</body>
-
 
 <section class="container mx-auto px-6 py-16">
     <h2 class="font-bold text-2xl mb-8 text-gray-800">
@@ -704,8 +701,8 @@ function hitungBMI() {
     </div>
 </section>
 
-<section class="pb-24 md:pb-32">
-    <nav aria-label="Pagination" class="flex justify-center space-x-2 px-4">
+<section class="container mx-auto px-6 pb-24 md:pb-32">
+    <nav aria-label="Pagination" class="flex justify-center space-x-2">
         <button aria-label="Previous page" class="w-10 h-10 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed" disabled>
             <i class="fas fa-arrow-left"></i>
         </button>
@@ -769,8 +766,8 @@ function hitungBMI() {
     </div>
 </section>
 
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-16">
-    <div class="bg-gray-900 text-white rounded-xl p-8 md:p-12 mx-auto space-y-5 w-full"> 
+<section class="container mx-auto px-6 mt-12 mb-16">
+    <div class="bg-gray-900 text-white rounded-xl p-8 md:p-12 mx-auto space-y-5 max-w-7xl"> 
         <p class="text-sm font-normal opacity-70">Khusus Klinik, Fisioterapi, & Lab</p>
         <h2 class="text-3xl md:text-4xl font-bold leading-tight">
             Tingkatkan Jangkauan Layanan Kesehatan Anda
