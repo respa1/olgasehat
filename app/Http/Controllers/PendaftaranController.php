@@ -96,10 +96,18 @@ class PendaftaranController extends Controller
     {
         $venue = Pendaftaran::with(['galleries', 'lapangans'])->where('user_id', auth()->id())->findOrFail($id);
         
-        // Parse fasilitas jika ada
-        $fasilitas = [];
-        if ($venue->fasilitas) {
-            $fasilitas = json_decode($venue->fasilitas, true) ?? [];
+        // Fasilitas sudah di-cast sebagai array di model
+        $fasilitas = $venue->fasilitas;
+        if (!is_array($fasilitas)) {
+            if (empty($fasilitas)) {
+                $fasilitas = [];
+            } elseif (is_string($fasilitas)) {
+                // Fallback untuk data lama yang masih JSON string
+                $decoded = json_decode($fasilitas, true);
+                $fasilitas = is_array($decoded) ? $decoded : [];
+            } else {
+                $fasilitas = [];
+            }
         }
         
         return view('pemiliklapangan.Fasilitas.detailvenue', compact('venue', 'fasilitas'));
@@ -748,10 +756,18 @@ class PendaftaranController extends Controller
     {
         $venue = Pendaftaran::with('galleries')->findOrFail($id);
         
-        // Parse fasilitas jika ada
-        $fasilitas = [];
-        if ($venue->fasilitas) {
-            $fasilitas = json_decode($venue->fasilitas, true) ?? [];
+        // Fasilitas sudah di-cast sebagai array di model
+        $fasilitas = $venue->fasilitas;
+        if (!is_array($fasilitas)) {
+            if (empty($fasilitas)) {
+                $fasilitas = [];
+            } elseif (is_string($fasilitas)) {
+                // Fallback untuk data lama yang masih JSON string
+                $decoded = json_decode($fasilitas, true);
+                $fasilitas = is_array($decoded) ? $decoded : [];
+            } else {
+                $fasilitas = [];
+            }
         }
         
         return view('pemiliklapangan.Fasilitas.editvenue', compact('venue', 'fasilitas'));

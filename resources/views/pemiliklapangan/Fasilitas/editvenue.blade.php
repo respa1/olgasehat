@@ -260,7 +260,15 @@
                   $selectedFasilitas = $fasilitas ?? [];
                   $customFasilitas = [];
                   if (isset($venue) && $venue->fasilitas) {
-                    $allSelected = json_decode($venue->fasilitas, true) ?? [];
+                    // Fasilitas sudah di-cast sebagai array di model
+                    if (is_array($venue->fasilitas)) {
+                      $allSelected = $venue->fasilitas;
+                    } elseif (is_string($venue->fasilitas)) {
+                      $decoded = json_decode($venue->fasilitas, true);
+                      $allSelected = is_array($decoded) ? $decoded : [];
+                    } else {
+                      $allSelected = [];
+                    }
                     foreach ($allSelected as $fas) {
                       if (!in_array($fas, $allFasilitas)) {
                         $customFasilitas[] = $fas;
