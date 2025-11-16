@@ -51,44 +51,54 @@
     </section>
   @endif
 
-  <section class="container mx-auto px-6 py-8">
-    <form class="flex flex-wrap gap-4 justify-center md:justify-start items-stretch">
+  <section class="container mx-auto px-6 py-6">
+    <form id="venueSearchForm" class="bg-white rounded-lg border border-gray-200 shadow-sm">
+      <div class="flex flex-col lg:flex-row items-stretch gap-2 p-2">
         
-        <div class="relative flex-grow min-w-full sm:min-w-[300px]">
+        <!-- Search Input - Cari nama venue dan Kota (gabungan, memanjang) -->
+        <div class="relative flex-[2] min-w-0">
+          <div class="relative">
             <input
-                type="text"
-                id="unifiedSearch"
-                placeholder="Cari venue terdekat (e.g., MU Sport Center, Denpasar)"
-                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 h-full text-gray-700 placeholder-gray-500 focus:outline-none focus:border-blue-500 transition duration-150"
+              type="text"
+              id="unifiedSearch"
+              name="q"
+              placeholder="Cari nama venue atau kota"
+              class="w-full border border-gray-300 rounded-lg px-4 pl-10 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-gray-400 transition-all duration-150 bg-white"
+              autocomplete="off"
             />
-            <div id="suggestionsDropdown" class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-lg shadow-xl max-h-60 overflow-y-auto hidden z-10 mt-1">
-            </div>
+            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
+          </div>
+          <!-- Suggestions Dropdown -->
+          <div id="suggestionsDropdown" class="absolute top-full left-0 w-full bg-white border border-gray-200 rounded-lg shadow-xl max-h-80 overflow-y-auto hidden z-50 mt-1">
+          </div>
         </div>
         
-        <select
-            class="border border-gray-300 rounded-lg px-4 py-2.5 min-w-[180px] w-full sm:w-auto text-gray-700 focus:outline-none focus:border-blue-500 transition duration-150"
-        >
-            <option disabled selected class="text-gray-500">Pilih Olahraga</option>
-            <option>Futsal</option>
-            <option>Basketball</option>
-            <option>Mini Soccer</option>
-            <option>Badminton</option>
-            <option>Gym</option>
-        </select>
+        <!-- Sport Category Dropdown - Pilih Cabang Olahraga -->
+        <div class="relative flex-1 min-w-0">
+          <div class="relative">
+            <select
+              id="sportCategory"
+              name="kategori"
+              class="w-full border border-gray-300 rounded-lg px-4 pl-10 pr-10 py-3 text-gray-700 focus:outline-none focus:border-gray-400 transition-all duration-150 bg-white appearance-none cursor-pointer"
+            >
+              <option value="all" selected>Pilih Cabang Olahraga</option>
+            </select>
+            <i class="fas fa-chevron-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm pointer-events-none"></i>
+            <i class="fas fa-football-ball absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
+          </div>
+        </div>
         
-        <input
-            type="date"
-            class="border border-gray-300 rounded-lg px-4 py-2.5 min-w-[160px] w-full sm:w-auto text-gray-700 focus:outline-none focus:border-blue-500 transition duration-150"
-        />
-        
+        <!-- Search Button - Cari venue -->
         <button
-            type="submit"
-            class="bg-blue-700 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-blue-800 transition min-w-full sm:min-w-[120px]"
+          type="submit"
+          class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 whitespace-nowrap"
         >
-            Cari Venue
+          Cari venue
         </button>
+        
+      </div>
     </form>
-</section>
+  </section>
 
   <!-- Venue Cards Grid -->
   <section class="container mx-auto px-6 pb-12">
@@ -475,29 +485,61 @@
   </div>
 </section>
 
-<script>
+  <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('unifiedSearch');
     const suggestionsDropdown = document.getElementById('suggestionsDropdown');
+    const sportCategory = document.getElementById('sportCategory');
+    const searchForm = document.getElementById('venueSearchForm');
     let searchTimeout;
     let selectedIndex = -1;
     
+    // Load sport categories from API
+    function loadSportCategories() {
+        fetch('{{ route("frontend.venue.categories") }}')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.categories && data.categories.length > 0) {
+                    // Clear existing options except "Pilih Cabang Olahraga"
+                    while (sportCategory.options.length > 1) {
+                        sportCategory.remove(1);
+                    }
+                    
+                    // Add categories from API
+                    data.categories.forEach(category => {
+                        const option = document.createElement('option');
+                        option.value = category;
+                        option.textContent = category;
+                        sportCategory.appendChild(option);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error loading categories:', error);
+            });
+    }
+    
+    // Load categories on page load
+    if (sportCategory) {
+        loadSportCategories();
+    }
+    
     if (!searchInput || !suggestionsDropdown) return;
     
-    // Search function
+    // Search function untuk suggestions
     function performSearch(query) {
         if (query.length < 2) {
             suggestionsDropdown.classList.add('hidden');
             return;
         }
         
-        fetch(`{{ route('frontend.venue.search') }}?q=${encodeURIComponent(query)}`)
+        fetch(`{{ route('frontend.venue.search') }}?q=${encodeURIComponent(query)}&limit=8`)
             .then(response => response.json())
             .then(data => {
                 if (data.success && data.results.length > 0) {
-                    displaySuggestions(data.results);
+                    displaySuggestions(data.results, query);
                 } else {
-                    suggestionsDropdown.innerHTML = '<div class="p-4 text-center text-gray-500">Tidak ada hasil ditemukan</div>';
+                    suggestionsDropdown.innerHTML = '<div class="p-4 text-center text-gray-500 text-sm">Tidak ada hasil ditemukan</div>';
                     suggestionsDropdown.classList.remove('hidden');
                 }
             })
@@ -507,15 +549,54 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
     
-    // Display suggestions
-    function displaySuggestions(results) {
-        suggestionsDropdown.innerHTML = results.map((venue, index) => `
-            <div class="p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0 suggestion-item" data-venue-id="${venue.id}" data-index="${index}">
-                <h4 class="font-semibold text-gray-900 text-sm mb-1">${venue.nama}</h4>
-                <p class="text-xs text-gray-600 mb-1">${venue.alamat}</p>
-                ${venue.lapangan ? `<p class="text-xs text-gray-500">Lapangan: ${venue.lapangan}</p>` : ''}
-            </div>
-        `).join('');
+    // Display suggestions dengan format yang rapi
+    function displaySuggestions(results, query) {
+        suggestionsDropdown.innerHTML = results.map((venue, index) => {
+            // Highlight matching text
+            const highlightText = (text, query) => {
+                if (!text || !query) return text;
+                const regex = new RegExp(`(${query})`, 'gi');
+                return text.replace(regex, '<mark class="bg-yellow-200 px-1 rounded">$1</mark>');
+            };
+            
+            const namaHighlighted = highlightText(venue.nama, query);
+            const kotaHighlighted = highlightText(venue.kota, query);
+            
+            // Format lapangan list
+            let lapanganHtml = '';
+            if (venue.lapangan && venue.lapangan.length > 0) {
+                const lapanganList = venue.lapangan.slice(0, 3).map(l => highlightText(l, query)).join(', ');
+                const moreCount = venue.lapangan.length > 3 ? ` +${venue.lapangan.length - 3} lainnya` : '';
+                lapanganHtml = `
+                    <div class="mt-1 flex items-start">
+                        <i class="fas fa-futbol text-gray-400 text-xs mt-0.5 mr-2"></i>
+                        <span class="text-xs text-gray-600">${lapanganList}${moreCount}</span>
+                    </div>
+                `;
+            }
+            
+            return `
+                <div class="suggestion-item p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors duration-150" 
+                     data-venue-id="${venue.id}" 
+                     data-index="${index}">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-semibold text-gray-900 text-sm mb-1">${namaHighlighted}</h4>
+                            <div class="flex items-center text-xs text-gray-600 mb-1">
+                                <i class="fas fa-map-marker-alt mr-1.5 text-gray-400"></i>
+                                <span>${kotaHighlighted}${venue.provinsi ? ', ' + venue.provinsi : ''}</span>
+                            </div>
+                            ${lapanganHtml}
+                        </div>
+                        <div class="ml-3 flex-shrink-0">
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                ${venue.kategori || 'Olahraga'}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
         
         suggestionsDropdown.classList.remove('hidden');
         selectedIndex = -1;
@@ -558,6 +639,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } else if (e.key === 'Escape') {
             suggestionsDropdown.classList.add('hidden');
+            selectedIndex = -1;
         }
     });
     
@@ -565,8 +647,10 @@ document.addEventListener('DOMContentLoaded', function() {
         items.forEach((item, index) => {
             if (index === selectedIndex) {
                 item.classList.add('bg-blue-50');
+                item.classList.remove('hover:bg-gray-50');
             } else {
                 item.classList.remove('bg-blue-50');
+                item.classList.add('hover:bg-gray-50');
             }
         });
     }
@@ -575,8 +659,31 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function(e) {
         if (!searchInput.contains(e.target) && !suggestionsDropdown.contains(e.target)) {
             suggestionsDropdown.classList.add('hidden');
+            selectedIndex = -1;
         }
     });
+    
+    // Form submission with filter
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(searchForm);
+            const params = new URLSearchParams();
+            
+            // Query search now includes both venue name and city
+            if (formData.get('q')) {
+                params.append('q', formData.get('q'));
+            }
+            if (formData.get('kategori') && formData.get('kategori') !== 'all') {
+                params.append('kategori', formData.get('kategori'));
+            }
+            
+            // Redirect to filter route with parameters (use user route)
+            const filterUrl = '/venueuser?' + params.toString();
+            window.location.href = filterUrl;
+        });
+    }
 });
 
 // Venue Banner Carousel

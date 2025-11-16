@@ -54,6 +54,8 @@ Route::get('/healthy', fn() => view('FRONTEND.healthy'));
 Route::get('/venue-detail/{id}', [App\Http\Controllers\VenueFrontendController::class, 'show'])->name('frontend.venue.detail');
 Route::get('/venue-detail/{id}/slots', [App\Http\Controllers\VenueFrontendController::class, 'getSlots'])->name('frontend.venue.slots');
 Route::get('/venue/search', [App\Http\Controllers\VenueFrontendController::class, 'search'])->name('frontend.venue.search');
+Route::get('/venue/categories', [App\Http\Controllers\VenueFrontendController::class, 'getCategories'])->name('frontend.venue.categories');
+Route::get('/venue/filter', [App\Http\Controllers\VenueFrontendController::class, 'filter'])->name('frontend.venue.filter');
 Route::get('/klinik', fn() => view('FRONTEND.klinik'));
 Route::get('/venue-management', fn() => view('FRONTEND.venue_management'))->name('venue.management');
 Route::get('/health-management', fn() => view('FRONTEND.health_management'))->name('health.management');

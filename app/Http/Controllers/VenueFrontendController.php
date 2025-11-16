@@ -19,14 +19,49 @@ class VenueFrontendController extends Controller
         // Deteksi apakah request dari /venue atau /venueuser
         $isUserView = $request->is('venueuser') || $request->routeIs('user.venue');
         
-        // Ambil venue yang sudah disetujui atau yang sudah memiliki data lengkap
-        // Untuk testing, tampilkan semua venue yang sudah ada
+        // Check if there are filter parameters
+        $query = $request->input('q', '');
+        $kota = $request->input('kota', '');
+        $kategori = $request->input('kategori', '');
+        $tanggal = $request->input('tanggal', '');
+        
         $venues = Pendaftaran::with(['lapangans.slots', 'galleries'])
-            ->where(function($query) {
-                $query->where('syarat_disetujui', true)
-                      ->orWhereNotNull('namavenue'); // Fallback: tampilkan venue yang sudah ada
-            })
-            ->orderBy('created_at', 'desc')
+            ->where(function($q) {
+                $q->where('syarat_disetujui', true)
+                  ->orWhereNotNull('namavenue');
+            });
+        
+        // Filter berdasarkan query (nama venue, provinsi, nama lapangan)
+        if (!empty($query)) {
+            $venues->where(function($q) use ($query) {
+                $q->where('namavenue', 'like', "%{$query}%")
+                  ->orWhere('provinsi', 'like', "%{$query}%")
+                  ->orWhere('lokasi', 'like', "%{$query}%")
+                  ->orWhereHas('lapangans', function($lapanganQuery) use ($query) {
+                      $lapanganQuery->where('nama', 'like', "%{$query}%");
+                  });
+            });
+        }
+        
+        // Filter berdasarkan kota (terpisah dari query search)
+        if (!empty($kota)) {
+            $venues->where('kota', 'like', "%{$kota}%");
+        }
+        
+        // Filter berdasarkan kategori
+        if (!empty($kategori) && $kategori !== 'all') {
+            $venues->where('kategori', $kategori);
+        }
+        
+        // Filter berdasarkan tanggal (jika ada slot available pada tanggal tersebut)
+        if (!empty($tanggal)) {
+            $venues->whereHas('lapangans.slots', function($slotQuery) use ($tanggal) {
+                $slotQuery->whereDate('tanggal', $tanggal)
+                         ->where('status', 'available');
+            });
+        }
+        
+        $venues = $venues->orderBy('created_at', 'desc')
             ->paginate(16);
         
         // Hitung harga minimum per venue dari slots yang available
@@ -209,8 +244,8 @@ class VenueFrontendController extends Controller
             ->get();
         
         $results = $venues->map(function($venue) {
-            // Ambil nama lapangan pertama jika ada
-            $lapanganNama = $venue->lapangans->first() ? $venue->lapangans->first()->nama : null;
+            // Ambil semua nama lapangan
+            $lapanganList = $venue->lapangans->pluck('nama')->toArray();
             
             // Format alamat
             $alamat = trim($venue->kota . ', ' . $venue->provinsi);
@@ -222,7 +257,8 @@ class VenueFrontendController extends Controller
                 'alamat' => $alamat,
                 'kota' => $venue->kota,
                 'provinsi' => $venue->provinsi,
-                'lapangan' => $lapanganNama,
+                'lapangan' => $lapanganList, // Array semua lapangan
+                'lapangan_count' => count($lapanganList),
             ];
         });
         
@@ -230,5 +266,109 @@ class VenueFrontendController extends Controller
             'success' => true,
             'results' => $results
         ]);
+    }
+    
+    /**
+     * Ambil semua kategori olahraga unik dari database
+     */
+    public function getCategories()
+    {
+        $categories = Pendaftaran::where(function($query) {
+                $query->where('syarat_disetujui', true)
+                      ->orWhereNotNull('namavenue');
+            })
+            ->distinct()
+            ->orderBy('kategori', 'asc')
+            ->pluck('kategori')
+            ->filter()
+            ->values();
+        
+        return response()->json([
+            'success' => true,
+            'categories' => $categories
+        ]);
+    }
+    
+    /**
+     * Filter venue berdasarkan kategori, query, dan tanggal
+     */
+    public function filter(Request $request)
+    {
+        $query = $request->input('q', '');
+        $kota = $request->input('kota', '');
+        $kategori = $request->input('kategori', '');
+        $tanggal = $request->input('tanggal', '');
+        
+        $venues = Pendaftaran::with(['lapangans.slots', 'galleries'])
+            ->where(function($q) {
+                $q->where('syarat_disetujui', true)
+                  ->orWhereNotNull('namavenue');
+            });
+        
+        // Filter berdasarkan query (nama venue, provinsi, nama lapangan)
+        if (!empty($query)) {
+            $venues->where(function($q) use ($query) {
+                $q->where('namavenue', 'like', "%{$query}%")
+                  ->orWhere('provinsi', 'like', "%{$query}%")
+                  ->orWhere('lokasi', 'like', "%{$query}%")
+                  ->orWhereHas('lapangans', function($lapanganQuery) use ($query) {
+                      $lapanganQuery->where('nama', 'like', "%{$query}%");
+                  });
+            });
+        }
+        
+        // Filter berdasarkan kota (terpisah dari query search)
+        if (!empty($kota)) {
+            $venues->where('kota', 'like', "%{$kota}%");
+        }
+        
+        // Filter berdasarkan kategori
+        if (!empty($kategori) && $kategori !== 'all') {
+            $venues->where('kategori', $kategori);
+        }
+        
+        // Filter berdasarkan tanggal (jika ada slot available pada tanggal tersebut)
+        if (!empty($tanggal)) {
+            $venues->whereHas('lapangans.slots', function($slotQuery) use ($tanggal) {
+                $slotQuery->whereDate('tanggal', $tanggal)
+                         ->where('status', 'available');
+            });
+        }
+        
+        $venues = $venues->orderBy('created_at', 'desc')
+            ->paginate(16);
+        
+        // Hitung harga minimum per venue
+        foreach ($venues as $venue) {
+            $minPrice = $venue->lapangans->flatMap(function($lapangan) {
+                return $lapangan->slots;
+            })
+            ->where('status', 'available')
+            ->min('harga');
+            
+            $venue->min_price = $minPrice ?? 0;
+        }
+        
+        // Deteksi apakah request dari /venue atau /venueuser
+        $isUserView = $request->is('venueuser') || $request->routeIs('user.venue');
+        
+        // Ambil venue banner
+        $venueBanners = Galeri::where('kategori', 'venue_banner')
+            ->orderBy('urutan', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
+        // Return view sesuai route
+        $viewName = $isUserView ? 'user.venueuser' : 'FRONTEND.venue';
+        
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'html' => view('FRONTEND.partials.venue-cards', compact('venues'))->render(),
+                'pagination' => view('FRONTEND.partials.venue-pagination', compact('venues'))->render(),
+            ]);
+        }
+        
+        return view($viewName, compact('venues', 'venueBanners'));
     }
 }
