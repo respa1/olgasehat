@@ -143,10 +143,10 @@
 
     <!-- Menu Desktop -->
     <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
-      <a href="/venueuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200">Fasilitas Olahraga</a>
-      <a href="/healthyuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200">Layanan Kesehatan</a>
-      <a href="/communityuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200">Komunitas & Aktivitas</a>
-      <a href="/bloguser_news" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200">Info Sehat</a>
+      <a href="/venueuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Fasilitas Olahraga</a>
+      <a href="/healthyuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Layanan Kesehatan</a>
+      <a href="/communityuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Komunitas & Aktivitas</a>
+      <a href="/bloguser_news" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Info Sehat</a>
     </nav>
 
     <!-- Aksi Desktop -->
@@ -190,30 +190,30 @@
             <span class="badge badge-role mt-1">User</span>
           </div>
           <a href="/dashboarduser" class="dropdown-item">
-            <span>Profil</span>
+            <span data-translate>Profil</span>
             <i class="fas fa-user"></i>
           </a>
           <a href="/riwayatpayment" class="dropdown-item">
-            <span>Riwayat Pemesanan</span>
+            <span data-translate>Riwayat Pemesanan</span>
             <i class="fas fa-history"></i>
           </a>
           <a href="/riwayat-komunitas" class="dropdown-item">
-            <span>Komunitas</span>
+            <span data-translate>Komunitas</span>
             <i class="fas fa-users"></i>
           </a>
           <a href="/riwayatmembership" class="dropdown-item">
-            <span>Membership</span>
+            <span data-translate>Membership</span>
             <i class="fas fa-crown"></i>
           </a>
           <a href="/settings" class="dropdown-item">
-            <span>Pengaturan</span>
+            <span data-translate>Pengaturan</span>
             <i class="fas fa-cog"></i>
           </a>
           <div class="dropdown-divider my-2" style="border-top: 1px solid #e5e7eb;"></div>
           <form id="logout-form" action="{{ route('user.logout') }}" method="POST">
             @csrf
             <button type="submit" class="dropdown-item w-full text-left text-red-600 hover:bg-red-50" style="border: none; background: none; cursor: pointer;">
-              <span>Logout</span>
+              <span data-translate>Logout</span>
               <i class="fas fa-sign-out-alt"></i>
             </button>
           </form>
@@ -247,15 +247,15 @@
         </button>
         <!-- Dropdown menu -->
         <div id="mobileUserMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
-          <a href="/dashboarduser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
-          <a href="/riwayatpayment" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Riwayat Pemesanan</a>
-          <a href="/komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Komunitas</a>
-          <a href="/klub" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Klub</a>
-          <a href="/settings" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pengaturan</a>
+          <a href="/dashboarduser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Profil</a>
+          <a href="/riwayatpayment" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Riwayat Pemesanan</a>
+          <a href="/komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Komunitas</a>
+          <a href="/klub" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Klub</a>
+          <a href="/settings" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Pengaturan</a>
           
           <form id="mobile-logout-form" action="{{ route('user.logout') }}" method="POST" class="block border-t border-gray-200 mt-1">
             @csrf
-            <button type="submit" class="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 font-medium transition-colors">Logout</button>
+            <button type="submit" class="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 font-medium transition-colors" data-translate>Logout</button>
           </form>
         </div>
       </div>
@@ -274,14 +274,14 @@
                 transition-all duration-300 ease-in-out absolute top-full left-0 w-full z-[50]">
 
       <!-- Link Navigasi -->
-      <a href="/venueuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Fasilitas Olahraga</a>
-      <a href="#" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Layanan Kesehatan</a>
-      <a href="/communityuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas & Aktivitas</a>
-      <a href="/bloguser_news" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Info Sehat</a>
+      <a href="/venueuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Fasilitas Olahraga</a>
+      <a href="#" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Layanan Kesehatan</a>
+      <a href="/communityuser" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Komunitas & Aktivitas</a>
+      <a href="/bloguser_news" class="block px-6 py-4 border-b text-center font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Info Sehat</a>
 
       <!-- User Links -->
       <div class="border-t pt-4">
-        <a href="/logout" class="block w-full px-6 py-4 text-center bg-red-600 text-white font-semibold rounded-md hover:bg-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Logout</a>
+        <a href="/logout" class="block w-full px-6 py-4 text-center bg-red-600 text-white font-semibold rounded-md hover:bg-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Logout</a>
       </div>
     </nav>
 </header>
@@ -399,33 +399,82 @@
       const languageDropdownUserMobile = document.getElementById("languageDropdownUserMobile");
       const currentLanguageUserMobile = document.getElementById("currentLanguageUserMobile");
 
-      // Fetch languages from LibreTranslate API
-      async function fetchLanguagesUser() {
-        try {
-          const response = await fetch('https://libretranslate.com/languages');
-          const languages = await response.json();
-          populateLanguageDropdownUser(languages);
-          populateLanguageDropdownUserMobile(languages);
-        } catch (error) {
-          console.error('Error fetching languages:', error);
-          // Fallback to common languages
-          const fallbackLanguages = [
-            {code: 'en', name: 'English'},
-            {code: 'id', name: 'Indonesian'},
-            {code: 'es', name: 'Spanish'},
-            {code: 'fr', name: 'French'},
-            {code: 'de', name: 'German'},
-            {code: 'it', name: 'Italian'},
-            {code: 'pt', name: 'Portuguese'},
-            {code: 'ru', name: 'Russian'},
-            {code: 'ja', name: 'Japanese'},
-            {code: 'ko', name: 'Korean'},
-            {code: 'zh', name: 'Chinese'},
-            {code: 'ar', name: 'Arabic'},
-            {code: 'hi', name: 'Hindi'}
-          ];
-          populateLanguageDropdownUser(fallbackLanguages);
-          populateLanguageDropdownUserMobile(fallbackLanguages);
+      // Language list dengan bahasa Bali, Jawa, dan internasional
+      const languages = [
+        {code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩'},
+        {code: 'ban', name: 'Basa Bali', flag: '🏝️'},
+        {code: 'jw', name: 'Basa Jawa', flag: '☕'}, // Google Translate pakai 'jw' bukan 'jv'
+        {code: 'en', name: 'English', flag: '🇬🇧'},
+        {code: 'es', name: 'Español', flag: '🇪🇸'},
+        {code: 'fr', name: 'Français', flag: '🇫🇷'},
+        {code: 'de', name: 'Deutsch', flag: '🇩🇪'},
+        {code: 'it', name: 'Italiano', flag: '🇮🇹'},
+        {code: 'pt', name: 'Português', flag: '🇵🇹'},
+        {code: 'ru', name: 'Русский', flag: '🇷🇺'},
+        {code: 'ja', name: '日本語', flag: '🇯🇵'},
+        {code: 'ko', name: '한국어', flag: '🇰🇷'},
+        {code: 'zh', name: '中文', flag: '🇨🇳'},
+        {code: 'ar', name: 'العربية', flag: '🇸🇦'},
+        {code: 'hi', name: 'हिन्दी', flag: '🇮🇳'},
+        {code: 'th', name: 'ไทย', flag: '🇹🇭'},
+        {code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳'},
+        {code: 'nl', name: 'Nederlands', flag: '🇳🇱'},
+        {code: 'pl', name: 'Polski', flag: '🇵🇱'},
+        {code: 'tr', name: 'Türkçe', flag: '🇹🇷'}
+      ];
+
+      // Parallel translate untuk lebih cepat (5 requests sekaligus)
+      async function translateBatch(texts, targetLang) {
+        const promises = texts.map(text => translateText(text, targetLang));
+        return Promise.all(promises);
+      }
+
+      // Batch translate multiple texts sekaligus dengan parallel processing (LEBIH CEPAT)
+      async function batchTranslateTexts(texts, targetLang) {
+        const uniqueTexts = [...new Set(texts.filter(t => t && t.trim().length >= 2))];
+        const translatedMap = new Map();
+        
+        // Translate dalam batch parallel (5 teks sekaligus untuk lebih cepat)
+        const batchSize = 5;
+        for (let i = 0; i < uniqueTexts.length; i += batchSize) {
+          const batch = uniqueTexts.slice(i, i + batchSize);
+          const translatedBatch = await translateBatch(batch, targetLang);
+          
+          batch.forEach((text, index) => {
+            translatedMap.set(text, translatedBatch[index]);
+          });
+          
+          // Delay minimal hanya di akhir setiap batch
+          if (i + batchSize < uniqueTexts.length) {
+            await new Promise(resolve => setTimeout(resolve, 10)); // Delay minimal
+          }
+        }
+        
+        return translatedMap;
+      }
+
+      function fetchLanguagesUser() {
+        populateLanguageDropdownUser(languages);
+        populateLanguageDropdownUserMobile(languages);
+        
+        // Load saved language from localStorage dan auto-translate
+        const savedLang = localStorage.getItem('selectedLanguage') || 'id';
+        const savedLangObj = languages.find(l => l.code === savedLang);
+        if (savedLangObj) {
+          currentLanguageUser.textContent = savedLangObj.code.toUpperCase();
+          currentLanguageUserMobile.textContent = savedLangObj.code.toUpperCase();
+          
+          // Auto-translate saat page load jika bukan bahasa Indonesia
+          if (savedLang !== 'id') {
+            // Translate segera setelah DOM ready
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
+              translatePageUser(savedLang);
+            } else {
+              document.addEventListener('DOMContentLoaded', () => {
+                translatePageUser(savedLang);
+              });
+            }
+          }
         }
       }
 
@@ -433,12 +482,11 @@
         languageDropdownUser.innerHTML = '';
         languages.forEach(lang => {
           const li = document.createElement('li');
-          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
-          li.textContent = `${lang.name} (${lang.code.toUpperCase()})`;
+          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center space-x-2';
+          li.innerHTML = `<span>${lang.flag || '🌐'}</span><span>${lang.name} (${lang.code.toUpperCase()})</span>`;
           li.addEventListener('click', () => {
             currentLanguageUser.textContent = lang.code.toUpperCase();
             languageDropdownUser.classList.add('hidden');
-            // Here you can add logic to change the page language
             changeLanguageUser(lang.code);
           });
           languageDropdownUser.appendChild(li);
@@ -449,29 +497,238 @@
         languageDropdownUserMobile.innerHTML = '';
         languages.forEach(lang => {
           const li = document.createElement('li');
-          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
-          li.textContent = `${lang.name} (${lang.code.toUpperCase()})`;
+          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center space-x-2';
+          li.innerHTML = `<span>${lang.flag || '🌐'}</span><span>${lang.name} (${lang.code.toUpperCase()})</span>`;
           li.addEventListener('click', () => {
             currentLanguageUserMobile.textContent = lang.code.toUpperCase();
             languageDropdownUserMobile.classList.add('hidden');
-            // Here you can add logic to change the page language
             changeLanguageUser(lang.code);
           });
           languageDropdownUserMobile.appendChild(li);
         });
       }
 
-      function changeLanguageUser(langCode) {
-        // Placeholder function for language change
-        // You can implement translation logic here
-        console.log('Changing language to:', langCode);
-        // For now, just show an alert
+      // Translation cache untuk menghindari translate ulang
+      const translationCache = new Map();
+      
+      // Translate text menggunakan multiple API dengan cache
+      async function translateText(text, targetLang) {
+        if (targetLang === 'id') return text;
+        if (!text || text.trim().length === 0) return text;
+        
+        const cacheKey = `${text}|${targetLang}`;
+        if (translationCache.has(cacheKey)) {
+          return translationCache.get(cacheKey);
+        }
+
+        if (/^[\d\s\W]+$/.test(text) || text.trim().length < 2) {
+          return text;
+        }
+
+        try {
+          const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=id&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`);
+          const data = await response.json();
+          if (data && data[0] && data[0][0] && data[0][0][0]) {
+            const translated = data[0][0][0];
+            translationCache.set(cacheKey, translated);
+            return translated;
+          }
+        } catch (error) {
+          console.log('Google Translate failed, trying MyMemory API');
+        }
+        try {
+          const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=id|${targetLang}`);
+          const data = await response.json();
+          if (data.responseData && data.responseData.translatedText) {
+            const translated = data.responseData.translatedText;
+            translationCache.set(cacheKey, translated);
+            return translated;
+          }
+        } catch (error) {
+          console.error('Translation API error:', error);
+        }
+        return text;
+      }
+
+      // Get all text nodes di halaman (otomatis, tanpa perlu data-translate)
+      function getAllTextNodes(element = document.body) {
+        const textNodes = [];
+        const walker = document.createTreeWalker(
+          element,
+          NodeFilter.SHOW_TEXT,
+          {
+            acceptNode: function(node) {
+              const parent = node.parentElement;
+              if (!parent) return NodeFilter.FILTER_REJECT;
+              
+              const tagName = parent.tagName.toLowerCase();
+              if (['script', 'style', 'noscript', 'meta', 'link'].includes(tagName)) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              
+              const style = window.getComputedStyle(parent);
+              if (style.display === 'none' || style.visibility === 'hidden') {
+                return NodeFilter.FILTER_REJECT;
+              }
+              
+              if (parent.classList.contains('no-translate') || parent.hasAttribute('data-no-translate')) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              
+              const text = node.textContent.trim();
+              if (!text || text.length < 2 || /^[\d\s\W]+$/.test(text)) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              
+              if (/^[\d.]+$/.test(text) || /^(https?|www\.)/i.test(text)) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              
+              return NodeFilter.FILTER_ACCEPT;
+            }
+          }
+        );
+        
+        let node;
+        while (node = walker.nextNode()) {
+          const text = node.textContent.trim();
+          if (text && text.length >= 2) {
+            textNodes.push({
+              node: node,
+              text: text,
+              original: text
+            });
+          }
+        }
+        
+        return textNodes;
+      }
+
+      async function changeLanguageUser(langCode) {
+        localStorage.setItem('selectedLanguage', langCode);
+        const langObj = languages.find(l => l.code === langCode);
+        if (langObj) {
+          currentLanguageUser.textContent = langObj.code.toUpperCase();
+          currentLanguageUserMobile.textContent = langObj.code.toUpperCase();
+        }
+        if (langCode === 'id') {
+          document.querySelectorAll('[data-translated]').forEach(el => {
+            el.removeAttribute('data-translated');
+          });
+          location.reload();
+          return;
+        }
         Swal.fire({
-          icon: 'info',
-          title: 'Language Changed',
-          text: `Language changed to ${langCode.toUpperCase()}`,
-          confirmButtonText: 'OK'
+          title: 'Mengubah Bahasa...',
+          text: 'Mohon tunggu sebentar',
+          allowOutsideClick: false,
+          showConfirmButton: false,
+          willOpen: () => { Swal.showLoading(); }
         });
+        try {
+          // Get all text nodes automatically
+          const textNodes = getAllTextNodes();
+          if (textNodes.length === 0) {
+            Swal.close();
+            return;
+          }
+
+          textNodes.forEach(item => {
+            if (!item.node.parentElement.hasAttribute('data-translated')) {
+              item.node.parentElement.setAttribute('data-original-text', item.text);
+              item.node.parentElement.setAttribute('data-translated', 'true');
+            }
+          });
+
+          const uniqueTexts = [...new Set(textNodes.map(item => item.text))];
+          let translatedCount = 0;
+          const totalTexts = uniqueTexts.length;
+          
+          const updateProgress = () => {
+            const progress = Math.round((translatedCount / totalTexts) * 100);
+            Swal.update({ text: `Menerjemahkan ${translatedCount}/${totalTexts} teks... ${progress}%` });
+          };
+
+          // Batch translate dengan parallel processing (lebih cepat)
+          const uniqueTextsList = uniqueTexts.filter(t => t && t.trim().length >= 2);
+          const translatedMap = await batchTranslateTexts(uniqueTextsList, langCode);
+          
+          // Update progress setelah selesai
+          translatedCount = uniqueTextsList.length;
+          updateProgress();
+
+          textNodes.forEach(item => {
+            const translated = translatedMap.get(item.text);
+            if (translated && translated !== item.text) {
+              item.node.textContent = item.node.textContent.replace(item.text, translated);
+            }
+          });
+
+          Swal.close();
+          Swal.fire({
+            icon: 'success',
+            title: 'Bahasa Berhasil Diubah',
+            text: `Semua halaman telah diterjemahkan ke ${langObj ? langObj.name : langCode.toUpperCase()}`,
+            confirmButtonText: 'OK',
+            timer: 2000,
+            timerProgressBar: true
+          });
+        } catch (error) {
+          console.error('Language change error:', error);
+          Swal.close();
+          Swal.fire({
+            icon: 'error',
+            title: 'Terjadi Kesalahan',
+            text: 'Gagal mengubah bahasa. Silakan coba lagi.',
+            confirmButtonText: 'OK'
+          });
+        }
+      }
+
+      async function translatePageUser(langCode) {
+        if (langCode === 'id') return;
+        try {
+          // Tunggu DOM siap
+          if (document.readyState === 'loading') {
+            await new Promise(resolve => {
+              if (document.readyState === 'complete') {
+                resolve();
+              } else {
+                document.addEventListener('DOMContentLoaded', resolve);
+              }
+            });
+          }
+          
+          // Tunggu sebentar untuk memastikan konten dinamis sudah ter-load
+          await new Promise(resolve => setTimeout(resolve, 300));
+          
+          const textNodes = getAllTextNodes();
+          if (textNodes.length === 0) return;
+
+          textNodes.forEach(item => {
+            if (!item.node.parentElement.hasAttribute('data-translated')) {
+              item.node.parentElement.setAttribute('data-original-text', item.text);
+              item.node.parentElement.setAttribute('data-translated', 'true');
+            }
+          });
+
+          const uniqueTexts = [...new Set(textNodes.map(item => item.text))];
+          const uniqueTextsList = uniqueTexts.filter(t => t && t.trim().length >= 2);
+          
+          // Batch translate dengan parallel processing (lebih cepat)
+          const translatedMap = await batchTranslateTexts(uniqueTextsList, langCode);
+
+          textNodes.forEach(item => {
+            const translated = translatedMap.get(item.text);
+            if (translated && translated !== item.text) {
+              item.node.textContent = item.node.textContent.replace(item.text, translated);
+            }
+          });
+          
+          console.log(`Auto-translated ${uniqueTextsList.length} unique texts to ${langCode}`);
+        } catch (error) {
+          console.error('Auto translate error:', error);
+        }
       }
 
       // Toggle desktop language dropdown

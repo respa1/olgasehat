@@ -119,10 +119,10 @@
 
     <!-- Menu Desktop -->
     <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
-      <a href="/venueuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200">Fasilitas Olahraga</a>
-      <a href="/healthyuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200">Layanan Kesehatan</a>
-      <a href="/communityuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200">Komunitas & Aktivitas</a>
-      <a href="/bloguser_news" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200">Info Sehat</a>
+      <a href="/venueuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Fasilitas Olahraga</a>
+      <a href="/healthyuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Layanan Kesehatan</a>
+      <a href="/communityuser" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Komunitas & Aktivitas</a>
+      <a href="/bloguser_news" class="hover:text-blue-700 border-b-2 border-transparent hover:border-blue-700 pb-1 transition-colors duration-200" data-translate>Info Sehat</a>
     </nav>
 
     <!-- Aksi Desktop -->
@@ -166,30 +166,30 @@
             <span class="badge badge-role mt-1">User</span>
           </div>
           <a href="/dashboarduser" class="dropdown-item">
-            <span>Profil</span>
+            <span data-translate>Profil</span>
             <i class="fas fa-user"></i>
           </a>
           <a href="/riwayatpayment" class="dropdown-item">
-            <span>Riwayat Pemesanan</span>
+            <span data-translate>Riwayat Pemesanan</span>
             <i class="fas fa-history"></i>
           </a>
           <a href="/riwayat-komunitas" class="dropdown-item">
-            <span>Komunitas</span>
+            <span data-translate>Komunitas</span>
             <i class="fas fa-users"></i>
           </a>
           <a href="/riwayatmembership" class="dropdown-item">
-            <span>Membership</span>
+            <span data-translate>Membership</span>
             <i class="fas fa-crown"></i>
           </a>
           <a href="/settings" class="dropdown-item">
-            <span>Pengaturan</span>
+            <span data-translate>Pengaturan</span>
             <i class="fas fa-cog"></i>
           </a>
           <div class="dropdown-divider my-2" style="border-top: 1px solid #e5e7eb;"></div>
           <form id="logout-form" action="{{ route('user.logout') }}" method="POST">
             @csrf
             <button type="submit" class="dropdown-item w-full text-left text-red-600 hover:bg-red-50" style="border: none; background: none; cursor: pointer;">
-              <span>Logout</span>
+              <span data-translate>Logout</span>
               <i class="fas fa-sign-out-alt"></i>
             </button>
           </form>
@@ -237,30 +237,30 @@
             <span class="badge badge-role mt-1">User</span>
           </div>
           <a href="/dashboarduser" class="dropdown-item" style="font-size: 0.875rem;">
-            <span>Profil</span>
+            <span data-translate>Profil</span>
             <i class="fas fa-user"></i>
           </a>
           <a href="/riwayatpayment" class="dropdown-item" style="font-size: 0.875rem;">
-            <span>Riwayat Pemesanan</span>
+            <span data-translate>Riwayat Pemesanan</span>
             <i class="fas fa-history"></i>
           </a>
           <a href="/riwayat-komunitas" class="dropdown-item" style="font-size: 0.875rem;">
-            <span>Komunitas</span>
+            <span data-translate>Komunitas</span>
             <i class="fas fa-users"></i>
           </a>
           <a href="/riwayatmembership" class="dropdown-item" style="font-size: 0.875rem;">
-            <span>Membership</span>
+            <span data-translate>Membership</span>
             <i class="fas fa-crown"></i>
           </a>
           <a href="/settings" class="dropdown-item" style="font-size: 0.875rem;">
-            <span>Pengaturan</span>
+            <span data-translate>Pengaturan</span>
             <i class="fas fa-cog"></i>
           </a>
           <div class="dropdown-divider my-2" style="border-top: 1px solid #e5e7eb;"></div>
           <form id="mobile-logout-form" action="{{ route('user.logout') }}" method="POST">
             @csrf
             <button type="submit" class="dropdown-item w-full text-left text-red-600 hover:bg-red-50" style="border: none; background: none; cursor: pointer; font-size: 0.875rem;">
-              <span>Logout</span>
+              <span data-translate>Logout</span>
               <i class="fas fa-sign-out-alt"></i>
             </button>
           </form>
@@ -281,14 +281,14 @@
                 transition-all duration-300 ease-in-out absolute top-full left-0 w-full z-[50] max-h-[calc(100vh-4rem)] overflow-y-auto">
 
       <!-- Link Navigasi -->
-      <a href="/venueuser" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Fasilitas Olahraga</a>
-      <a href="/healthyuser" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Layanan Kesehatan</a>
-      <a href="/communityuser" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Komunitas & Aktivitas</a>
-      <a href="/bloguser_news" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Info Sehat</a>
+      <a href="/venueuser" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Fasilitas Olahraga</a>
+      <a href="/healthyuser" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Layanan Kesehatan</a>
+      <a href="/communityuser" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Komunitas & Aktivitas</a>
+      <a href="/bloguser_news" class="block px-4 sm:px-6 py-3 sm:py-4 border-b text-center font-medium text-sm sm:text-base text-gray-700 hover:bg-blue-50 hover:text-blue-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Info Sehat</a>
 
       <!-- User Links -->
       <div class="border-t pt-3 sm:pt-4 px-4 sm:px-6 pb-4">
-        <a href="/logout" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 menu-item opacity-0 translate-y-1 transition-all duration-200">Logout</a>
+        <a href="/logout" class="block w-full px-4 sm:px-6 py-3 sm:py-4 text-center text-sm sm:text-base bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 menu-item opacity-0 translate-y-1 transition-all duration-200" data-translate>Logout</a>
       </div>
     </nav>
 </header>
@@ -308,28 +308,28 @@
       </p>
     </div>
     <div>
-      <h3 class="font-semibold text-lg mb-4 text-gray-800">Perusahaan</h3>
+      <h3 class="font-semibold text-lg mb-4 text-gray-800" data-translate>Perusahaan</h3>
       <ul class="space-y-3 text-base">
-        <li><a href="tentang_user" class="hover:text-blue-700">Tentang</a></li>
-        <li><a href="#" class="hover:text-blue-700">Kebijakan &amp; Privasi</a></li>
-        <li><a href="#" class="hover:text-blue-700">Syarat &amp; Ketentuan</a></li>
+        <li><a href="tentang_user" class="hover:text-blue-700" data-translate>Tentang</a></li>
+        <li><a href="#" class="hover:text-blue-700" data-translate>Kebijakan &amp; Privasi</a></li>
+        <li><a href="#" class="hover:text-blue-700" data-translate>Syarat &amp; Ketentuan</a></li>
       </ul>
     </div>
     <div>
-      <h3 class="font-semibold text-lg mb-4 text-gray-800">Ekosistem</h3>
+      <h3 class="font-semibold text-lg mb-4 text-gray-800" data-translate>Ekosistem</h3>
       <ul class="space-y-3 text-base">
-        <li><a href="/venueuser" class="hover:text-blue-700">Fasilitas Olahraga</a></li>
-        <li><a href="/healthyuser" class="hover:text-blue-700">Layanan Kesehatan</a></li>
-        <li><a href="/communityuser" class="hover:text-blue-700">Komunitas & Aktivitas</a></li>
-        <li><a href="/bloguser_news" class="hover:text-blue-700">Info Sehat</a></li>
+        <li><a href="/venueuser" class="hover:text-blue-700" data-translate>Fasilitas Olahraga</a></li>
+        <li><a href="/healthyuser" class="hover:text-blue-700" data-translate>Layanan Kesehatan</a></li>
+        <li><a href="/communityuser" class="hover:text-blue-700" data-translate>Komunitas & Aktivitas</a></li>
+        <li><a href="/bloguser_news" class="hover:text-blue-700" data-translate>Info Sehat</a></li>
       </ul>
     </div>
     <div>
-      <h3 class="font-semibold text-lg mb-4 text-gray-800">Support</h3>
+      <h3 class="font-semibold text-lg mb-4 text-gray-800" data-translate>Support</h3>
       <ul class="space-y-3 text-base">
-        <li><a href="#" class="hover:text-blue-700">FAQs</a></li>
-        <li><a href="#" class="hover:text-blue-700">Support Center</a></li>
-        <li><a href="#" class="hover:text-blue-700">Contact Us</a></li>
+        <li><a href="#" class="hover:text-blue-700" data-translate>FAQs</a></li>
+        <li><a href="#" class="hover:text-blue-700" data-translate>Support Center</a></li>
+        <li><a href="#" class="hover:text-blue-700" data-translate>Contact Us</a></li>
       </ul>
       <div class="flex space-x-4 mt-6">
         <a
@@ -481,46 +481,141 @@
       const languageDropdownUserMobile = document.getElementById("languageDropdownUserMobile");
       const currentLanguageUserMobile = document.getElementById("currentLanguageUserMobile");
 
-      // Fetch languages from LibreTranslate API
-      async function fetchLanguagesUser() {
-        try {
-          const response = await fetch('https://libretranslate.com/languages');
-          const languages = await response.json();
-          populateLanguageDropdownUser(languages);
-          populateLanguageDropdownUserMobile(languages);
-        } catch (error) {
-          console.error('Error fetching languages:', error);
-          // Fallback to common languages
-          const fallbackLanguages = [
-            {code: 'en', name: 'English'},
-            {code: 'id', name: 'Indonesian'},
-            {code: 'es', name: 'Spanish'},
-            {code: 'fr', name: 'French'},
-            {code: 'de', name: 'German'},
-            {code: 'it', name: 'Italian'},
-            {code: 'pt', name: 'Portuguese'},
-            {code: 'ru', name: 'Russian'},
-            {code: 'ja', name: 'Japanese'},
-            {code: 'ko', name: 'Korean'},
-            {code: 'zh', name: 'Chinese'},
-            {code: 'ar', name: 'Arabic'},
-            {code: 'hi', name: 'Hindi'}
-          ];
-          populateLanguageDropdownUser(fallbackLanguages);
-          populateLanguageDropdownUserMobile(fallbackLanguages);
+      // Language list dengan bahasa Bali, Jawa, dan internasional
+      const languages = [
+        {code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩'},
+        {code: 'ban', name: 'Basa Bali', flag: '🏝️'},
+        {code: 'jw', name: 'Basa Jawa', flag: '☕'}, // Google Translate pakai 'jw' bukan 'jv'
+        {code: 'en', name: 'English', flag: '🇬🇧'},
+        {code: 'es', name: 'Español', flag: '🇪🇸'},
+        {code: 'fr', name: 'Français', flag: '🇫🇷'},
+        {code: 'de', name: 'Deutsch', flag: '🇩🇪'},
+        {code: 'it', name: 'Italiano', flag: '🇮🇹'},
+        {code: 'pt', name: 'Português', flag: '🇵🇹'},
+        {code: 'ru', name: 'Русский', flag: '🇷🇺'},
+        {code: 'ja', name: '日本語', flag: '🇯🇵'},
+        {code: 'ko', name: '한국어', flag: '🇰🇷'},
+        {code: 'zh', name: '中文', flag: '🇨🇳'},
+        {code: 'ar', name: 'العربية', flag: '🇸🇦'},
+        {code: 'hi', name: 'हिन्दी', flag: '🇮🇳'},
+        {code: 'th', name: 'ไทย', flag: '🇹🇭'},
+        {code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳'},
+        {code: 'nl', name: 'Nederlands', flag: '🇳🇱'},
+        {code: 'pl', name: 'Polski', flag: '🇵🇱'},
+        {code: 'tr', name: 'Türkçe', flag: '🇹🇷'}
+      ];
+
+      // Observer untuk auto-translate saat navigasi
+      let pageObserverUser = null;
+      let isTranslatingUser = false;
+      
+      function setupAutoTranslateObserverUser(langCode) {
+        if (langCode === 'id') {
+          if (pageObserverUser) {
+            pageObserverUser.disconnect();
+            pageObserverUser = null;
+          }
+          return;
         }
+        
+        if (pageObserverUser) {
+          pageObserverUser.disconnect();
+        }
+        
+        pageObserverUser = new MutationObserver((mutations) => {
+          let hasNewText = false;
+          mutations.forEach((mutation) => {
+            if (mutation.addedNodes.length > 0) {
+              mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === Node.ELEMENT_NODE && 
+                    !node.hasAttribute('data-translated') &&
+                    node.textContent && 
+                    node.textContent.trim().length > 2) {
+                  hasNewText = true;
+                }
+              });
+            }
+          });
+          
+          if (hasNewText) {
+            clearTimeout(window.translateTimeoutUser);
+            window.translateTimeoutUser = setTimeout(() => {
+              translatePageUser(langCode, true);
+            }, 1000);
+          }
+        });
+        
+        pageObserverUser.observe(document.body, {
+          childList: true,
+          subtree: true,
+          characterData: true
+        });
+      }
+
+      function fetchLanguagesUser() {
+        populateLanguageDropdownUser(languages);
+        populateLanguageDropdownUserMobile(languages);
+        
+        // Load saved language from localStorage dan auto-translate
+        const savedLang = localStorage.getItem('selectedLanguage') || 'id';
+        const savedLangObj = languages.find(l => l.code === savedLang);
+        if (savedLangObj) {
+          currentLanguageUser.textContent = savedLangObj.code.toUpperCase();
+          currentLanguageUserMobile.textContent = savedLangObj.code.toUpperCase();
+          
+          // Auto-translate saat page load jika bukan bahasa Indonesia
+          if (savedLang !== 'id') {
+            // Setup observer untuk auto-translate saat navigasi
+            setupAutoTranslateObserverUser(savedLang);
+            
+            // Translate segera setelah DOM ready
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
+              translatePageUser(savedLang);
+            } else {
+              document.addEventListener('DOMContentLoaded', () => {
+                translatePageUser(savedLang);
+              });
+            }
+          }
+        }
+        
+        // Listen untuk navigation events
+        window.addEventListener('popstate', () => {
+          const lang = localStorage.getItem('selectedLanguage') || 'id';
+          if (lang !== 'id') {
+            setTimeout(() => translatePageUser(lang, true), 300);
+          }
+        });
+        
+        // Intercept link clicks untuk auto-translate setelah navigation
+        document.addEventListener('click', (e) => {
+          const link = e.target.closest('a[href]');
+          if (link && link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
+            const lang = localStorage.getItem('selectedLanguage') || 'id';
+            if (lang !== 'id') {
+              setTimeout(() => {
+                if (document.readyState === 'complete') {
+                  translatePageUser(lang, true);
+                } else {
+                  window.addEventListener('load', () => {
+                    translatePageUser(lang, true);
+                  }, { once: true });
+                }
+              }, 500);
+            }
+          }
+        });
       }
 
       function populateLanguageDropdownUser(languages) {
         languageDropdownUser.innerHTML = '';
         languages.forEach(lang => {
           const li = document.createElement('li');
-          li.className = 'px-3 xl:px-4 py-2 text-sm xl:text-base hover:bg-gray-100 cursor-pointer';
-          li.textContent = `${lang.name} (${lang.code.toUpperCase()})`;
+          li.className = 'px-3 xl:px-4 py-2 text-sm xl:text-base hover:bg-gray-100 cursor-pointer flex items-center space-x-2';
+          li.innerHTML = `<span>${lang.flag || '🌐'}</span><span>${lang.name} (${lang.code.toUpperCase()})</span>`;
           li.addEventListener('click', () => {
             currentLanguageUser.textContent = lang.code.toUpperCase();
             languageDropdownUser.classList.add('hidden');
-            // Here you can add logic to change the page language
             changeLanguageUser(lang.code);
           });
           languageDropdownUser.appendChild(li);
@@ -531,29 +626,356 @@
         languageDropdownUserMobile.innerHTML = '';
         languages.forEach(lang => {
           const li = document.createElement('li');
-          li.className = 'px-3 sm:px-4 py-2 text-sm sm:text-base hover:bg-gray-100 cursor-pointer';
-          li.textContent = `${lang.name} (${lang.code.toUpperCase()})`;
+          li.className = 'px-3 sm:px-4 py-2 text-sm sm:text-base hover:bg-gray-100 cursor-pointer flex items-center space-x-2';
+          li.innerHTML = `<span>${lang.flag || '🌐'}</span><span>${lang.name} (${lang.code.toUpperCase()})</span>`;
           li.addEventListener('click', () => {
             currentLanguageUserMobile.textContent = lang.code.toUpperCase();
             languageDropdownUserMobile.classList.add('hidden');
-            // Here you can add logic to change the page language
             changeLanguageUser(lang.code);
           });
           languageDropdownUserMobile.appendChild(li);
         });
       }
 
-      function changeLanguageUser(langCode) {
-        // Placeholder function for language change
-        // You can implement translation logic here
-        console.log('Changing language to:', langCode);
-        // For now, just show an alert
+      // Translation cache untuk menghindari translate ulang
+      const translationCache = new Map();
+      
+      // Mapping bahasa untuk Google Translate (beberapa code berbeda)
+      const langCodeMap = {
+        'ban': 'ban', // Bali
+        'jw': 'jw',   // Jawa - Google Translate pakai 'jw'
+        'jv': 'jw',   // Fallback untuk 'jv' ke 'jw'
+        'id': 'id',
+        'en': 'en',
+        'es': 'es',
+        'fr': 'fr',
+        'de': 'de',
+        'it': 'it',
+        'pt': 'pt',
+        'ru': 'ru',
+        'ja': 'ja',
+        'ko': 'ko',
+        'zh': 'zh',
+        'ar': 'ar',
+        'hi': 'hi',
+        'th': 'th',
+        'vi': 'vi',
+        'nl': 'nl',
+        'pl': 'pl',
+        'tr': 'tr'
+      };
+
+      // Translate text menggunakan multiple API dengan cache
+      async function translateText(text, targetLang) {
+        if (targetLang === 'id') return text;
+        if (!text || text.trim().length === 0) return text;
+        
+        // Cek cache dulu
+        const cacheKey = `${text}|${targetLang}`;
+        if (translationCache.has(cacheKey)) {
+          return translationCache.get(cacheKey);
+        }
+
+        // Skip jika hanya angka, symbol, atau terlalu pendek
+        if (/^[\d\s\W]+$/.test(text) || text.trim().length < 2) {
+          return text;
+        }
+
+        // Map language code untuk Google Translate
+        const googleLangCode = langCodeMap[targetLang] || targetLang;
+
+        try {
+          const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=id&tl=${googleLangCode}&dt=t&q=${encodeURIComponent(text)}`);
+          const data = await response.json();
+          if (data && data[0] && data[0][0] && data[0][0][0]) {
+            const translated = data[0][0][0];
+            translationCache.set(cacheKey, translated);
+            return translated;
+          }
+        } catch (error) {
+          console.log('Google Translate failed, trying MyMemory API');
+        }
+        try {
+          const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=id|${targetLang}`);
+          const data = await response.json();
+          if (data.responseData && data.responseData.translatedText) {
+            const translated = data.responseData.translatedText;
+            translationCache.set(cacheKey, translated);
+            return translated;
+          }
+        } catch (error) {
+          console.error('Translation API error:', error);
+        }
+        
+        // Untuk bahasa Bali dan Jawa
+        if (targetLang === 'ban' || targetLang === 'jw' || targetLang === 'jv') {
+          console.warn(`Translation untuk ${targetLang} tidak tersedia untuk: "${text}"`);
+          return text;
+        }
+        
+        return text;
+      }
+
+      // Parallel translate untuk lebih cepat (5 requests sekaligus)
+      async function translateBatch(texts, targetLang) {
+        const promises = texts.map(text => translateText(text, targetLang));
+        return Promise.all(promises);
+      }
+
+      // Batch translate multiple texts sekaligus dengan parallel processing (LEBIH CEPAT)
+      async function batchTranslateTexts(texts, targetLang) {
+        const uniqueTexts = [...new Set(texts.filter(t => t && t.trim().length >= 2))];
+        const translatedMap = new Map();
+        
+        // Translate dalam batch parallel (5 teks sekaligus untuk lebih cepat)
+        const batchSize = 5;
+        for (let i = 0; i < uniqueTexts.length; i += batchSize) {
+          const batch = uniqueTexts.slice(i, i + batchSize);
+          const translatedBatch = await translateBatch(batch, targetLang);
+          
+          batch.forEach((text, index) => {
+            translatedMap.set(text, translatedBatch[index]);
+          });
+          
+          // Delay minimal hanya di akhir setiap batch
+          if (i + batchSize < uniqueTexts.length) {
+            await new Promise(resolve => setTimeout(resolve, 10)); // Delay minimal
+          }
+        }
+        
+        return translatedMap;
+      }
+
+      // Get all text nodes di halaman (otomatis, tanpa perlu data-translate)
+      function getAllTextNodes(element = document.body) {
+        const textNodes = [];
+        const walker = document.createTreeWalker(
+          element,
+          NodeFilter.SHOW_TEXT,
+          {
+            acceptNode: function(node) {
+              const parent = node.parentElement;
+              if (!parent) return NodeFilter.FILTER_REJECT;
+              
+              const tagName = parent.tagName.toLowerCase();
+              if (['script', 'style', 'noscript', 'meta', 'link'].includes(tagName)) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              
+              const style = window.getComputedStyle(parent);
+              if (style.display === 'none' || style.visibility === 'hidden') {
+                return NodeFilter.FILTER_REJECT;
+              }
+              
+              if (parent.classList.contains('no-translate') || parent.hasAttribute('data-no-translate')) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              
+              const text = node.textContent.trim();
+              if (!text || text.length < 2 || /^[\d\s\W]+$/.test(text)) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              
+              if (/^[\d.]+$/.test(text) || /^(https?|www\.)/i.test(text)) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              
+              return NodeFilter.FILTER_ACCEPT;
+            }
+          }
+        );
+        
+        let node;
+        while (node = walker.nextNode()) {
+          const text = node.textContent.trim();
+          if (text && text.length >= 2) {
+            textNodes.push({
+              node: node,
+              text: text,
+              original: text
+            });
+          }
+        }
+        
+        return textNodes;
+      }
+
+      async function changeLanguageUser(langCode) {
+        localStorage.setItem('selectedLanguage', langCode);
+        const langObj = languages.find(l => l.code === langCode);
+        if (langObj) {
+          currentLanguageUser.textContent = langObj.code.toUpperCase();
+          currentLanguageUserMobile.textContent = langObj.code.toUpperCase();
+        }
+        if (langCode === 'id') {
+          document.querySelectorAll('[data-translated]').forEach(el => {
+            el.removeAttribute('data-translated');
+            el.removeAttribute('data-original-text');
+          });
+          if (pageObserverUser) {
+            pageObserverUser.disconnect();
+            pageObserverUser = null;
+          }
+          location.reload();
+          return;
+        }
+        
+        // Setup observer untuk bahasa baru
+        setupAutoTranslateObserverUser(langCode);
         Swal.fire({
-          icon: 'info',
-          title: 'Language Changed',
-          text: `Language changed to ${langCode.toUpperCase()}`,
-          confirmButtonText: 'OK'
+          title: 'Mengubah Bahasa...',
+          text: 'Mohon tunggu sebentar',
+          allowOutsideClick: false,
+          showConfirmButton: false,
+          willOpen: () => { Swal.showLoading(); }
         });
+        try {
+          // Get all text nodes automatically
+          const textNodes = getAllTextNodes();
+          if (textNodes.length === 0) {
+            Swal.close();
+            return;
+          }
+
+          textNodes.forEach(item => {
+            if (!item.node.parentElement.hasAttribute('data-translated')) {
+              item.node.parentElement.setAttribute('data-original-text', item.text);
+              item.node.parentElement.setAttribute('data-translated', 'true');
+            }
+          });
+
+          const uniqueTexts = [...new Set(textNodes.map(item => item.text))];
+          let translatedCount = 0;
+          const totalTexts = uniqueTexts.length;
+          
+          const updateProgress = () => {
+            const progress = Math.round((translatedCount / totalTexts) * 100);
+            Swal.update({ text: `Menerjemahkan ${translatedCount}/${totalTexts} teks... ${progress}%` });
+          };
+
+          // Batch translate dengan parallel processing (lebih cepat)
+          const uniqueTextsList = uniqueTexts.filter(t => t && t.trim().length >= 2);
+          const translatedMap = await batchTranslateTexts(uniqueTextsList, langCode);
+          
+          // Update progress setelah selesai
+          translatedCount = uniqueTextsList.length;
+          updateProgress();
+
+          textNodes.forEach(item => {
+            const translated = translatedMap.get(item.text);
+            if (translated && translated !== item.text) {
+              item.node.textContent = item.node.textContent.replace(item.text, translated);
+            }
+          });
+
+          Swal.close();
+          Swal.fire({
+            icon: 'success',
+            title: 'Bahasa Berhasil Diubah',
+            text: `Semua halaman telah diterjemahkan ke ${langObj ? langObj.name : langCode.toUpperCase()}`,
+            confirmButtonText: 'OK',
+            timer: 2000,
+            timerProgressBar: true
+          });
+        } catch (error) {
+          console.error('Language change error:', error);
+          Swal.close();
+          Swal.fire({
+            icon: 'error',
+            title: 'Terjadi Kesalahan',
+            text: 'Gagal mengubah bahasa. Silakan coba lagi.',
+            confirmButtonText: 'OK'
+          });
+        }
+      }
+
+      async function translatePageUser(langCode, force = false) {
+        if (langCode === 'id') {
+          document.querySelectorAll('[data-translated]').forEach(el => {
+            const original = el.getAttribute('data-original-text');
+            if (original) {
+              const textNode = Array.from(el.childNodes).find(n => n.nodeType === Node.TEXT_NODE);
+              if (textNode) {
+                textNode.textContent = original;
+              }
+              el.removeAttribute('data-translated');
+              el.removeAttribute('data-original-text');
+            }
+          });
+          return;
+        }
+        
+        if (isTranslatingUser && !force) {
+          console.log('Translation already in progress, skipping...');
+          return;
+        }
+        isTranslatingUser = true;
+        
+        try {
+          if (document.readyState === 'loading') {
+            await new Promise(resolve => {
+              if (document.readyState === 'complete') {
+                resolve();
+              } else {
+                document.addEventListener('DOMContentLoaded', resolve);
+              }
+            });
+          }
+          
+          await new Promise(resolve => setTimeout(resolve, 500));
+          
+          if (force) {
+            document.querySelectorAll('[data-translated]').forEach(el => {
+              el.removeAttribute('data-translated');
+            });
+          }
+          
+          const textNodes = getAllTextNodes();
+          if (textNodes.length === 0) {
+            isTranslatingUser = false;
+            return;
+          }
+
+          const nodesToTranslate = textNodes.filter(item => {
+            return !item.node.parentElement.hasAttribute('data-translated');
+          });
+
+          if (nodesToTranslate.length === 0) {
+            isTranslatingUser = false;
+            return;
+          }
+
+          nodesToTranslate.forEach(item => {
+            if (!item.node.parentElement.hasAttribute('data-translated')) {
+              const originalText = item.node.textContent.trim();
+              item.node.parentElement.setAttribute('data-original-text', originalText);
+              item.node.parentElement.setAttribute('data-translated', 'true');
+            }
+          });
+
+          const uniqueTexts = [...new Set(nodesToTranslate.map(item => item.text))];
+          const uniqueTextsList = uniqueTexts.filter(t => t && t.trim().length >= 2);
+          
+          if (uniqueTextsList.length === 0) {
+            isTranslatingUser = false;
+            return;
+          }
+          
+          const translatedMap = await batchTranslateTexts(uniqueTextsList, langCode);
+
+          nodesToTranslate.forEach(item => {
+            const translated = translatedMap.get(item.text);
+            if (translated && translated !== item.text) {
+              item.node.textContent = item.node.textContent.replace(item.text, translated);
+            }
+          });
+          
+          console.log(`Auto-translated ${uniqueTextsList.length} unique texts to ${langCode}`);
+        } catch (error) {
+          console.error('Auto translate error:', error);
+        } finally {
+          isTranslatingUser = false;
+        }
       }
 
       // Toggle desktop language dropdown
