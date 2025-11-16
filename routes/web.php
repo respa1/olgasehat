@@ -189,6 +189,7 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     Route::put('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal/{slot}', [PendaftaranController::class, 'updateLapanganSlot'])->name('fasilitas.lapangan.jadwal.update');
     Route::delete('/fasilitas/venue/{venue}/lapangan/{lapangan}/jadwal/{slot}', [PendaftaranController::class, 'deleteLapanganSlot'])->name('fasilitas.lapangan.jadwal.delete');
     Route::get('/papan', [PendaftaranController::class, 'papan'])->name('papan');
+    Route::get('/pemiliklapangan/promo', [PendaftaranController::class, 'promo'])->name('pemilik.promo');
     
     Route::prefix('keuangan')->group(function () {
         Route::get('/fasilitas', fn() => view('pemiliklapangan.Keuangan.fasilitas'))->name('keuangan.fasilitas');

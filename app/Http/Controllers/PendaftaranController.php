@@ -992,4 +992,86 @@ class PendaftaranController extends Controller
         // Arahkan ke halaman "Syarat & Ketentuan"
         return redirect()->route('syarat')->with('success', 'Detail venue berhasil disimpan!');
     }
+
+    /**
+     * Menampilkan halaman promo/diskon
+     */
+    public function promo()
+    {
+        $userId = auth()->id();
+        
+        // Ambil semua venue milik user
+        $venues = Pendaftaran::where('user_id', $userId)
+            ->with(['lapangans.slots', 'galleries'])
+            ->get();
+        
+        // Kumpulkan semua promo dari semua venue
+        $promos = collect();
+        
+        foreach ($venues as $venue) {
+            foreach ($venue->lapangans as $lapangan) {
+                // Ambil slot promo (is_promo = true atau harga_awal > harga)
+                $promoSlots = $lapangan->slots()
+                    ->where(function($query) {
+                        $query->where('is_promo', true)
+                              ->orWhere(function($q) {
+                                  $q->whereNotNull('harga_awal')
+                                    ->whereColumn('harga_awal', '>', 'harga');
+                              });
+                    })
+                    ->where('status', 'available')
+                    ->get();
+                
+                if ($promoSlots->isEmpty()) {
+                    continue;
+                }
+                
+                // Hitung periode promo (dari tanggal terawal sampai terakhir)
+                $tanggalMin = $promoSlots->min('tanggal');
+                $tanggalMax = $promoSlots->max('tanggal');
+                
+                // Ambil slot pertama untuk info promo
+                $firstSlot = $promoSlots->first();
+                
+                // Hitung diskon
+                $diskonPercent = 0;
+                if ($firstSlot->harga_awal && $firstSlot->harga_awal > $firstSlot->harga) {
+                    $diskonPercent = round((($firstSlot->harga_awal - $firstSlot->harga) / $firstSlot->harga_awal) * 100);
+                }
+                
+                // Ambil gambar venue (logo atau gallery pertama)
+                $imageUrl = $venue->logo ? asset('storage/' . $venue->logo) : null;
+                if (!$imageUrl && $venue->galleries->isNotEmpty()) {
+                    $imageUrl = asset('fotogaleri/' . $venue->galleries->first()->foto);
+                }
+                if (!$imageUrl) {
+                    $imageUrl = asset('assets/olgasehat-icon.png');
+                }
+                
+                // Judul promo
+                $judulPromo = $firstSlot->catatan 
+                    ? $firstSlot->catatan 
+                    : ($diskonPercent > 0 ? "Diskon {$diskonPercent}%" : "Promo Spesial");
+                
+                $promos->push([
+                    'venue_id' => $venue->id,
+                    'venue_name' => $venue->namavenue,
+                    'lapangan_name' => $lapangan->nama,
+                    'image_url' => $imageUrl,
+                    'judul' => $judulPromo,
+                    'tanggal_min' => $tanggalMin,
+                    'tanggal_max' => $tanggalMax,
+                    'harga' => $firstSlot->harga,
+                    'harga_awal' => $firstSlot->harga_awal,
+                    'diskon_percent' => $diskonPercent,
+                    'total_slots' => $promoSlots->count(),
+                ]);
+            }
+        }
+        
+        // Sort by tanggal terbaru
+        $promos = $promos->sortByDesc('tanggal_min')->values();
+        
+        return view('pemiliklapangan.Promo.promo', compact('promos', 'venues'));
+    }
 }
