@@ -20,14 +20,40 @@
         transform: translateX(4px);
         background-color: #f9fafb;
     }
-    .datepicker-input {
-        @apply w-full md:w-48 rounded-lg border border-gray-300 px-4 py-2.5 mb-1 text-gray-800 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-150;
+    .booking-card {
+        transition: all 0.3s ease;
+        border-left: 4px solid;
     }
-    .filter-btn-active {
-        @apply bg-blue-600 text-white shadow-md hover:bg-blue-700;
+    .booking-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
-    .filter-btn-inactive {
-        @apply text-blue-600 border border-blue-500 bg-blue-50 hover:bg-blue-100;
+    .booking-card.completed {
+        border-left-color: #10b981;
+    }
+    .booking-card.pending {
+        border-left-color: #f59e0b;
+    }
+    .booking-card.cancelled {
+        border-left-color: #ef4444;
+    }
+    .status-badge {
+        padding: 0.375rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    .status-completed {
+        background-color: #d1fae5;
+        color: #065f46;
+    }
+    .status-pending {
+        background-color: #fef3c7;
+        color: #92400e;
+    }
+    .status-cancelled {
+        background-color: #fee2e2;
+        color: #991b1b;
     }
 </style>
 @endpush
@@ -42,108 +68,344 @@
             
             {{-- Header --}}
             <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Riwayat Transaksi</h1>
-                <p class="text-gray-600">Lihat semua riwayat pembayaran dan transaksi Anda</p>
-            </div>
-
-            {{-- Filter & Keterangan --}}
-            <div class="bg-white p-6 rounded-2xl shadow-lg mb-8 border border-gray-100">
-                <div class="flex flex-col md:flex-row md:justify-between md:items-end gap-6">
-
-                    {{-- Kiri: Tanggal Cut Off --}}
+                <div class="flex items-center justify-between">
                     <div>
-                        <label for="cutoff-date" class="block text-sm font-semibold text-gray-800 mb-2">
-                            Pilih Tanggal Cut Off
-                        </label>
-
-                        <div class="relative max-w-xs">
-                            <input 
-                                id="cutoff-date" 
-                                type="text" 
-                                class="border border-gray-300 rounded-lg px-4 py-2 w-full text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
-                                placeholder="Pilih tanggal"
-                            >
-                            <i class="fas fa-calendar-alt absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                        </div>
-
-                        <p class="text-xs text-gray-500 mt-2 leading-relaxed">
-                            *Menampilkan transaksi <span class="text-blue-600 font-semibold">6 bulan ke belakang</span> 
-                            dari tanggal pilihan Anda.
-                        </p>
+                        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Riwayat Pemesanan</h1>
+                        <p class="text-gray-600">Lihat semua booking venue olahraga yang telah Anda lakukan</p>
                     </div>
-
-                    {{-- Kanan: Tombol Filter --}}
-                    <div class="flex flex-wrap gap-3">
-                        <button 
-                            id="btn-semua" 
-                            type="button"
-                            class="flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-lg shadow-sm hover:bg-blue-700 transition active:scale-95">
-                            <i class="fas fa-list-ul"></i> Semua Transaksi
-                        </button>
-
-                        <button 
-                            id="btn-dp" 
-                            type="button"
-                            class="flex items-center gap-2 px-5 py-2.5 bg-white text-gray-700 font-semibold rounded-lg border border-gray-300 hover:bg-gray-50 transition active:scale-95">
-                            <i class="fas fa-percent"></i> Down Payment (DP)
-                        </button>
+                    <div class="hidden md:flex items-center space-x-2">
+                        <div class="bg-blue-100 text-blue-700 px-4 py-2 rounded-lg font-semibold">
+                            <i class="fas fa-calendar-check mr-2"></i>Total: 5 Booking
+                        </div>
                     </div>
                 </div>
             </div>
-        
-            {{-- List Riwayat Transaksi --}}
+
+            {{-- Filter Section --}}
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-filter mr-2 text-gray-500"></i>Cari Booking
+                        </label>
+                        <input 
+                            type="text" 
+                            placeholder="Cari berdasarkan venue, lapangan, atau ID booking..."
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                        >
+                    </div>
+                    <div class="md:w-48">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-calendar-alt mr-2 text-gray-500"></i>Tanggal
+                        </label>
+                        <input 
+                            type="date" 
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                        >
+                    </div>
+                    <div class="md:w-48">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-info-circle mr-2 text-gray-500"></i>Status
+                        </label>
+                        <select class="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                            <option value="">Semua Status</option>
+                            <option value="completed">Selesai</option>
+                            <option value="pending">Pending</option>
+                            <option value="cancelled">Dibatalkan</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Booking Cards --}}
             <div class="space-y-4">
                 
-                {{-- Kasus 1: Transaksi Ditemukan --}}
-                <h2 class="text-lg font-bold text-gray-700 mb-3">Transaksi Ditemukan (Oktober 2025)</h2>
+                {{-- Card 1: Booking Selesai --}}
+                <div class="booking-card completed bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+                    <div class="flex flex-col md:flex-row">
+                        {{-- Image Venue --}}
+                        <div class="md:w-48 flex-shrink-0">
+                            <img 
+                                src="{{ asset('assets/MU Sport Center.jpeg') }}" 
+                                alt="Futsal Tirtayasa Club"
+                                class="w-full h-full object-cover"
+                            >
+                        </div>
+                        
+                        {{-- Content --}}
+                        <div class="flex-1 p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <span class="text-xs text-gray-500 font-medium">Venue | Futsal</span>
+                                        <span class="status-badge status-completed">
+                                            <i class="fas fa-check-circle mr-1"></i>Selesai
+                                        </span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-2">Futsal Tirtayasa Club</h3>
+                                    <p class="text-sm text-gray-600 flex items-center mb-1">
+                                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-2"></i>
+                                        Denpasar, Bali
+                                    </p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-bold text-green-600 mb-1">Rp 150.000</p>
+                                    <p class="text-xs text-gray-500">Total Pembayaran</p>
+                                </div>
+                            </div>
 
-                {{-- Item Transaksi Selesai --}}
-                <div class="bg-white rounded-lg p-5 shadow-md flex justify-between items-center transition hover:shadow-lg border-l-4 border-green-500">
-                    <div class="flex flex-col md:flex-row md:items-center">
-                        <div class="text-xl font-bold text-green-600 md:w-24">Rp 150K</div>
-                        <div class="md:ml-6 mt-2 md:mt-0">
-                            <p class="font-bold text-gray-800">Booking Futsal (Lapangan A Tirtayasa)</p>
-                            <p class="text-sm text-gray-500">
-                                <i class="fas fa-calendar-check mr-1"></i> 14 Okt 2025 | ID: #OLG-1014-001
-                            </p>
+                            {{-- Booking Details --}}
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 p-4 bg-gray-50 rounded-lg">
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fas fa-futbol mr-3 text-blue-600 w-5"></i>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Lapangan</p>
+                                        <p class="font-semibold">Lapangan A</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fas fa-calendar-alt mr-3 text-blue-600 w-5"></i>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Tanggal</p>
+                                        <p class="font-semibold">14 Oktober 2025</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fas fa-clock mr-3 text-blue-600 w-5"></i>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Waktu</p>
+                                        <p class="font-semibold">19:00 - 21:00 WITA</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fas fa-hashtag mr-3 text-blue-600 w-5"></i>
+                                    <div>
+                                        <p class="text-xs text-gray-500">ID Booking</p>
+                                        <p class="font-semibold">#OLG-1014-001</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Action Buttons --}}
+                            <div class="flex flex-wrap gap-2 pt-4 border-t border-gray-200">
+                                <a href="/venueuser_detail" class="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition text-sm">
+                                    <i class="fas fa-eye mr-2"></i>Lihat Detail Venue
+                                </a>
+                                <button class="flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition text-sm">
+                                    <i class="fas fa-file-pdf mr-2"></i>Download Invoice
+                                </button>
+                                <button class="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-semibold transition text-sm">
+                                    <i class="fas fa-redo mr-2"></i>Booking Lagi
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <span class="text-xs font-semibold px-3 py-1 rounded-full bg-green-100 text-green-700 hidden sm:inline-block">
-                        Selesai
-                    </span>
-                </div>
-                
-                {{-- Item Transaksi Pending (DP) --}}
-                <div class="bg-white rounded-lg p-5 shadow-md flex justify-between items-center transition hover:shadow-lg border-l-4 border-yellow-500">
-                    <div class="flex flex-col md:flex-row md:items-center">
-                        <div class="text-xl font-bold text-yellow-600 md:w-24">Rp 50K</div>
-                        <div class="md:ml-6 mt-2 md:mt-0">
-                            <p class="font-bold text-gray-800">Down Payment (DP) GOR Bulu Tangkis Sentosa</p>
-                            <p class="text-sm text-gray-500">
-                                <i class="fas fa-calendar-day mr-1"></i> 15 Okt 2025 | ID: #OLG-1015-002
-                            </p>
-                        </div>
-                    </div>
-                    <span class="text-xs font-semibold px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 hidden sm:inline-block">
-                        DP
-                    </span>
                 </div>
 
-                {{-- Item Transaksi Sebelumnya --}}
-                <div class="bg-white rounded-lg p-5 shadow-md flex justify-between items-center transition hover:shadow-lg border-l-4 border-gray-300">
-                    <div class="flex flex-col md:flex-row md:items-center">
-                        <div class="text-xl font-bold text-gray-600 md:w-24">Rp 120K</div>
-                        <div class="md:ml-6 mt-2 md:mt-0">
-                            <p class="font-bold text-gray-800">Booking Lapangan Voli (Komunitas)</p>
-                            <p class="text-sm text-gray-500">
-                                <i class="fas fa-calendar-check mr-1"></i> 05 Sep 2025 | ID: #OLG-0905-008
-                            </p>
+                {{-- Card 2: Booking Pending (DP) --}}
+                <div class="booking-card pending bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+                    <div class="flex flex-col md:flex-row">
+                        {{-- Image Venue --}}
+                        <div class="md:w-48 flex-shrink-0">
+                            <img 
+                                src="{{ asset('assets/olgasehat-icon.png') }}" 
+                                alt="GOR Bulu Tangkis Sentosa"
+                                class="w-full h-full object-cover bg-gray-100"
+                            >
+                        </div>
+                        
+                        {{-- Content --}}
+                        <div class="flex-1 p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <span class="text-xs text-gray-500 font-medium">Venue | Bulu Tangkis</span>
+                                        <span class="status-badge status-pending">
+                                            <i class="fas fa-clock mr-1"></i>Pending (DP)
+                                        </span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-2">GOR Bulu Tangkis Sentosa</h3>
+                                    <p class="text-sm text-gray-600 flex items-center mb-1">
+                                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-2"></i>
+                                        Denpasar, Bali
+                                    </p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-bold text-yellow-600 mb-1">Rp 50.000</p>
+                                    <p class="text-xs text-gray-500">Down Payment</p>
+                                </div>
+                            </div>
+
+                            {{-- Booking Details --}}
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 p-4 bg-yellow-50 rounded-lg border border-yellow-100">
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fas fa-futbol mr-3 text-blue-600 w-5"></i>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Lapangan</p>
+                                        <p class="font-semibold">Lapangan Utama</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fas fa-calendar-alt mr-3 text-blue-600 w-5"></i>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Tanggal</p>
+                                        <p class="font-semibold">15 Oktober 2025</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fas fa-clock mr-3 text-blue-600 w-5"></i>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Waktu</p>
+                                        <p class="font-semibold">18:00 - 20:00 WITA</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fas fa-hashtag mr-3 text-blue-600 w-5"></i>
+                                    <div>
+                                        <p class="text-xs text-gray-500">ID Booking</p>
+                                        <p class="font-semibold">#OLG-1015-002</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Payment Info --}}
+                            <div class="bg-yellow-50 border-l-4 border-yellow-500 rounded-lg p-4 mb-4">
+                                <h4 class="font-semibold text-yellow-900 mb-2 flex items-center">
+                                    <i class="fas fa-info-circle mr-2"></i>
+                                    Informasi Pembayaran
+                                </h4>
+                                <p class="text-sm text-yellow-800">
+                                    Down Payment sebesar <span class="font-bold">Rp 50.000</span> telah dibayar. 
+                                    Sisa pembayaran <span class="font-bold">Rp 100.000</span> dapat dilunasi sebelum tanggal booking.
+                                </p>
+                            </div>
+
+                            {{-- Action Buttons --}}
+                            <div class="flex flex-wrap gap-2 pt-4 border-t border-gray-200">
+                                <button class="flex items-center px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg font-semibold transition text-sm">
+                                    <i class="fas fa-credit-card mr-2"></i>Lunasi Pembayaran
+                                </button>
+                                <a href="/venueuser_detail" class="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition text-sm">
+                                    <i class="fas fa-eye mr-2"></i>Lihat Detail
+                                </a>
+                                <button class="flex items-center px-4 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg font-semibold transition text-sm">
+                                    <i class="fas fa-times mr-2"></i>Batalkan
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <span class="text-xs font-semibold px-3 py-1 rounded-full bg-gray-100 text-gray-700 hidden sm:inline-block">
-                        Selesai
-                    </span>
                 </div>
+
+                {{-- Card 3: Booking Selesai (Lama) --}}
+                <div class="booking-card completed bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+                    <div class="flex flex-col md:flex-row">
+                        {{-- Image Venue --}}
+                        <div class="md:w-48 flex-shrink-0">
+                            <img 
+                                src="{{ asset('assets/olgasehat-icon.png') }}" 
+                                alt="Lapangan Voli Komunitas"
+                                class="w-full h-full object-cover bg-gray-100"
+                            >
+                        </div>
+                        
+                        {{-- Content --}}
+                        <div class="flex-1 p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <span class="text-xs text-gray-500 font-medium">Venue | Voli</span>
+                                        <span class="status-badge status-completed">
+                                            <i class="fas fa-check-circle mr-1"></i>Selesai
+                                        </span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-2">Lapangan Voli Komunitas</h3>
+                                    <p class="text-sm text-gray-600 flex items-center mb-1">
+                                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-2"></i>
+                                        Denpasar, Bali
+                                    </p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-bold text-green-600 mb-1">Rp 120.000</p>
+                                    <p class="text-xs text-gray-500">Total Pembayaran</p>
+                                </div>
+                            </div>
+
+                            {{-- Booking Details --}}
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 p-4 bg-gray-50 rounded-lg">
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fas fa-futbol mr-3 text-blue-600 w-5"></i>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Lapangan</p>
+                                        <p class="font-semibold">Lapangan 1</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fas fa-calendar-alt mr-3 text-blue-600 w-5"></i>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Tanggal</p>
+                                        <p class="font-semibold">05 September 2025</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fas fa-clock mr-3 text-blue-600 w-5"></i>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Waktu</p>
+                                        <p class="font-semibold">16:00 - 18:00 WITA</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fas fa-hashtag mr-3 text-blue-600 w-5"></i>
+                                    <div>
+                                        <p class="text-xs text-gray-500">ID Booking</p>
+                                        <p class="font-semibold">#OLG-0905-008</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Action Buttons --}}
+                            <div class="flex flex-wrap gap-2 pt-4 border-t border-gray-200">
+                                <a href="/venueuser_detail" class="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition text-sm">
+                                    <i class="fas fa-eye mr-2"></i>Lihat Detail Venue
+                                </a>
+                                <button class="flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition text-sm">
+                                    <i class="fas fa-file-pdf mr-2"></i>Download Invoice
+                                </button>
+                                <button class="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-semibold transition text-sm">
+                                    <i class="fas fa-redo mr-2"></i>Booking Lagi
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Empty State (Hidden by default, bisa ditampilkan jika tidak ada data) --}}
+                {{-- 
+                <div class="bg-white rounded-xl shadow-lg p-12 text-center border-2 border-dashed border-gray-300">
+                    <i class="fas fa-calendar-times text-6xl text-gray-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Belum Ada Booking</h3>
+                    <p class="text-gray-500 max-w-lg mx-auto mb-6">
+                        Anda belum melakukan booking venue apapun. Mulai dengan mencari venue olahraga favorit Anda sekarang!
+                    </p>
+                    <a href="/venueuser" class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition">
+                        <i class="fas fa-search mr-2"></i> Cari Venue Sekarang
+                    </a>
+                </div>
+                --}}
+
+            </div>
+
+            {{-- Pagination --}}
+            <div class="flex justify-center mt-6">
+                <nav class="flex space-x-2">
+                    <button class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition font-semibold">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold">1</button>
+                    <button class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition font-semibold">2</button>
+                    <button class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition font-semibold">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </nav>
             </div>
 
         </div>
@@ -251,40 +513,5 @@
         </div>
     </div>
 </main>
-
-@push('scripts')
-    {{-- Flatpickr (Datepicker Modern) --}}
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
-    <script>
-        // Inisialisasi datepicker
-        flatpickr("#cutoff-date", {
-            dateFormat: "d F Y",
-            defaultDate: "today",
-            locale: "id",
-        });
-
-        // Tombol toggle
-        const btnSemua = document.getElementById('btn-semua');
-        const btnDP = document.getElementById('btn-dp');
-
-        btnSemua.addEventListener('click', () => {
-            btnSemua.classList.add('bg-blue-600', 'text-white', 'border-transparent');
-            btnSemua.classList.remove('bg-white', 'text-gray-700', 'border', 'border-gray-300');
-            
-            btnDP.classList.remove('bg-blue-600', 'text-white');
-            btnDP.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-300');
-        });
-
-        btnDP.addEventListener('click', () => {
-            btnDP.classList.add('bg-blue-600', 'text-white', 'border-transparent');
-            btnDP.classList.remove('bg-white', 'text-gray-700', 'border', 'border-gray-300');
-
-            btnSemua.classList.remove('bg-blue-600', 'text-white');
-            btnSemua.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-300');
-        });
-    </script>
-@endpush
 
 @endsection
