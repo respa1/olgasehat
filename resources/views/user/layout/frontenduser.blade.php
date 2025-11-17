@@ -169,11 +169,12 @@
             <span data-translate>Profil</span>
             <i class="fas fa-user"></i>
           </a>
-          <a href="/riwayatpayment" class="dropdown-item">
+          <a href="/riwayatpayment" class="dropdown-item" style="background-color: #dbeafe; color: #1e40af;">
             <span data-translate>Riwayat Pemesanan</span>
             <i class="fas fa-history"></i>
           </a>
-          <a href="/riwayatkontrol" class="dropdown-item">
+          <div class="dropdown-divider my-2" style="border-top: 1px solid #e5e7eb;"></div>
+          <a href="/riwayatkontrol" class="dropdown-item" style="background-color: #d1fae5; color: #065f46;">
             <span data-translate>Riwayat Kontrol</span>
             <i class="fas fa-clipboard-list"></i>
           </a>
@@ -244,11 +245,12 @@
             <span data-translate>Profil</span>
             <i class="fas fa-user"></i>
           </a>
-          <a href="/riwayatpayment" class="dropdown-item" style="font-size: 0.875rem;">
+          <a href="/riwayatpayment" class="dropdown-item" style="font-size: 0.875rem; background-color: #dbeafe !important; color: #1e40af !important; border-radius: 8px; font-weight: 500;">
             <span data-translate>Riwayat Pemesanan</span>
             <i class="fas fa-history"></i>
           </a>
-          <a href="/riwayatkontrol" class="dropdown-item" style="font-size: 0.875rem;">
+          <div class="dropdown-divider my-2" style="border-top: 1px solid #e5e7eb;"></div>
+          <a href="/riwayatkontrol" class="dropdown-item" style="font-size: 0.875rem; background-color: #d1fae5 !important; color: #065f46 !important; border-radius: 8px; font-weight: 500;">
             <span data-translate>Riwayat Kontrol</span>
             <i class="fas fa-clipboard-list"></i>
           </a>

@@ -193,11 +193,12 @@
             <span data-translate>Profil</span>
             <i class="fas fa-user"></i>
           </a>
-          <a href="/riwayatpayment" class="dropdown-item">
+          <a href="/riwayatpayment" class="dropdown-item" style="background-color: #dbeafe; color: #1e40af;">
             <span data-translate>Riwayat Pemesanan</span>
             <i class="fas fa-history"></i>
           </a>
-          <a href="/riwayatkontrol" class="dropdown-item">
+          <div class="dropdown-divider my-2" style="border-top: 1px solid #e5e7eb;"></div>
+          <a href="/riwayatkontrol" class="dropdown-item" style="background-color: #d1fae5; color: #065f46;">
             <span data-translate>Riwayat Kontrol</span>
             <i class="fas fa-clipboard-list"></i>
           </a>
@@ -242,25 +243,60 @@
       <!-- Dropdown User Mobile -->
       <div class="relative">
         <button id="mobileUserBtn" class="flex items-center space-x-2 focus:outline-none">
-          @if(Auth::user()->image)
+          @if(Auth::user()->image ?? false)
               <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="User Avatar" class="w-8 h-8 rounded-full border object-cover" />
           @else
-              <img src="{{ asset('assets/guru.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+              <div class="w-8 h-8 rounded-full border bg-blue-100 flex items-center justify-center text-blue-700 font-semibold text-sm">
+                {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
+              </div>
           @endif
-          <i class="fas fa-chevron-down text-gray-500 text-sm"></i>
+          <i class="fas fa-chevron-down text-gray-500 text-xs sm:text-sm"></i>
         </button>
         <!-- Dropdown menu -->
-        <div id="mobileUserMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
-          <a href="/dashboarduser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Profil</a>
-          <a href="/riwayatpayment" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Riwayat Pemesanan</a>
-          <a href="/riwayatkontrol" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Riwayat Kontrol</a>
-          <a href="/komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Komunitas</a>
-          <a href="/klub" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Klub</a>
-          <a href="/settings" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Pengaturan</a>
-          
-          <form id="mobile-logout-form" action="{{ route('user.logout') }}" method="POST" class="block border-t border-gray-200 mt-1">
+        <div id="mobileUserMenu" class="hidden absolute right-0 mt-2 owner-dropdown bg-white shadow-lg border-0 z-50" style="width: 200px; padding: 16px 16px 8px;">
+          <div class="owner-profile-card text-center mb-3">
+            <div class="owner-avatar-lg mx-auto mb-2" style="width: 56px; height: 56px; font-size: 1.1rem;">
+              @if(Auth::user()->image ?? false)
+                <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}">
+              @else
+                <span>{{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}</span>
+              @endif
+            </div>
+            <h6 class="mb-0" style="font-size: 0.875rem;">{{ Auth::user()->name ?? 'User' }}</h6>
+            <span class="badge badge-role mt-1">User</span>
+          </div>
+          <a href="/dashboarduser" class="dropdown-item" style="font-size: 0.875rem;">
+            <span data-translate>Profil</span>
+            <i class="fas fa-user"></i>
+          </a>
+          <a href="/riwayatpayment" class="dropdown-item" style="font-size: 0.875rem; background-color: #dbeafe !important; color: #1e40af !important; border-radius: 8px; font-weight: 500;">
+            <span data-translate>Riwayat Pemesanan</span>
+            <i class="fas fa-history"></i>
+          </a>
+          <div class="dropdown-divider my-2" style="border-top: 1px solid #e5e7eb;"></div>
+          <a href="/riwayatkontrol" class="dropdown-item" style="font-size: 0.875rem; background-color: #d1fae5 !important; color: #065f46 !important; border-radius: 8px; font-weight: 500;">
+            <span data-translate>Riwayat Kontrol</span>
+            <i class="fas fa-clipboard-list"></i>
+          </a>
+          <a href="/riwayat-komunitas" class="dropdown-item" style="font-size: 0.875rem;">
+            <span data-translate>Komunitas</span>
+            <i class="fas fa-users"></i>
+          </a>
+          <a href="/riwayatmembership" class="dropdown-item" style="font-size: 0.875rem;">
+            <span data-translate>Membership</span>
+            <i class="fas fa-crown"></i>
+          </a>
+          <a href="/settings" class="dropdown-item" style="font-size: 0.875rem;">
+            <span data-translate>Pengaturan</span>
+            <i class="fas fa-cog"></i>
+          </a>
+          <div class="dropdown-divider my-2" style="border-top: 1px solid #e5e7eb;"></div>
+          <form id="mobile-logout-form" action="{{ route('user.logout') }}" method="POST">
             @csrf
-            <button type="submit" class="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 font-medium transition-colors" data-translate>Logout</button>
+            <button type="submit" class="dropdown-item w-full text-left text-red-600 hover:bg-red-50" style="border: none; background: none; cursor: pointer; font-size: 0.875rem;">
+              <span data-translate>Logout</span>
+              <i class="fas fa-sign-out-alt"></i>
+            </button>
           </form>
         </div>
       </div>
