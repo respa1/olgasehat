@@ -194,52 +194,21 @@
                 <div id="contentPemesanan" class="content-tab p-6">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-xl font-semibold text-gray-800 flex items-center">
-                            <i class="fas fa-list-ul text-blue-600 mr-2"></i>
-                            Daftar Pemesanan Aktif
+                            <i class="fas fa-calendar-alt text-blue-600 mr-2"></i>
+                            Riwayat Pemesanan
                         </h3>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <!-- Card Pemesanan 1 -->
-                        <div class="booking-card bg-white rounded-xl p-5 border border-gray-200 shadow-md">
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                                    <i class="fas fa-futbol text-blue-600 text-xl"></i>
-                                </div>
-                                <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">Aktif</span>
-                            </div>
-                            <p class="font-semibold text-gray-900 mb-2 text-lg">Lapangan Futsal Tirtayasa - A</p>
-                            <p class="text-sm text-gray-500 flex items-center">
-                                <i class="far fa-calendar mr-2"></i>14 Okt 2025 | 19:00 - 21:00
-                            </p>
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-8 border border-blue-200 text-center">
+                        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-calendar-check text-blue-600 text-3xl"></i>
                         </div>
-
-                        <!-- Card Pemesanan 2 -->
-                        <div class="booking-card bg-white rounded-xl p-5 border border-gray-200 shadow-md">
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                                    <i class="fas fa-futbol text-blue-600 text-xl"></i>
-                                </div>
-                                <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">Aktif</span>
-                            </div>
-                            <p class="font-semibold text-gray-900 mb-2 text-lg">Lapangan Futsal Tirtayasa - A</p>
-                            <p class="text-sm text-gray-500 flex items-center">
-                                <i class="far fa-calendar mr-2"></i>14 Okt 2025 | 19:00 - 21:00
-                            </p>
-                        </div>
-
-                        <!-- Card Pemesanan 3 -->
-                        <div class="booking-card bg-white rounded-xl p-5 border border-gray-200 shadow-md">
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                                    <i class="fas fa-futbol text-blue-600 text-xl"></i>
-                                </div>
-                                <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">Aktif</span>
-                            </div>
-                            <p class="font-semibold text-gray-900 mb-2 text-lg">Lapangan Futsal Tirtayasa - A</p>
-                            <p class="text-sm text-gray-500 flex items-center">
-                                <i class="far fa-calendar mr-2"></i>14 Okt 2025 | 19:00 - 21:00
-                            </p>
-                        </div>
+                        <h4 class="text-xl font-bold text-gray-900 mb-2">Kelola Riwayat Pemesanan Anda</h4>
+                        <p class="text-gray-600 mb-6 max-w-md mx-auto">
+                            Lihat semua riwayat pemesanan lapangan olahraga, booking venue, dan transaksi Anda dalam satu tempat.
+                        </p>
+                        <a href="/riwayatpayment" class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-200">
+                            <i class="fas fa-arrow-right mr-2"></i>Lihat Riwayat Pemesanan
+                        </a>
                     </div>
                 </div>
 

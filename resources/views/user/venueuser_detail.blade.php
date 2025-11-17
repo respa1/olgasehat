@@ -123,17 +123,66 @@
                         <h3 class="font-bold text-xl mb-3 text-gray-800">Lokasi Venue</h3>
                         <div class="bg-gray-50 p-4 rounded-lg flex flex-col space-y-3">
                             <p class="text-gray-600 leading-relaxed">
-                                {{ $venue->lokasi ?? 'Alamat belum tersedia' }}
+                                {{ $venue->kota ?? '' }}{{ $venue->kota && $venue->provinsi ? ', ' : '' }}{{ $venue->provinsi ?? '' }}
+                                @if(!$venue->kota && !$venue->provinsi)
+                                    Alamat belum tersedia
+                                @endif
                             </p>
                             @if($venue->lokasi)
-                            <a
-                                href="https://www.google.com/maps/search/?api=1&query={{ urlencode($venue->lokasi) }}"
-                                class="text-blue-700 font-semibold hover:text-blue-900 transition flex items-center space-x-2 text-base"
-                                target="_blank"
-                            >
-                                <i class="fas fa-map-marked-alt"></i>
-                                <span>Buka Peta (Google Maps)</span>
-                            </a>
+                                @php
+                                    // Fungsi untuk mendapatkan embed URL dari Google Maps link
+                                    $mapUrl = $venue->lokasi;
+                                    $embedUrl = null;
+                                    
+                                    // Deteksi tipe URL Google Maps
+                                    if (strpos($mapUrl, 'maps.app.goo.gl') !== false || strpos($mapUrl, 'goo.gl/maps') !== false) {
+                                        // Short URL - tidak bisa di-embed langsung, hanya link
+                                        $embedUrl = null;
+                                    } elseif (strpos($mapUrl, 'google.com/maps') !== false) {
+                                        // Full URL Google Maps - coba extract untuk embed
+                                        // Format 1: /maps/@lat,lng,zoom
+                                        if (preg_match('/@(-?\d+\.?\d*),(-?\d+\.?\d*),?(\d+\.?\d*)?z?/', $mapUrl, $matches)) {
+                                            $lat = $matches[1];
+                                            $lng = $matches[2];
+                                            $zoom = isset($matches[3]) ? $matches[3] : '15';
+                                            // Gunakan format embed dengan koordinat
+                                            $embedUrl = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d0!2d' . $lng . '!3d' . $lat . '!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z' . $lat . '!' . $lng . '!5e0!3m2!1sen!2sid!4v' . time() . '!5m2!1sen!2sid';
+                                        }
+                                        // Format 2: /maps/place/PlaceName
+                                        elseif (preg_match('/place\/([^\/\?]+)/', $mapUrl, $matches)) {
+                                            $placeName = urlencode($matches[1]);
+                                            // Gunakan format search untuk embed (tidak perlu API key)
+                                            $embedUrl = 'https://www.google.com/maps?q=' . $placeName . '&output=embed';
+                                        }
+                                    }
+                                @endphp
+                                
+                                @if($embedUrl)
+                                    <!-- Tampilkan peta embedded -->
+                                    <div class="mt-3 rounded-lg overflow-hidden shadow-md">
+                                        <iframe
+                                            src="{{ $embedUrl }}"
+                                            width="100%"
+                                            height="250"
+                                            style="border:0;"
+                                            allowfullscreen=""
+                                            loading="lazy"
+                                            referrerpolicy="no-referrer-when-downgrade"
+                                            class="w-full"
+                                        ></iframe>
+                                    </div>
+                                @endif
+                                
+                                <a
+                                    href="{{ $venue->lokasi }}"
+                                    class="text-blue-700 font-semibold hover:text-blue-900 transition flex items-center space-x-2 text-base mt-2"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <i class="fas fa-map-marked-alt"></i>
+                                    <span>Buka Peta (Google Maps)</span>
+                                    <i class="fas fa-external-link-alt text-xs"></i>
+                                </a>
                             @endif
                         </div>
                     </div>
