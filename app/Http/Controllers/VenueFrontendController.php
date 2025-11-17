@@ -50,16 +50,20 @@ class VenueFrontendController extends Controller
             $venues->whereJsonContains('kategori', $kategori);
         }
         
-        // Filter berdasarkan tanggal (jika ada slot available pada tanggal tersebut)
+        // Filter berdasarkan tanggal (jika ada slot available pada tanggal tersebut yang masih berlaku)
         if (!empty($tanggal)) {
             $venues->whereHas('lapangans.slots', function($slotQuery) use ($tanggal) {
                 $slotQuery->whereDate('tanggal', $tanggal)
-                         ->where('status', 'available');
+                         ->where('status', 'available')
+                         ->valid(); // Hanya jadwal yang masih berlaku
             });
         }
         
         $venues = $venues->orderBy('created_at', 'desc')
             ->paginate(16);
+        
+        // Append query parameters untuk pagination
+        $venues->appends($request->query());
         
         // Hitung harga minimum per venue dari slots yang available
         foreach ($venues as $venue) {
@@ -349,16 +353,20 @@ class VenueFrontendController extends Controller
             $venues->whereJsonContains('kategori', $kategori);
         }
         
-        // Filter berdasarkan tanggal (jika ada slot available pada tanggal tersebut)
+        // Filter berdasarkan tanggal (jika ada slot available pada tanggal tersebut yang masih berlaku)
         if (!empty($tanggal)) {
             $venues->whereHas('lapangans.slots', function($slotQuery) use ($tanggal) {
                 $slotQuery->whereDate('tanggal', $tanggal)
-                         ->where('status', 'available');
+                         ->where('status', 'available')
+                         ->valid(); // Hanya jadwal yang masih berlaku
             });
         }
         
         $venues = $venues->orderBy('created_at', 'desc')
             ->paginate(16);
+        
+        // Append query parameters untuk pagination
+        $venues->appends($request->query());
         
         // Hitung harga minimum per venue
         foreach ($venues as $venue) {

@@ -14,43 +14,71 @@
     </div>
 </section>
 
-<section class="container mx-auto px-6 py-8">
-    <form class="flex flex-wrap gap-4 justify-center md:justify-start items-stretch">
+<section class="container mx-auto px-6 py-6">
+    <form id="healthySearchForm" class="bg-white rounded-lg border border-gray-200 shadow-sm">
+      <div class="flex flex-col lg:flex-row items-stretch gap-2 p-2">
         
-        <div class="relative flex-grow min-w-full sm:min-w-[300px]">
+        <!-- Search Input - Cari layanan kesehatan -->
+        <div class="relative flex-[2] min-w-0">
+          <div class="relative">
             <input
-                type="text"
-                id="unifiedSearch"
-                placeholder="Cari layanan (e.g., Fisioterapi, Cek Kolesterol, Klinik Mata)"
-                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 h-full text-gray-700 placeholder-gray-500 focus:outline-none focus:border-blue-500 transition duration-150"
+              type="text"
+              id="unifiedSearch"
+              name="q"
+              placeholder="Cari layanan (e.g., Fisioterapi, Cek Kolesterol, Klinik Mata)"
+              class="w-full border border-gray-300 rounded-lg px-4 pl-10 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-gray-400 transition-all duration-150 bg-white"
+              autocomplete="off"
             />
-            <div id="suggestionsDropdown" class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-lg shadow-xl max-h-60 overflow-y-auto hidden z-10 mt-1">
-            </div>
+            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
+          </div>
+          <!-- Suggestions Dropdown -->
+          <div id="suggestionsDropdown" class="absolute top-full left-0 w-full bg-white border border-gray-200 rounded-lg shadow-xl max-h-80 overflow-y-auto hidden z-50 mt-1">
+          </div>
         </div>
         
-        <select
-            class="border border-gray-300 rounded-lg px-4 py-2.5 min-w-[180px] w-full sm:w-auto text-gray-700 focus:outline-none focus:border-blue-500 transition duration-150"
-        >
-            <option disabled selected class="text-gray-500">Kategori Layanan</option>
-            <option>Fisioterapi & Cedera</option>
-            <option>Medical Check-Up</option>
-            <option>Dokter Spesialis</option>
-            <option>Nutrisi & Gizi</option>
-        </select>
+        <!-- Category Dropdown - Kategori Layanan -->
+        <div class="relative flex-1 min-w-0">
+          <div class="relative">
+            <select
+              id="serviceCategory"
+              name="kategori"
+              class="w-full border border-gray-300 rounded-lg px-4 pl-10 pr-10 py-3 text-gray-700 focus:outline-none focus:border-gray-400 transition-all duration-150 bg-white appearance-none cursor-pointer"
+            >
+              <option value="all" selected>Kategori Layanan</option>
+              <option value="Fisioterapi & Cedera">Fisioterapi & Cedera</option>
+              <option value="Medical Check-Up">Medical Check-Up</option>
+              <option value="Dokter Spesialis">Dokter Spesialis</option>
+              <option value="Nutrisi & Gizi">Nutrisi & Gizi</option>
+            </select>
+            <i class="fas fa-chevron-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm pointer-events-none"></i>
+            <i class="fas fa-heartbeat absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
+          </div>
+        </div>
+
+        <!-- Date Input - Lihat Tanggal -->
+        <div class="relative flex-1 min-w-0">
+          <div class="relative">
+            <input
+              type="date"
+              id="bookingDate"
+              name="tanggal"
+              class="w-full border border-gray-300 rounded-lg px-4 pl-10 pr-4 py-3 text-gray-700 focus:outline-none focus:border-gray-400 transition-all duration-150 bg-white cursor-pointer"
+            />
+            <i class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm pointer-events-none"></i>
+          </div>
+        </div>
         
-        <input
-            type="date"
-            class="border border-gray-300 rounded-lg px-4 py-2.5 min-w-[160px] w-full sm:w-auto text-gray-700 focus:outline-none focus:border-blue-500 transition duration-150"
-        />
-        
-         <button
-            type="submit"
-            class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition min-w-full sm:min-w-[150px]"
+        <!-- Search Button - Cari Layanan -->
+        <button
+          type="submit"
+          class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 whitespace-nowrap"
         >
-            Cari Layanan
+          Cari Layanan
         </button>
+        
+      </div>
     </form>
-</section>
+  </section>
 
 <section class="container mx-auto px-6 py-10">
     <div class="text-center mb-12">

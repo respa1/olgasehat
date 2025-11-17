@@ -47,6 +47,20 @@
             <i class="fas fa-football-ball absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
           </div>
         </div>
+
+        <!-- Date Input - Lihat Tanggal -->
+        <div class="relative flex-1 min-w-0">
+          <div class="relative">
+            <input
+              type="date"
+              id="bookingDate"
+              name="tanggal"
+              value="{{ request('tanggal') }}"
+              class="w-full border border-gray-300 rounded-lg px-4 pl-10 pr-4 py-3 text-gray-700 focus:outline-none focus:border-gray-400 transition-all duration-150 bg-white cursor-pointer"
+            />
+            <i class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm pointer-events-none"></i>
+          </div>
+        </div>
         
         <!-- Search Button - Cari venue -->
         <button
@@ -652,6 +666,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             if (formData.get('kategori') && formData.get('kategori') !== 'all') {
                 params.append('kategori', formData.get('kategori'));
+            }
+            // Tambahkan parameter tanggal jika ada
+            if (formData.get('tanggal')) {
+                params.append('tanggal', formData.get('tanggal'));
             }
             
             // Redirect to filter route with parameters (use user route)
