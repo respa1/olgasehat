@@ -222,6 +222,40 @@
                     </div>
                 </div>
 
+                <hr class="border-gray-200" />
+
+                <!-- Informasi Penting -->
+                <div>
+                    <h3 class="font-bold text-xl mb-4 text-gray-800 flex items-center">
+                        <i class="fas fa-info-circle text-blue-600 mr-2"></i>Informasi Penting
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="flex items-start p-4 bg-blue-50 rounded-lg">
+                            <i class="fas fa-clock text-blue-600 mr-3 mt-1 text-xl"></i>
+                            <div>
+                                <p class="font-semibold text-gray-800 mb-1">Jam Operasional</p>
+                                <p class="text-sm text-gray-600">Senin - Jumat: 08:00 - 17:00</p>
+                                <p class="text-sm text-gray-600">Sabtu: 08:00 - 13:00</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start p-4 bg-green-50 rounded-lg">
+                            <i class="fas fa-phone text-green-600 mr-3 mt-1 text-xl"></i>
+                            <div>
+                                <p class="font-semibold text-gray-800 mb-1">Kontak</p>
+                                <p class="text-sm text-gray-600">021-12345678</p>
+                                <p class="text-sm text-gray-600">0812-3456-7890</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start p-4 bg-purple-50 rounded-lg">
+                            <i class="fas fa-shield-alt text-purple-600 mr-3 mt-1 text-xl"></i>
+                            <div>
+                                <p class="font-semibold text-gray-800 mb-1">Terdaftar</p>
+                                <p class="text-sm text-gray-600">BPJS, Asuransi Swasta</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Testimoni Section -->
@@ -332,34 +366,6 @@
                     <button class="w-full bg-white text-blue-600 font-bold py-3 rounded-lg hover:bg-blue-50 transition duration-200 mt-2 shadow-md">
                         <i class="fas fa-calendar-check mr-2"></i>Booking Sekarang
                     </button>
-                </div>
-            </div>
-
-            <!-- Info Card -->
-            <div class="bg-white p-6 rounded-xl shadow-xl">
-                <h3 class="font-bold text-lg mb-4 text-gray-800">Informasi Penting</h3>
-                <div class="space-y-3 text-sm">
-                    <div class="flex items-start">
-                        <i class="fas fa-clock text-blue-600 mr-2 mt-1"></i>
-                        <div>
-                            <p class="font-semibold text-gray-800">Jam Operasional</p>
-                            <p class="text-gray-600">Senin - Jumat: 08:00 - 17:00<br>Sabtu: 08:00 - 13:00</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <i class="fas fa-phone text-green-600 mr-2 mt-1"></i>
-                        <div>
-                            <p class="font-semibold text-gray-800">Kontak</p>
-                            <p class="text-gray-600">021-12345678<br>0812-3456-7890</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <i class="fas fa-shield-alt text-purple-600 mr-2 mt-1"></i>
-                        <div>
-                            <p class="font-semibold text-gray-800">Terdaftar</p>
-                            <p class="text-gray-600">BPJS, Asuransi Swasta</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </aside>

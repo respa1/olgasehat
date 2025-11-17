@@ -10,7 +10,7 @@
                         <i class="fas fa-calendar-alt mr-1"></i>Onboarding • Waktu Operasional
                     </p>
                     <h1 class="page-title mb-1" style="font-size: 1.75rem;">
-                        Waktu Operasional
+                        <i class="fas fa-calendar-alt mr-2 text-primary"></i>Waktu Operasional
                     </h1>
                     <p class="text-muted mb-0 small">Atur jam operasional dan slot pemesanan untuk venue Anda.</p>
                 </div>
