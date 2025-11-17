@@ -32,87 +32,166 @@
 
         <section class="lg:col-span-3 space-y-6">
             
-            {{-- Header Konten (MODIFIKASI DI SINI) --}}
+            {{-- Header Konten --}}
             <div class="bg-white rounded-xl shadow-xl p-6 border-l-4 border-orange-500 flex justify-between items-center">
                 <div>
-                    <h2 class="font-extrabold text-2xl text-gray-900">Komunitas Kamu</h2>
-                    <p class="text-gray-500 mt-1">Kumpulan komunitas yang kamu telah tergabung saat ini.</p>
+                    <h2 class="font-extrabold text-2xl text-gray-900">Riwayat Aktivitas Saya</h2>
+                    <p class="text-gray-500 mt-1">Aktivitas yang telah kamu buat dan kelola.</p>
                 </div>
-                {{-- Tombol Tambah Komunitas di Header --}}
+                {{-- Tombol Tambah Aktivitas di Header --}}
                 <a href="/buat-aktivitas" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition duration-150 flex items-center text-sm md:text-base whitespace-nowrap">
-                    <i class="fas fa-plus mr-2"></i> Tambah Komunitas
+                    <i class="fas fa-plus mr-2"></i> Tambah Aktivitas
                 </a>
+            </div>
+
+            {{-- Notifikasi --}}
+            @if(session('success'))
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            {{-- Filter dan Search --}}
+            <div class="bg-white rounded-xl shadow-md p-4">
+                <form method="GET" action="{{ route('user.riwayat-komunitas') }}" class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1">
+                        <input type="text" 
+                               name="search" 
+                               placeholder="Cari aktivitas..." 
+                               value="{{ request('search') }}"
+                               class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <select name="status" class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500">
+                            <option value="">Semua Status</option>
+                            <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                            <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Approved</option>
+                            <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                        <i class="fas fa-search mr-2"></i> Cari
+                    </button>
+                </form>
             </div>
             
-            {{-- Daftar Komunitas --}}
+            {{-- Daftar Aktivitas yang Dibuat User --}}
+            @if(isset($activities) && $activities->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                @foreach($activities as $activity)
+                <div class="community-card bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center flex-1">
+                            {{-- Ikon berdasarkan jenis --}}
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0
+                                @if($activity->jenis == 'komunitas') bg-blue-100 text-blue-600
+                                @elseif($activity->jenis == 'membership') bg-amber-100 text-amber-600
+                                @else bg-red-100 text-red-600
+                                @endif">
+                                @if($activity->jenis == 'komunitas')
+                                    <i class="fas fa-users text-xl"></i>
+                                @elseif($activity->jenis == 'membership')
+                                    <i class="fas fa-credit-card text-xl"></i>
+                                @else
+                                    <i class="fas fa-calendar-alt text-xl"></i>
+                                @endif
+                            </div>
+                            {{-- Info Dasar --}}
+                            <div class="flex-1">
+                                <p class="text-xl font-bold text-gray-900">{{ $activity->nama }}</p>
+                                <p class="text-sm text-gray-500">{{ $activity->kategori }} | {{ $activity->lokasi ?? '-' }}</p>
+                            </div>
+                        </div>
+                        {{-- Status Badge --}}
+                        <div class="ml-2">
+                            @if($activity->status == 'approved')
+                                <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">
+                                    <i class="fas fa-check-circle"></i> Approved
+                                </span>
+                            @elseif($activity->status == 'pending')
+                                <span class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded-full">
+                                    <i class="fas fa-clock"></i> Pending
+                                </span>
+                            @else
+                                <span class="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">
+                                    <i class="fas fa-times-circle"></i> Rejected
+                                </span>
+                            @endif
+                        </div>
+                    </div>
 
-                <div class="community-card bg-white p-6 rounded-lg shadow-md mb-6">
-                <div class="flex items-center mb-4">
-                    {{-- Ikon Lari --}}
-                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                        <i class="fas fa-running text-blue-600 text-xl"></i>
+                    {{-- Banner Preview --}}
+                    @if($activity->banner)
+                    <div class="mb-4">
+                        <img src="{{ asset('fotoaktivitas/'.$activity->banner) }}" 
+                             alt="{{ $activity->nama }}" 
+                             class="w-full h-32 object-cover rounded-lg">
                     </div>
-                    {{-- Info Dasar --}}
-                    <div>
-                        <p class="text-xl font-bold text-gray-900">Running Club Jakarta</p>
-                        <p class="text-sm text-gray-500">32 Anggota | Aktifitas Terakhir: 2 hari lalu</p>
+                    @endif
+                    
+                    {{-- Deskripsi --}}
+                    <p class="text-sm text-gray-600 mt-4 pt-3 border-t border-gray-100 line-clamp-2">
+                        {{ Str::limit($activity->deskripsi, 100) }}
+                    </p>
+
+                    {{-- Info Tambahan --}}
+                    <div class="mt-3 pt-3 border-t border-gray-100">
+                        <div class="flex items-center justify-between text-xs text-gray-500 mb-2">
+                            <span>
+                                <i class="fas fa-money-bill-wave mr-1"></i>
+                                {{ $activity->biaya_bergabung == 'gratis' ? 'Gratis' : 'Rp ' . number_format($activity->harga, 0, ',', '.') }}
+                            </span>
+                            <span>
+                                <i class="fas fa-calendar mr-1"></i>
+                                {{ $activity->created_at->format('d M Y') }}
+                            </span>
+                        </div>
+                        @if($activity->status == 'rejected' && $activity->alasan_reject)
+                        <div class="mt-2 p-2 bg-red-50 border border-red-200 rounded text-xs text-red-700">
+                            <strong>Alasan ditolak:</strong> {{ $activity->alasan_reject }}
+                        </div>
+                        @endif
+                    </div>
+                    
+                    {{-- Tombol Aksi --}}
+                    <div class="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
+                        <a href="{{ route('user.community.detail', $activity->id) }}" 
+                           class="text-sm font-semibold text-orange-500 hover:text-orange-700 transition duration-150 ease-in-out">
+                            Lihat Detail 
+                            <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                        <a href="{{ route('user.aktivitas.edit', $activity->id) }}" 
+                           class="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-150">
+                            <i class="fas fa-edit mr-1"></i> Edit
+                        </a>
                     </div>
                 </div>
-                
-                {{-- Deskripsi Komunitas --}}
-                <p class="text-sm text-gray-600 mt-4 pt-3 border-t border-gray-100">
-                    Komunitas lari mingguan untuk semua level, dari pemula hingga maraton.
-                </p>
-                
-                {{-- Tombol Detail --}}
-                <div class="flex justify-end mt-4">
-                    <a href="#" class="text-sm font-semibold text-orange-500 hover:text-orange-700 transition duration-150 ease-in-out">
-                        Lihat Detail 
-                        <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
+                @endforeach
             </div>
 
-            <div class="community-card bg-white p-6 rounded-lg shadow-md mb-6">
-                <div class="flex items-center mb-4">
-                    {{-- Ikon Voli --}}
-                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
-                        <i class="fas fa-volleyball-ball text-green-600 text-xl"></i>
-                    </div>
-                    {{-- Info Dasar --}}
-                    <div>
-                        <p class="text-xl font-bold text-gray-900">Volly Ball Squad Banten</p>
-                        <p class="text-sm text-gray-500">18 Anggota | Aktifitas Terakhir: Hari ini!</p>
-                    </div>
-                </div>
-                
-                {{-- Deskripsi Komunitas --}}
-                <p class="text-sm text-gray-600 mt-4 pt-3 border-t border-gray-100">
-                    Sesi main volly santai setiap Rabu dan Sabtu sore. Semua level diterima.
-                </p>
-                
-                {{-- Tombol Detail --}}
-                <div class="flex justify-end mt-4">
-                    <a href="#" class="text-sm font-semibold text-orange-500 hover:text-orange-700 transition duration-150 ease-in-out">
-                        Lihat Detail 
-                        <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
+            {{-- Pagination --}}
+            <div class="mt-6">
+                {{ $activities->links() }}
             </div>
-
-            {{-- Empty State yang Ditingkatkan (MODIFIKASI DI SINI) --}}
+            @else
+            {{-- Empty State --}}
             <div class="bg-white rounded-xl shadow-xl p-10 flex flex-col items-center justify-center text-center border-2 border-dashed border-gray-300">
-                <i class="fas fa-users-slash text-6xl text-gray-400 mb-4"></i>
-                <h3 class="text-2xl font-bold text-gray-800 mb-2">Belum Tergabung Komunitas</h3>
+                <i class="fas fa-clipboard-list text-6xl text-gray-400 mb-4"></i>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Belum Ada Aktivitas</h3>
                 <p class="text-gray-500 max-w-lg mb-6">
-                    Yuk, cari teman main baru! Bergabunglah dengan komunitas olahraga favoritmu untuk menambah semangat dan relasi.
+                    Kamu belum membuat aktivitas apapun. Yuk, buat aktivitas pertama kamu sekarang!
                 </p>
-                {{-- Tombol Tambah Komunitas di Empty State --}}
-                <a href="/communityuser" class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-150">
-                    Cari Komunitas Sekarang <i class="fas fa-search ml-2"></i>
+                <a href="/buat-aktivitas" class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-150">
+                    <i class="fas fa-plus mr-2"></i> Buat Aktivitas Sekarang
                 </a>
             </div>
+            @endif
             
         </section>
         

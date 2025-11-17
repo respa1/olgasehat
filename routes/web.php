@@ -113,7 +113,9 @@ Route::get('/success_user', function () {return view('user.success_user'); });
 
 
 Route::get('/edit-profile-user', fn() => view('user.editprofile_user'));
-Route::get('/riwayat-komunitas', fn() => view('user.riwayatkomunitas'));
+Route::get('/riwayat-komunitas', [App\Http\Controllers\ActivityController::class, 'riwayatKomunitas'])->name('user.riwayat-komunitas');
+Route::get('/riwayat-komunitas/{id}/edit', [App\Http\Controllers\ActivityController::class, 'editUserActivity'])->name('user.aktivitas.edit');
+Route::put('/riwayat-komunitas/{id}', [App\Http\Controllers\ActivityController::class, 'updateUserActivity'])->name('user.aktivitas.update');
 Route::get('/riwayatmembership', fn() => view('user.riwayatmembership'));
 Route::get('/riwayatpayment', fn() => view('user.riwayatpayment'));
 Route::get('/registeremail', fn() => view('user.registeremail'));

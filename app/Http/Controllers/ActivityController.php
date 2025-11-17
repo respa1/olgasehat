@@ -264,6 +264,102 @@ class ActivityController extends Controller
     }
 
     /**
+     * Menampilkan riwayat aktivitas yang dibuat oleh user yang login
+     */
+    public function riwayatKomunitas(Request $request)
+    {
+        $user = Auth::user();
+        
+        // Ambil aktivitas yang dibuat oleh user yang login
+        $query = Activity::where('user_id', $user->id)
+            ->with(['activityType'])
+            ->orderBy('created_at', 'desc');
+
+        // Filter berdasarkan status jika ada
+        if ($request->has('status') && $request->status) {
+            $query->where('status', $request->status);
+        }
+
+        // Search
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama', 'LIKE', '%' . $search . '%')
+                  ->orWhere('kategori', 'LIKE', '%' . $search . '%')
+                  ->orWhere('lokasi', 'LIKE', '%' . $search . '%');
+            });
+        }
+
+        $activities = $query->paginate(10);
+
+        return view('user.riwayatkomunitas', compact('activities'));
+    }
+
+    /**
+     * Menampilkan form edit aktivitas untuk user
+     */
+    public function editUserActivity($id)
+    {
+        $activity = Activity::where('user_id', Auth::id())
+            ->findOrFail($id);
+
+        return view('user.edit_aktivitas', compact('activity'));
+    }
+
+    /**
+     * Update aktivitas yang dibuat oleh user
+     */
+    public function updateUserActivity(Request $request, $id)
+    {
+        $activity = Activity::where('user_id', Auth::id())
+            ->findOrFail($id);
+
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'kategori' => 'required|string|max:255',
+            'lokasi' => 'nullable|string|max:255',
+            'biaya' => 'required|in:gratis,berbayar',
+            'harga' => 'nullable|integer|min:0|required_if:biaya,berbayar',
+            'deskripsi' => 'required|string',
+            'link' => 'nullable|string|max:500',
+            'jenis' => 'required|in:komunitas,membership,event',
+        ]);
+
+        // Update data
+        $activity->nama = $request->nama;
+        $activity->kategori = $request->kategori;
+        $activity->lokasi = $request->lokasi;
+        $activity->biaya_bergabung = $request->biaya;
+        $activity->harga = $request->biaya === 'berbayar' ? $request->harga : null;
+        $activity->deskripsi = $request->deskripsi;
+        $activity->link_kontak = $request->link;
+        $activity->jenis = $request->jenis;
+        
+        // Jika status sudah approved, set kembali ke pending untuk verifikasi ulang
+        if ($activity->status === 'approved') {
+            $activity->status = 'pending';
+        }
+
+        // Handle upload banner baru jika ada
+        if ($request->hasFile('banner')) {
+            // Hapus banner lama jika ada
+            if ($activity->banner && file_exists(public_path('fotoaktivitas/' . $activity->banner))) {
+                unlink(public_path('fotoaktivitas/' . $activity->banner));
+            }
+
+            $image = $request->file('banner');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('fotoaktivitas'), $imageName);
+            $activity->banner = $imageName;
+        }
+
+        $activity->save();
+
+        return redirect()->route('user.riwayat-komunitas')
+            ->with('success', 'Aktivitas berhasil diperbarui dan sedang menunggu verifikasi ulang admin.');
+    }
+
+    /**
      * Show activity detail for frontend (non-logged in users)
      */
     public function showDetail($id)
