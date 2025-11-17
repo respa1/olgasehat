@@ -1,99 +1,70 @@
 @extends('pemiliklapangan.layout.ownervenue')
 
 @section('content')
-<div class="content-wrapper p-4">
-    <style>
-    .video-preview iframe {
-        border-radius: 10px;
-        max-width: 560px;
-        width: 100%;
-        height: 315px;
-    }
-    .step-number {
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-    }
-    /* Summernote custom style */
-    .note-editor.note-frame {
-        border: 1px solid #dee2e6;
-        border-radius: 6px;
-    }
-    .note-toolbar {
-        background-color: #f8f9fa !important;
-        border-bottom: 1px solid #dee2e6 !important;
-    }
-    </style>
-
-    {{-- Tambahkan CSS Summernote --}}
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-
-    <div class="container-fluid">
-        <div class="row">
-            {{-- Sidebar kiri (langkah-langkah) --}}
-            <div class="col-md-3">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body">
-                        <ul class="list-unstyled">
-                            <li class="mb-4">
-                                <div class="d-flex align-items-center">
-                                    <span class="step-number bg-primary text-white rounded-circle me-2"> 
-                                        <i class="fas fa-handshake"></i>
-                                    </span>
-                                    <div>
-                                        <strong>Selamat Datang</strong>
-                                        <div class="small text-muted">Salam Pembuka</div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="mb-4">
-                                <div class="d-flex align-items-center">
-                                    <span class="step-number bg-primary text-white rounded-circle me-2">1</span>
-                                    <div>
-                                        <strong>Informasi Venue</strong>
-                                        <div class="small text-muted">Isi Data Informasi Venue</div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="mb-4">
-                                <div class="d-flex align-items-center">
-                                    <span class="step-number bg-primary text-white rounded-circle me-2">2</span>
-                                    <div>
-                                        <strong>Detail Venue</strong>
-                                        <div class="small text-muted">Detail Fasilitas Venue</div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="mb-4">
-                                <div class="d-flex align-items-center">
-                                    <span class="step-number bg-secondary text-white rounded-circle me-2">3</span>
-                                    <div>
-                                        <strong>Syarat & Ketentuan</strong>
-                                        <div class="small text-muted">Informasi Syarat & Ketentuan</div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="d-flex align-items-center">
-                                    <span class="step-number bg-secondary text-white rounded-circle me-2">
-                                        <i class="fas fa-check"></i>
-                                    </span>
-                                    <div>
-                                        <strong>Selesai</strong>
-                                        <div class="small text-muted">Onboarding Selesai</div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+<div class="content-wrapper dashboard-onboarding">
+    <div class="content-header border-0 pb-0">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center justify-content-between flex-wrap">
+                <div>
+                    <p class="breadcrumb-dashboard mb-1 text-muted">Onboarding • Detail Venue</p>
+                    <h1 class="page-title mb-0">Detail Venue</h1>
+                    <p class="text-muted mb-0">Tambahkan fasilitas, galeri, dan deskripsi untuk venue Anda.</p>
                 </div>
             </div>
+        </div>
+    </div>
 
-            {{-- Bagian kanan (Form) --}}
-            <div class="col-md-9">
+    <div class="content pt-3">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Stepper -->
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="card border-0 shadow-sm h-100 stepper-card">
+                        <div class="card-body">
+                            <h5 class="mb-4 font-weight-bold text-primary">Langkah Onboarding</h5>
+                            <ul class="timeline list-unstyled mb-0">
+                                <li class="timeline-item">
+                                    <span class="dot"><i class="fas fa-handshake"></i></span>
+                                    <div class="timeline-content">
+                                        <h6>Selamat Datang</h6>
+                                        <p class="text-muted mb-0 small">Mulai perjalanan mengelola venue anda.</p>
+                                    </div>
+                                </li>
+                                <li class="timeline-item">
+                                    <span class="dot">1</span>
+                                    <div class="timeline-content">
+                                        <h6>Informasi Venue</h6>
+                                        <p class="text-muted mb-0 small">Isi detail umum venue dan kontak utama.</p>
+                                    </div>
+                                </li>
+                                <li class="timeline-item timeline-active">
+                                    <span class="dot">2</span>
+                                    <div class="timeline-content">
+                                        <h6>Detail Venue</h6>
+                                        <p class="text-muted mb-0 small">Tambahkan fasilitas, galeri, dan deskripsi.</p>
+                                    </div>
+                                </li>
+                                <li class="timeline-item">
+                                    <span class="dot">3</span>
+                                    <div class="timeline-content">
+                                        <h6>Waktu Operasional</h6>
+                                        <p class="text-muted mb-0 small">Atur jam operasional dan slot pemesanan.</p>
+                                    </div>
+                                </li>
+                                <li class="timeline-item">
+                                    <span class="dot"><i class="fas fa-check"></i></span>
+                                    <div class="timeline-content">
+                                        <h6>Selesai</h6>
+                                        <p class="text-muted mb-0 small">Verifikasi & terbitkan venue anda.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Konten Utama -->
+                <div class="col-lg-8">
                 @if(session('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         {{ session('error') }}
@@ -108,9 +79,9 @@
                     </div>
                 @endif
 
-                <div class="card shadow-sm border-0">
-                    <div class="card-body">
-                        <form action="{{ route('insertdetail') }}" method="post" enctype="multipart/form-data" id="detailForm">
+                    <div class="card border-0 shadow-sm info-card">
+                        <div class="card-body p-4">
+                            <form action="{{ route('insertdetail') }}" method="post" enctype="multipart/form-data" id="detailForm">
                             @csrf
 
                             {{-- Hidden Venue ID --}}
@@ -285,16 +256,138 @@
                                 <div id="galeriPreview" class="mt-3 row"></div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary" {{ !isset($venue) && !session('venue_id') ? 'disabled' : '' }}>
-                                Selanjutnya →
-                            </button>
+                            <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                                <a href="{{ route('informasi') }}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-arrow-left mr-2"></i>Kembali
+                                </a>
+                                <button type="submit" class="btn btn-primary btn-lg px-5" {{ !isset($venue) && !session('venue_id') ? 'disabled' : '' }}>
+                                    Selanjutnya <i class="fas fa-arrow-right ml-2"></i>
+                                </button>
+                            </div>
                         </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .dashboard-onboarding {
+        background: linear-gradient(180deg, #f6f9ff 0%, #ffffff 100%);
+        min-height: 100vh;
+    }
+    .dashboard-onboarding .content-wrapper {
+        background: transparent;
+    }
+    .breadcrumb-dashboard {
+        font-size: 0.85rem;
+        letter-spacing: 0.02em;
+    }
+    .page-title {
+        font-weight: 700;
+        color: #1d2c5b;
+    }
+    .stepper-card {
+        border-radius: 18px;
+    }
+    .timeline {
+        position: relative;
+        padding-left: 1.5rem;
+    }
+    .timeline::before {
+        content: "";
+        position: absolute;
+        left: 18px;
+        top: 5px;
+        bottom: 5px;
+        width: 2px;
+        background: linear-gradient(180deg, #d7e5ff 0%, #edf2ff 100%);
+    }
+    .timeline-item {
+        position: relative;
+        padding-left: 2.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .timeline-item:last-child {
+        margin-bottom: 0;
+    }
+    .timeline-item .dot {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #e0e9ff;
+        color: #4a63ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        box-shadow: inset 0 0 0 4px #f7f9ff;
+    }
+    .timeline-item.timeline-active .dot {
+        background: linear-gradient(135deg, #0096ff 0%, #00c6ff 100%);
+        color: #fff;
+        box-shadow: 0 8px 18px rgba(0, 150, 255, 0.35);
+    }
+    .timeline-content h6 {
+        font-weight: 700;
+        margin-bottom: 0.2rem;
+        color: #152345;
+    }
+    .info-card {
+        border-radius: 18px;
+    }
+    .form-control, .form-select {
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+        transition: all 0.3s ease;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: #0096ff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 150, 255, 0.15);
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, #0096ff 0%, #00c6ff 100%);
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 150, 255, 0.3);
+    }
+    .video-preview iframe {
+        border-radius: 12px;
+        max-width: 560px;
+        width: 100%;
+        height: 315px;
+    }
+    .note-editor.note-frame {
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+    }
+    .note-toolbar {
+        background-color: #f8f9fa !important;
+        border-bottom: 1px solid #e0e0e0 !important;
+    }
+    @media (max-width: 991.98px) {
+        .timeline::before {
+            left: 16px;
+        }
+        .timeline-item .dot {
+            width: 32px;
+            height: 32px;
+        }
+    }
+</style>
+
+{{-- Tambahkan CSS Summernote --}}
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 
 {{-- Script Summernote --}}
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
