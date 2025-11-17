@@ -57,6 +57,7 @@ Route::get('/venue/search', [App\Http\Controllers\VenueFrontendController::class
 Route::get('/venue/categories', [App\Http\Controllers\VenueFrontendController::class, 'getCategories'])->name('frontend.venue.categories');
 Route::get('/venue/filter', [App\Http\Controllers\VenueFrontendController::class, 'filter'])->name('frontend.venue.filter');
 Route::get('/klinik', fn() => view('FRONTEND.klinik'));
+Route::get('/service-detail', fn() => view('FRONTEND.service_detail'))->name('frontend.service.detail');
 Route::get('/venue-management', fn() => view('FRONTEND.venue_management'))->name('venue.management');
 Route::get('/health-management', fn() => view('FRONTEND.health_management'))->name('health.management');
 
@@ -101,6 +102,7 @@ Route::get('/resetpassword', function () {return view('user.resetpassword'); });
 Route::get('/homeuser', function () {return view('user.homeuser'); });
 Route::get('/venueuser', [App\Http\Controllers\VenueFrontendController::class, 'index'])->name('user.venue');
 Route::get('/venueuser_detail/{id}', [App\Http\Controllers\VenueFrontendController::class, 'show'])->name('user.venue.detail');
+Route::get('/service-detail-user', fn() => view('user.service_detail_user'))->name('user.service.detail');
 Route::get('/buat-aktivitas', fn() => view('user.user_buat_aktivitas'));
 Route::post('/buat-aktivitas', [App\Http\Controllers\ActivityController::class, 'storeFromUser'])->name('activities.store.user');
 Route::get('/communityuser', [App\Http\Controllers\ActivityController::class, 'indexUser'])->name('user.community');
