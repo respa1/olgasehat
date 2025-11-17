@@ -197,6 +197,10 @@
             <span data-translate>Riwayat Pemesanan</span>
             <i class="fas fa-history"></i>
           </a>
+          <a href="/riwayatkontrol" class="dropdown-item">
+            <span data-translate>Riwayat Kontrol</span>
+            <i class="fas fa-clipboard-list"></i>
+          </a>
           <a href="/riwayat-komunitas" class="dropdown-item">
             <span data-translate>Komunitas</span>
             <i class="fas fa-users"></i>
@@ -249,6 +253,7 @@
         <div id="mobileUserMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50">
           <a href="/dashboarduser" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Profil</a>
           <a href="/riwayatpayment" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Riwayat Pemesanan</a>
+          <a href="/riwayatkontrol" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Riwayat Kontrol</a>
           <a href="/komunitas" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Komunitas</a>
           <a href="/klub" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Klub</a>
           <a href="/settings" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" data-translate>Pengaturan</a>

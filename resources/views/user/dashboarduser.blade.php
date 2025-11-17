@@ -245,9 +245,23 @@
 
                 {{-- Content Area: Cek Kesehatan (Hidden by default) --}}
                 <div id="contentCekKesehatan" class="content-tab hidden p-6">
-                    <div class="text-center py-8">
-                        <i class="fas fa-heartbeat text-4xl text-green-600 mb-4"></i>
-                        <p class="text-gray-600 text-lg">Konten Cek Kesehatan akan ditampilkan di sini.</p>
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-semibold text-gray-800 flex items-center">
+                            <i class="fas fa-clipboard-list text-green-600 mr-2"></i>
+                            Riwayat Kontrol Kesehatan
+                        </h3>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-50 to-blue-50 rounded-xl p-8 border border-green-200 text-center">
+                        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-heartbeat text-green-600 text-3xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900 mb-2">Kelola Riwayat Kontrol Anda</h4>
+                        <p class="text-gray-600 mb-6 max-w-md mx-auto">
+                            Lihat semua riwayat cek kesehatan, hasil pemeriksaan, dan rekomendasi dokter dalam satu tempat.
+                        </p>
+                        <a href="/riwayatkontrol" class="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition duration-200">
+                            <i class="fas fa-arrow-right mr-2"></i>Lihat Riwayat Kontrol
+                        </a>
                     </div>
                 </div>
 

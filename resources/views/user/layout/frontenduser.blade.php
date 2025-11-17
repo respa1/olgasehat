@@ -173,6 +173,10 @@
             <span data-translate>Riwayat Pemesanan</span>
             <i class="fas fa-history"></i>
           </a>
+          <a href="/riwayatkontrol" class="dropdown-item">
+            <span data-translate>Riwayat Kontrol</span>
+            <i class="fas fa-clipboard-list"></i>
+          </a>
           <a href="/riwayat-komunitas" class="dropdown-item">
             <span data-translate>Komunitas</span>
             <i class="fas fa-users"></i>
@@ -243,6 +247,10 @@
           <a href="/riwayatpayment" class="dropdown-item" style="font-size: 0.875rem;">
             <span data-translate>Riwayat Pemesanan</span>
             <i class="fas fa-history"></i>
+          </a>
+          <a href="/riwayatkontrol" class="dropdown-item" style="font-size: 0.875rem;">
+            <span data-translate>Riwayat Kontrol</span>
+            <i class="fas fa-clipboard-list"></i>
           </a>
           <a href="/riwayat-komunitas" class="dropdown-item" style="font-size: 0.875rem;">
             <span data-translate>Komunitas</span>

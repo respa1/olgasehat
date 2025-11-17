@@ -94,6 +94,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 Route::get('/riwayat komunitas', function () {return view('user.riwayatkomunitas');});
 Route::get('/riwayatclub', function () {return view('user.riwayatclub');});
 Route::get('/riwayatpayment', function () {return view('user.riwayatpayment');});
+Route::get('/riwayatkontrol', function () {return view('user.riwayatkontrol');});
 Route::get('/registeremail', function () {return view('user.registeremail');});
 Route::get('/loginemail', function () { return view('user.loginemail');});
 Route::get('/resetpassword', function () {return view('user.resetpassword'); });
