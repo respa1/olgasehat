@@ -209,31 +209,40 @@
                   @endif
                 </td>
                 <td class="text-center">
-                  <a href="{{ route('activities.show', $activity->id) }}" class="btn btn-sm btn-info" title="Detail">
-                    <i class="fas fa-eye"></i>
-                  </a>
-                  @if($activity->status == 'pending')
-                    <form action="{{ route('activities.approve', $activity->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menyetujui aktivitas ini?');">
+                  <div class="btn-group" role="group">
+                    <a href="{{ route('activities.show', $activity->id) }}" class="btn btn-sm btn-info" title="Detail">
+                      <i class="fas fa-eye"></i>
+                    </a>
+                    @if($activity->status == 'pending')
+                      <form action="{{ route('activities.approve', $activity->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menyetujui aktivitas ini?');">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="btn btn-sm btn-success" title="Setujui">
+                          <i class="fas fa-check"></i>
+                        </button>
+                      </form>
+                      <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#rejectModal{{ $activity->id }}" title="Tolak">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    @elseif($activity->status == 'approved')
+                      <span class="badge badge-success">
+                        <i class="fas fa-check-circle"></i> Sudah Disetujui
+                      </span>
+                    @elseif($activity->status == 'rejected')
+                      @if($activity->alasan_reject)
+                        <button type="button" class="btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="top" title="Alasan: {{ $activity->alasan_reject }}">
+                          <i class="fas fa-info-circle"></i> Lihat Alasan
+                        </button>
+                      @endif
+                    @endif
+                    <form action="{{ route('activities.destroy', $activity->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus aktivitas ini? Tindakan ini tidak dapat dibatalkan.');">
                       @csrf
-                      @method('PUT')
-                      <button type="submit" class="btn btn-sm btn-success" title="Setujui">
-                        <i class="fas fa-check"></i>
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                        <i class="fas fa-trash"></i>
                       </button>
                     </form>
-                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#rejectModal{{ $activity->id }}" title="Tolak">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  @elseif($activity->status == 'approved')
-                    <span class="badge badge-success">
-                      <i class="fas fa-check-circle"></i> Sudah Disetujui
-                    </span>
-                  @elseif($activity->status == 'rejected')
-                    @if($activity->alasan_reject)
-                      <button type="button" class="btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="top" title="Alasan: {{ $activity->alasan_reject }}">
-                        <i class="fas fa-info-circle"></i> Lihat Alasan
-                      </button>
-                    @endif
-                  @endif
+                  </div>
                 </td>
               </tr>
 

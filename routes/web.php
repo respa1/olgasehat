@@ -320,6 +320,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('activities/{id}', [App\Http\Controllers\ActivityController::class, 'show'])->name('activities.show');
         Route::put('activities/{id}/approve', [App\Http\Controllers\ActivityController::class, 'approve'])->name('activities.approve');
         Route::put('activities/{id}/reject', [App\Http\Controllers\ActivityController::class, 'reject'])->name('activities.reject');
+        Route::delete('activities/{id}', [App\Http\Controllers\ActivityController::class, 'destroy'])->name('activities.destroy');
 
         // EXTRA - SOCIAL MEDIA
         Route::get('/social-media', [SocialMediaController::class, 'index'])->name('social-media.index');

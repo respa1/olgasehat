@@ -182,6 +182,23 @@ class ActivityController extends Controller
     }
 
     /**
+     * Hapus aktivitas
+     */
+    public function destroy($id)
+    {
+        $activity = Activity::findOrFail($id);
+        
+        // Hapus gambar jika ada
+        if ($activity->gambar && Storage::exists('public/' . $activity->gambar)) {
+            Storage::delete('public/' . $activity->gambar);
+        }
+        
+        $activity->delete();
+
+        return redirect()->route('activity-types.daftar', ['status' => request('status', 'all')])->with('success', 'Aktivitas berhasil dihapus.');
+    }
+
+    /**
      * Display approved activities for frontend community page
      */
     public function index(Request $request)
