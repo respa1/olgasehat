@@ -119,10 +119,15 @@
     </div>
   </div>
 
-  <button onclick="hitungKolesterol()" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center space-x-2">
-    <i class="fas fa-calculator"></i>
-    <span>Hitung Kolesterol</span>
-  </button>
+  <div class="flex gap-3">
+    <button onclick="hitungKolesterol()" class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center space-x-2">
+      <i class="fas fa-calculator"></i>
+      <span>Hitung Kolesterol</span>
+    </button>
+    <button onclick="resetKolesterol()" class="px-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center" title="Reset">
+      <i class="fas fa-redo"></i>
+    </button>
+  </div>
 
   <div id="hasilKolesterol" class="mt-6 p-5 rounded-xl border-2 text-center bg-gray-50 text-gray-600 transition-all duration-300">
     <div class="flex items-center justify-center mb-3">
@@ -183,10 +188,15 @@
     </div>
   </div>
 
-  <button onclick="hitungGula()" class="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center space-x-2">
-    <i class="fas fa-calculator"></i>
-    <span>Hitung Gula Darah</span>
-  </button>
+  <div class="flex gap-3">
+    <button onclick="hitungGula()" class="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center space-x-2">
+      <i class="fas fa-calculator"></i>
+      <span>Hitung Gula Darah</span>
+    </button>
+    <button onclick="resetGula()" class="px-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center" title="Reset">
+      <i class="fas fa-redo"></i>
+    </button>
+  </div>
 
   <div id="hasilGula" class="mt-6 p-5 rounded-xl border-2 text-center bg-gray-50 text-gray-600 transition-all duration-300">
     <div class="flex items-center justify-center mb-3">
@@ -244,10 +254,15 @@
     </div>
   </div>
 
-  <button onclick="hitungBMI()" class="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center space-x-2">
-    <i class="fas fa-calculator"></i>
-    <span>Hitung BMI</span>
-  </button>
+  <div class="flex gap-3">
+    <button onclick="hitungBMI()" class="flex-1 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center space-x-2">
+      <i class="fas fa-calculator"></i>
+      <span>Hitung BMI</span>
+    </button>
+    <button onclick="resetBMI()" class="px-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center" title="Reset">
+      <i class="fas fa-redo"></i>
+    </button>
+  </div>
 
   <div id="hasilBMI" class="mt-6 p-5 rounded-xl border-2 text-center bg-gray-50 text-gray-600 transition-all duration-300">
     <div class="flex items-center justify-center mb-3">
@@ -715,6 +730,89 @@ function hitungBMI() {
   
   tampilkanSaran("bmiSaran", saranList, warnaSaran || "purple");
   warnaiBar("barBMI", index, warnaBar);
+}
+
+// === Fungsi Reset Kalkulator ===
+
+function resetKolesterol() {
+  document.getElementById("ldl").value = "";
+  document.getElementById("hdl").value = "";
+  document.getElementById("kolesterolNilai").textContent = "–";
+  document.getElementById("kolesterolStatus").textContent = "Belum ada hasil";
+  document.getElementById("hasilKolesterol").className = "mt-6 p-5 rounded-xl border-2 text-center bg-gray-50 text-gray-600 transition-all duration-300";
+  document.getElementById("hasilKolesterol").innerHTML = `
+    <div class="flex items-center justify-center mb-3">
+      <i class="fas fa-chart-line text-3xl text-gray-400"></i>
+    </div>
+    <p class="text-4xl font-extrabold mb-2" id="kolesterolNilai">–</p>
+    <p class="font-bold text-lg mb-4" id="kolesterolStatus">Belum ada hasil</p>
+    <div class="w-full h-4 rounded-full mt-4 flex overflow-hidden bg-gray-200 shadow-inner" id="barKolesterol">
+      <div class="w-1/4 h-4 bg-gray-300 transition-all duration-500"></div>
+      <div class="w-1/4 h-4 bg-gray-300 transition-all duration-500"></div>
+      <div class="w-1/4 h-4 bg-gray-300 transition-all duration-500"></div>
+      <div class="w-1/4 h-4 bg-gray-300 transition-all duration-500"></div>
+    </div>
+    <div class="flex justify-between text-xs text-gray-500 mt-2 mb-4">
+      <span class="font-medium">&lt;100</span><span class="font-medium">100-159</span><span class="font-medium">160-189</span><span class="font-medium">&gt;190</span>
+    </div>
+    <div class="text-sm mt-4 text-left bg-white rounded-lg p-4 border border-gray-200" id="kolesterolSaran">
+      <p class="text-center text-gray-500 italic">Isi data dan klik "Hitung Kolesterol".</p>
+    </div>
+  `;
+}
+
+function resetGula() {
+  document.getElementById("gula").value = "";
+  document.getElementById("waktuGula").value = "puasa";
+  document.getElementById("gulaNilai").textContent = "–";
+  document.getElementById("gulaStatus").textContent = "Belum ada hasil";
+  document.getElementById("hasilGula").className = "mt-6 p-5 rounded-xl border-2 text-center bg-gray-50 text-gray-600 transition-all duration-300";
+  document.getElementById("hasilGula").innerHTML = `
+    <div class="flex items-center justify-center mb-3">
+      <i class="fas fa-chart-line text-3xl text-gray-400"></i>
+    </div>
+    <p class="text-4xl font-extrabold mb-2" id="gulaNilai">–</p>
+    <p class="font-bold text-lg mb-4" id="gulaStatus">Belum ada hasil</p>
+    <div class="w-full h-4 rounded-full mt-4 flex overflow-hidden bg-gray-200 shadow-inner" id="barGula">
+      <div class="w-1/4 h-4 bg-gray-300 transition-all duration-500"></div>
+      <div class="w-1/4 h-4 bg-gray-300 transition-all duration-500"></div>
+      <div class="w-1/4 h-4 bg-gray-300 transition-all duration-500"></div>
+      <div class="w-1/4 h-4 bg-gray-300 transition-all duration-500"></div>
+    </div>
+    <div class="flex justify-between text-xs text-gray-500 mt-2 mb-4">
+      <span class="font-medium">Normal</span><span class="font-medium">Pra-Diabetes</span><span class="font-medium">Diabetes</span><span class="font-medium">Tinggi</span>
+    </div>
+    <div class="text-sm mt-4 text-left bg-white rounded-lg p-4 border border-gray-200" id="gulaSaran">
+      <p class="text-center text-gray-500 italic">Isi data dan klik "Hitung Gula Darah".</p>
+    </div>
+  `;
+}
+
+function resetBMI() {
+  document.getElementById("berat").value = "";
+  document.getElementById("tinggi").value = "";
+  document.getElementById("bmiNilai").textContent = "–";
+  document.getElementById("bmiStatus").textContent = "Belum ada hasil";
+  document.getElementById("hasilBMI").className = "mt-6 p-5 rounded-xl border-2 text-center bg-gray-50 text-gray-600 transition-all duration-300";
+  document.getElementById("hasilBMI").innerHTML = `
+    <div class="flex items-center justify-center mb-3">
+      <i class="fas fa-chart-line text-3xl text-gray-400"></i>
+    </div>
+    <p class="text-4xl font-extrabold mb-2" id="bmiNilai">–</p>
+    <p class="font-bold text-lg mb-4" id="bmiStatus">Belum ada hasil</p>
+    <div class="w-full h-4 rounded-full mt-4 flex overflow-hidden bg-gray-200 shadow-inner" id="barBMI">
+      <div class="w-1/4 h-4 bg-gray-300 transition-all duration-500"></div>
+      <div class="w-1/4 h-4 bg-gray-300 transition-all duration-500"></div>
+      <div class="w-1/4 h-4 bg-gray-300 transition-all duration-500"></div>
+      <div class="w-1/4 h-4 bg-gray-300 transition-all duration-500"></div>
+    </div>
+    <div class="flex justify-between text-xs text-gray-500 mt-2 mb-4">
+      <span class="font-medium">&lt;18.5</span><span class="font-medium">18.5-25</span><span class="font-medium">25-30</span><span class="font-medium">&gt;30</span>
+    </div>
+    <div class="text-sm mt-4 text-left bg-white rounded-lg p-4 border border-gray-200" id="bmiSaran">
+      <p class="text-center text-gray-500 italic">Isi data dan klik "Hitung BMI".</p>
+    </div>
+  `;
 }
 
 </script>
