@@ -120,9 +120,24 @@ class VenueFrontendController extends Controller
                 'Keamanan (Security) & P3K' => 'fa-shield-alt',
             ];
             
-            // Hitung harga minimum
+            // Hitung harga minimum - hanya dari jadwal yang masih berlaku
             $minPrice = $venue->lapangans->flatMap(function($lapangan) {
                 return $lapangan->slots;
+            })
+            ->filter(function($slot) {
+                // Filter jadwal yang masih berlaku
+                $today = now()->startOfDay();
+                $slotDate = \Carbon\Carbon::parse($slot->tanggal)->startOfDay();
+                
+                if ($slotDate->greaterThan($today)) {
+                    return true; // Tanggal lebih besar dari hari ini
+                } elseif ($slotDate->equalTo($today)) {
+                    // Jika tanggal sama, cek jam selesai
+                    $slotEndTime = \Carbon\Carbon::parse($slot->jam_selesai)->format('H:i:s');
+                    $nowTime = now()->format('H:i:s');
+                    return $slotEndTime >= $nowTime;
+                }
+                return false; // Tanggal sudah lewat
             })
             ->where('status', 'available')
             ->min('harga');
@@ -138,6 +153,7 @@ class VenueFrontendController extends Controller
             if ($defaultLapangan) {
                 $timeslots = $defaultLapangan->slots()
                     ->whereDate('tanggal', $defaultDate->toDateString())
+                    ->valid() // Hanya tampilkan jadwal yang masih berlaku
                     ->orderBy('jam_mulai')
                     ->get();
             }
@@ -179,6 +195,7 @@ class VenueFrontendController extends Controller
             
             $timeslots = $lapangan->slots()
                 ->whereDate('tanggal', $date->toDateString())
+                ->valid() // Hanya tampilkan jadwal yang masih berlaku
                 ->orderBy('jam_mulai')
                 ->get();
             

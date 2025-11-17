@@ -30,5 +30,42 @@ class LapanganSlot extends Model
     {
         return $this->belongsTo(Lapangan::class);
     }
+
+    /**
+     * Scope untuk filter jadwal yang masih berlaku (belum lewat)
+     */
+    public function scopeValid($query)
+    {
+        $today = now()->startOfDay();
+        
+        return $query->where(function($q) use ($today) {
+            // Tanggal lebih besar dari hari ini
+            $q->whereDate('tanggal', '>', $today)
+              // Atau tanggal sama dengan hari ini, tapi jam selesai belum lewat
+              ->orWhere(function($subQ) use ($today) {
+                  $subQ->whereDate('tanggal', '=', $today)
+                       ->whereTime('jam_selesai', '>=', now()->format('H:i:s'));
+              });
+        });
+    }
+
+    /**
+     * Scope untuk filter jadwal yang sudah lewat
+     */
+    public function scopeExpired($query)
+    {
+        $today = now()->startOfDay();
+        $now = now();
+        
+        return $query->where(function($q) use ($today, $now) {
+            // Tanggal lebih kecil dari hari ini
+            $q->whereDate('tanggal', '<', $today)
+              // Atau tanggal sama dengan hari ini, tapi jam selesai sudah lewat
+              ->orWhere(function($subQ) use ($today, $now) {
+                  $subQ->whereDate('tanggal', '=', $today)
+                       ->whereTime('jam_selesai', '<', $now->format('H:i:s'));
+              });
+        });
+    }
 }
 

@@ -157,11 +157,13 @@ class PendaftaranController extends Controller
 
         $timeslots = $lapangan->slots()
             ->whereDate('tanggal', $date->toDateString())
+            ->valid() // Hanya tampilkan jadwal yang masih berlaku
             ->orderBy('jam_mulai')
             ->get();
 
-        // Get dates that have slots (for calendar indicator)
+        // Get dates that have slots (for calendar indicator) - hanya yang masih berlaku
         $datesWithSlots = $lapangan->slots()
+            ->valid() // Hanya jadwal yang masih berlaku
             ->selectRaw('DATE(tanggal) as date, COUNT(*) as slot_count')
             ->groupBy('date')
             ->orderBy('date')
@@ -228,6 +230,7 @@ class PendaftaranController extends Controller
         // Try multiple query methods for better compatibility
         $timeslots = $lapangan->slots()
             ->whereDate('tanggal', $dateString)
+            ->valid() // Hanya tampilkan jadwal yang masih berlaku
             ->orderBy('jam_mulai')
             ->get();
         
@@ -241,8 +244,9 @@ class PendaftaranController extends Controller
             ]);
         }
 
-        // Get dates that have slots (for calendar indicator)
+        // Get dates that have slots (for calendar indicator) - hanya yang masih berlaku
         $datesWithSlots = $lapangan->slots()
+            ->valid() // Hanya jadwal yang masih berlaku
             ->selectRaw('DATE(tanggal) as date, COUNT(*) as slot_count')
             ->groupBy('date')
             ->orderBy('date')
