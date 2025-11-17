@@ -173,35 +173,66 @@
                                 </div>
                             </div>
 
-                            {{-- Field: Username --}}
+                            {{-- Field: Current Password --}}
                             <div>
-                                <label for="username" class="block text-sm font-semibold text-gray-700 mb-2">
-                                    Username
+                                <label for="current_password" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Password Saat Ini
                                 </label>
                                 <div class="relative">
-                                    <i class="fas fa-at absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                                    <input type="text" 
-                                           id="username" 
-                                           name="username"
-                                           value="{{ old('username', Auth::user()->username ?? '') }}"
-                                           class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 form-input"
-                                           placeholder="Masukkan username (opsional)">
+                                    <i class="fas fa-lock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                    <input type="password" 
+                                           id="current_password" 
+                                           name="current_password"
+                                           class="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 form-input"
+                                           placeholder="Masukkan password saat ini">
+                                    <button type="button" 
+                                            onclick="togglePassword('current_password', 'toggleCurrentPassword')"
+                                            class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition">
+                                        <i id="toggleCurrentPassword" class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">
+                                    <i class="fas fa-info-circle mr-1"></i>Diperlukan untuk mengubah password
+                                </p>
+                            </div>
+
+                            {{-- Field: New Password --}}
+                            <div>
+                                <label for="new_password" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Password Baru
+                                </label>
+                                <div class="relative">
+                                    <i class="fas fa-key absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                    <input type="password" 
+                                           id="new_password" 
+                                           name="new_password"
+                                           class="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 form-input"
+                                           placeholder="Masukkan password baru">
+                                    <button type="button" 
+                                            onclick="togglePassword('new_password', 'toggleNewPassword')"
+                                            class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition">
+                                        <i id="toggleNewPassword" class="fas fa-eye"></i>
+                                    </button>
                                 </div>
                             </div>
 
-                            {{-- Field: Phone --}}
+                            {{-- Field: Confirm New Password --}}
                             <div>
-                                <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">
-                                    Nomor Telepon
+                                <label for="new_password_confirmation" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Konfirmasi Password Baru
                                 </label>
                                 <div class="relative">
-                                    <i class="fas fa-phone absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                                    <input type="tel" 
-                                           id="phone" 
-                                           name="phone"
-                                           value="{{ old('phone', Auth::user()->phone ?? '') }}"
-                                           class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 form-input"
-                                           placeholder="Masukkan nomor telepon (opsional)">
+                                    <i class="fas fa-key absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                    <input type="password" 
+                                           id="new_password_confirmation" 
+                                           name="new_password_confirmation"
+                                           class="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 form-input"
+                                           placeholder="Konfirmasi password baru">
+                                    <button type="button" 
+                                            onclick="togglePassword('new_password_confirmation', 'toggleConfirmPassword')"
+                                            class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition">
+                                        <i id="toggleConfirmPassword" class="fas fa-eye"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -412,6 +443,21 @@ function previewImage(input) {
         reader.readAsDataURL(input.files[0]);
     } else {
         preview.classList.add('hidden');
+    }
+}
+
+function togglePassword(inputId, iconId) {
+    const input = document.getElementById(inputId);
+    const icon = document.getElementById(iconId);
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
     }
 }
 </script>
