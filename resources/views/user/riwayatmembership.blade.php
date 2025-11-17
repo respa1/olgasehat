@@ -32,10 +32,10 @@
 
 @section('content')
 
-<main class="bg-gray-100 min-h-[calc(100vh-64px)] pt-20 pb-8 px-4">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
+<main class="pt-20 min-h-screen pb-8 px-4 md:px-8 lg:px-10 bg-gradient-to-br from-gray-50 to-gray-100">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-        <section class="lg:col-span-3 space-y-6">
+        <div class="lg:col-span-2 space-y-6">
             
             {{-- Header Konten --}}
             <div class="bg-white rounded-xl shadow-xl p-6 border-l-4 border-orange-500 flex justify-between items-center">
@@ -128,55 +128,109 @@
 
 
             {{-- Empty State (Gunakan jika tidak ada data) --}}
-            </section>
-
-            {{-- Kolom Kanan (Profil) --}}
-<div class="lg:col-span-1 space-y-6">
-
-    {{-- Card: Profil Utama --}}
-    <div class="bg-white shadow-md rounded-2xl p-6 text-center border-t-4 border-blue-500">
-        @if(Auth::user()->image)
-            <img src="{{ asset('storage/' . Auth::user()->image) }}"
-                 alt="Foto Profil"
-                 class="w-24 h-24 mx-auto rounded-full shadow-md mb-4 object-cover">
-        @else
-            <img src="https://via.placeholder.com/120/2563EB/FFFFFF?text={{ substr(Auth::user()->name ?? 'U', 0, 1) }}"
-                 alt="Foto Profil"
-                 class="w-24 h-24 mx-auto rounded-full shadow-md mb-4 object-cover">
-        @endif
-        <h2 class="text-xl font-bold text-gray-900">
-            {{ Auth::user()->name ?? 'Rendra Pratama' }}
-        </h2>
-        <p class="text-sm text-gray-500 mb-2">Anggota Sejak 2024</p>
-
-        <span class="inline-block bg-yellow-100 text-yellow-700 text-sm font-semibold px-3 py-1 rounded-full mb-3">
-            Gold Member
-        </span>
-
-        <div class="flex justify-center">
-            <a href="/edit-profile-user" 
-               class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-semibold transition duration-200">
-                <i class="fas fa-user-edit mr-2"></i> Edit Profil
-            </a>
         </div>
-    </div>
 
-    {{-- Card: Statistik Akun --}}
-    <div class="bg-white shadow-md rounded-2xl p-6 border-t-4 border-indigo-500">
-        <h3 class="text-lg font-semibold text-gray-700 mb-3">Statistik Akun</h3>
-        <ul class="space-y-2 text-sm text-gray-600">
-            <li class="flex justify-between">
-                <span>Total Pemesanan</span>
-                <span class="font-semibold text-gray-800">12</span>
-            </li>
-            <li class="flex justify-between">
-                <span>Komunitas Aktif</span>
-                <span class="font-semibold text-gray-800">2</span>
-            </li>
-        </ul>
-    </div>
+            {{-- Kolom Kanan (1/3) - Sidebar Unified --}}
+        <div class="lg:col-span-1">
+            <div class="bg-white rounded-2xl p-6 space-y-6 border border-gray-200 shadow-lg">
+                
+                {{-- Greeting Section --}}
+                <div class="flex items-start justify-between pb-4 border-b border-gray-200">
+                    <div class="flex-1">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-2">Hello. {{ Auth::user()->name ?? 'Rendra' }}!</h2>
+                        <p class="text-sm text-gray-600 leading-relaxed">Siap bergerak aktif hari ini? Yuk, cek progresmu!</p>
+                    </div>
+                    <div class="ml-4 flex-shrink-0">
+                        @if(Auth::user()->image ?? null)
+                            <img src="{{ asset('storage/' . Auth::user()->image) }}"
+                                 alt="Profile Picture"
+                                 class="w-20 h-20 rounded-full object-cover shadow-lg border-2 border-gray-200">
+                        @else
+                            @php
+                                $userName = Auth::user()->name ?? 'Rendra';
+                                $initial = strtolower(substr($userName, 0, 1));
+                            @endphp
+                            <div class="w-20 h-20 rounded-full bg-blue-300 flex items-center justify-center text-blue-800 text-3xl font-bold shadow-lg">
+                                {{ $initial }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                
+                {{-- Action Buttons --}}
+                <div class="flex gap-2 pb-4 border-b border-gray-200">
+                    <a href="#" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-center py-2.5 px-4 rounded-lg font-semibold transition duration-200 text-sm shadow-md hover:shadow-lg">
+                        <i class="fas fa-phone mr-1"></i>Hubungi Kami
+                    </a>
+                    <a href="/edit-profile-user" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-center py-2.5 px-4 rounded-lg font-semibold transition duration-200 text-sm shadow-md hover:shadow-lg">
+                        <i class="fas fa-user-edit mr-1"></i>Edit Profile
+                    </a>
+                </div>
 
-    </div>
+                {{-- Blue Banner Card: Nikmati Akses User --}}
+                <a href="#" class="rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md block relative overflow-hidden transition-all duration-300 hover:translate-x-1">
+                    <div class="absolute inset-0 opacity-20" style="background-image: url('{{ asset('assets/blue-banner.png') }}'); background-size: cover; background-position: center;"></div>
+                    <div class="relative z-10 flex items-start space-x-3">
+                        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+                            <i class="fas fa-star text-white text-lg"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-gray-900 mb-1">Nikmati Akses User</h3>
+                            <p class="text-xs text-gray-500">Akses penuh ke semua fitur premium dan layanan eksklusif untuk pengalaman terbaik Anda</p>
+                        </div>
+                    </div>
+                </a>
+
+                {{-- Quick Actions Section --}}
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-bolt text-yellow-500 mr-2"></i>
+                        Aksi Cepat
+                    </h2>
+                    <div class="space-y-3">
+                        <!-- Fasilitas Olahraga -->
+                        <a href="/venueuser" class="bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md block transition-all duration-300 hover:translate-x-1">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-futbol text-blue-600 text-lg"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-900 mb-1">Fasilitas Olahraga</h3>
+                                    <p class="text-xs text-gray-500">Booking lapangan olahraga favorit Anda dengan mudah</p>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Layanan Kesehatan -->
+                        <a href="/healthyuser" class="bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md block transition-all duration-300 hover:translate-x-1">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-heartbeat text-green-600 text-lg"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-900 mb-1">Layanan Kesehatan</h3>
+                                    <p class="text-xs text-gray-500">Cek kesehatan dan layanan medis terdekat</p>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Buat & Temukan Komunitas -->
+                        <a href="/communityuser" class="bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md block transition-all duration-300 hover:translate-x-1">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-users text-orange-600 text-lg"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-900 mb-1">Buat & Temukan Komunitas</h3>
+                                    <p class="text-xs text-gray-500">Bergabung atau buat komunitas olahraga baru</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 </main>
 
 @endsection
