@@ -112,8 +112,22 @@
                                     <textarea class="form-control" id="deskripsi" name="deskripsi" rows="4" placeholder="Tulis ringkasan komunitas, jadwal, dan manfaatnya" required>{{ old('deskripsi') }}</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="link">Link Grup / Kontak (WhatsApp / IG)</label>
-                                    <input type="text" class="form-control" id="link" name="link_kontak" placeholder="https://wa.me/.. atau @akuninstagram" value="{{ old('link_kontak') }}">
+                                    <label for="link">
+                                        <i class="fas fa-link text-primary mr-1"></i>Link Grup WhatsApp (Untuk Bergabung)
+                                    </label>
+                                    <input type="text" class="form-control" id="link" name="link_kontak" placeholder="https://chat.whatsapp.com/..." value="{{ old('link_kontak') }}">
+                                    <small class="form-text text-muted">
+                                        <i class="fas fa-info-circle mr-1"></i>Link ini akan digunakan untuk tombol "Bergabung"
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="link_kontak_2">
+                                        <i class="fas fa-phone-alt text-primary mr-1"></i>Kontak & Informasi Lainnya (Opsional)
+                                    </label>
+                                    <input type="text" class="form-control" id="link_kontak_2" name="link_kontak_2" placeholder="https://wa.me/.. atau @akuninstagram atau link lainnya" value="{{ old('link_kontak_2') }}">
+                                    <small class="form-text text-muted">
+                                        <i class="fas fa-info-circle mr-1"></i>Link kontak tambahan (Instagram, WhatsApp personal, dll.)
+                                    </small>
                                 </div>
                                 <div class="form-group">
                                     <label for="banner">Upload Banner Komunitas (Max 2MB)</label>

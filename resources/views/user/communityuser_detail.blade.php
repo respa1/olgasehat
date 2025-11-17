@@ -158,7 +158,7 @@
             </div>
 
             <!-- Contact Section -->
-            @if($activity->link_kontak)
+            @if($activity->link_kontak || ($activity->link_kontak_2 ?? null))
             <div class="contact-box rounded-2xl shadow-xl p-6 md:p-8 mb-6">
                 <div class="flex items-center space-x-3 mb-4">
                     <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
@@ -166,10 +166,26 @@
                     </div>
                     <h3 class="text-xl font-bold text-white">Kontak & Informasi</h3>
                 </div>
-                <a href="{{ $activity->link_kontak }}" target="_blank" class="inline-flex items-center space-x-2 text-white hover:text-blue-100 transition font-medium text-lg break-all max-w-full">
-                    <i class="fas fa-external-link-alt flex-shrink-0"></i>
-                    <span class="break-all">{{ $activity->link_kontak }}</span>
-                </a>
+                <div class="space-y-3">
+                    @if($activity->link_kontak)
+                    <div>
+                        <p class="text-sm text-white/80 mb-1">Link Grup WhatsApp:</p>
+                        <a href="{{ $activity->link_kontak }}" target="_blank" class="inline-flex items-center space-x-2 text-white hover:text-blue-100 transition font-medium text-lg break-all max-w-full">
+                            <i class="fab fa-whatsapp flex-shrink-0"></i>
+                            <span class="break-all">{{ $activity->link_kontak }}</span>
+                        </a>
+                    </div>
+                    @endif
+                    @if($activity->link_kontak_2 ?? null)
+                    <div class="pt-3 border-t border-white/20">
+                        <p class="text-sm text-white/80 mb-1">Kontak Lainnya:</p>
+                        <a href="{{ $activity->link_kontak_2 }}" target="_blank" class="inline-flex items-center space-x-2 text-white hover:text-blue-100 transition font-medium text-lg break-all max-w-full">
+                            <i class="fas fa-external-link-alt flex-shrink-0"></i>
+                            <span class="break-all">{{ $activity->link_kontak_2 }}</span>
+                        </a>
+                    </div>
+                    @endif
+                </div>
             </div>
             @endif
 
@@ -218,7 +234,7 @@
                 
                 @if($activity->link_kontak)
                 <a href="{{ $activity->link_kontak }}" target="_blank" class="w-full bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-4 rounded-xl font-bold text-lg hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 mb-6 block text-center">
-                    <i class="fas fa-paper-plane mr-2"></i> BERGABUNG SEKARANG
+                    <i class="fab fa-whatsapp mr-2"></i> BERGABUNG SEKARANG
                 </a>
                 @else
                 <button class="w-full bg-gradient-to-r from-blue-700 to-indigo-700 text-white py-4 rounded-xl font-bold text-lg hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 mb-6">
