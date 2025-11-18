@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use App\Models\ActivityType;
+use App\Models\ActivityParticipant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -68,10 +69,14 @@ class ActivityController extends Controller
             'harga' => 'nullable|integer|min:0|required_if:biaya_bergabung,berbayar',
             'deskripsi' => 'required|string',
             'link_kontak' => 'nullable|string|max:500',
+            'jenis' => 'nullable|in:komunitas,event', // Tambahkan jenis untuk support event
         ]);
 
-        // Tentukan activity_type_id (default komunitas untuk pemilik)
-        $activityType = ActivityType::where('name', 'open-class')->first();
+        $jenis = $request->jenis ?? 'komunitas'; // Default komunitas jika tidak ada
+
+        // Tentukan activity_type_id berdasarkan jenis
+        $activityTypeName = $jenis === 'event' ? 'event' : 'open-class';
+        $activityType = ActivityType::where('name', $activityTypeName)->first();
 
         $data = new Activity();
         $data->nama = $request->nama;
@@ -81,7 +86,7 @@ class ActivityController extends Controller
         $data->harga = $request->biaya_bergabung === 'berbayar' ? $request->harga : null;
         $data->deskripsi = $request->deskripsi;
         $data->link_kontak = $request->link_kontak;
-        $data->jenis = 'komunitas';
+        $data->jenis = $jenis;
         $data->status = 'pending'; // Status pending untuk verifikasi
         $data->pemilik_id = Auth::id();
         $data->activity_type_id = $activityType ? $activityType->id : null;
@@ -96,7 +101,55 @@ class ActivityController extends Controller
 
         $data->save();
 
-        return redirect()->back()->with('success', 'Komunitas berhasil dibuat dan sedang menunggu verifikasi admin.');
+        $message = $jenis === 'event' 
+            ? 'Event berhasil dibuat dan sedang menunggu verifikasi admin.'
+            : 'Komunitas berhasil dibuat dan sedang menunggu verifikasi admin.';
+
+        return redirect()->back()->with('success', $message);
+    }
+
+    /**
+     * User bergabung ke event/aktivitas
+     */
+    public function joinEvent(Request $request, $id)
+    {
+        $activity = Activity::where('status', 'approved')->findOrFail($id);
+
+        // Cek apakah user sudah bergabung
+        $existingParticipant = ActivityParticipant::where('activity_id', $id)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if ($existingParticipant) {
+            return redirect()->back()->with('error', 'Anda sudah terdaftar pada event ini.');
+        }
+
+        $request->validate([
+            'nama_peserta' => 'required|string|max:255',
+            'bukti_pembayaran' => $activity->biaya_bergabung === 'berbayar' ? 'required|image|mimes:jpeg,png,jpg,gif|max:2048' : 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $participant = new ActivityParticipant();
+        $participant->activity_id = $activity->id;
+        $participant->user_id = Auth::id();
+        $participant->nama_peserta = $request->nama_peserta;
+        $participant->status = $activity->biaya_bergabung === 'berbayar' ? 'pending' : 'approved'; // Jika gratis langsung approved
+
+        // Handle upload bukti pembayaran jika event berbayar
+        if ($request->hasFile('bukti_pembayaran')) {
+            $image = $request->file('bukti_pembayaran');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('bukti_pembayaran'), $imageName);
+            $participant->bukti_pembayaran = $imageName;
+        }
+
+        $participant->save();
+
+        $message = $activity->biaya_bergabung === 'berbayar'
+            ? 'Pendaftaran berhasil! Bukti pembayaran sedang diverifikasi oleh admin.'
+            : 'Anda berhasil bergabung dengan event ini!';
+
+        return redirect()->back()->with('success', $message);
     }
 
     /**
@@ -266,8 +319,18 @@ class ActivityController extends Controller
     public function showUser($id)
     {
         $activity = Activity::where('status', 'approved')
-            ->with(['user', 'pemilik', 'activityType'])
+            ->with(['user', 'pemilik', 'activityType', 'participants'])
             ->findOrFail($id);
+
+        // Cek apakah user sudah bergabung
+        $isJoined = false;
+        $participant = null;
+        if (Auth::check()) {
+            $participant = ActivityParticipant::where('activity_id', $id)
+                ->where('user_id', Auth::id())
+                ->first();
+            $isJoined = $participant !== null;
+        }
 
         // Get related activities (same category, excluding current)
         $relatedActivities = Activity::where('status', 'approved')
@@ -277,39 +340,46 @@ class ActivityController extends Controller
             ->limit(4)
             ->get();
 
-        return view('user.communityuser_detail', compact('activity', 'relatedActivities'));
+        return view('user.communityuser_detail', compact('activity', 'relatedActivities', 'isJoined', 'participant'));
     }
 
     /**
      * Menampilkan riwayat aktivitas yang dibuat oleh user yang login
+     * DAN aktivitas yang diikuti (bergabung) oleh user
      */
     public function riwayatKomunitas(Request $request)
     {
         $user = Auth::user();
         
         // Ambil aktivitas yang dibuat oleh user yang login
-        $query = Activity::where('user_id', $user->id)
+        $activitiesCreated = Activity::where('user_id', $user->id)
             ->with(['activityType'])
             ->orderBy('created_at', 'desc');
 
         // Filter berdasarkan status jika ada
         if ($request->has('status') && $request->status) {
-            $query->where('status', $request->status);
+            $activitiesCreated->where('status', $request->status);
         }
 
         // Search
         if ($request->has('search') && $request->search) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
+            $activitiesCreated->where(function($q) use ($search) {
                 $q->where('nama', 'LIKE', '%' . $search . '%')
                   ->orWhere('kategori', 'LIKE', '%' . $search . '%')
                   ->orWhere('lokasi', 'LIKE', '%' . $search . '%');
             });
         }
 
-        $activities = $query->paginate(10);
+        $activities = $activitiesCreated->paginate(10);
 
-        return view('user.riwayatkomunitas', compact('activities'));
+        // Ambil aktivitas yang diikuti user (bergabung sebagai peserta)
+        $activitiesJoined = ActivityParticipant::where('user_id', $user->id)
+            ->with(['activity.activityType'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('user.riwayatkomunitas', compact('activities', 'activitiesJoined'));
     }
 
     /**
@@ -394,5 +464,113 @@ class ActivityController extends Controller
             ->get();
 
         return view('FRONTEND.community_detail', compact('activity', 'relatedActivities'));
+    }
+
+    /**
+     * Daftar peserta event yang perlu diverifikasi pembayarannya (untuk admin)
+     */
+    public function verifikasiPembayaran(Request $request)
+    {
+        $status = $request->get('status', 'pending'); // Default pending
+        
+        $query = ActivityParticipant::with(['activity.activityType', 'user'])
+            ->whereHas('activity', function($q) {
+                $q->where('status', 'approved'); // Hanya event yang sudah disetujui
+            });
+
+        // Filter berdasarkan status
+        if ($status == 'pending') {
+            $query->where('status', 'pending');
+        } elseif ($status == 'approved') {
+            $query->where('status', 'approved');
+        } elseif ($status == 'rejected') {
+            $query->where('status', 'rejected');
+        } elseif ($status == 'all') {
+            // Tampilkan semua
+        } else {
+            $query->where('status', 'pending');
+        }
+
+        // Search functionality
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama_peserta', 'LIKE', '%' . $search . '%')
+                  ->orWhereHas('activity', function($q) use ($search) {
+                      $q->where('nama', 'LIKE', '%' . $search . '%')
+                        ->orWhere('kategori', 'LIKE', '%' . $search . '%');
+                  })
+                  ->orWhereHas('user', function($q) use ($search) {
+                      $q->where('name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('email', 'LIKE', '%' . $search . '%');
+                  });
+            });
+        }
+
+        $participants = $query->orderBy('created_at', 'desc')->paginate(15);
+
+        // Count untuk statistik
+        $countPending = ActivityParticipant::where('status', 'pending')
+            ->whereHas('activity', function($q) {
+                $q->where('status', 'approved');
+            })
+            ->count();
+        $countApproved = ActivityParticipant::where('status', 'approved')
+            ->whereHas('activity', function($q) {
+                $q->where('status', 'approved');
+            })
+            ->count();
+        $countRejected = ActivityParticipant::where('status', 'rejected')
+            ->whereHas('activity', function($q) {
+                $q->where('status', 'approved');
+            })
+            ->count();
+        $countAll = ActivityParticipant::whereHas('activity', function($q) {
+                $q->where('status', 'approved');
+            })
+            ->count();
+
+        return view('backend.activity_types.verifikasi_pembayaran', compact('participants', 'status', 'countPending', 'countApproved', 'countRejected', 'countAll'));
+    }
+
+    /**
+     * Approve pembayaran peserta event
+     */
+    public function approvePembayaran($id)
+    {
+        $participant = ActivityParticipant::with('activity')->findOrFail($id);
+        
+        // Pastikan event sudah approved
+        if ($participant->activity->status !== 'approved') {
+            return redirect()->back()->with('error', 'Event belum disetujui.');
+        }
+
+        $participant->status = 'approved';
+        $participant->save();
+
+        return redirect()->route('activities.verifikasi-pembayaran')->with('success', 'Pembayaran berhasil disetujui.');
+    }
+
+    /**
+     * Reject pembayaran peserta event
+     */
+    public function rejectPembayaran(Request $request, $id)
+    {
+        $request->validate([
+            'alasan_reject' => 'required|string|max:500',
+        ]);
+
+        $participant = ActivityParticipant::with('activity')->findOrFail($id);
+        
+        // Pastikan event sudah approved
+        if ($participant->activity->status !== 'approved') {
+            return redirect()->back()->with('error', 'Event belum disetujui.');
+        }
+
+        $participant->status = 'rejected';
+        $participant->catatan = $request->alasan_reject;
+        $participant->save();
+
+        return redirect()->route('activities.verifikasi-pembayaran')->with('success', 'Pembayaran ditolak.');
     }
 }

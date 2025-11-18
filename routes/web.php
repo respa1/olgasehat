@@ -107,6 +107,7 @@ Route::get('/buat-aktivitas', fn() => view('user.user_buat_aktivitas'));
 Route::post('/buat-aktivitas', [App\Http\Controllers\ActivityController::class, 'storeFromUser'])->name('activities.store.user');
 Route::get('/communityuser', [App\Http\Controllers\ActivityController::class, 'indexUser'])->name('user.community');
 Route::get('/communityuser_detail/{id}', [App\Http\Controllers\ActivityController::class, 'showUser'])->name('user.community.detail');
+Route::post('/communityuser_detail/{id}/join', [App\Http\Controllers\ActivityController::class, 'joinEvent'])->name('user.community.join');
 Route::get('/bloguser_news', [BeritaController::class, 'indexUser'])->name('user.bloguser_news');
 Route::get('/bloguser_detail/{id}', [BeritaController::class, 'showUser'])->name('user.bloguser_detail');
 Route::get('/confirmuser', function () {return view('user.confirmuser'); });
@@ -168,6 +169,7 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
     Route::post('/pemiliklapangan/komunitas', [App\Http\Controllers\ActivityController::class, 'storeFromPemilik'])->name('activities.store.pemilik');
     Route::get('/pemiliklapangan/membership', fn() => view('pemiliklapangan.pemilik_buat_membership'))->name('pemilik.membership');
     Route::get('/pemiliklapangan/event', fn() => view('pemiliklapangan.pemilik_buat_event'))->name('pemilik.event');
+    Route::post('/pemiliklapangan/event', [App\Http\Controllers\ActivityController::class, 'storeFromPemilik'])->name('activities.store.pemilik.event');
     // Route untuk proses pendaftaran venue
     Route::get('/informasi', [PendaftaranController::class, 'informasi'])->name('informasi');
     Route::post('/insertinform', [PendaftaranController::class, 'insertinform'])->name('insertinform');
@@ -318,6 +320,11 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('activity-types', ActivityTypeController::class);
         Route::get('activity-types-daftar', [App\Http\Controllers\ActivityController::class, 'daftar'])->name('activity-types.daftar');
         
+        // VERIFIKASI PEMBAYARAN EVENT (Harus sebelum activities/{id} agar tidak conflict)
+        Route::get('activities/verifikasi-pembayaran', [App\Http\Controllers\ActivityController::class, 'verifikasiPembayaran'])->name('activities.verifikasi-pembayaran');
+        Route::put('activities/pembayaran/{id}/approve', [App\Http\Controllers\ActivityController::class, 'approvePembayaran'])->name('activities.approve-pembayaran');
+        Route::put('activities/pembayaran/{id}/reject', [App\Http\Controllers\ActivityController::class, 'rejectPembayaran'])->name('activities.reject-pembayaran');
+
         // ACTIVITIES (Verifikasi)
         Route::get('activities/{id}', [App\Http\Controllers\ActivityController::class, 'show'])->name('activities.show');
         Route::put('activities/{id}/approve', [App\Http\Controllers\ActivityController::class, 'approve'])->name('activities.approve');

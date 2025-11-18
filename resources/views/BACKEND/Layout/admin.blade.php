@@ -200,6 +200,12 @@
                   <p>Daftar Aktivitas</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ route('activities.verifikasi-pembayaran') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Verifikasi Pembayaran</p>
+                </a>
+              </li>
             </ul>
           </li>
 

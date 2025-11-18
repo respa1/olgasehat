@@ -20,7 +20,7 @@
             <div class="bg-white rounded-xl shadow-xl p-6 border-l-4 border-orange-500 flex justify-between items-center">
                 <div>
                     <h2 class="font-extrabold text-2xl text-gray-900">Riwayat Aktivitas Saya</h2>
-                    <p class="text-gray-500 mt-1">Aktivitas yang telah kamu buat dan kelola.</p>
+                    <p class="text-gray-500 mt-1">Aktivitas yang telah kamu buat, kelola, dan ikuti.</p>
                 </div>
                 {{-- Tombol Tambah Aktivitas di Header --}}
                 <a href="/buat-aktivitas" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition duration-150 flex items-center text-sm md:text-base whitespace-nowrap">
@@ -174,6 +174,98 @@
                 <a href="/buat-aktivitas" class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-150">
                     <i class="fas fa-plus mr-2"></i> Buat Aktivitas Sekarang
                 </a>
+            </div>
+            @endif
+
+            {{-- Section: Aktivitas yang Diikuti (Bergabung) --}}
+            @if(isset($activitiesJoined) && $activitiesJoined->count() > 0)
+            <div class="mt-8">
+                <div class="bg-white rounded-xl shadow-xl p-6 border-l-4 border-blue-500 mb-6">
+                    <h2 class="font-extrabold text-2xl text-gray-900">Event yang Saya Ikuti</h2>
+                    <p class="text-gray-500 mt-1">Daftar event yang telah kamu daftarkan sebagai peserta.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    @foreach($activitiesJoined as $participant)
+                    @php
+                        $activity = $participant->activity;
+                    @endphp
+                    @if($activity)
+                    <div class="community-card bg-white p-6 rounded-lg shadow-md">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center flex-1">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center mr-4 flex-shrink-0 bg-red-100 text-red-600">
+                                    <i class="fas fa-calendar-alt text-xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-xl font-bold text-gray-900">{{ $activity->nama }}</p>
+                                    <p class="text-sm text-gray-500">{{ $activity->kategori }} | {{ $activity->lokasi ?? '-' }}</p>
+                                </div>
+                            </div>
+                            {{-- Status Badge --}}
+                            <div class="ml-2">
+                                @if($participant->status === 'approved')
+                                    <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">
+                                        <i class="fas fa-check-circle"></i> Disetujui
+                                    </span>
+                                @elseif($participant->status === 'pending')
+                                    <span class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded-full">
+                                        <i class="fas fa-clock"></i> Menunggu Verifikasi
+                                    </span>
+                                @else
+                                    <span class="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">
+                                        <i class="fas fa-times-circle"></i> Ditolak
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        {{-- Banner Preview --}}
+                        @if($activity->banner)
+                        <div class="mb-4">
+                            <img src="{{ asset('fotoaktivitas/'.$activity->banner) }}" 
+                                 alt="{{ $activity->nama }}" 
+                                 class="w-full h-32 object-cover rounded-lg">
+                        </div>
+                        @endif
+                        
+                        {{-- Info Peserta --}}
+                        <div class="mt-3 pt-3 border-t border-gray-100">
+                            <p class="text-sm text-gray-600 mb-2">
+                                <i class="fas fa-user mr-1"></i>
+                                <strong>Nama Peserta:</strong> {{ $participant->nama_peserta }}
+                            </p>
+                            <div class="flex items-center justify-between text-xs text-gray-500 mb-2">
+                                <span>
+                                    <i class="fas fa-money-bill-wave mr-1"></i>
+                                    {{ $activity->biaya_bergabung == 'gratis' ? 'Gratis' : 'Rp ' . number_format($activity->harga, 0, ',', '.') }}
+                                </span>
+                                <span>
+                                    <i class="fas fa-calendar mr-1"></i>
+                                    Daftar: {{ $participant->created_at->format('d M Y') }}
+                                </span>
+                            </div>
+                            @if($participant->bukti_pembayaran)
+                            <div class="mt-2">
+                                <a href="{{ asset('bukti_pembayaran/'.$participant->bukti_pembayaran) }}" target="_blank" class="text-xs text-blue-600 hover:text-blue-800">
+                                    <i class="fas fa-file-image mr-1"></i> Lihat Bukti Pembayaran
+                                </a>
+                            </div>
+                            @endif
+                        </div>
+                        
+                        {{-- Tombol Aksi --}}
+                        <div class="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
+                            <a href="{{ route('user.community.detail', $activity->id) }}" 
+                               class="text-sm font-semibold text-orange-500 hover:text-orange-700 transition duration-150 ease-in-out">
+                                Lihat Detail 
+                                <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    @endif
+                    @endforeach
+                </div>
             </div>
             @endif
             
