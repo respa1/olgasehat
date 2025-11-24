@@ -7,6 +7,7 @@ use App\Models\HealthService;
 use App\Models\Clinic;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HealthServiceController extends Controller
 {
@@ -42,8 +43,8 @@ class HealthServiceController extends Controller
      */
     public function create()
     {
-        $clinics = Clinic::where('status', 'approved')->get();
-        $doctors = Doctor::where('status', 'approved')->where('aktif', true)->get();
+        $clinics = Clinic::where('user_id', Auth::id())->get();
+        $doctors = Doctor::whereIn('clinic_id', $clinics->pluck('id'))->where('aktif', true)->get();
         return view('BACKEND.Health.HealthService.create', compact('clinics', 'doctors'));
     }
 
@@ -75,8 +76,8 @@ class HealthServiceController extends Controller
     public function edit($id)
     {
         $service = HealthService::findOrFail($id);
-        $clinics = Clinic::where('status', 'approved')->get();
-        $doctors = Doctor::where('status', 'approved')->where('aktif', true)->get();
+        $clinics = Clinic::where('user_id', Auth::id())->get();
+        $doctors = Doctor::whereIn('clinic_id', $clinics->pluck('id'))->where('aktif', true)->get();
         return view('BACKEND.Health.HealthService.edit', compact('service', 'clinics', 'doctors'));
     }
 

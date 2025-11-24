@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Health;
 
 use App\Http\Controllers\Controller;
 use App\Models\Clinic;
-use App\Models\ClinicCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -15,7 +14,7 @@ class ClinicController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Clinic::with(['category', 'user']);
+        $query = Clinic::with(['user']);
 
         // Filter berdasarkan status
         if ($request->has('status') && $request->status) {
@@ -27,10 +26,6 @@ class ClinicController extends Controller
             $query->where('tipe', $request->tipe);
         }
 
-        // Filter berdasarkan kategori
-        if ($request->has('category_id') && $request->category_id) {
-            $query->where('clinic_category_id', $request->category_id);
-        }
 
         // Search
         if ($request->has('search') && $request->search) {
@@ -42,10 +37,14 @@ class ClinicController extends Controller
             });
         }
 
+        // Get counts for statistics (before pagination)
+        $countPending = Clinic::where('status', 'pending')->count();
+        $countApproved = Clinic::where('status', 'approved')->count();
+        $countRejected = Clinic::where('status', 'rejected')->count();
+        
         $clinics = $query->orderBy('created_at', 'desc')->paginate(15);
-        $categories = ClinicCategory::where('aktif', true)->get();
 
-        return view('BACKEND.Health.Clinic.index', compact('clinics', 'categories'));
+        return view('BACKEND.Health.Clinic.index', compact('clinics', 'countPending', 'countApproved', 'countRejected'));
     }
 
     /**
@@ -53,8 +52,7 @@ class ClinicController extends Controller
      */
     public function create()
     {
-        $categories = ClinicCategory::where('aktif', true)->get();
-        return view('BACKEND.Health.Clinic.create', compact('categories'));
+        return view('BACKEND.Health.Clinic.create');
     }
 
     /**
@@ -75,7 +73,6 @@ class ClinicController extends Controller
             'hari_operasional' => 'nullable|array',
             'jam_buka' => 'nullable',
             'jam_tutup' => 'nullable',
-            'clinic_category_id' => 'nullable|exists:clinic_categories,id',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_utama' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -111,7 +108,7 @@ class ClinicController extends Controller
      */
     public function show($id)
     {
-        $clinic = Clinic::with(['category', 'user', 'doctors', 'services', 'bookings'])->findOrFail($id);
+        $clinic = Clinic::with(['user', 'doctors', 'services', 'bookings'])->findOrFail($id);
         return view('BACKEND.Health.Clinic.show', compact('clinic'));
     }
 
@@ -121,8 +118,7 @@ class ClinicController extends Controller
     public function edit($id)
     {
         $clinic = Clinic::findOrFail($id);
-        $categories = ClinicCategory::where('aktif', true)->get();
-        return view('BACKEND.Health.Clinic.edit', compact('clinic', 'categories'));
+        return view('BACKEND.Health.Clinic.edit', compact('clinic'));
     }
 
     /**
@@ -143,7 +139,6 @@ class ClinicController extends Controller
             'hari_operasional' => 'nullable|array',
             'jam_buka' => 'nullable',
             'jam_tutup' => 'nullable',
-            'clinic_category_id' => 'nullable|exists:clinic_categories,id',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_utama' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -188,8 +183,18 @@ class ClinicController extends Controller
     public function approve($id)
     {
         $clinic = Clinic::findOrFail($id);
+        
+        // If already approved, reset to pending
+        if ($clinic->status == 'approved') {
+            $clinic->status = 'pending';
+            $clinic->verified_at = null;
+            $clinic->save();
+            return redirect()->back()->with('success', 'Status klinik diubah menjadi pending.');
+        }
+        
         $clinic->status = 'approved';
         $clinic->verified_at = now();
+        $clinic->alasan_reject = null; // Clear rejection reason if any
         $clinic->save();
 
         return redirect()->back()->with('success', 'Klinik berhasil disetujui.');

@@ -82,8 +82,7 @@ class HealthManagerController extends Controller
      */
     public function createClinic()
     {
-        $categories = \App\Models\ClinicCategory::where('aktif', true)->get();
-        return view('pemilikkesehatan.Clinic.create', compact('categories'));
+        return view('pemilikkesehatan.Clinic.create');
     }
 
     /**
@@ -104,7 +103,8 @@ class HealthManagerController extends Controller
             'hari_operasional' => 'nullable|array',
             'jam_buka' => 'nullable',
             'jam_tutup' => 'nullable',
-            'clinic_category_id' => 'nullable|exists:clinic_categories,id',
+            'jenis_layanan' => 'required|array|min:1',
+            'jenis_layanan.*' => 'required|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_utama' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -113,6 +113,15 @@ class HealthManagerController extends Controller
         $data['slug'] = Str::slug($request->nama);
         $data['status'] = 'pending';
         $data['user_id'] = Auth::id();
+        
+        // Handle jenis layanan - simpan sebagai array JSON
+        if ($request->has('jenis_layanan')) {
+            $jenisLayanan = array_filter($request->jenis_layanan); // Hapus yang kosong
+            $data['layanan_tersedia'] = array_values($jenisLayanan); // Re-index array
+        }
+        
+        // Hapus jenis_layanan dari data karena tidak ada di database
+        unset($data['jenis_layanan']);
 
         // Handle upload logo
         if ($request->hasFile('logo')) {
@@ -142,8 +151,7 @@ class HealthManagerController extends Controller
     public function editClinic($id)
     {
         $clinic = Clinic::where('user_id', Auth::id())->findOrFail($id);
-        $categories = \App\Models\ClinicCategory::where('aktif', true)->get();
-        return view('pemilikkesehatan.Clinic.edit', compact('clinic', 'categories'));
+        return view('pemilikkesehatan.Clinic.edit', compact('clinic'));
     }
 
     /**
@@ -166,13 +174,23 @@ class HealthManagerController extends Controller
             'hari_operasional' => 'nullable|array',
             'jam_buka' => 'nullable',
             'jam_tutup' => 'nullable',
-            'clinic_category_id' => 'nullable|exists:clinic_categories,id',
+            'jenis_layanan' => 'required|array|min:1',
+            'jenis_layanan.*' => 'required|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_utama' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = $request->all();
         $data['slug'] = Str::slug($request->nama);
+        
+        // Handle jenis layanan - simpan sebagai array JSON
+        if ($request->has('jenis_layanan')) {
+            $jenisLayanan = array_filter($request->jenis_layanan); // Hapus yang kosong
+            $data['layanan_tersedia'] = array_values($jenisLayanan); // Re-index array
+        }
+        
+        // Hapus jenis_layanan dari data karena tidak ada di database
+        unset($data['jenis_layanan']);
 
         // Handle upload logo
         if ($request->hasFile('logo')) {

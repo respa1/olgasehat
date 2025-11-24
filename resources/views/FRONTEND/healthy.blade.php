@@ -814,236 +814,182 @@ function resetBMI() {
 </script>
 
 <section class="container mx-auto px-6 py-16">
-    <h2 class="font-bold text-2xl mb-8 text-gray-800">
-        Nikmati <span class="text-green-600 mb-20">6 Layanan Unggulan</span> Terdekat
-    </h2>
-    <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
-        aria-label="Daftar layanan kesehatan"
-    >
+    <!-- Header Section -->
+    <div class="text-center mb-12">
+        <h1 class="font-bold text-3xl md:text-4xl text-gray-900 mb-4">
+            Klinik Mitra Pilihan
+        </h1>
+        <p class="text-lg text-gray-600">
+            Paling Banyak Dikunjungi
+        </p>
+    </div>
+
+    <!-- Divider -->
+    <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-green-500 mx-auto mb-12 rounded-full"></div>
+
+    <!-- Klinik Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         
-        <a href="/service-detail" class="block group">
-            <article
-                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:scale-[1.02] group-hover:shadow-xl transition duration-300 h-full flex flex-col"
-            >
-                <img
-                    src="assets/fisioterapi.jpg" 
-                    alt="Layanan Fisioterapi Olahraga"
-                    class="w-full h-40 object-cover"
-                />
-                
-                <div class="p-4 flex flex-col flex-grow">
-                    <p class="text-xs text-gray-500 font-medium mb-1">Klinik | Fisioterapi</p>
-                    <h3 class="font-bold text-lg text-gray-900 mb-1">Bali Sport Physio Center</h3>
-                    <p class="text-sm text-gray-600 mb-3 flex items-center">
-                        <i class="fas fa-map-marker-alt text-green-600 text-xs mr-1"></i> Kota Denpasar
-                    </p>
-                    
-                    <p class="font-bold text-gray-900 mb-3 mt-auto">
-                        Mulai <span class="text-xl text-green-700">Rp200,000</span> /Sesi
-                    </p>
-                    
-                    <div class="pt-2 border-t border-gray-100">
-                        <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Cek Tersedia</p>
-                    <div class="flex flex-wrap gap-2">
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                        08.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                        18.00
-                        </button>
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                        20.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                        22.00
-                        </button>
+        <!-- Klinik 1 -->
+        <div class="group">
+            <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div class="relative">
+                    <img 
+                        src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                        alt="Klinik Sarana Medika Baru"
+                        class="w-full h-48 object-cover"
+                    />
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-white/90 backdrop-blur-sm text-blue-600 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            ★ 4.8
+                        </span>
                     </div>
+                </div>
+                
+                <div class="p-6">
+                    <h3 class="font-bold text-xl text-gray-900 mb-3">
+                        Klinik Sarana Medika Baru
+                    </h3>
+                    <p class="text-gray-600 mb-4 flex items-center">
+                        <i class="fas fa-map-marker-alt text-gray-400 mr-3 text-sm"></i>
+                        Kabupaten Tangerang
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                        <span class="text-green-600 font-semibold flex items-center">
+                            <i class="fas fa-clock mr-2 text-sm"></i>
+                            Buka 24 Jam
+                        </span>
+                        <button class="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                            Lihat Detail
+                            <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                        </button>
                     </div>
                 </div>
             </article>
-        </a>
+        </div>
 
-        <a href="/service-detail" class="block group">
-            <article
-                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:scale-[1.02] group-hover:shadow-xl transition duration-300 h-full flex flex-col"
-            >
-                <img
-                    src="assets/checkup.jpg"
-                    alt="Medical Check Up"
-                    class="w-full h-40 object-cover"
-                />
+        <!-- Klinik 2 -->
+        <div class="group">
+            <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div class="relative">
+                    <img 
+                        src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                        alt="Klinik Tri Medika"
+                        class="w-full h-48 object-cover"
+                    />
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-white/90 backdrop-blur-sm text-blue-600 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            ★ 4.6
+                        </span>
+                    </div>
+                </div>
                 
-                <div class="p-4 flex flex-col flex-grow">
-                    <p class="text-xs text-gray-500 font-medium mb-1">Lab | MCU</p>
-                    <h3 class="font-bold text-lg text-gray-900 mb-1">Pro Lab Wellness</h3>
-                    <p class="text-sm text-gray-600 mb-3 flex items-center">
-                        <i class="fas fa-map-marker-alt text-green-600 text-xs mr-1"></i> Kota Denpasar
+                <div class="p-6">
+                    <h3 class="font-bold text-xl text-gray-900 mb-3">
+                        Klinik Tri Medika
+                    </h3>
+                    <p class="text-gray-600 mb-4 flex items-center">
+                        <i class="fas fa-map-marker-alt text-gray-400 mr-3 text-sm"></i>
+                        Kabupaten Karawang
                     </p>
-                    
-                    <p class="font-bold text-gray-900 mb-3 mt-auto">
-                        Mulai <span class="text-xl text-green-700">Rp450,000</span> /Paket
-                    </p>
-
-                    <div class="pt-2 border-t border-gray-100">
-                        <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Cek Tersedia</p>
-                    <div class="flex flex-wrap gap-2">
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                        08.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                        18.00
-                        </button>
-                        <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                        20.00
-                        </button>
-                        <button disabled class="bg-gray-200 text-gray-500 text-xs rounded-lg px-3 py-1 cursor-not-allowed">
-                        22.00
+                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                        <span class="text-green-600 font-semibold flex items-center">
+                            <i class="fas fa-clock mr-2 text-sm"></i>
+                            Buka Hari Ini
+                        </span>
+                        <button class="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                            Lihat Detail
+                            <i class="fas fa-chevron-right ml-1 text-xs"></i>
                         </button>
                     </div>
-                    </div>
                 </div>
             </article>
-        </a>
+        </div>
 
-        <a href="/service-detail" class="block group">
-            <article
-                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:scale-[1.02] group-hover:shadow-xl transition duration-300 h-full flex flex-col"
-            >
-                <img
-                    src="assets/dokter.jpg"
-                    alt="Konsultasi Dokter"
-                    class="w-full h-40 object-cover"
-                />
+        <!-- Klinik 3 -->
+        <div class="group">
+            <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div class="relative">
+                    <img 
+                        src="https://images.unsplash.com/photo-1551076805-e1869033e561?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                        alt="Klinik Sumber Urip Medika II"
+                        class="w-full h-48 object-cover"
+                    />
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-white/90 backdrop-blur-sm text-blue-600 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            ★ 4.7
+                        </span>
+                    </div>
+                </div>
                 
-                <div class="p-4 flex flex-col flex-grow">
-                    <p class="text-xs text-gray-500 font-medium mb-1">Klinik | Dokter Umum</p>
-                    <h3 class="font-bold text-lg text-gray-900 mb-1">Klinik Sehat Denpasar</h3>
-                    <p class="text-sm text-gray-600 mb-3 flex items-center">
-                        <i class="fas fa-map-marker-alt text-green-600 text-xs mr-1"></i> Kota Denpasar
+                <div class="p-6">
+                    <h3 class="font-bold text-xl text-gray-900 mb-3">
+                        Klinik Sumber Urip Medika II
+                    </h3>
+                    <p class="text-gray-600 mb-4 flex items-center">
+                        <i class="fas fa-map-marker-alt text-gray-400 mr-3 text-sm"></i>
+                        Kabupaten Tangerang
                     </p>
-                    
-                    <p class="font-bold text-gray-900 mb-3 mt-auto">
-                        Mulai <span class="text-xl text-green-700">Rp80,000</span> /Sesi
-                    </p>
-                    
-                    <div class="pt-2 border-t border-gray-100">
-                        <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Cek Tersedia</p>
-                        <div class="flex flex-wrap gap-2">
-                            <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                            10.00
-                            </button>
-                            <button class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium hover:bg-green-600 hover:text-white transition">
-                            15.00
-                            </button>
-                        </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                        <span class="text-green-600 font-semibold flex items-center">
+                            <i class="fas fa-clock mr-2 text-sm"></i>
+                            Buka 07.00 - 21.00
+                        </span>
+                        <button class="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                            Lihat Detail
+                            <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                        </button>
                     </div>
                 </div>
             </article>
-        </a>
-        
-        <a href="/service-detail" class="block group">
-            <article
-                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:scale-[1.02] group-hover:shadow-xl transition duration-300 h-full flex flex-col"
-            >
-                <img
-                    src="assets/fisioterapi2.jpg"
-                    alt="Fisioterapi Recovery"
-                    class="w-full h-40 object-cover"
-                />
-                
-                <div class="p-4 flex flex-col flex-grow">
-                    <p class="text-xs text-gray-500 font-medium mb-1">Klinik | Fisioterapi</p>
-                    <h3 class="font-bold text-lg text-gray-900 mb-1">Recovery & Care Clinic</h3>
-                    <p class="text-sm text-gray-600 mb-3 flex items-center">
-                        <i class="fas fa-map-marker-alt text-green-600 text-xs mr-1"></i> Badung
-                    </p>
-                    
-                    <p class="font-bold text-gray-900 mb-3 mt-auto">
-                        Mulai <span class="text-xl text-green-700">Rp220,000</span> /Sesi
-                    </p>
-                    
-                    <div class="pt-2 border-t border-gray-100">
-                        <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Cek Tersedia</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium">
-                                11.00
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        </a>
+        </div>
 
-        <a href="/service-detail" class="block group">
-            <article
-                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:scale-[1.02] group-hover:shadow-xl transition duration-300 h-full flex flex-col"
-            >
-                <img
-                    src="assets/nutrisi.jpg"
-                    alt="Konsultasi Ahli Gizi"
-                    class="w-full h-40 object-cover"
-                />
+        <!-- Klinik 4 -->
+        <div class="group">
+            <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div class="relative">
+                    <img 
+                        src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                        alt="TPMD dr. Siti Aminah"
+                        class="w-full h-48 object-cover"
+                    />
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-white/90 backdrop-blur-sm text-blue-600 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            ★ 4.9
+                        </span>
+                    </div>
+                </div>
                 
-                <div class="p-4 flex flex-col flex-grow">
-                    <p class="text-xs text-gray-500 font-medium mb-1">Konsultasi | Gizi</p>
-                    <h3 class="font-bold text-lg text-gray-900 mb-1">Bali Diet Specialist</h3>
-                    <p class="text-sm text-gray-600 mb-3 flex items-center">
-                        <i class="fas fa-map-marker-alt text-green-600 text-xs mr-1"></i> Kota Denpasar
+                <div class="p-6">
+                    <h3 class="font-bold text-xl text-gray-900 mb-3">
+                        TPMD dr. Siti Aminah
+                    </h3>
+                    <p class="text-gray-600 mb-4 flex items-center">
+                        <i class="fas fa-map-marker-alt text-gray-400 mr-3 text-sm"></i>
+                        Kabupaten Situbondo
                     </p>
-                    
-                    <p class="font-bold text-gray-900 mb-3 mt-auto">
-                        Mulai <span class="text-xl text-green-700">Rp150,000</span> /Sesi
-                    </p>
-                    
-                    <div class="pt-2 border-t border-gray-100">
-                        <p class="text-xs text-gray-500 font-medium mb-2">Jadwal Cek Tersedia</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium">
-                                08.00
-                            </span>
-                            <span class="bg-green-100 text-green-700 text-xs rounded-lg px-3 py-1 font-medium">
-                                16.00
-                            </span>
-                        </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                        <span class="text-orange-500 font-semibold flex items-center">
+                            <i class="fas fa-clock mr-2 text-sm"></i>
+                            Tutup Sementara
+                        </span>
+                        <button class="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                            Lihat Detail
+                            <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                        </button>
                     </div>
                 </div>
             </article>
-        </a>
+        </div>
 
-        <a href="/service-detail" class="block group">
-            <article
-                class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform group-hover:scale-[1.02] group-hover:shadow-xl transition duration-300 h-full flex flex-col"
-            >
-                <img
-                    src="assets/lab24.jpg"
-                    alt="Layanan Lab 24 Jam"
-                    class="w-full h-40 object-cover"
-                />
-                
-                <div class="p-4 flex flex-col flex-grow">
-                    <p class="text-xs text-gray-500 font-medium mb-1">Lab | 24 Jam</p>
-                    <h3 class="font-bold text-lg text-gray-900 mb-1">Lab Cek Cepat Mandiri</h3>
-                    <p class="text-sm text-gray-600 mb-3 flex items-center">
-                        <i class="fas fa-map-marker-alt text-green-600 text-xs mr-1"></i> Seluruh Denpasar
-                    </p>
-                    
-                    <p class="font-bold text-gray-900 mb-3 mt-auto">
-                        Mulai <span class="text-xl text-green-700">Rp120,000</span> /Tes
-                    </p>
-                    
-                    <div class="pt-2 border-t border-gray-100">
-                        <p class="text-xs text-gray-500 font-medium mb-2">Ketersediaan</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-yellow-100 text-yellow-700 text-xs rounded-lg px-3 py-1 font-medium">
-                                Tersedia 24 Jam
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        </a>
-        
+    </div>
+
+    <!-- CTA Section -->
+    <div class="text-center mt-12">
+        <button class="bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+            Lihat Semua Klinik Lainnya
+            <i class="fas fa-arrow-right ml-2"></i>
+        </button>
     </div>
 </section>
 

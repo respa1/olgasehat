@@ -44,7 +44,6 @@
                                         <th>Jam</th>
                                         <th class="d-none d-lg-table-cell">Durasi</th>
                                         <th class="d-none d-lg-table-cell">Kuota</th>
-                                        <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -65,13 +64,6 @@
                                         </td>
                                         <td data-label="Durasi" class="d-none d-lg-table-cell">{{ $schedule->durasi_konsultasi }} menit</td>
                                         <td data-label="Kuota" class="d-none d-lg-table-cell">{{ $schedule->kuota_per_hari }} pasien/hari</td>
-                                        <td data-label="Status">
-                                            @if($schedule->aktif)
-                                                <span class="badge badge-success">Aktif</span>
-                                            @else
-                                                <span class="badge badge-secondary">Tidak Aktif</span>
-                                            @endif
-                                        </td>
                                         <td data-label="Aksi">
                                             <div class="btn-group" role="group">
                                                 <a href="{{ route('pengelola.schedules.edit', $schedule->id) }}" class="btn btn-sm btn-primary" title="Edit">
@@ -89,7 +81,7 @@
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="8" class="text-center py-4">
+                                        <td colspan="7" class="text-center py-4">
                                             <i class="fas fa-calendar-times fa-2x text-muted mb-2"></i>
                                             <p class="text-muted mb-0">Belum ada jadwal yang terdaftar</p>
                                         </td>

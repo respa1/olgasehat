@@ -52,15 +52,50 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Kategori</label>
-                                <select name="clinic_category_id" class="form-control">
-                                    <option value="">Pilih Kategori</option>
-                                    @foreach($categories as $category)
-                                        <option value="{{ $category->id }}" {{ old('clinic_category_id', $clinic->clinic_category_id) == $category->id ? 'selected' : '' }}>
-                                            {{ $category->nama }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <label>Jenis Layanan <span class="text-danger">*</span></label>
+                                <div id="jenisLayananContainer">
+                                    @if(old('jenis_layanan'))
+                                        @foreach(old('jenis_layanan') as $index => $layanan)
+                                            <div class="input-group mb-2 jenis-layanan-item">
+                                                <input type="text" name="jenis_layanan[]" class="form-control" value="{{ $layanan }}" placeholder="Contoh: Konsultasi Dokter Umum" required>
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-danger btn-remove-layanan" style="display: {{ $loop->first && count(old('jenis_layanan')) == 1 ? 'none' : 'block' }};">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @elseif($clinic->layanan_tersedia && count($clinic->layanan_tersedia) > 0)
+                                        @foreach($clinic->layanan_tersedia as $index => $layanan)
+                                            <div class="input-group mb-2 jenis-layanan-item">
+                                                <input type="text" name="jenis_layanan[]" class="form-control" value="{{ $layanan }}" placeholder="Contoh: Konsultasi Dokter Umum" required>
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-danger btn-remove-layanan" style="display: {{ $loop->first && count($clinic->layanan_tersedia) == 1 ? 'none' : 'block' }};">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <div class="input-group mb-2 jenis-layanan-item">
+                                            <input type="text" name="jenis_layanan[]" class="form-control" placeholder="Contoh: Konsultasi Dokter Umum" required>
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-danger btn-remove-layanan" style="display: none;">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="btnTambahLayanan">
+                                    <i class="fas fa-plus"></i> Tambah Jenis Layanan
+                                </button>
+                                <small class="form-text text-muted d-block mt-2">
+                                    Masukkan jenis layanan yang tersedia di klinik Anda (contoh: Konsultasi, Medical Check-Up, Fisioterapi, dll)
+                                </small>
+                                @error('jenis_layanan')
+                                    <small class="text-danger d-block">{{ $message }}</small>
+                                @enderror
                             </div>
 
                             <div class="form-group">
@@ -188,5 +223,55 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('jenisLayananContainer');
+    const btnTambah = document.getElementById('btnTambahLayanan');
+    
+    // Tambah input baru
+    btnTambah.addEventListener('click', function() {
+        const newItem = document.createElement('div');
+        newItem.className = 'input-group mb-2 jenis-layanan-item';
+        newItem.innerHTML = `
+            <input type="text" name="jenis_layanan[]" class="form-control" placeholder="Contoh: Medical Check-Up" required>
+            <div class="input-group-append">
+                <button type="button" class="btn btn-danger btn-remove-layanan">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+        container.appendChild(newItem);
+        updateRemoveButtons();
+    });
+    
+    // Hapus input
+    container.addEventListener('click', function(e) {
+        if (e.target.closest('.btn-remove-layanan')) {
+            const item = e.target.closest('.jenis-layanan-item');
+            if (container.children.length > 1) {
+                item.remove();
+                updateRemoveButtons();
+            }
+        }
+    });
+    
+    // Update visibility tombol remove
+    function updateRemoveButtons() {
+        const items = container.querySelectorAll('.jenis-layanan-item');
+        items.forEach((item, index) => {
+            const btnRemove = item.querySelector('.btn-remove-layanan');
+            if (items.length > 1) {
+                btnRemove.style.display = 'block';
+            } else {
+                btnRemove.style.display = 'none';
+            }
+        });
+    }
+    
+    // Initialize
+    updateRemoveButtons();
+});
+</script>
 @endsection
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Doctor;
 use App\Models\Clinic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DoctorController extends Controller
 {
@@ -36,7 +37,7 @@ class DoctorController extends Controller
         }
 
         $doctors = $query->orderBy('created_at', 'desc')->paginate(15);
-        $clinics = Clinic::where('status', 'approved')->get();
+        $clinics = Clinic::where('user_id', Auth::id())->get();
 
         return view('BACKEND.Health.Doctor.index', compact('doctors', 'clinics'));
     }
@@ -46,7 +47,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        $clinics = Clinic::where('status', 'approved')->get();
+        $clinics = Clinic::where('user_id', Auth::id())->get();
         return view('BACKEND.Health.Doctor.create', compact('clinics'));
     }
 
@@ -99,7 +100,7 @@ class DoctorController extends Controller
     public function edit($id)
     {
         $doctor = Doctor::findOrFail($id);
-        $clinics = Clinic::where('status', 'approved')->get();
+        $clinics = Clinic::where('user_id', Auth::id())->get();
         return view('BACKEND.Health.Doctor.edit', compact('doctor', 'clinics'));
     }
 
@@ -141,33 +142,6 @@ class DoctorController extends Controller
             ->with('success', 'Dokter berhasil diperbarui.');
     }
 
-    /**
-     * Approve doctor
-     */
-    public function approve($id)
-    {
-        $doctor = Doctor::findOrFail($id);
-        $doctor->status = 'approved';
-        $doctor->save();
-
-        return redirect()->back()->with('success', 'Dokter berhasil disetujui.');
-    }
-
-    /**
-     * Reject doctor
-     */
-    public function reject(Request $request, $id)
-    {
-        $request->validate([
-            'alasan_reject' => 'required|string|max:500',
-        ]);
-
-        $doctor = Doctor::findOrFail($id);
-        $doctor->status = 'rejected';
-        $doctor->save();
-
-        return redirect()->back()->with('success', 'Dokter ditolak.');
-    }
 
     /**
      * Remove the specified resource from storage.

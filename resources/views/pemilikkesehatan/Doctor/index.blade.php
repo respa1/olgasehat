@@ -41,7 +41,6 @@
                                     <th>Nama</th>
                                     <th class="d-none d-md-table-cell">Spesialisasi</th>
                                     <th class="d-none d-lg-table-cell">Klinik</th>
-                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -67,18 +66,6 @@
                                         <span class="badge badge-info">{{ $doctor->spesialisasi }}</span>
                                     </td>
                                     <td data-label="Klinik" class="d-none d-lg-table-cell">{{ $doctor->clinic->nama }}</td>
-                                    <td data-label="Status">
-                                        @if($doctor->status == 'approved')
-                                            <span class="badge badge-success">Disetujui</span>
-                                        @elseif($doctor->status == 'pending')
-                                            <span class="badge badge-warning">Menunggu</span>
-                                        @else
-                                            <span class="badge badge-danger">Ditolak</span>
-                                        @endif
-                                        @if(!$doctor->aktif)
-                                            <span class="badge badge-secondary">Tidak Aktif</span>
-                                        @endif
-                                    </td>
                                     <td data-label="Aksi">
                                         <a href="{{ route('pengelola.doctors.edit', $doctor->id) }}" class="btn btn-sm btn-primary">
                                             <i class="fas fa-edit"></i>
@@ -94,7 +81,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="6" class="text-center">Belum ada dokter yang terdaftar</td>
+                                    <td colspan="5" class="text-center">Belum ada dokter yang terdaftar</td>
                                 </tr>
                                 @endforelse
                             </tbody>

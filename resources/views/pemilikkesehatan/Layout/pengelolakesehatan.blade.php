@@ -555,43 +555,128 @@
 <!-- Auto-detect active menu -->
 <script>
   $(document).ready(function() {
-    var currentUrl = window.location.href;
-    var currentPath = window.location.pathname;
-    
-    // Remove active class from all nav links
-    $('.nav-sidebar .nav-link').removeClass('active');
-    
-    // Find and activate the matching nav link
-    $('.nav-sidebar .nav-link').each(function() {
-      var linkUrl = $(this).attr('href');
-      if (linkUrl) {
-        // Check if current path matches the link
-        if (currentPath === linkUrl || currentUrl.indexOf(linkUrl) !== -1) {
-          $(this).addClass('active');
-          // Also activate parent if it's a treeview
-          $(this).closest('.nav-item').addClass('menu-open');
-          $(this).closest('.nav-treeview').siblings('.nav-link').addClass('active');
-        }
-      }
-    });
-    
-    // For routes that might have dynamic segments, check if path starts with
-    $('.nav-sidebar .nav-link').each(function() {
-      var linkUrl = $(this).attr('href');
-      if (linkUrl && linkUrl !== '#' && linkUrl !== '/') {
-        // Remove leading slash and compare
-        var cleanLink = linkUrl.replace(/^\//, '');
-        var cleanPath = currentPath.replace(/^\//, '');
+    // Fungsi untuk mengatur menu aktif
+    function setActiveMenu() {
+      var currentUrl = window.location.href;
+      var currentPath = window.location.pathname;
+      
+      console.log('Current URL:', currentUrl);
+      console.log('Current Path:', currentPath);
+      
+      // Hapus semua kelas aktif terlebih dahulu
+      $('.nav-sidebar .nav-link').removeClass('active');
+      $('.nav-item').removeClass('menu-open');
+      
+      // Variabel untuk melacak apakah sudah ditemukan menu yang aktif
+      var activeFound = false;
+      
+      // Iterasi melalui semua link di sidebar
+      $('.nav-sidebar .nav-link').each(function() {
+        var $link = $(this);
+        var linkUrl = $link.attr('href');
         
-        // Check if current path starts with the link path
-        if (cleanPath.startsWith(cleanLink) && cleanLink !== 'pengelolakesehatan' && cleanLink !== 'pengelolakesehatan/dashboard') {
-          $(this).addClass('active');
-          // Also activate parent if it's a treeview
-          $(this).closest('.nav-item').addClass('menu-open');
-          $(this).closest('.nav-treeview').siblings('.nav-link').addClass('active');
+        // Skip jika link tidak valid
+        if (!linkUrl || linkUrl === '#' || linkUrl === '/') {
+          return true; // continue
         }
+        
+        // Normalisasi URL untuk perbandingan
+        var normalizedLink = linkUrl.replace(/\/+$/, ''); // Hapus trailing slash
+        var normalizedCurrent = currentUrl.replace(/\/+$/, '');
+        var normalizedCurrentPath = currentPath.replace(/\/+$/, '');
+        
+        console.log('Checking link:', normalizedLink, 'against:', normalizedCurrent);
+        
+        // Cek kecocokan eksak
+        if (normalizedCurrent === normalizedLink || normalizedCurrentPath === normalizedLink) {
+          if (!activeFound) {
+            $link.addClass('active');
+            $link.closest('.nav-item').addClass('menu-open');
+            activeFound = true;
+            console.log('Exact match found:', normalizedLink);
+          }
+          return false; // break
+        }
+      });
+      
+      // Jika tidak ditemukan kecocokan eksak, cek kecocokan parsial
+      if (!activeFound) {
+        $('.nav-sidebar .nav-link').each(function() {
+          var $link = $(this);
+          var linkUrl = $link.attr('href');
+          
+          if (!linkUrl || linkUrl === '#' || linkUrl === '/') {
+            return true; // continue
+          }
+          
+          var normalizedLink = linkUrl.replace(/\/+$/, '');
+          var normalizedCurrent = currentUrl.replace(/\/+$/, '');
+          
+          // Cek jika current URL mengandung link URL (untuk nested routes)
+          if (normalizedCurrent.indexOf(normalizedLink) !== -1 && normalizedLink.length > 1) {
+            if (!activeFound) {
+              $link.addClass('active');
+              $link.closest('.nav-item').addClass('menu-open');
+              activeFound = true;
+              console.log('Partial match found:', normalizedLink);
+            }
+            return false; // break
+          }
+        });
+      }
+      
+      // Fallback: aktifkan dashboard jika tidak ada yang cocok dan di root
+      if (!activeFound && (currentPath === '/' || currentPath === '/pengelolakesehatan' || currentPath === '/pengelolakesehatan/dashboard')) {
+        $('.nav-sidebar .nav-link[href*="dashboard"]').first().addClass('active');
+        console.log('Fallback to dashboard');
+      }
+    }
+    
+    // Panggil fungsi saat dokumen siap
+    setActiveMenu();
+    
+    // Tambahkan event handler untuk klik manual
+    $('.nav-sidebar .nav-link').on('click', function(e) {
+      // Skip untuk link logout atau link khusus lainnya
+      if ($(this).attr('onclick') && $(this).attr('onclick').includes('logout')) {
+        return true;
+      }
+      
+      var $clickedLink = $(this);
+      var linkUrl = $clickedLink.attr('href');
+      
+      // Skip jika link tidak valid
+      if (!linkUrl || linkUrl === '#' || linkUrl.startsWith('javascript:')) {
+        return true;
+      }
+      
+      console.log('Menu clicked:', linkUrl);
+      
+      // Hapus semua kelas aktif
+      $('.nav-sidebar .nav-link').removeClass('active');
+      $('.nav-item').removeClass('menu-open');
+      
+      // Set aktif pada link yang diklik
+      $clickedLink.addClass('active');
+      $clickedLink.closest('.nav-item').addClass('menu-open');
+      
+      // Simpan status aktif di sessionStorage untuk konsistensi
+      if (linkUrl) {
+        sessionStorage.setItem('activeSidebarMenu', linkUrl);
       }
     });
+    
+    // Cek sessionStorage untuk status aktif yang disimpan
+    var savedActiveMenu = sessionStorage.getItem('activeSidebarMenu');
+    if (savedActiveMenu) {
+      var $savedLink = $('.nav-sidebar .nav-link[href="' + savedActiveMenu + '"]');
+      if ($savedLink.length > 0) {
+        $('.nav-sidebar .nav-link').removeClass('active');
+        $('.nav-item').removeClass('menu-open');
+        $savedLink.addClass('active');
+        $savedLink.closest('.nav-item').addClass('menu-open');
+      }
+    }
   });
 </script>
 </body>

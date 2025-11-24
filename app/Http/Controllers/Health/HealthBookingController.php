@@ -7,6 +7,7 @@ use App\Models\HealthBooking;
 use App\Models\Clinic;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HealthBookingController extends Controller
 {
@@ -48,8 +49,8 @@ class HealthBookingController extends Controller
         }
 
         $bookings = $query->orderBy('tanggal', 'desc')->orderBy('jam', 'desc')->paginate(20);
-        $clinics = Clinic::where('status', 'approved')->get();
-        $doctors = Doctor::where('status', 'approved')->where('aktif', true)->get();
+        $clinics = Clinic::where('user_id', Auth::id())->get();
+        $doctors = Doctor::whereIn('clinic_id', $clinics->pluck('id'))->where('aktif', true)->get();
 
         return view('BACKEND.Health.HealthBooking.index', compact('bookings', 'clinics', 'doctors'));
     }

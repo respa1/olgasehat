@@ -23,7 +23,6 @@ class HealthManagerScheduleController extends Controller
             ->get();
         
         $doctors = Doctor::whereIn('clinic_id', $clinicIds)
-            ->where('status', 'approved')
             ->where('aktif', true)
             ->get();
         
@@ -36,7 +35,6 @@ class HealthManagerScheduleController extends Controller
         $clinicIds = Clinic::where('user_id', $user->id)->pluck('id');
         
         $doctors = Doctor::whereIn('clinic_id', $clinicIds)
-            ->where('status', 'approved')
             ->where('aktif', true)
             ->get();
         
@@ -97,7 +95,6 @@ class HealthManagerScheduleController extends Controller
         
         $schedule = DoctorSchedule::whereIn('clinic_id', $clinicIds)->findOrFail($id);
         $doctors = Doctor::whereIn('clinic_id', $clinicIds)
-            ->where('status', 'approved')
             ->where('aktif', true)
             ->get();
         $clinics = Clinic::where('user_id', $user->id)

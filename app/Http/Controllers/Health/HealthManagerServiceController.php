@@ -34,7 +34,6 @@ class HealthManagerServiceController extends Controller
             ->get();
         
         $doctors = Doctor::whereIn('clinic_id', $clinicIds)
-            ->where('status', 'approved')
             ->where('aktif', true)
             ->get();
         
@@ -77,7 +76,6 @@ class HealthManagerServiceController extends Controller
             ->where('status', 'approved')
             ->get();
         $doctors = Doctor::whereIn('clinic_id', $clinicIds)
-            ->where('status', 'approved')
             ->where('aktif', true)
             ->get();
         

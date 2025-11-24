@@ -385,8 +385,6 @@ Route::middleware(['auth'])->group(function () {
             Route::get('doctors/{id}', [App\Http\Controllers\Health\DoctorController::class, 'show'])->name('doctors.show');
             Route::get('doctors/{id}/edit', [App\Http\Controllers\Health\DoctorController::class, 'edit'])->name('doctors.edit');
             Route::put('doctors/{id}', [App\Http\Controllers\Health\DoctorController::class, 'update'])->name('doctors.update');
-            Route::post('doctors/{id}/approve', [App\Http\Controllers\Health\DoctorController::class, 'approve'])->name('doctors.approve');
-            Route::post('doctors/{id}/reject', [App\Http\Controllers\Health\DoctorController::class, 'reject'])->name('doctors.reject');
             Route::delete('doctors/{id}', [App\Http\Controllers\Health\DoctorController::class, 'destroy'])->name('doctors.destroy');
             
             // Jadwal Dokter

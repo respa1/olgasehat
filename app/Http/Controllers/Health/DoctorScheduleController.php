@@ -7,6 +7,7 @@ use App\Models\DoctorSchedule;
 use App\Models\Doctor;
 use App\Models\Clinic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DoctorScheduleController extends Controller
 {
@@ -28,8 +29,8 @@ class DoctorScheduleController extends Controller
         }
 
         $schedules = $query->orderBy('hari')->orderBy('jam_mulai')->paginate(20);
-        $doctors = Doctor::where('status', 'approved')->where('aktif', true)->get();
-        $clinics = Clinic::where('status', 'approved')->get();
+        $clinics = Clinic::where('user_id', Auth::id())->get();
+        $doctors = Doctor::whereIn('clinic_id', $clinics->pluck('id'))->where('aktif', true)->get();
 
         return view('BACKEND.Health.DoctorSchedule.index', compact('schedules', 'doctors', 'clinics'));
     }
@@ -39,8 +40,8 @@ class DoctorScheduleController extends Controller
      */
     public function create()
     {
-        $doctors = Doctor::where('status', 'approved')->where('aktif', true)->get();
-        $clinics = Clinic::where('status', 'approved')->get();
+        $clinics = Clinic::where('user_id', Auth::id())->get();
+        $doctors = Doctor::whereIn('clinic_id', $clinics->pluck('id'))->where('aktif', true)->get();
         return view('BACKEND.Health.DoctorSchedule.create', compact('doctors', 'clinics'));
     }
 
@@ -84,8 +85,8 @@ class DoctorScheduleController extends Controller
     public function edit($id)
     {
         $schedule = DoctorSchedule::findOrFail($id);
-        $doctors = Doctor::where('status', 'approved')->where('aktif', true)->get();
-        $clinics = Clinic::where('status', 'approved')->get();
+        $clinics = Clinic::where('user_id', Auth::id())->get();
+        $doctors = Doctor::whereIn('clinic_id', $clinics->pluck('id'))->where('aktif', true)->get();
         return view('BACKEND.Health.DoctorSchedule.edit', compact('schedule', 'doctors', 'clinics'));
     }
 

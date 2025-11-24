@@ -59,7 +59,8 @@ class HealthManagerDoctorController extends Controller
             ->firstOrFail();
 
         $data = $request->all();
-        $data['status'] = 'pending';
+        $data['status'] = 'approved';
+        $data['aktif'] = true;
 
         if ($request->hasFile('foto')) {
             $image = $request->file('foto');
@@ -71,7 +72,7 @@ class HealthManagerDoctorController extends Controller
         Doctor::create($data);
 
         return redirect()->route('pengelola.doctors.index')
-            ->with('success', 'Dokter berhasil ditambahkan dan menunggu verifikasi.');
+            ->with('success', 'Dokter berhasil ditambahkan.');
     }
 
     public function edit($id)

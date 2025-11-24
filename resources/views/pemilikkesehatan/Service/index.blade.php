@@ -44,7 +44,6 @@
                                         <th class="d-none d-lg-table-cell">Dokter</th>
                                         <th>Harga</th>
                                         <th class="d-none d-lg-table-cell">Durasi</th>
-                                        <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -74,13 +73,6 @@
                                         <td data-label="Durasi" class="d-none d-lg-table-cell">
                                             {{ $service->durasi ? $service->durasi . ' menit' : '-' }}
                                         </td>
-                                        <td data-label="Status">
-                                            @if($service->aktif)
-                                                <span class="badge badge-success">Aktif</span>
-                                            @else
-                                                <span class="badge badge-secondary">Tidak Aktif</span>
-                                            @endif
-                                        </td>
                                         <td data-label="Aksi">
                                             <div class="btn-group" role="group">
                                                 <a href="{{ route('pengelola.services.edit', $service->id) }}" class="btn btn-sm btn-primary" title="Edit">
@@ -98,7 +90,7 @@
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="8" class="text-center py-4">
+                                        <td colspan="7" class="text-center py-4">
                                             <i class="fas fa-heartbeat fa-2x text-muted mb-2"></i>
                                             <p class="text-muted mb-0">Belum ada layanan yang terdaftar</p>
                                         </td>

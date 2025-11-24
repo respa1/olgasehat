@@ -168,6 +168,14 @@
             </ul>
           </li>
 
+          <!-- Data Layanan Kesehatan -->
+          <li class="nav-item">
+            <a href="{{ route('health.clinics.index') }}" class="nav-link">
+              <i class="nav-icon fas fa-heartbeat"></i>
+              <p>Data Layanan Kesehatan</p>
+            </a>
+          </li>
+
           <!-- Manajemen Venue -->
           <li class="nav-item">
             <a href="{{ route('admin.venue.list') }}" class="nav-link">
