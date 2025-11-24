@@ -43,9 +43,6 @@
                         <span class="inline-block bg-green-100 text-green-700 text-sm font-semibold px-4 py-1.5 rounded-full shadow-sm">
                             <i class="fas fa-clock mr-2"></i> 30 Menit
                         </span>
-                        <span class="inline-block bg-purple-100 text-purple-700 text-sm font-semibold px-4 py-1.5 rounded-full shadow-sm">
-                            <i class="fas fa-star mr-2"></i> 4.8 (120 Review)
-                        </span>
                     </div>
                 </div>
 
@@ -258,41 +255,6 @@
 
             </div>
 
-            <!-- Testimoni Section -->
-            <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl">
-                <h3 class="font-bold text-xl mb-4 text-gray-800 flex items-center">
-                    <i class="fas fa-star text-yellow-500 mr-2"></i>Testimoni Pasien
-                </h3>
-                <div class="space-y-4">
-                    <div class="border-l-4 border-blue-500 pl-4 py-2">
-                        <div class="flex items-center mb-2">
-                            <div class="flex text-yellow-400 mr-2">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span class="font-semibold text-gray-800">Budi Santoso</span>
-                        </div>
-                        <p class="text-gray-700">Pelayanan sangat baik, dokter sangat profesional dan ramah. Penjelasan yang diberikan sangat jelas dan mudah dipahami.</p>
-                    </div>
-                    <div class="border-l-4 border-green-500 pl-4 py-2">
-                        <div class="flex items-center mb-2">
-                            <div class="flex text-yellow-400 mr-2">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span class="font-semibold text-gray-800">Sari Dewi</span>
-                        </div>
-                        <p class="text-gray-700">Kliniknya bersih dan nyaman. Proses konsultasi berjalan lancar, tidak perlu menunggu lama. Sangat recommended!</p>
-                    </div>
-                </div>
-            </div>
-
             <!-- FAQ Section -->
             <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl">
                 <h3 class="font-bold text-xl mb-4 text-gray-800 flex items-center">
@@ -333,16 +295,9 @@
                         <span class="text-blue-100 text-sm">Biaya Konsultasi</span>
                         <span class="text-2xl font-bold">Rp 150.000</span>
                     </div>
-                    <div class="flex items-center justify-between text-sm pb-3 border-b border-blue-500/30">
+                    <div class="flex items-center justify-between text-sm">
                         <span class="text-blue-100">Durasi</span>
                         <span class="font-semibold">30 Menit</span>
-                    </div>
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-blue-100">Rating</span>
-                        <div class="flex items-center">
-                            <i class="fas fa-star text-yellow-300 mr-1"></i>
-                            <span class="font-semibold">4.8 (120)</span>
-                        </div>
                     </div>
                 </div>
 
