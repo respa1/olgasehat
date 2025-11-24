@@ -2,10 +2,6 @@
 
 @section('content')
 
-@extends('FRONTEND.layout.frontend')
-
-@section('content')
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 <main class="container mx-auto px-4 sm:px-6 pt-24 pb-32 max-w-7xl">
@@ -54,9 +50,6 @@
                         </span>
                         <span class="inline-block bg-green-100 text-green-700 text-sm font-semibold px-4 py-1.5 rounded-full shadow-sm">
                             <i class="fas fa-phone mr-2"></i> 08129941262
-                        </span>
-                        <span class="inline-block bg-purple-100 text-purple-700 text-sm font-semibold px-4 py-1.5 rounded-full shadow-sm">
-                            <i class="fas fa-star mr-2"></i> 4.8/5
                         </span>
                     </div>
                 </div>
@@ -394,8 +387,6 @@
 
     </div>
 </main>
-
-@endsection
 
 @endsection
 

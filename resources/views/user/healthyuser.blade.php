@@ -832,7 +832,7 @@ function resetBMI() {
     <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-green-500 mx-auto mb-12 rounded-full"></div>
 
     <!-- Klinik Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
         
         <!-- Klinik 1 -->
         <div class="group">
@@ -843,30 +843,28 @@ function resetBMI() {
                         alt="Klinik Sarana Medika Baru"
                         class="w-full h-48 object-cover"
                     />
-                    <div class="absolute top-4 left-4">
-                        <span class="bg-white/90 backdrop-blur-sm text-blue-600 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
-                            ★ 4.8
-                        </span>
-                    </div>
                 </div>
                 
-                <div class="p-6">
-                    <h3 class="font-bold text-xl text-gray-900 mb-3">
-                        Klinik Sarana Medika Baru
-                    </h3>
-                    <p class="text-gray-600 mb-4 flex items-center">
-                        <i class="fas fa-map-marker-alt text-gray-400 mr-3 text-sm"></i>
+                <div class="p-5 space-y-3">
+                    <div>
+                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1">Klinik Umum</p>
+                        <h3 class="font-bold text-lg text-gray-900 leading-tight line-clamp-2 min-h-[48px]">
+                            Klinik Sarana Medika Baru
+                        </h3>
+                    </div>
+                    <p class="text-sm text-gray-600 flex items-center">
+                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-2"></i>
                         Kabupaten Tangerang
                     </p>
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-100 text-xs sm:text-sm">
                         <span class="text-green-600 font-semibold flex items-center">
-                            <i class="fas fa-clock mr-2 text-sm"></i>
+                            <i class="fas fa-clock mr-2 text-xs"></i>
                             Buka 24 Jam
                         </span>
-                        <button class="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                        <a href="{{ route('user.service.detail') }}" class="text-blue-600 hover:text-blue-700 font-semibold flex items-center whitespace-nowrap">
                             Lihat Detail
                             <i class="fas fa-chevron-right ml-1 text-xs"></i>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </article>
@@ -881,30 +879,28 @@ function resetBMI() {
                         alt="Klinik Tri Medika"
                         class="w-full h-48 object-cover"
                     />
-                    <div class="absolute top-4 left-4">
-                        <span class="bg-white/90 backdrop-blur-sm text-blue-600 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
-                            ★ 4.6
-                        </span>
-                    </div>
                 </div>
                 
-                <div class="p-6">
-                    <h3 class="font-bold text-xl text-gray-900 mb-3">
-                        Klinik Tri Medika
-                    </h3>
-                    <p class="text-gray-600 mb-4 flex items-center">
-                        <i class="fas fa-map-marker-alt text-gray-400 mr-3 text-sm"></i>
+                <div class="p-5 space-y-3">
+                    <div>
+                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1">Klinik Umum</p>
+                        <h3 class="font-bold text-lg text-gray-900 leading-tight line-clamp-2 min-h-[48px]">
+                            Klinik Tri Medika
+                        </h3>
+                    </div>
+                    <p class="text-sm text-gray-600 flex items-center">
+                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-2"></i>
                         Kabupaten Karawang
                     </p>
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-100 text-xs sm:text-sm">
                         <span class="text-green-600 font-semibold flex items-center">
-                            <i class="fas fa-clock mr-2 text-sm"></i>
+                            <i class="fas fa-clock mr-2 text-xs"></i>
                             Buka Hari Ini
                         </span>
-                        <button class="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                        <a href="{{ route('user.service.detail') }}" class="text-blue-600 hover:text-blue-700 font-semibold flex items-center whitespace-nowrap">
                             Lihat Detail
                             <i class="fas fa-chevron-right ml-1 text-xs"></i>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </article>
@@ -919,30 +915,28 @@ function resetBMI() {
                         alt="Klinik Sumber Urip Medika II"
                         class="w-full h-48 object-cover"
                     />
-                    <div class="absolute top-4 left-4">
-                        <span class="bg-white/90 backdrop-blur-sm text-blue-600 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
-                            ★ 4.7
-                        </span>
-                    </div>
                 </div>
                 
-                <div class="p-6">
-                    <h3 class="font-bold text-xl text-gray-900 mb-3">
-                        Klinik Sumber Urip Medika II
-                    </h3>
-                    <p class="text-gray-600 mb-4 flex items-center">
-                        <i class="fas fa-map-marker-alt text-gray-400 mr-3 text-sm"></i>
+                <div class="p-5 space-y-3">
+                    <div>
+                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1">Klinik Umum</p>
+                        <h3 class="font-bold text-lg text-gray-900 leading-tight line-clamp-2 min-h-[48px]">
+                            Klinik Sumber Urip Medika II
+                        </h3>
+                    </div>
+                    <p class="text-sm text-gray-600 flex items-center">
+                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-2"></i>
                         Kabupaten Tangerang
                     </p>
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-100 text-xs sm:text-sm">
                         <span class="text-green-600 font-semibold flex items-center">
-                            <i class="fas fa-clock mr-2 text-sm"></i>
+                            <i class="fas fa-clock mr-2 text-xs"></i>
                             Buka 07.00 - 21.00
                         </span>
-                        <button class="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                        <a href="{{ route('user.service.detail') }}" class="text-blue-600 hover:text-blue-700 font-semibold flex items-center whitespace-nowrap">
                             Lihat Detail
                             <i class="fas fa-chevron-right ml-1 text-xs"></i>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </article>
@@ -957,30 +951,28 @@ function resetBMI() {
                         alt="TPMD dr. Siti Aminah"
                         class="w-full h-48 object-cover"
                     />
-                    <div class="absolute top-4 left-4">
-                        <span class="bg-white/90 backdrop-blur-sm text-blue-600 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
-                            ★ 4.9
-                        </span>
-                    </div>
                 </div>
                 
-                <div class="p-6">
-                    <h3 class="font-bold text-xl text-gray-900 mb-3">
-                        TPMD dr. Siti Aminah
-                    </h3>
-                    <p class="text-gray-600 mb-4 flex items-center">
-                        <i class="fas fa-map-marker-alt text-gray-400 mr-3 text-sm"></i>
+                <div class="p-5 space-y-3">
+                    <div>
+                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1">Klinik Umum</p>
+                        <h3 class="font-bold text-lg text-gray-900 leading-tight line-clamp-2 min-h-[48px]">
+                            TPMD dr. Siti Aminah
+                        </h3>
+                    </div>
+                    <p class="text-sm text-gray-600 flex items-center">
+                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-2"></i>
                         Kabupaten Situbondo
                     </p>
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-100 text-xs sm:text-sm">
                         <span class="text-orange-500 font-semibold flex items-center">
-                            <i class="fas fa-clock mr-2 text-sm"></i>
+                            <i class="fas fa-clock mr-2 text-xs"></i>
                             Tutup Sementara
                         </span>
-                        <button class="text-blue-600 hover:text-blue-700 font-semibold text-sm flex items-center group-hover:translate-x-1 transition-transform">
+                        <a href="{{ route('user.service.detail') }}" class="text-blue-600 hover:text-blue-700 font-semibold flex items-center whitespace-nowrap">
                             Lihat Detail
                             <i class="fas fa-chevron-right ml-1 text-xs"></i>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </article>
