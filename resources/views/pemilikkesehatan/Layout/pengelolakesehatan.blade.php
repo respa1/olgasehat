@@ -46,7 +46,7 @@
       top: 0;
       bottom: 0;
       width: 4px;
-      background-color: #007bff;
+      background-color: #28a745;
       z-index: 1;
     }
     .nav-sidebar .nav-link:hover {
@@ -112,6 +112,102 @@
     .owner-dropdown .dropdown-item:hover {
       background: #f1f5ff;
       color: #1c2a56;
+    }
+    
+    /* Responsive improvements */
+    @media (max-width: 768px) {
+      .main-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+      }
+      .main-sidebar.show {
+        transform: translateX(0);
+      }
+      .content-wrapper {
+        margin-left: 0 !important;
+      }
+      .small-box {
+        margin-bottom: 1rem;
+      }
+      .small-box .inner h3 {
+        font-size: 1.5rem;
+      }
+      .table-responsive {
+        font-size: 0.875rem;
+      }
+      .card-title {
+        font-size: 1rem;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .small-box .inner {
+        padding: 10px;
+      }
+      .small-box .inner h3 {
+        font-size: 1.25rem;
+      }
+      .small-box .inner p {
+        font-size: 0.875rem;
+      }
+      .small-box .icon {
+        font-size: 3rem;
+      }
+      .table th,
+      .table td {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+      }
+      .card-header {
+        padding: 0.75rem 1rem;
+      }
+      .card-body {
+        padding: 0.75rem;
+      }
+      .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+      }
+    }
+    
+    /* Better spacing for cards */
+    .row {
+      margin-left: -7.5px;
+      margin-right: -7.5px;
+    }
+    .row > * {
+      padding-left: 7.5px;
+      padding-right: 7.5px;
+    }
+    
+    /* Responsive table */
+    @media (max-width: 992px) {
+      .table-responsive {
+        border: 0;
+      }
+      .table thead {
+        display: none;
+      }
+      .table tbody tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+      }
+      .table tbody td {
+        display: block;
+        text-align: right;
+        padding: 0.5rem;
+        border-bottom: 1px solid #dee2e6;
+      }
+      .table tbody td:before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+      }
+      .table tbody td:last-child {
+        border-bottom: 0;
+      }
     }
   </style>
 </head>
@@ -218,7 +314,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Dashboard -->
           <li class="nav-item">
-            <a href="/pengelolakesehatan/dashboard" class="nav-link {{ request()->is('pengelolakesehatan/dashboard') ? 'active' : '' }}">
+            <a href="{{ route('pengelolakesehatan.dashboard') }}" class="nav-link {{ request()->routeIs('pengelolakesehatan.dashboard*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>Dashboard</p>
             </a>
@@ -237,25 +333,41 @@
 
           <!-- Kelola Fasilitas Kesehatan -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('pengelola.clinics') }}" class="nav-link {{ request()->routeIs('pengelola.clinics*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-hospital"></i>
-              <p>Kelola Fasilitas</p>
+              <p>Klinik</p>
             </a>
           </li>
 
-          <!-- Kelola Jadwal -->
+          <!-- Dokter -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-calendar"></i>
-              <p>Kelola Jadwal</p>
+            <a href="{{ route('pengelola.doctors.index') }}" class="nav-link {{ request()->routeIs('pengelola.doctors*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-user-md"></i>
+              <p>Dokter</p>
+            </a>
+          </li>
+
+          <!-- Jadwal Dokter -->
+          <li class="nav-item">
+            <a href="{{ route('pengelola.schedules.index') }}" class="nav-link {{ request()->routeIs('pengelola.schedules*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-calendar-alt"></i>
+              <p>Jadwal Dokter</p>
             </a>
           </li>
 
           <!-- Layanan Kesehatan -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-stethoscope"></i>
-              <p>Layanan Kesehatan</p>
+            <a href="{{ route('pengelola.services.index') }}" class="nav-link {{ request()->routeIs('pengelola.services*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-heartbeat"></i>
+              <p>Layanan</p>
+            </a>
+          </li>
+
+          <!-- Booking -->
+          <li class="nav-item">
+            <a href="{{ route('pengelola.bookings.index') }}" class="nav-link {{ request()->routeIs('pengelola.bookings*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-calendar-check"></i>
+              <p>Booking</p>
             </a>
           </li>
 
