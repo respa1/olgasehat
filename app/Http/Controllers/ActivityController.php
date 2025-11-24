@@ -353,7 +353,7 @@ class ActivityController extends Controller
         
         // Ambil aktivitas yang dibuat oleh user yang login
         $activitiesCreated = Activity::where('user_id', $user->id)
-            ->with(['activityType'])
+            ->with(['activityType', 'participants.user'])
             ->orderBy('created_at', 'desc');
 
         // Filter berdasarkan status jika ada
@@ -572,5 +572,60 @@ class ActivityController extends Controller
         $participant->save();
 
         return redirect()->route('activities.verifikasi-pembayaran')->with('success', 'Pembayaran ditolak.');
+    }
+
+    /**
+     * Approve peserta event oleh pembuat event
+     */
+    public function approveParticipant($id)
+    {
+        $participant = ActivityParticipant::with('activity')->findOrFail($id);
+        $user = Auth::user();
+        
+        // Pastikan user adalah pembuat event
+        if ($participant->activity->user_id !== $user->id) {
+            return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk menyetujui peserta ini.');
+        }
+
+        // Pastikan event sudah approved
+        if ($participant->activity->status !== 'approved') {
+            return redirect()->back()->with('error', 'Event belum disetujui.');
+        }
+
+        $participant->status = 'approved';
+        $participant->save();
+
+        return redirect()->route('user.riwayat-komunitas')->with('success', 'Peserta berhasil disetujui.');
+    }
+
+    /**
+     * Reject peserta event oleh pembuat event
+     */
+    public function rejectParticipant(Request $request, $id)
+    {
+        $request->validate([
+            'alasan_reject' => 'nullable|string|max:500',
+        ]);
+
+        $participant = ActivityParticipant::with('activity')->findOrFail($id);
+        $user = Auth::user();
+        
+        // Pastikan user adalah pembuat event
+        if ($participant->activity->user_id !== $user->id) {
+            return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk menolak peserta ini.');
+        }
+
+        // Pastikan event sudah approved
+        if ($participant->activity->status !== 'approved') {
+            return redirect()->back()->with('error', 'Event belum disetujui.');
+        }
+
+        $participant->status = 'rejected';
+        if ($request->alasan_reject) {
+            $participant->catatan = $request->alasan_reject;
+        }
+        $participant->save();
+
+        return redirect()->route('user.riwayat-komunitas')->with('success', 'Peserta ditolak.');
     }
 }

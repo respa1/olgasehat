@@ -143,6 +143,87 @@
                         @endif
                     </div>
                     
+                    {{-- Daftar Anggota yang Bergabung (hanya untuk aktivitas yang sudah disetujui) --}}
+                    @if($activity->status === 'approved')
+                    <div class="mt-4 pt-3 border-t border-gray-200">
+                        <h4 class="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <i class="fas fa-users mr-2"></i>
+                            Anggota yang Bergabung 
+                            @if($activity->participants && $activity->participants->count() > 0)
+                                ({{ $activity->participants->count() }})
+                            @endif
+                        </h4>
+                        @if($activity->participants && $activity->participants->count() > 0)
+                        <div class="space-y-2 max-h-64 overflow-y-auto">
+                            @foreach($activity->participants as $participant)
+                            <div class="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-gray-900">{{ $participant->nama_peserta }}</p>
+                                        @if($participant->user)
+                                        <p class="text-xs text-gray-500 mt-1">
+                                            <i class="fas fa-user mr-1"></i>
+                                            {{ $participant->user->name }} ({{ $participant->user->email }})
+                                        </p>
+                                        @endif
+                                        <p class="text-xs text-gray-500 mt-1">
+                                            <i class="fas fa-calendar mr-1"></i>
+                                            Daftar: {{ $participant->created_at->format('d M Y H:i') }}
+                                        </p>
+                                        @if($participant->bukti_pembayaran)
+                                        <a href="{{ asset('bukti_pembayaran/'.$participant->bukti_pembayaran) }}" 
+                                           target="_blank" 
+                                           class="text-xs text-blue-600 hover:text-blue-800 mt-1 inline-flex items-center">
+                                            <i class="fas fa-file-image mr-1"></i> Lihat Bukti Pembayaran
+                                        </a>
+                                        @endif
+                                    </div>
+                                    <div class="ml-3 flex flex-col items-end gap-2">
+                                        @if($participant->status === 'approved')
+                                            <span class="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">
+                                                <i class="fas fa-check-circle"></i> Disetujui
+                                            </span>
+                                        @elseif($participant->status === 'pending')
+                                            <span class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded-full">
+                                                <i class="fas fa-clock"></i> Menunggu
+                                            </span>
+                                        @else
+                                            <span class="bg-red-100 text-red-700 text-xs font-semibold px-2 py-1 rounded-full">
+                                                <i class="fas fa-times-circle"></i> Ditolak
+                                            </span>
+                                        @endif
+                                        
+                                        @if($participant->status === 'pending')
+                                        <div class="flex gap-2">
+                                            <form action="{{ route('user.participant.approve', $participant->id) }}" method="POST" class="inline">
+                                                @csrf
+                                                <button type="submit" 
+                                                        class="bg-green-600 text-white text-xs font-semibold px-3 py-1 rounded-lg hover:bg-green-700 transition duration-150"
+                                                        onclick="return confirm('Apakah Anda yakin ingin menyetujui peserta ini?')">
+                                                    <i class="fas fa-check mr-1"></i> Setujui
+                                                </button>
+                                            </form>
+                                            <button type="button" 
+                                                    class="bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-lg hover:bg-red-700 transition duration-150"
+                                                    onclick="showRejectModal({{ $participant->id }}, '{{ addslashes($participant->nama_peserta) }}')">
+                                                <i class="fas fa-times mr-1"></i> Tolak
+                                            </button>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                        @else
+                        <p class="text-sm text-gray-500 text-center py-2">
+                            <i class="fas fa-users mr-1"></i>
+                            Belum ada anggota yang bergabung
+                        </p>
+                        @endif
+                    </div>
+                    @endif
+
                     {{-- Tombol Aksi --}}
                     <div class="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
                         <a href="{{ route('user.community.detail', $activity->id) }}" 
@@ -373,5 +454,63 @@
             </div>
         </div>
 </main>
+
+{{-- Modal Reject Participant --}}
+<div id="rejectModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+    <div class="bg-white rounded-xl shadow-2xl p-6 max-w-md w-full mx-4">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold text-gray-900">Tolak Peserta</h3>
+            <button onclick="closeRejectModal()" class="text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <form id="rejectForm" method="POST">
+            @csrf
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Alasan Penolakan (Opsional)
+                </label>
+                <textarea name="alasan_reject" 
+                          rows="3" 
+                          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-red-500"
+                          placeholder="Masukkan alasan penolakan (opsional)"></textarea>
+            </div>
+            <div class="flex gap-3">
+                <button type="button" 
+                        onclick="closeRejectModal()" 
+                        class="flex-1 bg-gray-200 text-gray-700 font-semibold px-4 py-2 rounded-lg hover:bg-gray-300 transition duration-150">
+                    Batal
+                </button>
+                <button type="submit" 
+                        class="flex-1 bg-red-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-700 transition duration-150">
+                    <i class="fas fa-times mr-1"></i> Tolak Peserta
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@push('scripts')
+<script>
+function showRejectModal(participantId, participantName) {
+    const modal = document.getElementById('rejectModal');
+    const form = document.getElementById('rejectForm');
+    form.action = '{{ url("/riwayat-komunitas/participant") }}/' + participantId + '/reject';
+    modal.classList.remove('hidden');
+}
+
+function closeRejectModal() {
+    const modal = document.getElementById('rejectModal');
+    modal.classList.add('hidden');
+}
+
+// Close modal when clicking outside
+document.getElementById('rejectModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeRejectModal();
+    }
+});
+</script>
+@endpush
 
 @endsection

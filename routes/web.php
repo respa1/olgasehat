@@ -120,6 +120,8 @@ Route::get('/edit-profile-user', fn() => view('user.editprofile_user'));
 Route::get('/riwayat-komunitas', [App\Http\Controllers\ActivityController::class, 'riwayatKomunitas'])->name('user.riwayat-komunitas');
 Route::get('/riwayat-komunitas/{id}/edit', [App\Http\Controllers\ActivityController::class, 'editUserActivity'])->name('user.aktivitas.edit');
 Route::put('/riwayat-komunitas/{id}', [App\Http\Controllers\ActivityController::class, 'updateUserActivity'])->name('user.aktivitas.update');
+Route::post('/riwayat-komunitas/participant/{id}/approve', [App\Http\Controllers\ActivityController::class, 'approveParticipant'])->name('user.participant.approve');
+Route::post('/riwayat-komunitas/participant/{id}/reject', [App\Http\Controllers\ActivityController::class, 'rejectParticipant'])->name('user.participant.reject');
 Route::get('/riwayatmembership', fn() => view('user.riwayatmembership'));
 Route::get('/riwayatpayment', fn() => view('user.riwayatpayment'));
 Route::get('/registeremail', fn() => view('user.registeremail'));
