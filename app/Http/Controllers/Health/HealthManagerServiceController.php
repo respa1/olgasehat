@@ -21,7 +21,7 @@ class HealthManagerServiceController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         
-        return view('pengelolakesehatan.Service.index', compact('services'));
+        return view('pemilikkesehatan.Service.index', compact('services'));
     }
 
     public function create()
@@ -38,7 +38,7 @@ class HealthManagerServiceController extends Controller
             ->where('aktif', true)
             ->get();
         
-        return view('pengelolakesehatan.Service.create', compact('clinics', 'doctors'));
+        return view('pemilikkesehatan.Service.create', compact('clinics', 'doctors'));
     }
 
     public function store(Request $request)
@@ -81,7 +81,7 @@ class HealthManagerServiceController extends Controller
             ->where('aktif', true)
             ->get();
         
-        return view('pengelolakesehatan.Service.edit', compact('service', 'clinics', 'doctors'));
+        return view('pemilikkesehatan.Service.edit', compact('service', 'clinics', 'doctors'));
     }
 
     public function update(Request $request, $id)

@@ -1,122 +1,174 @@
 @extends('pemilikkesehatan.Layout.pengelolakesehatan')
 
 @section('content')
-<div class="content-wrapper dashboard-onboarding">
+<div class="content-wrapper" style="background: #f4f8ff; min-height: 100vh;">
     <div class="content-header border-0 pb-0">
         <div class="container-fluid">
-            <div class="d-flex align-items-center justify-content-between flex-wrap">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
                 <div>
-                    <p class="breadcrumb-dashboard mb-1 text-muted">Kelola Fasilitas • Dashboard Pengelola</p>
-                    <h1 class="page-title mb-0">Selamat Datang, {{ Auth::user()->name }}</h1>
-                    <p class="text-muted mb-0">Kami siapkan pengalaman onboarding yang mudah dan cepat agar fasilitas kesehatan anda segera tayang.</p>
+                    <h1 class="page-title mb-1" style="font-weight: 700; color: #1b2b5a;">Dashboard Pengelola Kesehatan</h1>
+                    <p class="text-muted mb-0">Ringkasan aktivitas dan statistik klinik Anda</p>
                 </div>
-                <div class="welcome-badge mt-3 mt-md-0">
-                    <i class="fas fa-bolt"></i> Quick Start
-                </div>
+                <ol class="breadcrumb float-md-right mt-2 mt-md-0">
+                    <li class="breadcrumb-item"><a href="{{ route('pengelola.dashboard') }}">Dashboard</a></li>
+                </ol>
             </div>
         </div>
     </div>
 
     <div class="content pt-3">
-        <div class="container-fluid">
-            <div class="row">
-                <!-- Stepper -->
-                <div class="col-lg-4 mb-4 mb-lg-0">
-                    <div class="card border-0 shadow-sm h-100 stepper-card">
-                        <div class="card-body">
-                            <h5 class="mb-4 font-weight-bold text-primary">Langkah Onboarding</h5>
-                            <ul class="timeline list-unstyled mb-0">
-                                <li class="timeline-item timeline-active">
-                                    <span class="dot"><i class="fas fa-handshake"></i></span>
-                                    <div class="timeline-content">
-                                        <h6>Selamat Datang</h6>
-                                        <p class="text-muted mb-0 small">Mulai perjalanan mengelola fasilitas kesehatan anda.</p>
-                                    </div>
-                                </li>
-                                <li class="timeline-item">
-                                    <span class="dot">1</span>
-                                    <div class="timeline-content">
-                                        <h6>Informasi Fasilitas</h6>
-                                        <p class="text-muted mb-0 small">Isi detail umum fasilitas kesehatan dan kontak utama.</p>
-                                    </div>
-                                </li>
-                                <li class="timeline-item">
-                                    <span class="dot">2</span>
-                                    <div class="timeline-content">
-                                        <h6>Detail Fasilitas</h6>
-                                        <p class="text-muted mb-0 small">Tambahkan layanan, galeri, dan deskripsi.</p>
-                                    </div>
-                                </li>
-                                <li class="timeline-item">
-                                    <span class="dot">3</span>
-                                    <div class="timeline-content">
-                                        <h6>Waktu Operasional</h6>
-                                        <p class="text-muted mb-0 small">Atur jam operasional dan slot layanan.</p>
-                                    </div>
-                                </li>
-                                <li class="timeline-item">
-                                    <span class="dot"><i class="fas fa-check"></i></span>
-                                    <div class="timeline-content">
-                                        <h6>Selesai</h6>
-                                        <p class="text-muted mb-0 small">Verifikasi & terbitkan fasilitas kesehatan anda.</p>
-                                    </div>
-                                </li>
-                            </ul>
+    <div class="container-fluid">
+        <!-- Statistik Cards -->
+        <div class="row">
+            <div class="col-6 col-lg-3 mb-3">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{ $totalClinics }}</h3>
+                        <p>Total Klinik</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <a href="{{ route('pengelola.clinics') }}" class="small-box-footer">
+                        Lihat Detail <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3 mb-3">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ $totalDoctors }}</h3>
+                        <p>Total Dokter</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <a href="{{ route('pengelola.doctors.index') }}" class="small-box-footer">
+                        Lihat Detail <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3 mb-3">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ $pendingBookings }}</h3>
+                        <p>Booking Pending</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <a href="{{ route('pengelola.bookings.index', ['status' => 'pending']) }}" class="small-box-footer">
+                        Lihat Detail <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3 mb-3">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>{{ $todayBookings }}</h3>
+                        <p>Booking Hari Ini</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-calendar-day"></i>
+                    </div>
+                    <a href="{{ route('pengelola.bookings.index', ['tanggal' => today()->format('Y-m-d')]) }}" class="small-box-footer">
+                        Lihat Detail <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Booking Hari Ini -->
+            <div class="col-12 col-lg-8 mb-3 mb-lg-0">
+                <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+                    <div class="card-header border-transparent" style="background: white; border-radius: 20px 20px 0 0;">
+                        <h3 class="card-title mb-0" style="font-weight: 700; color: #1b2b5a;">Booking Hari Ini</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                    <tr>
+                                        <th>Kode</th>
+                                        <th>Pasien</th>
+                                        <th class="d-none d-md-table-cell">Dokter</th>
+                                        <th>Waktu</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($bookingsToday as $booking)
+                                    <tr>
+                                        <td data-label="Kode"><a href="{{ route('pengelola.bookings.show', $booking->id) }}">{{ $booking->kode_booking }}</a></td>
+                                        <td data-label="Pasien">{{ $booking->nama_pasien }}</td>
+                                        <td data-label="Dokter" class="d-none d-md-table-cell">{{ $booking->doctor->nama_lengkap ?? $booking->doctor->nama }}</td>
+                                        <td data-label="Waktu">{{ $booking->jam }}</td>
+                                        <td data-label="Status">
+                                            @if($booking->status == 'pending')
+                                                <span class="badge badge-warning">Pending</span>
+                                            @elseif($booking->status == 'confirmed')
+                                                <span class="badge badge-info">Confirmed</span>
+                                            @elseif($booking->status == 'completed')
+                                                <span class="badge badge-success">Completed</span>
+                                            @elseif($booking->status == 'cancelled')
+                                                <span class="badge badge-danger">Cancelled</span>
+                                            @else
+                                                <span class="badge badge-secondary">{{ $booking->status }}</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center">Tidak ada booking hari ini</td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
                         </div>
+                    </div>
+                    <div class="card-footer clearfix">
+                        <a href="{{ route('pengelola.bookings.index') }}" class="btn btn-sm btn-info float-none float-md-right">Lihat Semua Booking</a>
                     </div>
                 </div>
+            </div>
 
-                <!-- Welcome Hero -->
-                <div class="col-lg-8">
-                    <div class="card border-0 shadow-sm hero-card mb-4">
-                        <div class="card-body d-flex flex-column flex-lg-row align-items-center">
-                            <div class="hero-content pr-lg-4">
-                                <div class="badge badge-soft-light mb-3">Tersisa 4 langkah lagi</div>
-                                <h2 class="font-weight-bold mb-3 text-white">Mari tampilkan fasilitas kesehatan terbaik anda kepada ribuan pengguna OLGA Sehat.</h2>
-                                <p class="text-light mb-4">Dengan melengkapi beberapa informasi penting, pasien dapat menemukan fasilitas anda dan melakukan pemesanan secara online.</p>
-                                <a href="#" class="btn btn-light btn-lg btn-continue">
-                                    Mulai Lengkapi Data
-                                    <span class="ml-2"><i class="fas fa-arrow-right"></i></span>
-                                </a>
-                                <div class="hero-footnote text-light-50 mt-3">
-                                    <i class="fas fa-shield-alt mr-2"></i>Data anda terlindungi dan hanya digunakan untuk keperluan verifikasi.
-                                </div>
-                            </div>
-                            <div class="hero-illustration mt-4 mt-lg-0">
-                                <img src="{{ asset('assets/ilus.png') }}" alt="Welcome Illustration">
-                            </div>
-                        </div>
+            <!-- Booking Pending -->
+            <div class="col-12 col-lg-4">
+                <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+                    <div class="card-header" style="background: white; border-radius: 20px 20px 0 0;">
+                        <h3 class="card-title mb-0" style="font-weight: 700; color: #1b2b5a;">Booking Pending</h3>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-4">
-                            <div class="card border-0 shadow-sm h-100 info-card">
-                                <div class="card-body">
-                                    <div class="icon-wrapper bg-soft-blue mb-3">
-                                        <i class="fas fa-lightbulb"></i>
-                                    </div>
-                                    <h6 class="font-weight-bold">Tips Cepat</h6>
-                                    <p class="text-muted small mb-3">Gunakan foto berkualitas tinggi dan highlight layanan unggulan untuk menarik perhatian calon pasien.</p>
-                                    <a href="#" class="text-primary small font-weight-bold">
-                                        Lihat panduan <i class="fas fa-arrow-right ml-1"></i>
+                    <div class="card-body p-0">
+                        <ul class="products-list product-list-in-card pl-2 pr-2">
+                            @forelse($bookingsPending as $booking)
+                            <li class="item">
+                                <div class="product-info">
+                                    <a href="{{ route('pengelola.bookings.show', $booking->id) }}" class="product-title">
+                                        {{ $booking->kode_booking }}
+                                        <span class="badge badge-warning float-right">Pending</span>
                                     </a>
+                                    <span class="product-description">
+                                        {{ $booking->nama_pasien }} - {{ $booking->doctor->nama_lengkap ?? $booking->doctor->nama }}
+                                        <br>
+                                        <small>{{ $booking->tanggal->format('d M Y') }} - {{ $booking->jam }}</small>
+                                    </span>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-4">
-                            <div class="card border-0 shadow-sm h-100 info-card">
-                                <div class="card-body">
-                                    <div class="icon-wrapper bg-soft-green mb-3">
-                                        <i class="fas fa-headset"></i>
-                                    </div>
-                                    <h6 class="font-weight-bold">Bantuan 24/7</h6>
-                                    <p class="text-muted small mb-3">Tim support kami siap membantu kapan saja melalui WhatsApp atau live chat.</p>
-                                    <a href="#" class="text-success small font-weight-bold">
-                                        Hubungi tim support <i class="fas fa-arrow-right ml-1"></i>
-                                    </a>
+                            </li>
+                            @empty
+                            <li class="item">
+                                <div class="product-info">
+                                    <span class="product-description">Tidak ada booking pending</span>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
+                            @endforelse
+                        </ul>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="{{ route('pengelola.bookings.index', ['status' => 'pending']) }}" class="uppercase">Lihat Semua</a>
                     </div>
                 </div>
             </div>
@@ -125,154 +177,79 @@
 </div>
 
 <style>
-    .dashboard-onboarding {
-        background: linear-gradient(180deg, #f6f9ff 0%, #ffffff 100%);
-        min-height: 100vh;
-    }
-    .dashboard-onboarding .content-wrapper {
-        background: transparent;
-    }
-    .breadcrumb-dashboard {
-        font-size: 0.85rem;
-        letter-spacing: 0.02em;
-    }
     .page-title {
         font-weight: 700;
-        color: #1d2c5b;
+        color: #1b2b5a;
     }
-    .welcome-badge {
-        background: rgba(0, 150, 255, 0.15);
-        color: #0075ff;
-        border-radius: 999px;
-        padding: 0.4rem 1rem;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
+    .content-wrapper {
+        background: #f4f8ff;
     }
-    .stepper-card {
-        border-radius: 18px;
-    }
-    .timeline {
-        position: relative;
-        padding-left: 1.5rem;
-    }
-    .timeline::before {
-        content: "";
-        position: absolute;
-        left: 18px;
-        top: 5px;
-        bottom: 5px;
-        width: 2px;
-        background: linear-gradient(180deg, #d7e5ff 0%, #edf2ff 100%);
-    }
-    .timeline-item {
-        position: relative;
-        padding-left: 2.5rem;
-        margin-bottom: 1.5rem;
-    }
-    .timeline-item:last-child {
-        margin-bottom: 0;
-    }
-    .timeline-item .dot {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: #e0e9ff;
-        color: #4a63ff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        box-shadow: inset 0 0 0 4px #f7f9ff;
-    }
-    .timeline-item.timeline-active .dot {
-        background: linear-gradient(135deg, #0096ff 0%, #00c6ff 100%);
-        color: #fff;
-        box-shadow: 0 8px 18px rgba(0, 150, 255, 0.35);
-    }
-    .timeline-content h6 {
-        font-weight: 700;
-        margin-bottom: 0.2rem;
-        color: #152345;
-    }
-    .hero-card {
-        background: linear-gradient(135deg, #0096ff 0%, #00c6ff 100%);
-        border-radius: 22px;
-        overflow: hidden;
-    }
-    .hero-content {
-        flex: 1 1 60%;
-    }
-    .hero-content .badge {
-        border-radius: 999px;
-        padding: 0.45rem 1rem;
-        font-weight: 600;
-    }
-    .badge-soft-light {
-        background: rgba(255,255,255,0.2);
-        color: #f2f7ff;
-    }
-    .btn-continue {
-        font-weight: 700;
-        padding: 0.75rem 1.8rem;
-        border-radius: 999px;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
-    }
-    .hero-footnote {
-        font-size: 0.85rem;
-        opacity: 0.85;
-    }
-    .text-light-50 {
-        color: rgba(255, 255, 255, 0.7);
-    }
-    .hero-illustration img {
-        max-width: 280px;
-        width: 100%;
-    }
-    .info-card {
-        border-radius: 18px;
-    }
-    .icon-wrapper {
-        width: 48px;
-        height: 48px;
-        border-radius: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.3rem;
-    }
-    .bg-soft-blue {
-        background: rgba(0, 149, 255, 0.12);
-        color: #0075ff;
-    }
-    .bg-soft-green {
-        background: rgba(46, 204, 113, 0.15);
-        color: #1f9451;
-    }
-    @media (max-width: 991.98px) {
-        .timeline::before {
-            left: 16px;
+    /* Responsive improvements for dashboard */
+    @media (max-width: 768px) {
+        .small-box {
+            margin-bottom: 1rem;
         }
-        .timeline-item .dot {
-            width: 32px;
-            height: 32px;
+        .small-box .inner {
+            padding: 15px;
         }
-        .hero-card {
-            text-align: center;
+        .small-box .inner h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
         }
-        .hero-content {
-            padding-right: 0;
+        .small-box .inner p {
+            font-size: 0.875rem;
         }
-        .hero-content .btn-continue {
-            justify-content: center;
+        .small-box .icon {
+            font-size: 3rem;
+            top: 15px;
+            right: 15px;
         }
+        .card-title {
+            font-size: 1rem;
+        }
+        .table-responsive {
+            font-size: 0.875rem;
+        }
+        .table th,
+        .table td {
+            padding: 0.5rem;
+        }
+        .card-footer .btn {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .content-header h1 {
+            font-size: 1.25rem;
+        }
+        .small-box .inner h3 {
+            font-size: 1.25rem;
+        }
+        .small-box .inner p {
+            font-size: 0.75rem;
+        }
+        .small-box .icon {
+            font-size: 2.5rem;
+        }
+        .table {
+            font-size: 0.75rem;
+        }
+        .badge {
+            font-size: 0.7rem;
+            padding: 0.25rem 0.5rem;
+        }
+    }
+    
+    /* Better card spacing */
+    .row {
+        margin-left: -7.5px;
+        margin-right: -7.5px;
+    }
+    .row > * {
+        padding-left: 7.5px;
+        padding-right: 7.5px;
     }
 </style>
 @endsection

@@ -1,14 +1,15 @@
 @extends('pemilikkesehatan.Layout.pengelolakesehatan')
 
 @section('content')
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Detail Booking</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
+<div class="content-wrapper" style="background: #f4f8ff; min-height: 100vh;">
+    <div class="content-header border-0 pb-0">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <h1 class="page-title mb-1" style="font-weight: 700; color: #1b2b5a;">Detail Booking</h1>
+                    <p class="text-muted mb-0">Informasi lengkap booking pasien</p>
+                </div>
+                <ol class="breadcrumb float-md-right mt-2 mt-md-0">
                     <li class="breadcrumb-item"><a href="{{ route('pengelola.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('pengelola.bookings.index') }}">Booking</a></li>
                     <li class="breadcrumb-item active">Detail</li>
@@ -16,16 +17,15 @@
             </div>
         </div>
     </div>
-</div>
 
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Informasi Booking</h3>
-                    </div>
+    <div class="content pt-3">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+                        <div class="card-header" style="background: white; border-radius: 20px 20px 0 0;">
+                            <h3 class="card-title mb-0" style="font-weight: 700; color: #1b2b5a;">Informasi Booking</h3>
+                        </div>
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-md-6">
@@ -158,9 +158,9 @@
             </div>
 
             <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Update Status</h3>
+                <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+                    <div class="card-header" style="background: white; border-radius: 20px 20px 0 0;">
+                        <h3 class="card-title mb-0" style="font-weight: 700; color: #1b2b5a;">Update Status</h3>
                     </div>
                     <form action="{{ route('pengelola.bookings.update-status', $booking->id) }}" method="POST">
                         @csrf
@@ -195,8 +195,8 @@
                             </div>
                             @endif
                         </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary btn-block">
+                        <div class="card-footer" style="background: white; border-radius: 0 0 20px 20px;">
+                            <button type="submit" class="btn btn-primary btn-block" style="background: #28a745; border-color: #28a745; border-radius: 10px;">
                                 <i class="fas fa-save"></i> Update Status
                             </button>
                         </div>
@@ -205,6 +205,6 @@
             </div>
         </div>
     </div>
-</section>
+</div>
 @endsection
 

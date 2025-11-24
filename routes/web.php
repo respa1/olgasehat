@@ -207,76 +207,27 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
 });
 
 // ======================================================
-// PENGELOLA KESEHATAN ROUTES
-// ======================================================
-Route::middleware(['auth'])->group(function () {
-    Route::prefix('pengelolakesehatan')->name('pengelola.')->group(function () {
-        // Dashboard
-        Route::get('/', [App\Http\Controllers\Health\HealthManagerController::class, 'dashboard'])->name('dashboard');
-        Route::get('/dashboard', [App\Http\Controllers\Health\HealthManagerController::class, 'dashboard'])->name('dashboard.alt');
-        
-        // Klinik
-        Route::get('/klinik', [App\Http\Controllers\Health\HealthManagerController::class, 'clinics'])->name('clinics');
-        Route::get('/klinik/create', [App\Http\Controllers\Health\HealthManagerController::class, 'createClinic'])->name('clinics.create');
-        Route::post('/klinik', [App\Http\Controllers\Health\HealthManagerController::class, 'storeClinic'])->name('clinics.store');
-        Route::get('/klinik/{id}', [App\Http\Controllers\Health\HealthManagerController::class, 'showClinic'])->name('clinics.show');
-        Route::get('/klinik/{id}/edit', [App\Http\Controllers\Health\HealthManagerController::class, 'editClinic'])->name('clinics.edit');
-        Route::put('/klinik/{id}', [App\Http\Controllers\Health\HealthManagerController::class, 'updateClinic'])->name('clinics.update');
-        
-        // Dokter (akan dibuat controller terpisah)
-        Route::get('/dokter', [App\Http\Controllers\Health\HealthManagerDoctorController::class, 'index'])->name('doctors.index');
-        Route::get('/dokter/create', [App\Http\Controllers\Health\HealthManagerDoctorController::class, 'create'])->name('doctors.create');
-        Route::post('/dokter', [App\Http\Controllers\Health\HealthManagerDoctorController::class, 'store'])->name('doctors.store');
-        Route::get('/dokter/{id}/edit', [App\Http\Controllers\Health\HealthManagerDoctorController::class, 'edit'])->name('doctors.edit');
-        Route::put('/dokter/{id}', [App\Http\Controllers\Health\HealthManagerDoctorController::class, 'update'])->name('doctors.update');
-        Route::delete('/dokter/{id}', [App\Http\Controllers\Health\HealthManagerDoctorController::class, 'destroy'])->name('doctors.destroy');
-        
-        // Jadwal Dokter
-        Route::get('/jadwal-dokter', [App\Http\Controllers\Health\HealthManagerScheduleController::class, 'index'])->name('schedules.index');
-        Route::get('/jadwal-dokter/create', [App\Http\Controllers\Health\HealthManagerScheduleController::class, 'create'])->name('schedules.create');
-        Route::post('/jadwal-dokter', [App\Http\Controllers\Health\HealthManagerScheduleController::class, 'store'])->name('schedules.store');
-        Route::get('/jadwal-dokter/{id}/edit', [App\Http\Controllers\Health\HealthManagerScheduleController::class, 'edit'])->name('schedules.edit');
-        Route::put('/jadwal-dokter/{id}', [App\Http\Controllers\Health\HealthManagerScheduleController::class, 'update'])->name('schedules.update');
-        Route::delete('/jadwal-dokter/{id}', [App\Http\Controllers\Health\HealthManagerScheduleController::class, 'destroy'])->name('schedules.destroy');
-        
-        // Layanan
-        Route::get('/layanan', [App\Http\Controllers\Health\HealthManagerServiceController::class, 'index'])->name('services.index');
-        Route::get('/layanan/create', [App\Http\Controllers\Health\HealthManagerServiceController::class, 'create'])->name('services.create');
-        Route::post('/layanan', [App\Http\Controllers\Health\HealthManagerServiceController::class, 'store'])->name('services.store');
-        Route::get('/layanan/{id}/edit', [App\Http\Controllers\Health\HealthManagerServiceController::class, 'edit'])->name('services.edit');
-        Route::put('/layanan/{id}', [App\Http\Controllers\Health\HealthManagerServiceController::class, 'update'])->name('services.update');
-        Route::delete('/layanan/{id}', [App\Http\Controllers\Health\HealthManagerServiceController::class, 'destroy'])->name('services.destroy');
-        
-        // Booking
-        Route::get('/booking', [App\Http\Controllers\Health\HealthManagerBookingController::class, 'index'])->name('bookings.index');
-        Route::get('/booking/{id}', [App\Http\Controllers\Health\HealthManagerBookingController::class, 'show'])->name('bookings.show');
-        Route::post('/booking/{id}/update-status', [App\Http\Controllers\Health\HealthManagerBookingController::class, 'updateStatus'])->name('bookings.update-status');
-    });
-    
-    Route::prefix('keuangan')->group(function () {
-        Route::get('/fasilitas', fn() => view('pemiliklapangan.Keuangan.fasilitas'))->name('keuangan.fasilitas');
-        Route::get('/komunitas', fn() => view('pemiliklapangan.Keuangan.komunitas'))->name('keuangan.komunitas');
-        Route::get('/membership', fn() => view('pemiliklapangan.Keuangan.membership'))->name('keuangan.membership');
-        Route::get('/event', fn() => view('pemiliklapangan.Keuangan.event'))->name('keuangan.event');
-    });
-    Route::get('/pemiliklapangan/pengaturan', [App\Http\Controllers\MitraController::class, 'pengaturan'])->name('pemilik.pengaturan');
-    Route::post('/pemiliklapangan/pengaturan/update', [App\Http\Controllers\MitraController::class, 'updatePengaturan'])->name('pemilik.pengaturan.update');
-        
-    });
-
 // ======================================================
 // PENGELOLA KESEHATAN ROUTES
 // ======================================================
 Route::get('/loginpengelolakesehatan', fn() => view('pemilikkesehatan.loginpengelolakesehatan'));
 Route::get('/regispengelolakesehatan', fn() => view('pemilikkesehatan.regispengelolakesehatan'));
 Route::get('/isidatakesehatan', [App\Http\Controllers\PengelolaKesehatanController::class, 'create'])->name('pengelolakesehatan.create');
+Route::post('/isidatakesehatan', [App\Http\Controllers\PengelolaKesehatanController::class, 'store'])->name('pengelolakesehatan.store');
 
 // Dashboard & Manajemen Kesehatan (Authenticated)
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:pengelolakesehatan'])->group(function () {
     Route::prefix('pengelolakesehatan')->name('pengelola.')->group(function () {
         // Dashboard
         Route::get('/', [App\Http\Controllers\Health\HealthManagerController::class, 'dashboard'])->name('dashboard');
         Route::get('/dashboard', [App\Http\Controllers\Health\HealthManagerController::class, 'dashboard'])->name('dashboard.alt');
+        
+        // Analytics
+        Route::get('/analytics', fn() => view('pemilikkesehatan.Analytics.index'))->name('analytics');
+        
+        // Pengaturan
+        Route::get('/pengaturan', [App\Http\Controllers\PengelolaKesehatanController::class, 'pengaturan'])->name('pengaturan');
+        Route::post('/pengaturan/update', [App\Http\Controllers\PengelolaKesehatanController::class, 'updatePengaturan'])->name('pengaturan.update');
         
         // Klinik
         Route::get('/klinik', [App\Http\Controllers\Health\HealthManagerController::class, 'clinics'])->name('clinics');
@@ -315,14 +266,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/booking/{id}', [App\Http\Controllers\Health\HealthManagerBookingController::class, 'show'])->name('bookings.show');
         Route::post('/booking/{id}/update-status', [App\Http\Controllers\Health\HealthManagerBookingController::class, 'updateStatus'])->name('bookings.update-status');
     });
-});
-Route::post('/isidatakesehatan', [App\Http\Controllers\PengelolaKesehatanController::class, 'store'])->name('pengelolakesehatan.store');
-
-Route::middleware(['auth', 'role:pengelolakesehatan'])->group(function () {
-    Route::get('/pengelolakesehatan/dashboard', [App\Http\Controllers\Health\HealthManagerController::class, 'dashboard'])->name('pengelolakesehatan.dashboard');
-    Route::get('/pengelolakesehatan/analytics', fn() => view('pemilikkesehatan.Analytics.index'))->name('pengelolakesehatan.analytics');
-    Route::get('/pengelolakesehatan/pengaturan', [App\Http\Controllers\PengelolaKesehatanController::class, 'pengaturan'])->name('pengelolakesehatan.pengaturan');
-    Route::post('/pengelolakesehatan/pengaturan/update', [App\Http\Controllers\PengelolaKesehatanController::class, 'updatePengaturan'])->name('pengelolakesehatan.pengaturan.update');
+    
+    Route::prefix('keuangan')->group(function () {
+        Route::get('/fasilitas', fn() => view('pemiliklapangan.Keuangan.fasilitas'))->name('keuangan.fasilitas');
+        Route::get('/komunitas', fn() => view('pemiliklapangan.Keuangan.komunitas'))->name('keuangan.komunitas');
+        Route::get('/membership', fn() => view('pemiliklapangan.Keuangan.membership'))->name('keuangan.membership');
+        Route::get('/event', fn() => view('pemiliklapangan.Keuangan.event'))->name('keuangan.event');
+    });
+    Route::get('/pemiliklapangan/pengaturan', [App\Http\Controllers\MitraController::class, 'pengaturan'])->name('pemilik.pengaturan');
+    Route::post('/pemiliklapangan/pengaturan/update', [App\Http\Controllers\MitraController::class, 'updatePengaturan'])->name('pemilik.pengaturan.update');
 });
 
 // ======================================================

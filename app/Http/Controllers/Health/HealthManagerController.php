@@ -51,7 +51,7 @@ class HealthManagerController extends Controller
             ->limit(5)
             ->get();
         
-        return view('pengelolakesehatan.Dashboard.dashboard', compact(
+        return view('pemilikkesehatan.Dashboard.dashboard', compact(
             'totalClinics',
             'totalDoctors',
             'totalBookings',
@@ -74,7 +74,7 @@ class HealthManagerController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         
-        return view('pengelolakesehatan.Clinic.index', compact('clinics'));
+        return view('pemilikkesehatan.Clinic.index', compact('clinics'));
     }
 
     /**
@@ -83,7 +83,7 @@ class HealthManagerController extends Controller
     public function createClinic()
     {
         $categories = \App\Models\ClinicCategory::where('aktif', true)->get();
-        return view('pengelolakesehatan.Clinic.create', compact('categories'));
+        return view('pemilikkesehatan.Clinic.create', compact('categories'));
     }
 
     /**
@@ -143,7 +143,7 @@ class HealthManagerController extends Controller
     {
         $clinic = Clinic::where('user_id', Auth::id())->findOrFail($id);
         $categories = \App\Models\ClinicCategory::where('aktif', true)->get();
-        return view('pengelolakesehatan.Clinic.edit', compact('clinic', 'categories'));
+        return view('pemilikkesehatan.Clinic.edit', compact('clinic', 'categories'));
     }
 
     /**
@@ -211,7 +211,7 @@ class HealthManagerController extends Controller
             ->with(['doctors', 'services', 'bookings'])
             ->findOrFail($id);
         
-        return view('pengelolakesehatan.Clinic.show', compact('clinic'));
+        return view('pemilikkesehatan.Clinic.show', compact('clinic'));
     }
 }
 

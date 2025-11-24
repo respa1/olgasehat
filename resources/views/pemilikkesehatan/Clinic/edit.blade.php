@@ -1,14 +1,15 @@
 @extends('pemilikkesehatan.Layout.pengelolakesehatan')
 
 @section('content')
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Edit Klinik</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
+<div class="content-wrapper" style="background: #f4f8ff; min-height: 100vh;">
+    <div class="content-header border-0 pb-0">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <h1 class="page-title mb-1" style="font-weight: 700; color: #1b2b5a;">Edit Klinik</h1>
+                    <p class="text-muted mb-0">Edit informasi klinik atau fasilitas kesehatan</p>
+                </div>
+                <ol class="breadcrumb float-md-right mt-2 mt-md-0">
                     <li class="breadcrumb-item"><a href="{{ route('pengelola.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('pengelola.clinics') }}">Klinik</a></li>
                     <li class="breadcrumb-item active">Edit</li>
@@ -16,22 +17,21 @@
             </div>
         </div>
     </div>
-</div>
 
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Form Edit Klinik</h3>
-                    </div>
+    <div class="content pt-3">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+                        <div class="card-header" style="background: white; border-radius: 20px 20px 0 0;">
+                            <h3 class="card-title mb-0" style="font-weight: 700; color: #1b2b5a;">Form Edit Klinik</h3>
+                        </div>
                     <form action="{{ route('pengelola.clinics.update', $clinic->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label>Nama Klinik <span class="text-danger">*</span></label>
                                         <input type="text" name="nama" class="form-control" value="{{ old('nama', $clinic->nama) }}" required>
@@ -40,7 +40,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label>Tipe <span class="text-danger">*</span></label>
                                         <select name="tipe" class="form-control" required>
@@ -74,19 +74,19 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label>Alamat</label>
                                         <input type="text" name="alamat" class="form-control" value="{{ old('alamat', $clinic->alamat) }}">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-12 col-md-3">
                                     <div class="form-group">
                                         <label>Kota</label>
                                         <input type="text" name="kota" class="form-control" value="{{ old('kota', $clinic->kota) }}">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-12 col-md-3">
                                     <div class="form-group">
                                         <label>Provinsi</label>
                                         <input type="text" name="provinsi" class="form-control" value="{{ old('provinsi', $clinic->provinsi) }}">
@@ -95,19 +95,19 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-12 col-md-4">
                                     <div class="form-group">
                                         <label>Nomor Telepon</label>
                                         <input type="text" name="nomor_telepon" class="form-control" value="{{ old('nomor_telepon', $clinic->nomor_telepon) }}">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-12 col-md-4">
                                     <div class="form-group">
                                         <label>Email</label>
                                         <input type="email" name="email" class="form-control" value="{{ old('email', $clinic->email) }}">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-12 col-md-4">
                                     <div class="form-group">
                                         <label>Website</label>
                                         <input type="text" name="website" class="form-control" value="{{ old('website', $clinic->website) }}">
@@ -119,7 +119,7 @@
                                 <label>Hari Operasional</label>
                                 <div class="row">
                                     @foreach(['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu'] as $hari)
-                                    <div class="col-md-3">
+                                    <div class="col-6 col-md-3 mb-2">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="hari_operasional[]" value="{{ $hari }}" 
                                                 {{ in_array($hari, old('hari_operasional', $clinic->hari_operasional ?? [])) ? 'checked' : '' }}>
@@ -131,22 +131,22 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label>Jam Buka</label>
-                                        <input type="time" name="jam_buka" class="form-control" value="{{ old('jam_buka', $clinic->jam_buka) }}">
+                                        <input type="time" name="jam_buka" class="form-control" value="{{ old('jam_buka', $clinic->jam_buka ? date('H:i', strtotime($clinic->jam_buka)) : '') }}">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label>Jam Tutup</label>
-                                        <input type="time" name="jam_tutup" class="form-control" value="{{ old('jam_tutup', $clinic->jam_tutup) }}">
+                                        <input type="time" name="jam_tutup" class="form-control" value="{{ old('jam_tutup', $clinic->jam_tutup ? date('H:i', strtotime($clinic->jam_tutup)) : '') }}">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label>Logo Klinik</label>
                                         @if($clinic->logo)
@@ -158,7 +158,7 @@
                                         <small class="text-muted">Kosongkan jika tidak ingin mengubah</small>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label>Foto Utama</label>
                                         @if($clinic->foto_utama)
@@ -172,19 +172,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Update
-                            </button>
-                            <a href="{{ route('pengelola.clinics') }}" class="btn btn-default">
-                                <i class="fas fa-times"></i> Batal
-                            </a>
+                        <div class="card-footer" style="background: white; border-radius: 0 0 20px 20px;">
+                            <div class="d-flex justify-content-end">
+                                <a href="{{ route('pengelola.clinics') }}" class="btn btn-light mr-3" style="border-radius: 10px;">
+                                    <i class="fas fa-times"></i> Batal
+                                </a>
+                                <button type="submit" class="btn btn-primary" style="background: #28a745; border-color: #28a745; border-radius: 10px;">
+                                    <i class="fas fa-save"></i> Update
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
 @endsection
 

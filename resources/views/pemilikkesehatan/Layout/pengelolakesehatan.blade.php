@@ -49,6 +49,11 @@
       background-color: #28a745;
       z-index: 1;
     }
+    .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active {
+      background-color: rgba(40, 167, 69, 0.15) !important;
+      color: #ffffff !important;
+      font-weight: 600;
+    }
     .nav-sidebar .nav-link:hover {
       background-color: rgba(255, 255, 255, 0.05) !important;
     }
@@ -209,6 +214,102 @@
         border-bottom: 0;
       }
     }
+    
+    /* Form improvements */
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-control {
+      border-radius: 0.375rem;
+    }
+    .form-control:focus {
+      border-color: #28a745;
+      box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+    
+    /* Button improvements */
+    .btn {
+      border-radius: 0.375rem;
+      font-weight: 500;
+    }
+    .btn-sm {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.875rem;
+    }
+    .btn-group .btn {
+      margin-right: 0.25rem;
+    }
+    .btn-group .btn:last-child {
+      margin-right: 0;
+    }
+    
+    /* Card improvements */
+    .card {
+      border-radius: 0.5rem;
+      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+    .card-header {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+      padding: 0.75rem 1.25rem;
+    }
+    .card-body {
+      padding: 1.25rem;
+    }
+    
+    /* Responsive buttons */
+    @media (max-width: 767px) {
+      .btn-md-inline-block {
+        display: block;
+        width: 100%;
+      }
+      .btn-md-inline-block + .btn-md-inline-block {
+        margin-top: 0.5rem;
+      }
+    }
+    @media (min-width: 768px) {
+      .btn-md-inline-block {
+        display: inline-block;
+        width: auto;
+      }
+    }
+    
+    /* Table improvements */
+    .table {
+      margin-bottom: 0;
+    }
+    .table th {
+      font-weight: 600;
+      border-top: none;
+    }
+    .table td {
+      vertical-align: middle;
+    }
+    
+    /* Empty state */
+    .table tbody td.text-center {
+      padding: 2rem;
+    }
+    .table tbody td.text-center i {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Badge improvements */
+    .badge {
+      padding: 0.35em 0.65em;
+      font-weight: 500;
+    }
+    
+    /* Content header improvements */
+    .content-header h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+    }
+    @media (max-width: 576px) {
+      .content-header h1 {
+        font-size: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -253,19 +354,19 @@
             <h6 class="mb-0">{{ Auth::user()->name ?? 'Pengelola' }}</h6>
             <span class="badge badge-role mt-1">Pengelola Kesehatan</span>
           </div>
-          <a href="{{ route('pengelolakesehatan.pengaturan') }}" class="dropdown-item d-flex align-items-center">
+          <a href="{{ route('pengelola.pengaturan') }}" class="dropdown-item d-flex align-items-center">
             <span>Keamanan Akun</span>
             <i class="fas fa-info-circle ml-auto text-muted"></i>
           </a>
-          <a href="{{ route('pengelolakesehatan.pengaturan') }}" class="dropdown-item d-flex align-items-center">
+          <a href="{{ route('pengelola.pengaturan') }}" class="dropdown-item d-flex align-items-center">
             <span>Profil User</span>
             <i class="fas fa-info-circle ml-auto text-muted"></i>
           </a>
-          <a href="{{ route('pengelolakesehatan.pengaturan') }}" class="dropdown-item d-flex align-items-center">
+          <a href="{{ route('pengelola.pengaturan') }}" class="dropdown-item d-flex align-items-center">
             <span>Profil Bisnis</span>
             <i class="fas fa-info-circle ml-auto text-muted"></i>
           </a>
-          <a href="{{ route('pengelolakesehatan.pengaturan') }}" class="dropdown-item d-flex align-items-center">
+          <a href="{{ route('pengelola.pengaturan') }}" class="dropdown-item d-flex align-items-center">
             <span>Pengaturan Pengelola</span>
             <i class="fas fa-info-circle ml-auto text-muted"></i>
           </a>
@@ -314,7 +415,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Dashboard -->
           <li class="nav-item">
-            <a href="{{ route('pengelolakesehatan.dashboard') }}" class="nav-link {{ request()->routeIs('pengelolakesehatan.dashboard*') ? 'active' : '' }}">
+            <a href="{{ route('pengelola.dashboard') }}" class="nav-link {{ request()->routeIs('pengelola.dashboard*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>Dashboard</p>
             </a>
@@ -322,7 +423,7 @@
 
           <!-- Analytics -->
           <li class="nav-item">
-            <a href="{{ route('pengelolakesehatan.analytics') }}" class="nav-link {{ request()->is('pengelolakesehatan/analytics') ? 'active' : '' }}">
+            <a href="{{ route('pengelola.analytics') }}" class="nav-link {{ request()->is('pengelolakesehatan/analytics') ? 'active' : '' }}">
               <i class="nav-icon fas fa-chart-line"></i>
               <p>Analytics</p>
             </a>
@@ -376,7 +477,7 @@
 
           <!-- Pengaturan -->
           <li class="nav-item">
-            <a href="{{ route('pengelolakesehatan.pengaturan') }}" class="nav-link {{ request()->is('pengelolakesehatan/pengaturan*') ? 'active' : '' }}">
+            <a href="{{ route('pengelola.pengaturan') }}" class="nav-link {{ request()->is('pengelolakesehatan/pengaturan*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-cog"></i>
               <p>Pengaturan</p>
             </a>
@@ -478,9 +579,16 @@
     $('.nav-sidebar .nav-link').each(function() {
       var linkUrl = $(this).attr('href');
       if (linkUrl && linkUrl !== '#' && linkUrl !== '/') {
+        // Remove leading slash and compare
+        var cleanLink = linkUrl.replace(/^\//, '');
+        var cleanPath = currentPath.replace(/^\//, '');
+        
         // Check if current path starts with the link path
-        if (currentPath.startsWith(linkUrl) && linkUrl !== '/pengelolakesehatan/dashboard') {
+        if (cleanPath.startsWith(cleanLink) && cleanLink !== 'pengelolakesehatan' && cleanLink !== 'pengelolakesehatan/dashboard') {
           $(this).addClass('active');
+          // Also activate parent if it's a treeview
+          $(this).closest('.nav-item').addClass('menu-open');
+          $(this).closest('.nav-treeview').siblings('.nav-link').addClass('active');
         }
       }
     });

@@ -1,13 +1,14 @@
 @extends('pemilikkesehatan.Layout.pengelolakesehatan')
 
 @section('content')
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-12 col-md-6">
-                <h1 class="m-0">Daftar Klinik</h1>
-            </div>
-            <div class="col-12 col-md-6">
+<div class="content-wrapper" style="background: #f4f8ff; min-height: 100vh;">
+    <div class="content-header border-0 pb-0">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <h1 class="page-title mb-1" style="font-weight: 700; color: #1b2b5a;">Daftar Klinik</h1>
+                    <p class="text-muted mb-0">Kelola klinik dan fasilitas kesehatan Anda</p>
+                </div>
                 <ol class="breadcrumb float-md-right mt-2 mt-md-0">
                     <li class="breadcrumb-item"><a href="{{ route('pengelola.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Klinik</li>
@@ -15,14 +16,13 @@
             </div>
         </div>
     </div>
-</div>
 
-<section class="content">
-    <div class="container-fluid">
+    <div class="content pt-3">
+        <div class="container-fluid">
         <div class="row">
             @forelse($clinics as $clinic)
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                <div class="card h-100">
+                <div class="card h-100 border-0 shadow-sm" style="border-radius: 20px;">
                     <div class="card-body text-center">
                         @if($clinic->logo)
                         <img src="{{ asset('fotoklinik/' . $clinic->logo) }}" alt="{{ $clinic->nama }}" class="img-fluid rounded mb-3" style="max-height: 150px;">
@@ -69,16 +69,16 @@
             @endforelse
 
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                <div class="card h-100 border border-primary border-dashed">
+                <div class="card h-100 border-0 shadow-sm" style="border: 2px dashed #28a745; border-radius: 20px; background: rgba(40, 167, 69, 0.05);">
                     <div class="card-body d-flex flex-column text-center justify-content-center">
                         <div class="mb-3">
-                            <i class="fas fa-plus-circle fa-3x text-primary"></i>
+                            <i class="fas fa-plus-circle fa-3x" style="color: #28a745;"></i>
                         </div>
-                        <h5 class="font-weight-bold">Tambah Klinik</h5>
+                        <h5 class="font-weight-bold" style="color: #1b2b5a;">Tambah Klinik</h5>
                         <p class="text-muted small mb-3">
                             Tambahkan klinik atau layanan kesehatan baru
                         </p>
-                        <a href="{{ route('pengelola.clinics.create') }}" class="btn btn-outline-primary">
+                        <a href="{{ route('pengelola.clinics.create') }}" class="btn" style="background: #28a745; color: white; border-radius: 10px;">
                             <i class="fas fa-plus"></i> Tambah Klinik
                         </a>
                     </div>
@@ -86,6 +86,6 @@
             </div>
         </div>
     </div>
-</section>
+</div>
 @endsection
 

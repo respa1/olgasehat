@@ -27,7 +27,7 @@ class HealthManagerScheduleController extends Controller
             ->where('aktif', true)
             ->get();
         
-        return view('pengelolakesehatan.Schedule.index', compact('schedules', 'doctors'));
+        return view('pemilikkesehatan.Schedule.index', compact('schedules', 'doctors'));
     }
 
     public function create()
@@ -44,7 +44,7 @@ class HealthManagerScheduleController extends Controller
             ->where('status', 'approved')
             ->get();
         
-        return view('pengelolakesehatan.Schedule.create', compact('doctors', 'clinics'));
+        return view('pemilikkesehatan.Schedule.create', compact('doctors', 'clinics'));
     }
 
     public function store(Request $request)
@@ -104,7 +104,7 @@ class HealthManagerScheduleController extends Controller
             ->where('status', 'approved')
             ->get();
         
-        return view('pengelolakesehatan.Schedule.edit', compact('schedule', 'doctors', 'clinics'));
+        return view('pemilikkesehatan.Schedule.edit', compact('schedule', 'doctors', 'clinics'));
     }
 
     public function update(Request $request, $id)

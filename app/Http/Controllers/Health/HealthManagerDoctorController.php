@@ -24,7 +24,7 @@ class HealthManagerDoctorController extends Controller
             ->where('status', 'approved')
             ->get();
         
-        return view('pengelolakesehatan.Doctor.index', compact('doctors', 'clinics'));
+        return view('pemilikkesehatan.Doctor.index', compact('doctors', 'clinics'));
     }
 
     public function create()
@@ -34,7 +34,7 @@ class HealthManagerDoctorController extends Controller
             ->where('status', 'approved')
             ->get();
         
-        return view('pengelolakesehatan.Doctor.create', compact('clinics'));
+        return view('pemilikkesehatan.Doctor.create', compact('clinics'));
     }
 
     public function store(Request $request)
@@ -84,7 +84,7 @@ class HealthManagerDoctorController extends Controller
             ->where('status', 'approved')
             ->get();
         
-        return view('pengelolakesehatan.Doctor.edit', compact('doctor', 'clinics'));
+        return view('pemilikkesehatan.Doctor.edit', compact('doctor', 'clinics'));
     }
 
     public function update(Request $request, $id)

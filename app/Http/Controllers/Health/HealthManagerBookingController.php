@@ -51,7 +51,7 @@ class HealthManagerBookingController extends Controller
             ->where('status', 'approved')
             ->get();
 
-        return view('pengelolakesehatan.Booking.index', compact('bookings', 'clinics'));
+        return view('pemilikkesehatan.Booking.index', compact('bookings', 'clinics'));
     }
 
     public function show($id)
@@ -63,7 +63,7 @@ class HealthManagerBookingController extends Controller
             ->with(['user', 'clinic', 'doctor', 'service'])
             ->findOrFail($id);
         
-        return view('pengelolakesehatan.Booking.show', compact('booking'));
+        return view('pemilikkesehatan.Booking.show', compact('booking'));
     }
 
     public function updateStatus(Request $request, $id)

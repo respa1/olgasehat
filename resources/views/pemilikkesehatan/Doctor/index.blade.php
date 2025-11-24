@@ -1,13 +1,14 @@
 @extends('pemilikkesehatan.Layout.pengelolakesehatan')
 
 @section('content')
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-12 col-md-6">
-                <h1 class="m-0">Daftar Dokter</h1>
-            </div>
-            <div class="col-12 col-md-6">
+<div class="content-wrapper" style="background: #f4f8ff; min-height: 100vh;">
+    <div class="content-header border-0 pb-0">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <h1 class="page-title mb-1" style="font-weight: 700; color: #1b2b5a;">Daftar Dokter</h1>
+                    <p class="text-muted mb-0">Kelola data dokter di klinik Anda</p>
+                </div>
                 <ol class="breadcrumb float-md-right mt-2 mt-md-0">
                     <li class="breadcrumb-item"><a href="{{ route('pengelola.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Dokter</li>
@@ -15,22 +16,24 @@
             </div>
         </div>
     </div>
-</div>
 
-<section class="content">
-    <div class="container-fluid">
-        <div class="row mb-3">
-            <div class="col-12">
-                <a href="{{ route('pengelola.doctors.create') }}" class="btn btn-primary btn-sm btn-block btn-md-inline-block">
-                    <i class="fas fa-plus"></i> Tambah Dokter
-                </a>
+    <div class="content pt-3">
+        <div class="container-fluid">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <a href="{{ route('pengelola.doctors.create') }}" class="btn btn-primary btn-sm btn-block btn-md-inline-block" style="background: #28a745; border-color: #28a745; border-radius: 10px;">
+                        <i class="fas fa-plus"></i> Tambah Dokter
+                    </a>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body table-responsive p-0">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+                        <div class="card-header" style="background: white; border-radius: 20px 20px 0 0;">
+                            <h3 class="card-title mb-0" style="font-weight: 700; color: #1b2b5a;">Daftar Dokter</h3>
+                        </div>
+                        <div class="card-body table-responsive p-0">
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
@@ -101,6 +104,6 @@
             </div>
         </div>
     </div>
-</section>
+</div>
 @endsection
 

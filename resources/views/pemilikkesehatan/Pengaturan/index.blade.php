@@ -155,7 +155,7 @@
                                     </button>
                                 </div>
                             @endif
-                            <form action="{{ route('pengelolakesehatan.pengaturan.update') }}" method="POST" class="mt-4">
+                            <form action="{{ route('pengelola.pengaturan.update') }}" method="POST" class="mt-4">
                                 @csrf
                                 <div class="form-row">
                                     <div class="form-group col-md-6">

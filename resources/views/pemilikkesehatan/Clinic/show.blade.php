@@ -1,14 +1,15 @@
 @extends('pemilikkesehatan.Layout.pengelolakesehatan')
 
 @section('content')
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Detail Klinik</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
+<div class="content-wrapper" style="background: #f4f8ff; min-height: 100vh;">
+    <div class="content-header border-0 pb-0">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <h1 class="page-title mb-1" style="font-weight: 700; color: #1b2b5a;">Detail Klinik</h1>
+                    <p class="text-muted mb-0">Informasi lengkap klinik atau fasilitas kesehatan</p>
+                </div>
+                <ol class="breadcrumb float-md-right mt-2 mt-md-0">
                     <li class="breadcrumb-item"><a href="{{ route('pengelola.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('pengelola.clinics') }}">Klinik</a></li>
                     <li class="breadcrumb-item active">Detail</li>
@@ -16,13 +17,12 @@
             </div>
         </div>
     </div>
-</div>
 
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
+    <div class="content pt-3">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm" style="border-radius: 20px;">
                     <div class="card-body text-center">
                         @if($clinic->logo)
                         <img src="{{ asset('fotoklinik/' . $clinic->logo) }}" alt="{{ $clinic->nama }}" class="img-fluid rounded mb-3">
@@ -59,9 +59,9 @@
             </div>
 
             <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Informasi Klinik</h3>
+                <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+                    <div class="card-header" style="background: white; border-radius: 20px 20px 0 0;">
+                        <h3 class="card-title mb-0" style="font-weight: 700; color: #1b2b5a;">Informasi Klinik</h3>
                     </div>
                     <div class="card-body">
                         @if($clinic->motto)
@@ -143,6 +143,6 @@
             </div>
         </div>
     </div>
-</section>
+</div>
 @endsection
 
