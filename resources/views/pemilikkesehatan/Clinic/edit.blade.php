@@ -180,31 +180,38 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group">
-                                        <label>Logo Klinik</label>
-                                        @if($clinic->logo)
-                                        <div class="mb-2">
-                                            <img src="{{ asset('fotoklinik/' . $clinic->logo) }}" alt="Logo" class="img-thumbnail" style="max-height: 100px;">
+                            <div class="form-group">
+                                <label>Banner Klinik</label>
+                                @if($clinic->logo)
+                                <div class="mb-2">
+                                    <img src="{{ asset('fotoklinik/' . $clinic->logo) }}" alt="Banner" class="img-thumbnail" style="max-height: 150px; width: auto;">
+                                </div>
+                                @endif
+                                <input type="file" name="banner" class="form-control-file" accept="image/*">
+                                <small class="text-muted">Kosongkan jika tidak ingin mengubah</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Galeri Klinik</label>
+                                @if($clinic->galleries && $clinic->galleries->count() > 0)
+                                <div class="mb-3">
+                                    <p class="small text-muted mb-2">Galeri yang sudah ada:</p>
+                                    <div class="row">
+                                        @foreach($clinic->galleries as $gallery)
+                                        <div class="col-md-3 col-sm-4 mb-2">
+                                            <div class="position-relative">
+                                                <img src="{{ strpos($gallery->foto, 'clinic_galleries') !== false ? asset('storage/' . $gallery->foto) : asset('fotoklinik/' . $gallery->foto) }}" 
+                                                     alt="Gallery {{ $loop->iteration }}" 
+                                                     class="img-thumbnail" style="width: 100%; height: 120px; object-fit: cover;">
+                                            </div>
                                         </div>
-                                        @endif
-                                        <input type="file" name="logo" class="form-control-file" accept="image/*">
-                                        <small class="text-muted">Kosongkan jika tidak ingin mengubah</small>
+                                        @endforeach
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="form-group">
-                                        <label>Foto Utama</label>
-                                        @if($clinic->foto_utama)
-                                        <div class="mb-2">
-                                            <img src="{{ asset('fotoklinik/' . $clinic->foto_utama) }}" alt="Foto Utama" class="img-thumbnail" style="max-height: 100px;">
-                                        </div>
-                                        @endif
-                                        <input type="file" name="foto_utama" class="form-control-file" accept="image/*">
-                                        <small class="text-muted">Kosongkan jika tidak ingin mengubah</small>
-                                    </div>
-                                </div>
+                                @endif
+                                <input type="file" name="galeri_foto[]" id="galeri_foto" class="form-control-file" accept="image/*" multiple>
+                                <small class="text-muted">Pilih multiple gambar untuk menambah galeri (maksimal 10 gambar total, format: JPG, PNG, maksimal 2MB per gambar)</small>
+                                <div id="galeriPreview" class="mt-3 row"></div>
                             </div>
                         </div>
                         <div class="card-footer" style="background: white; border-radius: 0 0 20px 20px;">
@@ -271,6 +278,46 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize
     updateRemoveButtons();
+
+    // Preview galeri foto
+    const galeriInput = document.getElementById('galeri_foto');
+    const galeriPreview = document.getElementById('galeriPreview');
+    
+    if (galeriInput) {
+        galeriInput.addEventListener('change', function(e) {
+            galeriPreview.innerHTML = '';
+            const files = e.target.files;
+            const existingCount = {{ $clinic->galleries ? $clinic->galleries->count() : 0 }};
+            
+            if (existingCount + files.length > 10) {
+                alert('Total galeri tidak boleh lebih dari 10 gambar. Anda sudah memiliki ' + existingCount + ' gambar.');
+                galeriInput.value = '';
+                return;
+            }
+            
+            for (let i = 0; i < files.length && i < 10; i++) {
+                const file = files[i];
+                if (file.size > 2 * 1024 * 1024) {
+                    alert(`File ${file.name} terlalu besar. Maksimal 2MB per gambar.`);
+                    continue;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const col = document.createElement('div');
+                    col.className = 'col-md-3 col-sm-4 mb-2';
+                    col.innerHTML = `
+                        <div class="position-relative">
+                            <img src="${e.target.result}" alt="Preview ${i + 1}" 
+                                 class="img-thumbnail" style="width: 100%; height: 120px; object-fit: cover;">
+                        </div>
+                    `;
+                    galeriPreview.appendChild(col);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
 });
 </script>
 @endsection

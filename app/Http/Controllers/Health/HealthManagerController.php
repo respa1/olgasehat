@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Health;
 
 use App\Http\Controllers\Controller;
 use App\Models\Clinic;
+use App\Models\ClinicGallery;
 use App\Models\Doctor;
 use App\Models\DoctorSchedule;
 use App\Models\HealthService;
@@ -105,8 +106,9 @@ class HealthManagerController extends Controller
             'jam_tutup' => 'nullable',
             'jenis_layanan' => 'required|array|min:1',
             'jenis_layanan.*' => 'required|string|max:255',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'foto_utama' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'galeri_foto' => 'nullable|array|max:10',
+            'galeri_foto.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = $request->all();
@@ -123,23 +125,36 @@ class HealthManagerController extends Controller
         // Hapus jenis_layanan dari data karena tidak ada di database
         unset($data['jenis_layanan']);
 
-        // Handle upload logo
-        if ($request->hasFile('logo')) {
-            $image = $request->file('logo');
-            $imageName = time() . '_logo_' . $image->getClientOriginalName();
+        // Handle upload banner (simpan di field logo untuk backward compatibility)
+        if ($request->hasFile('banner')) {
+            $image = $request->file('banner');
+            $imageName = time() . '_banner_' . $image->getClientOriginalName();
             $image->move(public_path('fotoklinik'), $imageName);
-            $data['logo'] = $imageName;
+            $data['logo'] = $imageName; // Simpan banner di field logo
         }
 
-        // Handle upload foto utama
-        if ($request->hasFile('foto_utama')) {
-            $image = $request->file('foto_utama');
-            $imageName = time() . '_utama_' . $image->getClientOriginalName();
-            $image->move(public_path('fotoklinik'), $imageName);
-            $data['foto_utama'] = $imageName;
-        }
+        // Buat clinic terlebih dahulu
+        $clinic = Clinic::create($data);
 
-        Clinic::create($data);
+        // Handle upload galeri foto multiple
+        if ($request->hasFile('galeri_foto')) {
+            $files = $request->file('galeri_foto');
+            if (count($files) > 10) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Maksimal 10 gambar untuk galeri.');
+            }
+            
+            foreach ($files as $index => $file) {
+                $pathFoto = $file->store('clinic_galleries', 'public');
+                
+                ClinicGallery::create([
+                    'clinic_id' => $clinic->id,
+                    'foto' => $pathFoto,
+                    'urutan' => $index + 1,
+                ]);
+            }
+        }
 
         return redirect()->route('pengelola.clinics')
             ->with('success', 'Klinik berhasil ditambahkan dan menunggu verifikasi admin.');
@@ -176,8 +191,9 @@ class HealthManagerController extends Controller
             'jam_tutup' => 'nullable',
             'jenis_layanan' => 'required|array|min:1',
             'jenis_layanan.*' => 'required|string|max:255',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'foto_utama' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'galeri_foto' => 'nullable|array|max:10',
+            'galeri_foto.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = $request->all();
@@ -192,29 +208,42 @@ class HealthManagerController extends Controller
         // Hapus jenis_layanan dari data karena tidak ada di database
         unset($data['jenis_layanan']);
 
-        // Handle upload logo
-        if ($request->hasFile('logo')) {
+        // Handle upload banner (simpan di field logo untuk backward compatibility)
+        if ($request->hasFile('banner')) {
+            // Hapus banner lama jika ada
             if ($clinic->logo && file_exists(public_path('fotoklinik/' . $clinic->logo))) {
                 unlink(public_path('fotoklinik/' . $clinic->logo));
             }
-            $image = $request->file('logo');
-            $imageName = time() . '_logo_' . $image->getClientOriginalName();
+            
+            $image = $request->file('banner');
+            $imageName = time() . '_banner_' . $image->getClientOriginalName();
             $image->move(public_path('fotoklinik'), $imageName);
-            $data['logo'] = $imageName;
-        }
-
-        // Handle upload foto utama
-        if ($request->hasFile('foto_utama')) {
-            if ($clinic->foto_utama && file_exists(public_path('fotoklinik/' . $clinic->foto_utama))) {
-                unlink(public_path('fotoklinik/' . $clinic->foto_utama));
-            }
-            $image = $request->file('foto_utama');
-            $imageName = time() . '_utama_' . $image->getClientOriginalName();
-            $image->move(public_path('fotoklinik'), $imageName);
-            $data['foto_utama'] = $imageName;
+            $data['logo'] = $imageName; // Simpan banner di field logo
         }
 
         $clinic->update($data);
+
+        // Handle upload galeri foto multiple baru
+        if ($request->hasFile('galeri_foto')) {
+            $existingCount = $clinic->galleries()->count();
+            $files = $request->file('galeri_foto');
+            
+            if ($existingCount + count($files) > 10) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Total galeri tidak boleh lebih dari 10 gambar.');
+            }
+            
+            foreach ($files as $index => $file) {
+                $pathFoto = $file->store('clinic_galleries', 'public');
+                
+                ClinicGallery::create([
+                    'clinic_id' => $clinic->id,
+                    'foto' => $pathFoto,
+                    'urutan' => $existingCount + $index + 1,
+                ]);
+            }
+        }
 
         return redirect()->route('pengelola.clinics')
             ->with('success', 'Klinik berhasil diperbarui.');

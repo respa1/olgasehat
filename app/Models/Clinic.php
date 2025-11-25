@@ -85,5 +85,11 @@ class Clinic extends Model
     {
         return $this->hasMany(HealthBooking::class);
     }
+
+    // Relasi ke ClinicGalleries
+    public function galleries()
+    {
+        return $this->hasMany(ClinicGallery::class)->orderBy('urutan');
+    }
 }
 
