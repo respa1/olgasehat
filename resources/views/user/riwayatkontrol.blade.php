@@ -142,354 +142,322 @@
             <div class="space-y-4">
                 
                 {{-- Card 1: Medical Check-Up (Completed) --}}
-                <div class="health-record-card completed bg-white rounded-xl p-6 shadow-md border border-gray-200">
-                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                        <div class="flex-1">
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                                        <i class="fas fa-stethoscope text-green-600 text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold text-gray-900 mb-1">Medical Check-Up Lengkap</h3>
-                                        <p class="text-sm text-gray-600 flex items-center">
-                                            <i class="fas fa-hospital mr-2 text-green-600"></i>
-                                            Klinik Sehat Jaya - Denpasar
-                                        </p>
-                                    </div>
-                                </div>
-                                <span class="status-badge status-completed">
-                                    <i class="fas fa-check-circle mr-1"></i>Selesai
-                                </span>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5 relative overflow-hidden">
+                    <div class="flex items-start justify-between mb-4 pb-3 border-b border-gray-200">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center flex-shrink-0 relative">
+                                <i class="fas fa-home text-white text-sm"></i>
+                                <i class="fas fa-plus text-white text-xs absolute bottom-0 right-0 bg-green-700 rounded-full w-3 h-3 flex items-center justify-center"></i>
                             </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-user-md mr-2 text-gray-400 w-5"></i>
-                                    <span class="font-medium">Dr. Ahmad Wijaya, Sp.PD</span>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-calendar-check mr-2 text-gray-400 w-5"></i>
-                                    <span>15 Oktober 2025, 09:00 WITA</span>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-tag mr-2 text-gray-400 w-5"></i>
-                                    <span>Medical Check-Up</span>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-money-bill-wave mr-2 text-gray-400 w-5"></i>
-                                    <span class="font-semibold text-gray-900">Rp 750.000</span>
-                                </div>
-                            </div>
-
-                            {{-- Hasil Pemeriksaan --}}
-                            <div class="bg-gray-50 rounded-lg p-4 mb-4">
-                                <h4 class="font-semibold text-gray-900 mb-3 flex items-center">
-                                    <i class="fas fa-clipboard-list mr-2 text-green-600"></i>
-                                    Hasil Pemeriksaan
-                                </h4>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                    <div class="result-item rounded-lg p-3">
-                                        <div class="flex items-center justify-between mb-1">
-                                            <span class="text-xs text-gray-500">Tekanan Darah</span>
-                                            <span class="text-xs font-semibold text-green-600">Normal</span>
-                                        </div>
-                                        <p class="text-sm font-bold text-gray-900">120/80 mmHg</p>
-                                    </div>
-                                    <div class="result-item rounded-lg p-3">
-                                        <div class="flex items-center justify-between mb-1">
-                                            <span class="text-xs text-gray-500">Kolesterol Total</span>
-                                            <span class="text-xs font-semibold text-green-600">Normal</span>
-                                        </div>
-                                        <p class="text-sm font-bold text-gray-900">180 mg/dL</p>
-                                    </div>
-                                    <div class="result-item rounded-lg p-3">
-                                        <div class="flex items-center justify-between mb-1">
-                                            <span class="text-xs text-gray-500">Gula Darah Puasa</span>
-                                            <span class="text-xs font-semibold text-yellow-600">Perhatian</span>
-                                        </div>
-                                        <p class="text-sm font-bold text-gray-900">110 mg/dL</p>
-                                    </div>
-                                    <div class="result-item rounded-lg p-3">
-                                        <div class="flex items-center justify-between mb-1">
-                                            <span class="text-xs text-gray-500">BMI</span>
-                                            <span class="text-xs font-semibold text-green-600">Normal</span>
-                                        </div>
-                                        <p class="text-sm font-bold text-gray-900">22.5</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- Rekomendasi Dokter --}}
-                            <div class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4 mb-4">
-                                <h4 class="font-semibold text-blue-900 mb-2 flex items-center">
-                                    <i class="fas fa-comment-medical mr-2"></i>
-                                    Rekomendasi Dokter
-                                </h4>
-                                <p class="text-sm text-blue-800">
-                                    Gula darah puasa sedikit di atas normal. Disarankan untuk mengurangi konsumsi gula dan karbohidrat sederhana, serta melakukan kontrol ulang dalam 3 bulan.
-                                </p>
-                            </div>
-
-                            {{-- Action Buttons --}}
-                            <div class="flex flex-wrap gap-2 pt-4 border-t border-gray-200">
-                                <button class="flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition text-sm">
-                                    <i class="fas fa-file-pdf mr-2"></i>Download Hasil
-                                </button>
-                                <button class="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition text-sm">
-                                    <i class="fas fa-calendar-plus mr-2"></i>Kontrol Ulang
-                                </button>
-                                <button class="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-semibold transition text-sm">
-                                    <i class="fas fa-eye mr-2"></i>Lihat Detail
-                                </button>
-                            </div>
+                            <h3 class="text-base font-bold text-gray-900">Klinik Sehat Jaya</h3>
                         </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-3 py-1.5 text-sm border border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition-colors">
+                                Jadwalkan Ulang
+                            </button>
+                            <button class="px-3 py-1.5 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                                Booking Ulang
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2.5 mb-4">
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Waktu Pemesanan</span>
+                            <span class="text-sm text-gray-900 font-medium">Senin, 15 Oktober 2025</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Kode Booking</span>
+                            <span class="text-sm text-gray-900 font-medium">251015001</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Nama Dokter</span>
+                            <span class="text-sm text-gray-900 font-medium">Dr. Ahmad Wijaya, Sp.PD</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Pelayanan</span>
+                            <span class="text-sm text-gray-900 font-medium">Pelayanan Dokter Umum</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Jadwal Booking</span>
+                            <span class="text-sm text-gray-900 font-medium">Senin, 15 Oktober 2025 • 09:00</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Status</span>
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+                                <span class="w-1.5 h-1.5 bg-red-600 rounded-full mr-1.5"></span>
+                                Selesai
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-gray-200">
+                        <button class="text-sm text-green-600 font-medium hover:text-green-700 hover:underline flex items-center">
+                            <i class="fas fa-eye mr-2"></i>
+                            Lihat Detail Pemesanan
+                        </button>
+                    </div>
+                    
+                    <div class="absolute bottom-0 right-0 w-20 h-20 opacity-10">
+                        <div class="absolute bottom-2 right-2 w-8 h-8 bg-blue-400 rounded-full"></div>
+                        <div class="absolute bottom-4 right-6 w-6 h-6 bg-green-400 rounded-full"></div>
+                        <div class="absolute bottom-6 right-2 w-4 h-4 bg-yellow-400 rounded-full"></div>
                     </div>
                 </div>
 
                 {{-- Card 2: Fisioterapi (Completed) --}}
-                <div class="health-record-card completed bg-white rounded-xl p-6 shadow-md border border-gray-200">
-                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                        <div class="flex-1">
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                                        <i class="fas fa-hand-holding-medical text-blue-600 text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold text-gray-900 mb-1">Fisioterapi Cedera Lutut</h3>
-                                        <p class="text-sm text-gray-600 flex items-center">
-                                            <i class="fas fa-hospital mr-2 text-blue-600"></i>
-                                            PhysioCare Center - Denpasar
-                                        </p>
-                                    </div>
-                                </div>
-                                <span class="status-badge status-completed">
-                                    <i class="fas fa-check-circle mr-1"></i>Selesai
-                                </span>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5 relative overflow-hidden">
+                    <div class="flex items-start justify-between mb-4 pb-3 border-b border-gray-200">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center flex-shrink-0 relative">
+                                <i class="fas fa-home text-white text-sm"></i>
+                                <i class="fas fa-plus text-white text-xs absolute bottom-0 right-0 bg-green-700 rounded-full w-3 h-3 flex items-center justify-center"></i>
                             </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-user-md mr-2 text-gray-400 w-5"></i>
-                                    <span class="font-medium">Fisioterapis Budi Santoso, S.Ft</span>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-calendar-check mr-2 text-gray-400 w-5"></i>
-                                    <span>12 Oktober 2025, 14:00 WITA</span>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-tag mr-2 text-gray-400 w-5"></i>
-                                    <span>Fisioterapi & Cedera</span>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-money-bill-wave mr-2 text-gray-400 w-5"></i>
-                                    <span class="font-semibold text-gray-900">Rp 300.000</span>
-                                </div>
-                            </div>
-
-                            {{-- Hasil Pemeriksaan --}}
-                            <div class="bg-gray-50 rounded-lg p-4 mb-4">
-                                <h4 class="font-semibold text-gray-900 mb-3 flex items-center">
-                                    <i class="fas fa-clipboard-list mr-2 text-blue-600"></i>
-                                    Hasil Terapi
-                                </h4>
-                                <div class="space-y-2">
-                                    <div class="flex items-center justify-between text-sm">
-                                        <span class="text-gray-600">Sesi Terapi</span>
-                                        <span class="font-semibold text-gray-900">Sesi 3 dari 6</span>
-                                    </div>
-                                    <div class="flex items-center justify-between text-sm">
-                                        <span class="text-gray-600">Kemajuan</span>
-                                        <span class="font-semibold text-green-600">50% - Membaik</span>
-                                    </div>
-                                    <div class="flex items-center justify-between text-sm">
-                                        <span class="text-gray-600">Rentang Gerak</span>
-                                        <span class="font-semibold text-gray-900">Meningkat 30%</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- Rekomendasi Dokter --}}
-                            <div class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4 mb-4">
-                                <h4 class="font-semibold text-blue-900 mb-2 flex items-center">
-                                    <i class="fas fa-comment-medical mr-2"></i>
-                                    Catatan Terapis
-                                </h4>
-                                <p class="text-sm text-blue-800">
-                                    Pasien menunjukkan kemajuan yang baik. Lanjutkan latihan peregangan di rumah 2x sehari. Sesi berikutnya: 19 Oktober 2025.
-                                </p>
-                            </div>
-
-                            {{-- Action Buttons --}}
-                            <div class="flex flex-wrap gap-2 pt-4 border-t border-gray-200">
-                                <button class="flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition text-sm">
-                                    <i class="fas fa-file-pdf mr-2"></i>Download Laporan
-                                </button>
-                                <button class="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition text-sm">
-                                    <i class="fas fa-calendar-plus mr-2"></i>Booking Sesi Berikutnya
-                                </button>
-                                <button class="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-semibold transition text-sm">
-                                    <i class="fas fa-eye mr-2"></i>Lihat Detail
-                                </button>
-                            </div>
+                            <h3 class="text-base font-bold text-gray-900">PhysioCare Center</h3>
                         </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-3 py-1.5 text-sm border border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition-colors">
+                                Jadwalkan Ulang
+                            </button>
+                            <button class="px-3 py-1.5 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                                Booking Ulang
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2.5 mb-4">
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Waktu Pemesanan</span>
+                            <span class="text-sm text-gray-900 font-medium">Sabtu, 12 Oktober 2025</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Kode Booking</span>
+                            <span class="text-sm text-gray-900 font-medium">251012002</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Nama Dokter</span>
+                            <span class="text-sm text-gray-900 font-medium">Fisioterapis Budi Santoso, S.Ft</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Pelayanan</span>
+                            <span class="text-sm text-gray-900 font-medium">Fisioterapi & Cedera</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Jadwal Booking</span>
+                            <span class="text-sm text-gray-900 font-medium">Sabtu, 12 Oktober 2025 • 14:00</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Status</span>
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+                                <span class="w-1.5 h-1.5 bg-red-600 rounded-full mr-1.5"></span>
+                                Selesai
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-gray-200">
+                        <button class="text-sm text-green-600 font-medium hover:text-green-700 hover:underline flex items-center">
+                            <i class="fas fa-eye mr-2"></i>
+                            Lihat Detail Pemesanan
+                        </button>
+                    </div>
+                    
+                    <div class="absolute bottom-0 right-0 w-20 h-20 opacity-10">
+                        <div class="absolute bottom-2 right-2 w-8 h-8 bg-blue-400 rounded-full"></div>
+                        <div class="absolute bottom-4 right-6 w-6 h-6 bg-green-400 rounded-full"></div>
+                        <div class="absolute bottom-6 right-2 w-4 h-4 bg-yellow-400 rounded-full"></div>
                     </div>
                 </div>
 
                 {{-- Card 3: Konsultasi Nutrisi (Pending) --}}
-                <div class="health-record-card pending bg-white rounded-xl p-6 shadow-md border border-gray-200">
-                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                        <div class="flex-1">
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                                        <i class="fas fa-apple-alt text-orange-600 text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold text-gray-900 mb-1">Konsultasi Nutrisi & Diet</h3>
-                                        <p class="text-sm text-gray-600 flex items-center">
-                                            <i class="fas fa-hospital mr-2 text-orange-600"></i>
-                                            NutriWell Clinic - Denpasar
-                                        </p>
-                                    </div>
-                                </div>
-                                <span class="status-badge status-pending">
-                                    <i class="fas fa-clock mr-1"></i>Menunggu Hasil
-                                </span>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5 relative overflow-hidden">
+                    <div class="flex items-start justify-between mb-4 pb-3 border-b border-gray-200">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center flex-shrink-0 relative">
+                                <i class="fas fa-home text-white text-sm"></i>
+                                <i class="fas fa-plus text-white text-xs absolute bottom-0 right-0 bg-green-700 rounded-full w-3 h-3 flex items-center justify-center"></i>
                             </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-user-md mr-2 text-gray-400 w-5"></i>
-                                    <span class="font-medium">Ahli Gizi Sari Indah, S.Gz</span>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-calendar-check mr-2 text-gray-400 w-5"></i>
-                                    <span>18 Oktober 2025, 10:00 WITA</span>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-tag mr-2 text-gray-400 w-5"></i>
-                                    <span>Nutrisi & Gizi</span>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-money-bill-wave mr-2 text-gray-400 w-5"></i>
-                                    <span class="font-semibold text-gray-900">Rp 250.000</span>
-                                </div>
-                            </div>
-
-                            {{-- Info Pending --}}
-                            <div class="bg-yellow-50 border-l-4 border-yellow-500 rounded-lg p-4 mb-4">
-                                <h4 class="font-semibold text-yellow-900 mb-2 flex items-center">
-                                    <i class="fas fa-info-circle mr-2"></i>
-                                    Status Pemeriksaan
-                                </h4>
-                                <p class="text-sm text-yellow-800">
-                                    Konsultasi telah dilakukan. Hasil analisis nutrisi dan rencana diet sedang dipersiapkan oleh ahli gizi. Hasil akan tersedia dalam 2-3 hari kerja.
-                                </p>
-                            </div>
-
-                            {{-- Action Buttons --}}
-                            <div class="flex flex-wrap gap-2 pt-4 border-t border-gray-200">
-                                <button class="flex items-center px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg font-semibold transition text-sm">
-                                    <i class="fas fa-sync-alt mr-2"></i>Cek Status
-                                </button>
-                                <button class="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-semibold transition text-sm">
-                                    <i class="fas fa-eye mr-2"></i>Lihat Detail
-                                </button>
-                            </div>
+                            <h3 class="text-base font-bold text-gray-900">NutriWell Clinic</h3>
                         </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-3 py-1.5 text-sm border border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition-colors">
+                                Jadwalkan Ulang
+                            </button>
+                            <button class="px-3 py-1.5 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                                Booking Ulang
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2.5 mb-4">
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Waktu Pemesanan</span>
+                            <span class="text-sm text-gray-900 font-medium">Jumat, 18 Oktober 2025</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Kode Booking</span>
+                            <span class="text-sm text-gray-900 font-medium">251018003</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Nama Dokter</span>
+                            <span class="text-sm text-gray-900 font-medium">Ahli Gizi Sari Indah, S.Gz</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Pelayanan</span>
+                            <span class="text-sm text-gray-900 font-medium">Nutrisi & Gizi</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Jadwal Booking</span>
+                            <span class="text-sm text-gray-900 font-medium">Jumat, 18 Oktober 2025 • 10:00</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Status</span>
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
+                                <span class="w-1.5 h-1.5 bg-yellow-600 rounded-full mr-1.5"></span>
+                                Menunggu Hasil
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-gray-200">
+                        <button class="text-sm text-green-600 font-medium hover:text-green-700 hover:underline flex items-center">
+                            <i class="fas fa-eye mr-2"></i>
+                            Lihat Detail Pemesanan
+                        </button>
+                    </div>
+                    
+                    <div class="absolute bottom-0 right-0 w-20 h-20 opacity-10">
+                        <div class="absolute bottom-2 right-2 w-8 h-8 bg-blue-400 rounded-full"></div>
+                        <div class="absolute bottom-4 right-6 w-6 h-6 bg-green-400 rounded-full"></div>
+                        <div class="absolute bottom-6 right-2 w-4 h-4 bg-yellow-400 rounded-full"></div>
                     </div>
                 </div>
 
                 {{-- Card 4: Dokter Spesialis (Completed) --}}
-                <div class="health-record-card completed bg-white rounded-xl p-6 shadow-md border border-gray-200">
-                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                        <div class="flex-1">
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                                        <i class="fas fa-user-md text-purple-600 text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold text-gray-900 mb-1">Konsultasi Dokter Spesialis Jantung</h3>
-                                        <p class="text-sm text-gray-600 flex items-center">
-                                            <i class="fas fa-hospital mr-2 text-purple-600"></i>
-                                            RS. Sehat Sentosa - Denpasar
-                                        </p>
-                                    </div>
-                                </div>
-                                <span class="status-badge status-completed">
-                                    <i class="fas fa-check-circle mr-1"></i>Selesai
-                                </span>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5 relative overflow-hidden">
+                    <div class="flex items-start justify-between mb-4 pb-3 border-b border-gray-200">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center flex-shrink-0 relative">
+                                <i class="fas fa-home text-white text-sm"></i>
+                                <i class="fas fa-plus text-white text-xs absolute bottom-0 right-0 bg-green-700 rounded-full w-3 h-3 flex items-center justify-center"></i>
                             </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-user-md mr-2 text-gray-400 w-5"></i>
-                                    <span class="font-medium">Dr. Rina Kartika, Sp.JP</span>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-calendar-check mr-2 text-gray-400 w-5"></i>
-                                    <span>08 Oktober 2025, 11:00 WITA</span>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-tag mr-2 text-gray-400 w-5"></i>
-                                    <span>Dokter Spesialis</span>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-600">
-                                    <i class="fas fa-money-bill-wave mr-2 text-gray-400 w-5"></i>
-                                    <span class="font-semibold text-gray-900">Rp 500.000</span>
-                                </div>
-                            </div>
-
-                            {{-- Hasil Pemeriksaan --}}
-                            <div class="bg-gray-50 rounded-lg p-4 mb-4">
-                                <h4 class="font-semibold text-gray-900 mb-3 flex items-center">
-                                    <i class="fas fa-clipboard-list mr-2 text-purple-600"></i>
-                                    Diagnosis & Tindakan
-                                </h4>
-                                <div class="space-y-2">
-                                    <div class="result-item rounded-lg p-3">
-                                        <div class="flex items-center justify-between mb-1">
-                                            <span class="text-xs text-gray-500">Diagnosis</span>
-                                        </div>
-                                        <p class="text-sm font-semibold text-gray-900">Jantung sehat, tidak ada kelainan signifikan</p>
-                                    </div>
-                                    <div class="result-item rounded-lg p-3">
-                                        <div class="flex items-center justify-between mb-1">
-                                            <span class="text-xs text-gray-500">EKG</span>
-                                            <span class="text-xs font-semibold text-green-600">Normal</span>
-                                        </div>
-                                        <p class="text-sm font-bold text-gray-900">Sinus Rhythm, 72 bpm</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- Rekomendasi Dokter --}}
-                            <div class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4 mb-4">
-                                <h4 class="font-semibold text-blue-900 mb-2 flex items-center">
-                                    <i class="fas fa-comment-medical mr-2"></i>
-                                    Rekomendasi Dokter
-                                </h4>
-                                <p class="text-sm text-blue-800">
-                                    Kondisi jantung dalam keadaan baik. Disarankan untuk tetap menjaga pola hidup sehat, olahraga teratur, dan kontrol rutin setiap 6 bulan sekali.
-                                </p>
-                            </div>
-
-                            {{-- Action Buttons --}}
-                            <div class="flex flex-wrap gap-2 pt-4 border-t border-gray-200">
-                                <button class="flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition text-sm">
-                                    <i class="fas fa-file-pdf mr-2"></i>Download Hasil
-                                </button>
-                                <button class="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition text-sm">
-                                    <i class="fas fa-calendar-plus mr-2"></i>Kontrol Ulang
-                                </button>
-                                <button class="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-semibold transition text-sm">
-                                    <i class="fas fa-eye mr-2"></i>Lihat Detail
-                                </button>
-                            </div>
+                            <h3 class="text-base font-bold text-gray-900">RS. Sehat Sentosa</h3>
                         </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-3 py-1.5 text-sm border border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition-colors">
+                                Jadwalkan Ulang
+                            </button>
+                            <button class="px-3 py-1.5 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                                Booking Ulang
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2.5 mb-4">
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Waktu Pemesanan</span>
+                            <span class="text-sm text-gray-900 font-medium">Selasa, 08 Oktober 2025</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Kode Booking</span>
+                            <span class="text-sm text-gray-900 font-medium">251008004</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Nama Dokter</span>
+                            <span class="text-sm text-gray-900 font-medium">Dr. Rina Kartika, Sp.JP</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Pelayanan</span>
+                            <span class="text-sm text-gray-900 font-medium">Dokter Spesialis</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Jadwal Booking</span>
+                            <span class="text-sm text-gray-900 font-medium">Selasa, 08 Oktober 2025 • 11:00</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Status</span>
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+                                <span class="w-1.5 h-1.5 bg-red-600 rounded-full mr-1.5"></span>
+                                Selesai
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-gray-200">
+                        <button class="text-sm text-green-600 font-medium hover:text-green-700 hover:underline flex items-center">
+                            <i class="fas fa-eye mr-2"></i>
+                            Lihat Detail Pemesanan
+                        </button>
+                    </div>
+                    
+                    <div class="absolute bottom-0 right-0 w-20 h-20 opacity-10">
+                        <div class="absolute bottom-2 right-2 w-8 h-8 bg-blue-400 rounded-full"></div>
+                        <div class="absolute bottom-4 right-6 w-6 h-6 bg-green-400 rounded-full"></div>
+                        <div class="absolute bottom-6 right-2 w-4 h-4 bg-yellow-400 rounded-full"></div>
+                    </div>
+                </div>
+
+                {{-- Card 5: Contoh Dibatalkan --}}
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5 relative overflow-hidden">
+                    <div class="flex items-start justify-between mb-4 pb-3 border-b border-gray-200">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center flex-shrink-0 relative">
+                                <i class="fas fa-home text-white text-sm"></i>
+                                <i class="fas fa-plus text-white text-xs absolute bottom-0 right-0 bg-green-700 rounded-full w-3 h-3 flex items-center justify-center"></i>
+                            </div>
+                            <h3 class="text-base font-bold text-gray-900">Klinik Pratama Pelita Insani</h3>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-3 py-1.5 text-sm border border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition-colors">
+                                Jadwalkan Ulang
+                            </button>
+                            <button class="px-3 py-1.5 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                                Booking Ulang
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2.5 mb-4">
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Waktu Pemesanan</span>
+                            <span class="text-sm text-gray-900 font-medium">Senin, 24 November 2025</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Kode Booking</span>
+                            <span class="text-sm text-gray-900 font-medium">251124001</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Nama Dokter</span>
+                            <span class="text-sm text-gray-900 font-medium">dr. Kukuh Prasetyo</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Pelayanan</span>
+                            <span class="text-sm text-gray-900 font-medium">Pelayanan Dokter Umum</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Jadwal Booking</span>
+                            <span class="text-sm text-gray-900 font-medium">Senin, 24 November 2025 • 11:00</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-sm text-gray-500 w-36">Status</span>
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+                                <span class="w-1.5 h-1.5 bg-red-600 rounded-full mr-1.5"></span>
+                                Dibatalkan
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-gray-200">
+                        <button class="text-sm text-green-600 font-medium hover:text-green-700 hover:underline flex items-center">
+                            <i class="fas fa-eye mr-2"></i>
+                            Lihat Detail Pemesanan
+                        </button>
+                    </div>
+                    
+                    <div class="absolute bottom-0 right-0 w-20 h-20 opacity-10">
+                        <div class="absolute bottom-2 right-2 w-8 h-8 bg-blue-400 rounded-full"></div>
+                        <div class="absolute bottom-4 right-6 w-6 h-6 bg-green-400 rounded-full"></div>
+                        <div class="absolute bottom-6 right-2 w-4 h-4 bg-yellow-400 rounded-full"></div>
                     </div>
                 </div>
 
