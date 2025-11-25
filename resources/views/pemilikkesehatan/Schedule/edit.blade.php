@@ -60,18 +60,23 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Hari <span class="text-danger">*</span></label>
-                                        <select name="hari" class="form-control" required>
-                                            <option value="senin" {{ old('hari', $schedule->hari) == 'senin' ? 'selected' : '' }}>Senin</option>
-                                            <option value="selasa" {{ old('hari', $schedule->hari) == 'selasa' ? 'selected' : '' }}>Selasa</option>
-                                            <option value="rabu" {{ old('hari', $schedule->hari) == 'rabu' ? 'selected' : '' }}>Rabu</option>
-                                            <option value="kamis" {{ old('hari', $schedule->hari) == 'kamis' ? 'selected' : '' }}>Kamis</option>
-                                            <option value="jumat" {{ old('hari', $schedule->hari) == 'jumat' ? 'selected' : '' }}>Jumat</option>
-                                            <option value="sabtu" {{ old('hari', $schedule->hari) == 'sabtu' ? 'selected' : '' }}>Sabtu</option>
-                                            <option value="minggu" {{ old('hari', $schedule->hari) == 'minggu' ? 'selected' : '' }}>Minggu</option>
-                                        </select>
+                                        <label>Hari Operasional <span class="text-danger">*</span></label>
+                                        <div class="row">
+                                            @foreach(['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu'] as $hari)
+                                            <div class="col-6 col-md-3 mb-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="hari[]" value="{{ $hari }}" id="hari_{{ $hari }}" 
+                                                        {{ old('hari') ? (in_array($hari, old('hari', [])) ? 'checked' : '') : ($schedule->hari == $hari ? 'checked' : '') }}>
+                                                    <label class="form-check-label" for="hari_{{ $hari }}">{{ ucfirst($hari) }}</label>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                        @error('hari')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-4">

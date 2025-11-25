@@ -3,42 +3,34 @@
 @section('title', 'Olga Sehat - Login User')
 
 @section('content')
-<main class="mt-30 flex items-center justify-center min-h-screen p-4 md:p-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-  <div class="bg-white rounded-2xl shadow-2xl max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 overflow-hidden">
-    <!-- Left image -->
-    <div class="w-full h-64 md:h-auto relative overflow-hidden">
-      <img
-        src="{{ asset('assets/sports-tools.jpg') }}"
-        alt="Peralatan olahraga di atas rumput"
-        class="object-cover w-full h-full rounded-t-2xl md:rounded-none md:rounded-l-2xl transform hover:scale-105 transition-transform duration-500"
-        onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=Image+Unavailable';"
-      />
-      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent md:block hidden"></div>
-      <div class="absolute bottom-8 left-8 right-8 text-white md:block hidden">
-        <h2 class="text-3xl font-bold mb-2">Selamat Datang Kembali</h2>
-        <p class="text-white/90">Lanjutkan perjalanan sehatmu</p>
+<main class="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+  <div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8 bg-white rounded-lg shadow-sm">
+    <!-- Left: Illustration -->
+    <div class="hidden md:flex items-center justify-center bg-gradient-to-br from-blue-50 to-green-50 p-8 rounded-l-lg">
+      <div class="text-center">
+        <div class="mb-6">
+          <i class="fas fa-running text-6xl text-blue-600 mb-4"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">Selamat Datang Kembali</h2>
+        <p class="text-gray-600">Lanjutkan perjalanan sehatmu</p>
       </div>
     </div>
 
-    <!-- Right content -->
-    <div class="p-6 md:p-10 lg:p-12 flex flex-col justify-center">
-      <!-- Judul -->
-      <div class="mb-8">
-        <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
+    <!-- Right: Login Form -->
+    <div class="p-8 md:p-12 flex flex-col justify-center">
+      <!-- Logo/Brand -->
+      <div class="mb-8 text-center md:text-left">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">
           Time to Move!
         </h1>
-        <p class="text-gray-600 leading-relaxed">
-          Ribuan orang sudah memulai gaya hidup sehat.<br />
-          Sekarang giliranmu bersama <span class="font-bold text-blue-600">OlgaSehat</span> – olahraga jadi lebih seru!
-        </p>
+        <p class="text-gray-600 text-sm">Silakan masuk untuk mengakses fitur-fitur unggulan di Olga Sehat</p>
       </div>
 
-      <!-- Tombol Masuk dengan Google -->
+      <!-- Google Login Button -->
       <button 
-        class="w-full mb-4 bg-white hover:bg-gray-50 text-gray-700 font-semibold py-3.5 rounded-xl flex items-center justify-center space-x-3 shadow-md hover:shadow-lg border-2 border-gray-200 hover:border-gray-300 transform hover:scale-[1.02] transition-all duration-200"
-        aria-label="Masuk Dengan Google"
+        class="w-full mb-4 bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 rounded-lg flex items-center justify-center space-x-3 border border-gray-300 transition-colors"
       >
-        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M21.805 10.023h-9.784v3.954h5.611a4.786 4.786 0 01-2.068 3.141v2.594h3.34c1.953-1.8 3.077-4.442 3.077-7.69 0-.676-.065-1.324-.176-1.999z" fill="#4285F4"/>
           <path d="M12.021 21c2.646 0 4.867-.875 6.489-2.38l-3.34-2.593c-.925.62-2.11.99-3.15.99a5.202 5.202 0 01-4.898-3.6H4.527v2.264A9 9 0 0012.02 21z" fill="#34A853"/>
           <path d="M7.123 13.417a5.155 5.155 0 010-3.252V7.9H4.527a9 9 0 000 8.198l2.596-2.68z" fill="#FBBC05"/>
@@ -48,35 +40,29 @@
       </button>
 
       <!-- Divider -->
-      <div class="flex items-center my-6">
+      <div class="flex items-center my-4">
         <div class="flex-1 border-t border-gray-300"></div>
         <span class="px-4 text-sm text-gray-500">atau</span>
         <div class="flex-1 border-t border-gray-300"></div>
       </div>
 
-      <!-- Tombol Login dengan Email -->
+      <!-- Email Login Button -->
       <a 
         href="/loginemail" 
-        class="w-full mb-6 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-semibold py-3.5 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 text-center flex items-center justify-center space-x-2"
+        class="w-full mb-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg text-center transition-colors"
       >
-        <i class="fas fa-envelope"></i>
-        <span>Login Dengan Email</span>
+        Login Dengan Email
       </a>
 
-      <!-- Link Register -->
-      <p class="text-center text-gray-600 mb-8">
-        Belum punya akun? 
-        <a href="/daftaruser" class="text-blue-600 hover:text-blue-700 font-semibold hover:underline transition-colors">
-          Daftar di sini
-        </a>
-      </p>
-
-      <!-- Footer -->
-      <p class="text-xs text-gray-500 text-center leading-relaxed pt-6 border-t border-gray-200">
-        Dengan melanjutkan, berarti kamu menyetujui
-        <a href="#" class="text-indigo-600 font-semibold hover:underline">Privacy Policy</a> dan
-        <a href="#" class="text-indigo-600 font-semibold hover:underline">Community Guidelines</a> OlgaSehat.id
-      </p>
+      <!-- Register Link -->
+      <div class="border-t border-gray-200 pt-4">
+        <p class="text-center text-sm text-gray-600">
+          Belum punya akun? 
+          <a href="/daftaruser" class="text-blue-600 font-medium hover:underline">
+            Daftar Sekarang!
+          </a>
+        </p>
+      </div>
     </div>
   </div>
 </main>

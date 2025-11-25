@@ -3,59 +3,46 @@
 @section('title', 'Olga Sehat - Daftar User')
 
 @section('content')
-<main class="mt-30 flex items-center justify-center min-h-screen p-4 md:py-8 md:px-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-  <div class="flex flex-col md:flex-row rounded-2xl overflow-hidden shadow-2xl max-w-6xl w-full bg-white md:max-h-[90vh]">
-    <!-- Left image -->
-    <div class="w-full md:w-1/2 md:h-auto flex-shrink-0 relative overflow-hidden">
-      <img
-        src="{{ asset('assets/sports-tools.jpg') }}"
-        alt="Peralatan olahraga di atas rumput"
-        class="object-cover w-full h-64 md:h-full rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none transform hover:scale-105 transition-transform duration-500"
-        onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=Image+Unavailable';"
-      />
-      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent md:block hidden"></div>
-      <div class="absolute bottom-8 left-8 right-8 text-white md:block hidden">
-        <h2 class="text-3xl font-bold mb-2">Bergabung dengan Kami</h2>
-        <p class="text-white/90">Mulai perjalanan sehatmu hari ini</p>
+<main class="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+  <div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8 bg-white rounded-lg shadow-sm">
+    <!-- Left: Illustration -->
+    <div class="hidden md:flex items-center justify-center bg-gradient-to-br from-blue-50 to-green-50 p-8 rounded-l-lg">
+      <div class="text-center">
+        <div class="mb-6">
+          <i class="fas fa-dumbbell text-6xl text-green-600 mb-4"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">Daftar Sekarang</h2>
+        <p class="text-gray-600">Silakan buat akun untuk mengakses fitur-fitur unggulan di Olga Sehat</p>
       </div>
     </div>
 
-    <!-- Right content -->
-    <div class="p-6 md:p-8 lg:p-10 flex flex-col justify-center w-full md:w-1/2 bg-white overflow-y-auto">
+    <!-- Right: Register Form -->
+    <div class="p-8 md:p-12 flex flex-col justify-center">
       <!-- Logo/Brand -->
-      <div class="mb-4 md:mb-5">
-        <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
+      <div class="mb-8 text-center md:text-left">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">
           Time to Move!
         </h1>
-        <p class="text-gray-600 leading-relaxed">
-          Ribuan orang sudah memulai gaya hidup sehat.<br />
-          Sekarang giliranmu bersama <span class="font-bold text-blue-600">OlgaSehat</span> – olahraga jadi lebih seru!
-        </p>
+        <p class="text-gray-600 text-sm">Silakan buat akun untuk mengakses fitur-fitur unggulan di Olga Sehat</p>
       </div>
 
       @if ($errors->any())
-        <div class="mb-4 md:mb-5 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg shadow-sm animate-fade-in">
-          <div class="flex items-center">
-            <i class="fas fa-exclamation-circle mr-2"></i>
-            <div>
-              <p class="font-semibold mb-1">Terjadi kesalahan:</p>
-              <ul class="list-disc list-inside text-sm">
-                @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-                @endforeach
-              </ul>
-            </div>
-          </div>
+        <div class="mb-4 p-3 bg-red-50 border-l-4 border-red-500 text-red-700 rounded text-sm">
+          <ul class="list-disc list-inside">
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
         </div>
       @endif
 
       <form action="{{ route('user.register.submit') }}" method="POST" class="space-y-4">
         @csrf
         
-        <!-- Nama -->
-        <div class="space-y-2">
-          <label for="name" class="block text-sm font-semibold text-gray-700">
-            <i class="fas fa-user text-blue-600 mr-2"></i>Nama Lengkap
+        <!-- Nama Lengkap -->
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
+            Nama Lengkap <span class="text-red-500">*</span>
           </label>
           <input 
             type="text" 
@@ -63,15 +50,15 @@
             name="name" 
             value="{{ old('name') }}" 
             required 
-            class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 outline-none"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Masukkan nama lengkap"
           />
         </div>
 
         <!-- Email -->
-        <div class="space-y-2">
-          <label for="email" class="block text-sm font-semibold text-gray-700">
-            <i class="fas fa-envelope text-blue-600 mr-2"></i>Email
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+            Email <span class="text-red-500">*</span>
           </label>
           <input 
             type="email" 
@@ -79,15 +66,15 @@
             name="email" 
             value="{{ old('email') }}" 
             required 
-            class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 outline-none"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="contoh@email.com"
           />
         </div>
 
         <!-- Password -->
-        <div class="space-y-2">
-          <label for="password" class="block text-sm font-semibold text-gray-700">
-            <i class="fas fa-lock text-blue-600 mr-2"></i>Password
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+            Password <span class="text-red-500">*</span>
           </label>
           <div class="relative">
             <input 
@@ -95,7 +82,7 @@
               id="password" 
               name="password" 
               required 
-              class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 outline-none"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Minimal 8 karakter"
             />
             <button 
@@ -109,9 +96,9 @@
         </div>
 
         <!-- Confirm Password -->
-        <div class="space-y-2">
-          <label for="password_confirmation" class="block text-sm font-semibold text-gray-700">
-            <i class="fas fa-lock text-blue-600 mr-2"></i>Konfirmasi Password
+        <div>
+          <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">
+            Konfirmasi Password <span class="text-red-500">*</span>
           </label>
           <div class="relative">
             <input 
@@ -119,7 +106,7 @@
               id="password_confirmation" 
               name="password_confirmation" 
               required 
-              class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 outline-none"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Ulangi password"
             />
             <button 
@@ -135,34 +122,21 @@
         <!-- Submit Button -->
         <button 
           type="submit" 
-          class="w-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-semibold py-3.5 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center space-x-2"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition-colors mt-6"
         >
-          <i class="fas fa-user-plus"></i>
-          <span>Daftar Sekarang</span>
+          Daftar
         </button>
       </form>
 
       <!-- Divider -->
-      <div class="flex items-center my-4 md:my-5">
-        <div class="flex-1 border-t border-gray-300"></div>
-        <span class="px-4 text-sm text-gray-500">atau</span>
-        <div class="flex-1 border-t border-gray-300"></div>
+      <div class="border-t border-gray-200 pt-4 mt-6">
+        <p class="text-center text-sm text-gray-600">
+          Sudah punya akun? 
+          <a href="/loginuser" class="text-blue-600 font-medium hover:underline">
+            Masuk Sekarang!
+          </a>
+        </p>
       </div>
-
-      <!-- Link Login -->
-      <p class="text-center text-gray-600 mb-4 md:mb-5">
-        Sudah punya akun?
-        <a href="/loginuser" class="text-blue-600 hover:text-blue-700 font-semibold hover:underline transition-colors">
-          Login di sini
-        </a>
-      </p>
-
-      <!-- Footer -->
-      <p class="text-xs text-gray-500 text-center leading-relaxed mt-4 md:mt-5 pt-4 md:pt-5 border-t border-gray-200">
-        Dengan melanjutkan, berarti kamu menyetujui
-        <a href="#" class="text-indigo-600 font-semibold hover:underline">Privacy Policy</a> dan
-        <a href="#" class="text-indigo-600 font-semibold hover:underline">Community Guidelines</a> OlgaSehat.id
-      </p>
     </div>
   </div>
 </main>
@@ -183,21 +157,4 @@ function togglePassword(fieldId) {
   }
 }
 </script>
-
-<style>
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fade-in 0.3s ease-out;
-}
-</style>
 @endsection

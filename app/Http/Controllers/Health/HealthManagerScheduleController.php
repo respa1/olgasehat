@@ -53,7 +53,8 @@ class HealthManagerScheduleController extends Controller
         $request->validate([
             'doctor_id' => 'required|exists:doctors,id',
             'clinic_id' => 'required|exists:clinics,id',
-            'hari' => 'required|in:senin,selasa,rabu,kamis,jumat,sabtu,minggu',
+            'hari' => 'required|array',
+            'hari.*' => 'required|in:senin,selasa,rabu,kamis,jumat,sabtu,minggu',
             'jam_mulai' => 'required',
             'jam_selesai' => 'required|after:jam_mulai',
             'durasi_konsultasi' => 'nullable|integer|min:15|max:120',
@@ -69,23 +70,47 @@ class HealthManagerScheduleController extends Controller
             ->where('id', $request->clinic_id)
             ->firstOrFail();
 
-        // Cek duplikasi
-        $existing = DoctorSchedule::where('doctor_id', $request->doctor_id)
-            ->where('clinic_id', $request->clinic_id)
-            ->where('hari', $request->hari)
-            ->where('jam_mulai', $request->jam_mulai)
-            ->first();
+        $created = 0;
+        $errors = [];
 
-        if ($existing) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', 'Jadwal sudah ada di hari dan waktu yang sama.');
+        // Loop untuk setiap hari yang dipilih
+        foreach ($request->hari as $hari) {
+            // Cek duplikasi
+            $existing = DoctorSchedule::where('doctor_id', $request->doctor_id)
+                ->where('clinic_id', $request->clinic_id)
+                ->where('hari', $hari)
+                ->where('jam_mulai', $request->jam_mulai)
+                ->first();
+
+            if ($existing) {
+                $errors[] = "Jadwal untuk hari " . ucfirst($hari) . " sudah ada di waktu yang sama.";
+                continue;
+            }
+
+            DoctorSchedule::create([
+                'doctor_id' => $request->doctor_id,
+                'clinic_id' => $request->clinic_id,
+                'hari' => $hari,
+                'jam_mulai' => $request->jam_mulai,
+                'jam_selesai' => $request->jam_selesai,
+                'durasi_konsultasi' => $request->durasi_konsultasi ?? 30,
+                'kuota_per_hari' => $request->kuota_per_hari ?? 20,
+            ]);
+            $created++;
         }
 
-        DoctorSchedule::create($request->all());
-
-        return redirect()->route('pengelola.schedules.index')
-            ->with('success', 'Jadwal dokter berhasil ditambahkan.');
+        if ($created > 0) {
+            $message = $created . ' jadwal dokter berhasil ditambahkan.';
+            if (!empty($errors)) {
+                $message .= ' ' . implode(' ', $errors);
+            }
+            return redirect()->route('pengelola.schedules.index')
+                ->with('success', $message);
+        } else {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', implode(' ', $errors));
+        }
     }
 
     public function edit($id)
@@ -114,31 +139,90 @@ class HealthManagerScheduleController extends Controller
         $request->validate([
             'doctor_id' => 'required|exists:doctors,id',
             'clinic_id' => 'required|exists:clinics,id',
-            'hari' => 'required|in:senin,selasa,rabu,kamis,jumat,sabtu,minggu',
+            'hari' => 'required|array',
+            'hari.*' => 'required|in:senin,selasa,rabu,kamis,jumat,sabtu,minggu',
             'jam_mulai' => 'required',
             'jam_selesai' => 'required|after:jam_mulai',
             'durasi_konsultasi' => 'nullable|integer|min:15|max:120',
             'kuota_per_hari' => 'nullable|integer|min:1|max:100',
         ]);
 
-        // Cek duplikasi
-        $existing = DoctorSchedule::where('doctor_id', $request->doctor_id)
-            ->where('clinic_id', $request->clinic_id)
-            ->where('hari', $request->hari)
-            ->where('jam_mulai', $request->jam_mulai)
-            ->where('id', '!=', $id)
-            ->first();
+        // Jika hanya 1 hari dipilih, update schedule yang ada
+        if (count($request->hari) == 1) {
+            $hari = $request->hari[0];
+            
+            // Cek duplikasi
+            $existing = DoctorSchedule::where('doctor_id', $request->doctor_id)
+                ->where('clinic_id', $request->clinic_id)
+                ->where('hari', $hari)
+                ->where('jam_mulai', $request->jam_mulai)
+                ->where('id', '!=', $id)
+                ->first();
 
-        if ($existing) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', 'Jadwal sudah ada di hari dan waktu yang sama.');
+            if ($existing) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Jadwal sudah ada di hari dan waktu yang sama.');
+            }
+
+            $schedule->update([
+                'doctor_id' => $request->doctor_id,
+                'clinic_id' => $request->clinic_id,
+                'hari' => $hari,
+                'jam_mulai' => $request->jam_mulai,
+                'jam_selesai' => $request->jam_selesai,
+                'durasi_konsultasi' => $request->durasi_konsultasi ?? 30,
+                'kuota_per_hari' => $request->kuota_per_hari ?? 20,
+            ]);
+
+            return redirect()->route('pengelola.schedules.index')
+                ->with('success', 'Jadwal dokter berhasil diperbarui.');
+        } else {
+            // Jika multiple hari, hapus yang lama dan buat yang baru
+            $oldHari = $schedule->hari;
+            $schedule->delete();
+
+            $created = 0;
+            $errors = [];
+
+            foreach ($request->hari as $hari) {
+                // Cek duplikasi
+                $existing = DoctorSchedule::where('doctor_id', $request->doctor_id)
+                    ->where('clinic_id', $request->clinic_id)
+                    ->where('hari', $hari)
+                    ->where('jam_mulai', $request->jam_mulai)
+                    ->first();
+
+                if ($existing) {
+                    $errors[] = "Jadwal untuk hari " . ucfirst($hari) . " sudah ada di waktu yang sama.";
+                    continue;
+                }
+
+                DoctorSchedule::create([
+                    'doctor_id' => $request->doctor_id,
+                    'clinic_id' => $request->clinic_id,
+                    'hari' => $hari,
+                    'jam_mulai' => $request->jam_mulai,
+                    'jam_selesai' => $request->jam_selesai,
+                    'durasi_konsultasi' => $request->durasi_konsultasi ?? 30,
+                    'kuota_per_hari' => $request->kuota_per_hari ?? 20,
+                ]);
+                $created++;
+            }
+
+            if ($created > 0) {
+                $message = $created . ' jadwal dokter berhasil diperbarui.';
+                if (!empty($errors)) {
+                    $message .= ' ' . implode(' ', $errors);
+                }
+                return redirect()->route('pengelola.schedules.index')
+                    ->with('success', $message);
+            } else {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', implode(' ', $errors));
+            }
         }
-
-        $schedule->update($request->all());
-
-        return redirect()->route('pengelola.schedules.index')
-            ->with('success', 'Jadwal dokter berhasil diperbarui.');
     }
 
     public function destroy($id)
