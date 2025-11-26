@@ -34,7 +34,17 @@ Route::get('/', function() {
                                            ->orderBy('created_at', 'desc')
                                            ->limit(4)
                                            ->get();
-    return view('FRONTEND.home', compact('programs', 'homeBanners', 'lapanganBanners', 'kesehatanBanners'));
+    
+    // Jika user sudah login, tambahkan activities
+    $activities = null;
+    if (Auth::check() && Auth::user()->role === 'user') {
+        $activities = \App\Models\Activity::where('status', 'approved')
+                                          ->orderBy('created_at', 'desc')
+                                          ->limit(3)
+                                          ->get();
+    }
+    
+    return view('FRONTEND.home', compact('programs', 'homeBanners', 'lapanganBanners', 'kesehatanBanners', 'activities'));
 });
 
 Route::get('/tentang', fn() => view('FRONTEND.tentang'))->name('tentang');
@@ -92,69 +102,28 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::post('/editprofile', [LoginController::class, 'updateProfile'])->name('user.updateprofile');
 });
 
-Route::get('/riwayat komunitas', function () {return view('user.riwayatkomunitas');});
-Route::get('/riwayatclub', function () {return view('user.riwayatclub');});
-Route::get('/riwayatpayment', function () {return view('user.riwayatpayment');});
-Route::get('/riwayatkontrol', function () {return view('user.riwayatkontrol');});
-Route::get('/registeremail', function () {return view('user.registeremail');});
-Route::get('/loginemail', function () { return view('user.loginemail');});
-Route::get('/resetpassword', function () {return view('user.resetpassword'); });
-Route::get('/homeuser', function () {return view('user.homeuser'); });
-Route::get('/venueuser', [App\Http\Controllers\VenueFrontendController::class, 'index'])->name('user.venue');
-Route::get('/venueuser_detail/{id}', [App\Http\Controllers\VenueFrontendController::class, 'show'])->name('user.venue.detail');
-Route::get('/service-detail-user', fn() => view('user.service_detail_user'))->name('user.service.detail');
-Route::get('/buat-aktivitas', fn() => view('user.user_buat_aktivitas'));
-Route::post('/buat-aktivitas', [App\Http\Controllers\ActivityController::class, 'storeFromUser'])->name('activities.store.user');
-Route::get('/communityuser', [App\Http\Controllers\ActivityController::class, 'indexUser'])->name('user.community');
-Route::get('/communityuser_detail/{id}', [App\Http\Controllers\ActivityController::class, 'showUser'])->name('user.community.detail');
-Route::post('/communityuser_detail/{id}/join', [App\Http\Controllers\ActivityController::class, 'joinEvent'])->name('user.community.join');
-Route::get('/bloguser_news', [BeritaController::class, 'indexUser'])->name('user.bloguser_news');
-Route::get('/bloguser_detail/{id}', [BeritaController::class, 'showUser'])->name('user.bloguser_detail');
-Route::get('/confirmuser', function () {return view('user.confirmuser'); });
-Route::get('/paymentuser', function () {return view('user.paymentuser'); });
-Route::get('/success_user', function () {return view('user.success_user'); });
+Route::middleware('auth')->group(function () {
+    Route::get('/buat-aktivitas', fn() => view('user.user_buat_aktivitas'))->name('activities.create');
+    Route::post('/buat-aktivitas', [App\Http\Controllers\ActivityController::class, 'storeFromUser'])->name('activities.store.user');
+    Route::post('/community-detail/{id}/join', [App\Http\Controllers\ActivityController::class, 'joinEvent'])->name('user.community.join');
+});
 
+Route::view('/confirmuser', 'user.confirmuser')->name('user.confirm');
+Route::view('/paymentuser', 'user.paymentuser')->name('user.payment');
+Route::view('/success_user', 'user.success_user')->name('user.success');
+Route::view('/riwayatpayment', 'user.riwayatpayment')->name('user.riwayatpayment');
+Route::view('/riwayatkontrol', 'user.riwayatkontrol')->name('user.riwayatkontrol');
+Route::view('/riwayatmembership', 'user.riwayatmembership')->name('user.riwayatmembership');
+Route::view('/registeremail', 'user.registeremail')->name('user.registeremail');
+Route::view('/loginemail', 'user.loginemail')->name('user.loginemail');
+Route::view('/resetpassword', 'user.resetpassword')->name('user.resetpassword');
+Route::view('/edit-profile-user', 'user.editprofile_user')->name('user.profile.edit');
 
-
-Route::get('/edit-profile-user', fn() => view('user.editprofile_user'));
 Route::get('/riwayat-komunitas', [App\Http\Controllers\ActivityController::class, 'riwayatKomunitas'])->name('user.riwayat-komunitas');
 Route::get('/riwayat-komunitas/{id}/edit', [App\Http\Controllers\ActivityController::class, 'editUserActivity'])->name('user.aktivitas.edit');
 Route::put('/riwayat-komunitas/{id}', [App\Http\Controllers\ActivityController::class, 'updateUserActivity'])->name('user.aktivitas.update');
 Route::post('/riwayat-komunitas/participant/{id}/approve', [App\Http\Controllers\ActivityController::class, 'approveParticipant'])->name('user.participant.approve');
 Route::post('/riwayat-komunitas/participant/{id}/reject', [App\Http\Controllers\ActivityController::class, 'rejectParticipant'])->name('user.participant.reject');
-Route::get('/riwayatmembership', fn() => view('user.riwayatmembership'));
-Route::get('/riwayatpayment', fn() => view('user.riwayatpayment'));
-Route::get('/registeremail', fn() => view('user.registeremail'));
-Route::get('/loginemail', fn() => view('user.loginemail'));
-Route::get('/resetpassword', fn() => view('user.resetpassword'));
-Route::get('/homeuser', function() {
-    $programs = \App\Models\Program::orderBy('created_at', 'desc')->get();
-    $homeBanners = \App\Models\Galeri::where('kategori', 'home_banner')
-                                      ->orderBy('urutan', 'asc')
-                                      ->orderBy('created_at', 'desc')
-                                      ->limit(4)
-                                      ->get();
-    $lapanganBanners = \App\Models\Galeri::where('kategori', 'lapangan_banner')
-                                         ->orderBy('urutan', 'asc')
-                                         ->orderBy('created_at', 'desc')
-                                         ->limit(4)
-                                         ->get();
-    $kesehatanBanners = \App\Models\Galeri::where('kategori', 'kesehatan_banner')
-                                           ->orderBy('urutan', 'asc')
-                                           ->orderBy('created_at', 'desc')
-                                           ->limit(4)
-                                           ->get();
-    $activities = \App\Models\Activity::where('status', 'approved')
-                                      ->orderBy('created_at', 'desc')
-                                      ->limit(3)
-                                      ->get();
-    return view('user.homeuser', compact('programs', 'homeBanners', 'lapanganBanners', 'kesehatanBanners', 'activities'));
-});
-// Route venueuser sudah diupdate di atas menggunakan controller
-Route::get('/membership-user-detail', fn() => view('user.membershipuser_detail'));
-Route::get('/healthyuser', fn() => view('user.healthyuser'));
-Route::get('/venue_management_user', fn() => view('user.venue_management_user'));
-Route::get('/tentang_user', fn() => view('user.tentang_user'));
 // ======================================================
 // PEMILIK / MITRA ROUTES
 // ======================================================
@@ -204,6 +173,9 @@ Route::middleware(['auth', 'role:pemiliklapangan'])->group(function () {
         Route::get('/fasilitas', fn() => view('pemiliklapangan.Keuangan.fasilitas'))->name('keuangan.fasilitas');
         Route::get('/komunitas', fn() => view('pemiliklapangan.Keuangan.komunitas'))->name('keuangan.komunitas');
     });
+
+    Route::get('/pemiliklapangan/pengaturan', [App\Http\Controllers\MitraController::class, 'pengaturan'])->name('pemilik.pengaturan');
+    Route::post('/pemiliklapangan/pengaturan/update', [App\Http\Controllers\MitraController::class, 'updatePengaturan'])->name('pemilik.pengaturan.update');
 });
 
 // ======================================================
@@ -273,8 +245,6 @@ Route::middleware(['auth', 'role:pengelolakesehatan'])->group(function () {
         Route::get('/membership', fn() => view('pemiliklapangan.Keuangan.membership'))->name('keuangan.membership');
         Route::get('/event', fn() => view('pemiliklapangan.Keuangan.event'))->name('keuangan.event');
     });
-    Route::get('/pemiliklapangan/pengaturan', [App\Http\Controllers\MitraController::class, 'pengaturan'])->name('pemilik.pengaturan');
-    Route::post('/pemiliklapangan/pengaturan/update', [App\Http\Controllers\MitraController::class, 'updatePengaturan'])->name('pemilik.pengaturan.update');
 });
 
 // ======================================================

@@ -147,7 +147,7 @@ public function updatedata(Request $request, $id){
         return $pdf->download('Data News.pdf');
     }
 
-    // Frontend: Display list of news
+    // Frontend: Display list of news (unified for guest and user)
     public function index(Request $request) {
         $query = Berita::with('category');
 
@@ -169,10 +169,11 @@ public function updatedata(Request $request, $id){
                                 ->limit(5)
                                 ->get();
 
+        // Gunakan view yang sama untuk guest dan user
         return view('FRONTEND.blog-news', compact('beritas', 'trendingBeritas'));
     }
 
-    // Frontend: Display specific news detail
+    // Frontend: Display specific news detail (unified for guest and user)
     public function show($id) {
         $berita = Berita::with('category')->findOrFail($id);
 
@@ -183,45 +184,21 @@ public function updatedata(Request $request, $id){
                               ->limit(5)
                               ->get();
 
+        // Gunakan view yang sama untuk guest dan user
         return view('FRONTEND.blog&news_detail', compact('berita', 'latestBeritas'));
     }
 
     // User: Display list of news for logged-in users
+    // @deprecated Use index() instead - redirect to main route
     public function indexUser(Request $request) {
-        $query = Berita::with('category');
-
-        if($request->has('search')){
-            $query->where('title','LIKE','%'.$request->search.'%');
-        }
-
-        if($request->has('category') && $request->category != ''){
-            $query->whereHas('category', function($q) use ($request) {
-                $q->where('title', $request->category);
-            });
-        }
-
-        $beritas = $query->orderBy('created_at', 'desc')->paginate(6);
-
-        // Get trending posts (top 5 by hit count)
-        $trendingBeritas = Berita::with('category')
-                                ->orderBy('hit', 'desc')
-                                ->limit(5)
-                                ->get();
-
-        return view('user.bloguser_news', compact('beritas', 'trendingBeritas'));
+        // Redirect ke route utama
+        return redirect()->route('frontend.blog-news');
     }
 
     // User: Display specific news detail for logged-in users
+    // @deprecated Use show() instead - redirect to main route
     public function showUser($id) {
-        $berita = Berita::with('category')->findOrFail($id);
-
-        // Get latest articles (top 5 newest, excluding current article)
-        $latestBeritas = Berita::with('category')
-                              ->where('id', '!=', $id)
-                              ->orderBy('created_at', 'desc')
-                              ->limit(5)
-                              ->get();
-
-        return view('user.bloguser_detail', compact('berita', 'latestBeritas'));
+        // Redirect ke route utama
+        return redirect()->route('frontend.blog-news-detail', $id);
     }
 }

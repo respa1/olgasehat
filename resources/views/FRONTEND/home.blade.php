@@ -1,4 +1,4 @@
-@extends('FRONTEND.layout.frontend')
+@extends('layouts.app')
 
 @section('content')
 
@@ -288,25 +288,27 @@
     </div>
 </section>
 
+@if(Auth::check() && Auth::user()->role === 'user' && isset($activities))
 <section class="bg-gray-50 py-16 md:py-20" data-aos="fade-up">
     <div class="container mx-auto px-6 text-center max-w-6xl">
 
-        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 leading-tight" data-aos="fade-up" data-aos-delay="100" data-translate>
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 leading-tight" data-aos="fade-up" data-aos-delay="100">
             Temukan <span class="text-blue-700">Komunitas & Aktivitas</span> Favoritmu!
         </h2>
-        <p class="text-gray-600 mb-10 max-w-3xl mx-auto text-lg leading-relaxed" data-aos="fade-up" data-aos-delay="200" data-translate>
+        <p class="text-gray-600 mb-10 max-w-3xl mx-auto text-lg leading-relaxed" data-aos="fade-up" data-aos-delay="200">
             Buat kegiatan seru bersama Olga Sehat! Komunitas, Membership, atau Event Seru dari berbagai kegiatan olahraga di sekitarmu. Saatnya jalin silaturahmi dan tambah semangat di lapangan!
         </p>
 
-        <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mb-14">
-            <a href="/loginuser" class="block w-full sm:w-auto">
-            <button class="bg-blue-700 text-white text-sm font-bold rounded-full px-6 py-3 shadow-lg hover:bg-blue-800 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50" data-translate>
+        <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mb-14" data-aos="fade-up" data-aos-delay="300">
+
+            <a href="/buat-aktivitas" class="block w-full sm:w-auto">
+            <button class="bg-blue-700 text-white text-sm font-bold rounded-full px-6 py-3 shadow-lg hover:bg-blue-800 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50">
                 <i class="fas fa-plus-circle mr-2"></i> BUAT AKTIVITAS BARU
             </button>
             </a>
 
             <a href="/community" class="block w-full sm:w-auto">
-            <button class="w-full bg-white text-gray-800 text-sm font-bold rounded-full px-6 py-3 border border-gray-300 shadow-md hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-opacity-50" data-translate>
+            <button class="w-full bg-white text-gray-800 text-sm font-bold rounded-full px-6 py-3 border border-gray-300 shadow-md hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-opacity-50">
                 <i class="fas fa-users mr-2"></i> GABUNG AKTIVITAS
             </button>
             </a>
@@ -314,45 +316,57 @@
 
         <div class="flex overflow-x-auto gap-4 pb-4 max-w-5xl mx-auto lg:overflow-x-visible lg:grid lg:grid-cols-3 lg:gap-4 lg:pb-0" data-aos="fade-up" data-aos-delay="300">
 
-            <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02] flex-shrink-0 w-72 sm:w-full" data-aos="fade-up" data-aos-delay="400">
-                <img src="{{ asset('assets/komunitas.png') }}" alt="Komunitas Futsal Jakarta"
-                            class="object-cover h-56 md:h-64 w-full transition duration-500 group-hover:opacity-85" />
-                <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-start justify-end p-4">
-                <span class="inline-block bg-green-600 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2" data-translate>KOMUNITAS</span>
-                    <h3 class="text-white text-lg font-bold" data-translate>Kumpulan Pemuda Futsal</h3>
+            @if($activities->count() > 0)
+                @foreach($activities as $index => $activity)
+                    <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02] flex-shrink-0 w-72 sm:w-full" data-aos="fade-up" data-aos-delay="{{ 400 + ($index * 100) }}">
+                        @if($activity->banner)
+                            <img src="{{ asset('fotoaktivitas/'.$activity->banner) }}" alt="{{ $activity->nama }}"
+                                class="object-cover h-56 md:h-64 w-full transition duration-500 group-hover:opacity-85" />
+                        @else
+                            <img src="{{ asset('assets/komunitas.png') }}" alt="{{ $activity->nama }}"
+                                class="object-cover h-56 md:h-64 w-full transition duration-500 group-hover:opacity-85" />
+                        @endif
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-start justify-end p-4">
+                            @if($activity->jenis == 'komunitas')
+                                <span class="inline-block bg-green-600 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2">KOMUNITAS</span>
+                            @elseif($activity->jenis == 'membership')
+                                <span class="inline-block bg-yellow-600 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2">MEMBERSHIP</span>
+                            @elseif($activity->jenis == 'event')
+                                <span class="inline-block bg-blue-600 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2">EVENT OLAHRAGA</span>
+                            @endif
+                            <h3 class="text-white text-lg font-bold">{{ $activity->nama }}</h3>
+                            <a href="/community-detail/{{ $activity->id }}" class="absolute inset-0"></a>
+                        </div>
+                    </div>
+                @endforeach
+                @if($activities->count() < 3)
+                    @for($i = $activities->count(); $i < 3; $i++)
+                        <div class="relative group overflow-hidden rounded-xl shadow-xl bg-gray-200 h-56 md:h-64 w-full flex items-center justify-center flex-shrink-0 w-72 sm:w-full">
+                            <span class="text-gray-400 text-sm">Aktivitas {{ $i + 1 }}</span>
+                        </div>
+                    @endfor
+                @endif
+            @else
+                {{-- Fallback jika tidak ada data --}}
+                <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02] flex-shrink-0 w-72 sm:w-full" data-aos="fade-up" data-aos-delay="400">
+                    <img src="{{ asset('assets/komunitas.png') }}" alt="Komunitas Futsal Jakarta"
+                                class="object-cover h-56 md:h-64 w-full transition duration-500 group-hover:opacity-85" />
+                    <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-start justify-end p-4">
+                    <span class="inline-block bg-green-600 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2">KOMUNITAS</span>
+                        <h3 class="text-white text-lg font-bold">Kumpulan Pemuda Futsal</h3>
+                    </div>
                 </div>
-            </div>
-
-            <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02] flex-shrink-0 w-72 sm:w-full" data-aos="fade-up" data-aos-delay="500">
-                <img src="{{ asset('assets/komunitas1.png') }}" alt="Komunitas Basket Surabaya"
-                            class="object-cover h-56 md:h-64 w-full transition duration-500 group-hover:opacity-85" />
-                <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-start justify-end p-4">
-                <span class="inline-block bg-yellow-600 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2" data-translate>MEMBERSHIP</span>
-                    <h3 class="text-white text-lg font-bold" data-translate>The SportMan Club Denpasar</h3>
-                </div>
-            </div>
-
-            <div class="relative group overflow-hidden rounded-xl shadow-xl transform transition duration-500 hover:scale-[1.02] flex-shrink-0 w-72 sm:w-full" data-aos="fade-up" data-aos-delay="600">
-                <img src="{{ asset('assets/komunitas2.png') }}" alt="Komunitas Badminton Bandung"
-                            class="object-cover h-56 md:h-64 w-full transition duration-500 group-hover:opacity-85" />
-                <div class="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-start justify-end p-4">
-                <span class="inline-block bg-blue-600 text-white text-xs font-bold px-2 py-0.5 rounded-full mb-2" data-translate>
-                    EVENT OLAHRAGA
-                </span>
-                <h3 class="text-white text-lg font-bold leading-snug" data-translate>
-                    Badminton Warriors BDG Championship
-                </h3>
-                </div>
-            </div>
+            @endif
 
         </div>
 
-        <a href="/community" class="inline-flex items-center text-blue-700 font-bold mt-12 hover:text-blue-900 text-lg transition-colors group" data-translate>
+        <a href="/community" class="inline-flex items-center text-blue-700 font-bold mt-12 hover:text-blue-900 text-lg transition-colors group">
             Lihat Semua Aktivitas
             <i class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-1"></i>
         </a>
     </div>
 </section>
+@endif
 
 <section class="relative h-auto py-16 md:py-24 overflow-hidden"
     style="background-image: url('{{ asset('assets/banten-indonesia-august-02-2022-600nw-2455954305.webp') }}'); background-attachment: fixed; background-size: cover; background-position: center;" data-aos="fade-up">

@@ -252,7 +252,7 @@ class ActivityController extends Controller
     }
 
     /**
-     * Display approved activities for frontend community page
+     * Display approved activities for frontend community page (unified for guest and user)
      */
     public function index(Request $request)
     {
@@ -279,44 +279,24 @@ class ActivityController extends Controller
         $activities = $query->orderBy('created_at', 'desc')->paginate(12);
         $activityTypes = ActivityType::all();
 
+        // Gunakan view yang sama untuk guest dan user
         return view('FRONTEND.community', compact('activities', 'activityTypes'));
     }
 
     /**
      * Display approved activities for logged-in user community page
+     * @deprecated Use index() instead - redirect to main route
      */
     public function indexUser(Request $request)
     {
-        $query = Activity::where('status', 'approved')
-            ->with(['user', 'pemilik', 'activityType']);
-
-        // Filter by type if provided
-        if ($request->has('type') && $request->type) {
-            $query->whereHas('activityType', function($q) use ($request) {
-                $q->where('name', $request->type);
-            });
-        }
-
-        // Search by location or category
-        if ($request->has('search') && $request->search) {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('lokasi', 'LIKE', '%' . $search . '%')
-                  ->orWhere('kategori', 'LIKE', '%' . $search . '%')
-                  ->orWhere('nama', 'LIKE', '%' . $search . '%');
-            });
-        }
-
-        $activities = $query->orderBy('created_at', 'desc')->paginate(12);
-        $activityTypes = ActivityType::all();
-
-        return view('user.communityuser', compact('activities', 'activityTypes'));
+        // Redirect ke route utama
+        return redirect()->route('community');
     }
 
     /**
-     * Show activity detail for logged-in user
+     * Show activity detail (unified for guest and user)
      */
-    public function showUser($id)
+    public function showDetail($id)
     {
         $activity = Activity::where('status', 'approved')
             ->with(['user', 'pemilik', 'activityType', 'participants'])
@@ -340,7 +320,18 @@ class ActivityController extends Controller
             ->limit(4)
             ->get();
 
-        return view('user.communityuser_detail', compact('activity', 'relatedActivities', 'isJoined', 'participant'));
+        // Gunakan view yang sama untuk guest dan user
+        return view('FRONTEND.community_detail', compact('activity', 'relatedActivities', 'isJoined', 'participant'));
+    }
+
+    /**
+     * Show activity detail for logged-in user
+     * @deprecated Use showDetail() instead - redirect to main route
+     */
+    public function showUser($id)
+    {
+        // Redirect ke route utama
+        return redirect()->route('community.detail', $id);
     }
 
     /**
@@ -446,25 +437,6 @@ class ActivityController extends Controller
             ->with('success', 'Aktivitas berhasil diperbarui dan sedang menunggu verifikasi ulang admin.');
     }
 
-    /**
-     * Show activity detail for frontend (non-logged in users)
-     */
-    public function showDetail($id)
-    {
-        $activity = Activity::where('status', 'approved')
-            ->with(['user', 'pemilik', 'activityType'])
-            ->findOrFail($id);
-
-        // Get related activities (same category, excluding current)
-        $relatedActivities = Activity::where('status', 'approved')
-            ->where('id', '!=', $id)
-            ->where('kategori', $activity->kategori)
-            ->with(['user', 'pemilik', 'activityType'])
-            ->limit(4)
-            ->get();
-
-        return view('FRONTEND.community_detail', compact('activity', 'relatedActivities'));
-    }
 
     /**
      * Daftar peserta event yang perlu diverifikasi pembayarannya (untuk admin)

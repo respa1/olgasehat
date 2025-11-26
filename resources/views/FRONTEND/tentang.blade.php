@@ -1,4 +1,4 @@
-@extends('FRONTEND.layout.frontend')
+@extends('layouts.app')
 
 @section('title', 'Tentang Kami - Olga Sehat')
 
