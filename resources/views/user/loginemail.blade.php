@@ -1,9 +1,9 @@
-@extends('FRONTEND.layout.frontend')
+@extends('layouts.app')
 
 @section('title', 'Olga Sehat - Login dengan Email')
 
 @section('content')
-<main class="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+<main class="min-h-screen flex items-start justify-center bg-gray-50 px-4 pt-20 pb-12">
   <div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8 bg-white rounded-lg shadow-sm">
     <!-- Left: Illustration -->
     <div class="hidden md:flex items-center justify-center bg-gradient-to-br from-blue-50 to-green-50 p-8 rounded-l-lg">

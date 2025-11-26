@@ -471,6 +471,7 @@
 
 @endsection
 
+@push('scripts')
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
   AOS.init({
@@ -628,8 +629,20 @@
         bannerInterval = setInterval(nextBanner, 5000); // 5 detik untuk melihat animasi lebih lama
       }
 
+      bannerSlides.forEach((slide) => {
+        slide.style.cursor = 'pointer';
+        slide.addEventListener('click', (event) => {
+          if (event.target.closest('.banner-dot') || event.target.closest('#bannerPrev') || event.target.closest('#bannerNext')) {
+            return;
+          }
+          nextBanner();
+          resetBannerInterval();
+        });
+      });
+
       // Auto-slide every 5 seconds
       bannerInterval = setInterval(nextBanner, 5000);
     }
   });
 </script>
+@endpush

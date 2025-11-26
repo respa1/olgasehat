@@ -1,9 +1,9 @@
-@extends('FRONTEND.layout.frontend')
+@extends('layouts.app')
 
 @section('title', 'Olga Sehat - Daftar User')
 
 @section('content')
-<main class="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+<main class="min-h-screen flex items-start justify-center bg-gray-50 px-4 pt-20 pb-12">
   <div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8 bg-white rounded-lg shadow-sm">
     <!-- Left: Illustration -->
     <div class="hidden md:flex items-center justify-center bg-gradient-to-br from-blue-50 to-green-50 p-8 rounded-l-lg">
@@ -19,7 +19,7 @@
     <!-- Right: Register Form -->
     <div class="p-8 md:p-12 flex flex-col justify-center">
       <!-- Logo/Brand -->
-      <div class="mb-8 text-center md:text-left">
+      <div class="mb-4 text-center md:text-left">
         <h1 class="text-3xl font-bold text-gray-900 mb-2">
           Time to Move!
         </h1>
