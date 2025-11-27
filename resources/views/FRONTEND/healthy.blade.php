@@ -844,44 +844,74 @@ function resetBMI() {
                     : 'Hubungi Klinik';
             @endphp
             <div class="group">
-                <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                    <div class="relative">
-                        <img 
-                            src="{{ $clinicImage }}" 
-                            alt="{{ $clinic->nama }}"
-                            class="w-full h-48 object-cover"
-                        />
-                    </div>
-                    
-                    <div class="p-5 space-y-3">
-                        <div>
-                            <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1">{{ ucfirst($clinic->tipe) }}</p>
-                            <h3 class="font-bold text-lg text-gray-900 leading-tight line-clamp-2 min-h-[48px]">
-                                {{ $clinic->nama }}
-                            </h3>
+                @if($primaryService)
+                    <a href="{{ route('frontend.service.detail', $primaryService->id) }}" class="block">
+                        <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer">
+                            <div class="relative">
+                                <img
+                                    src="{{ $clinicImage }}"
+                                    alt="{{ $clinic->nama }}"
+                                    class="w-full h-48 object-cover"
+                                />
+                            </div>
+
+                            <div class="p-5 space-y-3">
+                                <div>
+                                    <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1">{{ ucfirst($clinic->tipe) }}</p>
+                                    <h3 class="font-bold text-lg text-gray-900 leading-tight line-clamp-2 min-h-[48px]">
+                                        {{ $clinic->nama }}
+                                    </h3>
+                                </div>
+                                <p class="text-sm text-gray-600 flex items-center">
+                                    <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-2"></i>
+                                    {{ $clinic->kota ?? 'Lokasi belum diisi' }}
+                                </p>
+                                <div class="flex items-center justify-between pt-3 border-t border-gray-100 text-xs sm:text-sm">
+                                    <span class="text-green-600 font-semibold flex items-center">
+                                        <i class="fas fa-money-bill-wave mr-2 text-xs"></i>
+                                        {{ $priceLabel }}
+                                    </span>
+                                    <span class="text-blue-600 font-semibold flex items-center whitespace-nowrap">
+                                        Lihat Detail
+                                        <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </article>
+                    </a>
+                @else
+                    <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="relative">
+                            <img
+                                src="{{ $clinicImage }}"
+                                alt="{{ $clinic->nama }}"
+                                class="w-full h-48 object-cover"
+                            />
                         </div>
-                        <p class="text-sm text-gray-600 flex items-center">
-                            <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-2"></i>
-                            {{ $clinic->kota ?? 'Lokasi belum diisi' }}
-                        </p>
-                        <div class="flex items-center justify-between pt-3 border-t border-gray-100 text-xs sm:text-sm">
-                            <span class="text-green-600 font-semibold flex items-center">
-                                <i class="fas fa-money-bill-wave mr-2 text-xs"></i>
-                                {{ $priceLabel }}
-                            </span>
-                            @if($primaryService)
-                                <a href="{{ route('frontend.service.detail', $primaryService->id) }}" class="text-blue-600 hover:text-blue-700 font-semibold flex items-center whitespace-nowrap">
-                                    Lihat Detail
-                                    <i class="fas fa-chevron-right ml-1 text-xs"></i>
-                                </a>
-                            @else
+
+                        <div class="p-5 space-y-3">
+                            <div>
+                                <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1">{{ ucfirst($clinic->tipe) }}</p>
+                                <h3 class="font-bold text-lg text-gray-900 leading-tight line-clamp-2 min-h-[48px]">
+                                    {{ $clinic->nama }}
+                                </h3>
+                            </div>
+                            <p class="text-sm text-gray-600 flex items-center">
+                                <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-2"></i>
+                                {{ $clinic->kota ?? 'Lokasi belum diisi' }}
+                            </p>
+                            <div class="flex items-center justify-between pt-3 border-t border-gray-100 text-xs sm:text-sm">
+                                <span class="text-green-600 font-semibold flex items-center">
+                                    <i class="fas fa-money-bill-wave mr-2 text-xs"></i>
+                                    {{ $priceLabel }}
+                                </span>
                                 <span class="text-gray-400 flex items-center whitespace-nowrap">
                                     Jadwal belum ada
                                 </span>
-                            @endif
+                            </div>
                         </div>
-                    </div>
-                </article>
+                    </article>
+                @endif
             </div>
         @empty
             <div class="col-span-1 sm:col-span-2 lg:col-span-4 text-center text-gray-500">
