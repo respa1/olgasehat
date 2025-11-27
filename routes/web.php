@@ -238,6 +238,11 @@ Route::middleware(['auth', 'role:pengelolakesehatan'])->group(function () {
         Route::get('/booking', [App\Http\Controllers\Health\HealthManagerBookingController::class, 'index'])->name('bookings.index');
         Route::get('/booking/{id}', [App\Http\Controllers\Health\HealthManagerBookingController::class, 'show'])->name('bookings.show');
         Route::post('/booking/{id}/update-status', [App\Http\Controllers\Health\HealthManagerBookingController::class, 'updateStatus'])->name('bookings.update-status');
+
+        // Community & Membership
+        Route::get('/pengelolakesehatan/komunitas', fn() => view('pemilikkesehatan.pemilikkesehatan_buat_komunitas'))->name('pengelola.komunitas');
+        Route::post('/pengelolakesehatan/komunitas', [App\Http\Controllers\ActivityController::class, 'storeFromPengelola'])->name('activities.store.pengelola');
+        Route::get('/pengelolakesehatan/membership', fn() => view('pemilikkesehatan.pemilikkesehatan_buat_membership'))->name('pengelola.membership');
     });
     
     Route::prefix('keuangan')->group(function () {
@@ -426,6 +431,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/about/{id}/edit', [AboutUsController::class, 'edit'])->name('about-us.edit');
         Route::put('/about/{id}', [AboutUsController::class, 'update'])->name('about-us.update');
         Route::delete('/about/{id}', [AboutUsController::class, 'destroy'])->name('about-us.destroy');
+
+        // Community & Membership
+        Route::get('/admin/komunitas', fn() => view('BACKEND.admin_buat_komunitas'))->name('admin.komunitas');
+        Route::post('/admin/komunitas', [App\Http\Controllers\ActivityController::class, 'storeFromAdmin'])->name('activities.store.admin');
+        Route::get('/admin/membership', fn() => view('BACKEND.admin_buat_membership'))->name('admin.membership');
 
         // PAPAN JADWAL
 

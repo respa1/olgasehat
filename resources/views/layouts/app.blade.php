@@ -228,6 +228,14 @@
                   <span data-translate>Kelola Fasilitas</span>
                   <i class="fas fa-home"></i>
                 </a>
+                <a href="/pemiliklapangan/komunitas" class="dropdown-item">
+                  <span data-translate>Komunitas</span>
+                  <i class="fas fa-users"></i>
+                </a>
+                <a href="/pemiliklapangan/membership" class="dropdown-item">
+                  <span data-translate>Membership</span>
+                  <i class="fas fa-crown"></i>
+                </a>
                 <a href="/pemiliklapangan/pengaturan" class="dropdown-item">
                   <span data-translate>Pengaturan Pemilik</span>
                   <i class="fas fa-cog"></i>
@@ -237,6 +245,14 @@
                   <span data-translate>Kelola Layanan</span>
                   <i class="fas fa-stethoscope"></i>
                 </a>
+                <a href="/pengelolakesehatan/komunitas" class="dropdown-item">
+                  <span data-translate>Komunitas</span>
+                  <i class="fas fa-users"></i>
+                </a>
+                <a href="/pengelolakesehatan/membership" class="dropdown-item">
+                  <span data-translate>Membership</span>
+                  <i class="fas fa-crown"></i>
+                </a>
                 <a href="/pengelolakesehatan/pengaturan" class="dropdown-item">
                   <span data-translate>Pengaturan Klinik</span>
                   <i class="fas fa-cog"></i>
@@ -245,6 +261,14 @@
                 <a href="{{ route('admin') }}" class="dropdown-item">
                   <span data-translate>Backoffice Admin</span>
                   <i class="fas fa-lock"></i>
+                </a>
+                <a href="/admin/komunitas" class="dropdown-item">
+                  <span data-translate>Kelola Komunitas</span>
+                  <i class="fas fa-users"></i>
+                </a>
+                <a href="/admin/membership" class="dropdown-item">
+                  <span data-translate>Kelola Membership</span>
+                  <i class="fas fa-crown"></i>
                 </a>
                 <a href="{{ route('admin.users.list') }}" class="dropdown-item">
                   <span data-translate>Kelola Pengguna</span>

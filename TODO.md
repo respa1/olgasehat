@@ -12,3 +12,12 @@
 - If reviews exist, generate testimonial items dynamically
 - Update counter to show current/total
 - Ensure navigation buttons cycle through reviews properly
+
+## Completed Tasks
+- [x] Create community and membership creation views for pengelolakesehatan and superadmin roles
+  - Created resources/views/pemilikkesehatan/pemilikkesehatan_buat_komunitas.blade.php
+  - Created resources/views/pemilikkesehatan/pemilikkesehatan_buat_membership.blade.php
+  - Created resources/views/backend/admin_buat_komunitas.blade.php
+  - Created resources/views/backend/admin_buat_membership.blade.php
+  - Views are similar to existing riwayat-komunitas and riwayatmembership pages but adapted for creation purposes
+  - Include forms with appropriate fields, image upload, and preview functionality
