@@ -21,8 +21,16 @@ class HealthFrontendController extends Controller
             ->take(4)
             ->get();
 
+        $serviceCategories = HealthService::where('aktif', true)
+            ->distinct()
+            ->pluck('nama')
+            ->filter()
+            ->sort()
+            ->values();
+
         return view('FRONTEND.healthy', [
             'featuredClinics' => $featuredClinics,
+            'serviceCategories' => $serviceCategories,
         ]);
     }
 
@@ -65,14 +73,14 @@ class HealthFrontendController extends Controller
             });
         });
 
-        $relatedServices = $clinic->services->where('id', '!=', $service->id)->take(3);
+        $servingDoctors = $clinic->doctors->where('aktif', true)->take(6);
 
         return view('FRONTEND.service_detail', [
             'service' => $service,
             'clinic' => $clinic,
             'schedules' => $schedules,
             'timeSlots' => $timeSlots,
-            'relatedServices' => $relatedServices,
+            'servingDoctors' => $servingDoctors,
         ]);
     }
 }

@@ -40,19 +40,18 @@
           </div>
         </div>
         
-        <!-- Category Dropdown - Kategori Layanan -->
+        <!-- Category Dropdown - Jenis Layanan -->
         <div class="relative flex-1 min-w-0">
           <div class="relative">
             <select
               id="serviceCategory"
-              name="kategori"
+              name="jenis_layanan"
               class="w-full border border-gray-300 rounded-lg px-4 pl-10 pr-10 py-3 text-gray-700 focus:outline-none focus:border-gray-400 transition-all duration-150 bg-white appearance-none cursor-pointer"
             >
-              <option value="all" selected>Kategori Layanan</option>
-              <option value="Fisioterapi & Cedera">Fisioterapi & Cedera</option>
-              <option value="Medical Check-Up">Medical Check-Up</option>
-              <option value="Dokter Spesialis">Dokter Spesialis</option>
-              <option value="Nutrisi & Gizi">Nutrisi & Gizi</option>
+              <option value="all" selected>Jenis Layanan</option>
+              @foreach($serviceCategories ?? [] as $category)
+                <option value="{{ $category }}">{{ $category }}</option>
+              @endforeach
             </select>
             <i class="fas fa-chevron-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm pointer-events-none"></i>
             <i class="fas fa-heartbeat absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>

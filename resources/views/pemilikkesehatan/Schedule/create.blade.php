@@ -37,7 +37,7 @@
                                             <option value="">Pilih Dokter</option>
                                             @foreach($doctors as $doctor)
                                                 <option value="{{ $doctor->id }}" {{ old('doctor_id') == $doctor->id ? 'selected' : '' }}>
-                                                    {{ $doctor->nama_lengkap }} - {{ $doctor->clinic->nama }}
+                                                    {{ $doctor->nama_lengkap }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -64,46 +64,57 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                <div class="p-4 rounded-2xl shadow-sm mt-2" style="background: linear-gradient(135deg, #3065ff 0%, #5de0b1 100%);">
-                                    <div class="row">
-                                        <div class="col-md-6 mb-4 mb-md-0">
-                                            <label class="text-white font-weight-bold">Pilih Tanggal Pertemuan <span class="text-danger">*</span></label>
-                                            <div class="position-relative">
-                                                <input type="date" id="tanggalPertemuan" name="tanggal_pertemuan" class="form-control" style="border-radius: 12px;"
-                                                    value="{{ old('tanggal_pertemuan') }}">
-                                                <i class="fas fa-calendar-alt position-absolute" style="right: 16px; top: 50%; transform: translateY(-50%); color: #7ea8ff;"></i>
-                                            </div>
-                                            <small class="text-white d-block mt-2">
-                                                Hari klinik akan mengikuti tanggal yang dipilih.
-                                            </small>
-                                            <div class="mt-3">
-                                                <span class="badge badge-pill px-3 py-2" id="hariLabel" style="background: rgba(255,255,255,0.2); color: #fff;">
-                                                    Belum memilih tanggal
-                                                </span>
-                                            </div>
-                                            <input type="hidden" name="hari[]" id="hariValue" value="{{ old('hari.0') }}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Hari <span class="text-danger">*</span></label>
+                                        <div class="row">
+                                            @foreach(['senin' => 'Senin', 'selasa' => 'Selasa', 'rabu' => 'Rabu', 'kamis' => 'Kamis', 'jumat' => 'Jumat', 'sabtu' => 'Sabtu', 'minggu' => 'Minggu'] as $key => $day)
+                                                <div class="col-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="hari[]" value="{{ $key }}" id="hari_{{ $key }}" {{ in_array($key, old('hari', [])) ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="hari_{{ $key }}">
+                                                            {{ $day }}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            @endforeach
                                         </div>
-                                        <div class="col-md-6">
-                                            <label class="text-white font-weight-bold">Pilih Jam Pertemuan <span class="text-danger">*</span></label>
-                                            <select id="slotSelect" class="form-control" style="border-radius: 12px;">
-                                                <option value="">Pilih slot waktu</option>
-                                                @foreach(['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'] as $slot)
-                                                    <option value="{{ $slot }}">{{ $slot }}</option>
-                                                @endforeach
-                                            </select>
-                                            <small class="text-white d-block mt-2">
-                                                Slot disiapkan dalam interval 30 menit, sama seperti kartu layanan di halaman Healthy.
-                                            </small>
-                                            <input type="hidden" name="jam_mulai" id="jamMulaiValue" value="{{ old('jam_mulai') }}">
-                                            <input type="hidden" name="jam_selesai" id="jamSelesaiValue" value="{{ old('jam_selesai') }}">
-                                        </div>
+                                        @error('hari')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Jam Mulai <span class="text-danger">*</span></label>
+                                        <input type="time" name="jam_mulai" class="form-control" value="{{ old('jam_mulai') }}" required>
+                                        @error('jam_mulai')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Jam Selesai <span class="text-danger">*</span></label>
+                                        <input type="time" name="jam_selesai" class="form-control" value="{{ old('jam_selesai') }}" required>
+                                        @error('jam_selesai')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
 
-                            <input type="hidden" name="durasi_konsultasi" value="30">
-                            <input type="hidden" name="kuota_per_hari" value="20">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Durasi Konsultasi (menit) <span class="text-danger">*</span></label>
+                                        <input type="number" name="durasi_konsultasi" class="form-control" value="{{ old('durasi_konsultasi', 30) }}" min="15" max="120" required>
+                                        <small class="text-muted">Jadwal akan dibuat otomatis berdasarkan durasi ini (misal: 09:00, 09:30, dll.)</small>
+                                        @error('durasi_konsultasi')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer" style="background: white; border-radius: 0 0 20px 20px;">
                             <div class="d-flex justify-content-end">
@@ -176,32 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
         tanggalInput.dispatchEvent(new Event('change'));
     }
 
-    // Slot waktu
-    const slotSelect = document.getElementById('slotSelect');
-    const jamMulaiInput = document.getElementById('jamMulaiValue');
-    const jamSelesaiInput = document.getElementById('jamSelesaiValue');
-
-    const addMinutesToTime = (time, minutes = 30) => {
-        const [hour, minute] = time.split(':').map(Number);
-        const date = new Date();
-        date.setHours(hour);
-        date.setMinutes(minute + minutes);
-        return date.toTimeString().slice(0, 5);
-    };
-
-    slotSelect.addEventListener('change', function () {
-        if (!this.value) {
-            jamMulaiInput.value = '';
-            jamSelesaiInput.value = '';
-            return;
-        }
-        jamMulaiInput.value = this.value;
-        jamSelesaiInput.value = addMinutesToTime(this.value, 30);
-    });
-    if (jamMulaiInput.value) {
-        slotSelect.value = jamMulaiInput.value;
-        jamSelesaiInput.value = addMinutesToTime(jamMulaiInput.value, 30);
-    }
+    // Custom time inputs - no additional logic needed
 });
 </script>
 @endsection

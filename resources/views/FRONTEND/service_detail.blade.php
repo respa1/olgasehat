@@ -131,23 +131,57 @@
                 </div>
 
                 <div class="border-t border-gray-100 pt-6">
-                    <h3 class="font-bold text-xl text-gray-900 mb-4 flex items-center">
-                        <i class="fas fa-briefcase-medical text-purple-500 mr-2"></i> Layanan Lainnya
+                    <h3 class="font-bold text-xl text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-user-md text-purple-500 mr-2"></i> Dokter yang Melayani
                     </h3>
-                    @if(($relatedServices ?? collect())->isNotEmpty())
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            @foreach($relatedServices as $otherService)
-                                <a href="{{ route('frontend.service.detail', $otherService->id) }}" class="block border border-gray-100 rounded-xl p-4 hover:border-blue-300 transition shadow-sm">
-                                    <p class="text-sm text-blue-500 font-semibold mb-1">{{ ucfirst($otherService->kategori) }}</p>
-                                    <h4 class="font-bold text-gray-900 leading-tight">{{ $otherService->nama }}</h4>
-                                    <p class="text-sm text-gray-600 mt-2">
-                                        {{ $otherService->tipe_harga === 'gratis' ? 'Gratis' : 'Mulai ' . 'Rp ' . number_format($otherService->harga ?? 0, 0, ',', '.') }}
-                                    </p>
-                                </a>
+                    @if(($servingDoctors ?? collect())->isNotEmpty())
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            @foreach($servingDoctors as $doctor)
+                                <div class="bg-gradient-to-r from-white to-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-lg hover:border-purple-300 transition-all duration-300">
+                                    <div class="flex items-start space-x-4">
+                                        @if($doctor->foto)
+                                            <img src="{{ asset('fotodokter/' . $doctor->foto) }}" alt="{{ $doctor->nama_lengkap ?? $doctor->nama }}" class="w-16 h-16 rounded-full object-cover border-2 border-purple-200">
+                                        @else
+                                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center border-2 border-purple-200">
+                                                <i class="fas fa-user-md text-purple-600 text-lg"></i>
+                                            </div>
+                                        @endif
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-center space-x-2 mb-2">
+                                                <h4 class="font-bold text-lg text-gray-900 leading-tight">{{ $doctor->nama_lengkap ?? $doctor->nama }}</h4>
+                                                @if($doctor->gelar)
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                                        {{ $doctor->gelar }}
+                                                    </span>
+                                                @endif
+                                            </div>
+                                            @if($doctor->spesialisasi)
+                                            <div class="flex items-center text-sm text-gray-600 mb-3">
+                                                <i class="fas fa-stethoscope text-blue-500 mr-2"></i>
+                                                <span class="font-medium">{{ $doctor->spesialisasi }}</span>
+                                            </div>
+                                            @endif
+                                            @if($doctor->pengalaman)
+                                            <div class="bg-white rounded-lg p-3 border border-gray-100">
+                                                <div class="flex items-start text-sm">
+                                                    <i class="fas fa-briefcase text-green-500 mr-2 mt-0.5"></i>
+                                                    <div class="text-gray-700 leading-relaxed">
+                                                        <span class="font-medium text-green-700 mb-1 block">Pengalaman:</span>
+                                                        {{ Str::limit($doctor->pengalaman, 150) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
                         </div>
                     @else
-                        <p class="text-gray-500 italic">Belum ada layanan lain yang ditawarkan.</p>
+                        <div class="text-center py-8">
+                            <i class="fas fa-user-md text-4xl text-gray-300 mb-3"></i>
+                            <p class="text-gray-500 italic">Belum ada dokter yang terdaftar di klinik ini.</p>
+                        </div>
                     @endif
                 </div>
 
