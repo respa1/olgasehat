@@ -31,6 +31,7 @@ class Clinic extends Model
         'galeri',
         'clinic_category_id',
         'layanan_tersedia',
+        'fasilitas',
         'status',
         'alasan_reject',
         'verified_at',
@@ -41,6 +42,7 @@ class Clinic extends Model
         'hari_operasional' => 'array',
         'galeri' => 'array',
         'layanan_tersedia' => 'array',
+        'fasilitas' => 'array',
         'verified_at' => 'datetime',
     ];
 

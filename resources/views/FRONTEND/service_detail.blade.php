@@ -2,6 +2,249 @@
 
 @section('content')
 
+@php
+    $clinic = $clinic ?? $service->clinic;
+    $primaryImage = $clinic->logo
+        ? asset('fotoklinik/' . $clinic->logo)
+        : asset('assets/klnk.png');
+    $galleryImages = ($clinic->galleries ?? collect())->map(function ($item) {
+        return strpos($item->foto ?? '', 'clinic_galleries') !== false
+            ? asset('storage/' . $item->foto)
+            : asset('fotoklinik/' . $item->foto);
+    });
+    $priceLabel = $service->tipe_harga === 'gratis'
+        ? 'Gratis'
+        : 'Rp ' . number_format($service->harga ?? 0, 0, ',', '.');
+    $fasilitas = collect($clinic->fasilitas ?? []);
+    $address = collect([$clinic->alamat, $clinic->kota, $clinic->provinsi, $clinic->kode_pos])
+        ->filter()
+        ->implode(', ');
+    $doctors = ($clinic->doctors ?? collect())->filter(fn ($doc) => $doc->aktif);
+    $timeSlotOptions = collect($timeSlots ?? [])->flatMap(function ($items, $day) {
+        return $items->map(function ($item) use ($day) {
+            return [
+                'label' => ucfirst($day) . ' ' . $item['label'],
+                'value' => $item['label'],
+            ];
+        });
+    });
+@endphp
+
+<section class="relative overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700">
+        <div class="container mx-auto px-6 py-16 text-white">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                    <p class="text-sm uppercase tracking-[0.4em] text-blue-200 mb-3">{{ ucfirst($service->kategori) }}</p>
+                    <h1 class="text-3xl md:text-5xl font-bold leading-tight mb-4">{{ $service->nama }}</h1>
+                    <p class="text-blue-100 flex items-center text-lg mb-3">
+                        <i class="fas fa-map-marker-alt mr-2 text-blue-200"></i>
+                        {{ $address ?: 'Alamat belum tersedia' }}
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="inline-flex items-center bg-white/10 border border-white/20 px-4 py-2 rounded-full text-sm font-semibold">
+                            <i class="fas fa-money-bill-wave mr-2"></i>{{ $priceLabel }}
+                        </span>
+                        @if($clinic->nomor_telepon)
+                        <span class="inline-flex items-center bg-white/10 border border-white/20 px-4 py-2 rounded-full text-sm font-semibold">
+                            <i class="fas fa-phone mr-2"></i>{{ $clinic->nomor_telepon }}
+                        </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="hidden lg:block relative">
+                    <img src="{{ $primaryImage }}" alt="{{ $clinic->nama }}" class="rounded-2xl shadow-2xl w-full h-72 object-cover">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<main class="container mx-auto px-4 sm:px-6 pt-12 pb-24 max-w-7xl">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <section class="lg:col-span-8 space-y-8">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-custom space-y-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-3">Tentang {{ $clinic->nama }}</h2>
+                    <p class="text-gray-700 leading-relaxed">
+                        {{ $clinic->deskripsi ?? 'Deskripsi klinik belum ditambahkan oleh pengelola.' }}
+                    </p>
+                </div>
+
+                <div class="border-t border-gray-100 pt-6">
+                    <h3 class="font-bold text-xl text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-star text-green-500 mr-2"></i> Fasilitas
+                    </h3>
+                    @if($fasilitas->isNotEmpty())
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            @foreach($fasilitas as $item)
+                                <div class="flex items-center bg-green-50 border border-green-100 rounded-lg px-4 py-3 text-gray-700 text-sm">
+                                    <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                    {{ $item }}
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="text-gray-500 italic">Pengelola belum menambahkan daftar fasilitas.</p>
+                    @endif
+                </div>
+
+                <div class="border-t border-gray-100 pt-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-bold text-xl text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-calendar-alt text-blue-500 mr-2"></i> Jadwal Operasional
+                        </h3>
+                        @if($clinic->hari_operasional)
+                            <ul class="space-y-2 text-gray-700">
+                                @foreach($clinic->hari_operasional as $day)
+                                    <li class="flex justify-between border-b border-gray-100 pb-2">
+                                        <span class="font-medium">{{ ucfirst($day) }}</span>
+                                        <span>{{ $clinic->jam_buka ? date('H:i', strtotime($clinic->jam_buka)) : '00:00' }} - {{ $clinic->jam_tutup ? date('H:i', strtotime($clinic->jam_tutup)) : '24:00' }}</span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-gray-500 italic">Jadwal operasional belum ditambahkan.</p>
+                        @endif
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-clock text-blue-500 mr-2"></i> Jadwal Pertemuan
+                        </h3>
+                        @if(($timeSlots ?? collect())->isNotEmpty())
+                            <div class="space-y-3">
+                                @foreach(($timeSlots ?? collect()) as $day => $slots)
+                                    <div>
+                                        <p class="text-sm font-semibold text-gray-600 mb-2">{{ ucfirst($day) }}</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            @foreach($slots as $slot)
+                                                <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">{{ $slot['label'] }}</span>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <p class="text-gray-500 italic">Penjadwalan dokter belum tersedia.</p>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-100 pt-6">
+                    <h3 class="font-bold text-xl text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-briefcase-medical text-purple-500 mr-2"></i> Layanan Lainnya
+                    </h3>
+                    @if(($relatedServices ?? collect())->isNotEmpty())
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            @foreach($relatedServices as $otherService)
+                                <a href="{{ route('frontend.service.detail', $otherService->id) }}" class="block border border-gray-100 rounded-xl p-4 hover:border-blue-300 transition shadow-sm">
+                                    <p class="text-sm text-blue-500 font-semibold mb-1">{{ ucfirst($otherService->kategori) }}</p>
+                                    <h4 class="font-bold text-gray-900 leading-tight">{{ $otherService->nama }}</h4>
+                                    <p class="text-sm text-gray-600 mt-2">
+                                        {{ $otherService->tipe_harga === 'gratis' ? 'Gratis' : 'Mulai ' . 'Rp ' . number_format($otherService->harga ?? 0, 0, ',', '.') }}
+                                    </p>
+                                </a>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="text-gray-500 italic">Belum ada layanan lain yang ditawarkan.</p>
+                    @endif
+                </div>
+
+                @if($galleryImages->isNotEmpty())
+                <div class="border-t border-gray-100 pt-6">
+                    <h3 class="font-bold text-xl text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-images text-pink-500 mr-2"></i> Galeri Klinik
+                    </h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        @foreach($galleryImages as $image)
+                            <img src="{{ $image }}" alt="{{ $clinic->nama }}" class="rounded-xl object-cover w-full h-36">
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+            </div>
+        </section>
+
+        <aside class="lg:col-span-4 space-y-6">
+            <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-custom sticky top-24">
+                <h3 class="text-xl font-bold mb-5">Buat Janji Konsultasi</h3>
+                <p class="text-sm text-blue-100 mb-4">Isi form di bawah, tim kami akan menghubungi melalui WhatsApp.</p>
+                <form class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Pilih Dokter</label>
+                        <select class="w-full px-4 py-2.5 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
+                            @forelse($doctors as $doctor)
+                                <option value="{{ $doctor->id }}">{{ $doctor->nama_lengkap ?? $doctor->nama }}</option>
+                            @empty
+                                <option>Tidak ada dokter aktif</option>
+                            @endforelse
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Pilih Tanggal</label>
+                        <input type="date" class="w-full px-4 py-2.5 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Jam Pertemuan</label>
+                        <select class="w-full px-4 py-2.5 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
+                            @forelse($timeSlotOptions as $option)
+                                <option value="{{ $option['value'] }}">{{ $option['label'] }}</option>
+                            @empty
+                                <option>Jadwal belum tersedia</option>
+                            @endforelse
+                        </select>
+                    </div>
+                    <button type="button" class="w-full bg-white text-blue-700 font-bold py-3 rounded-lg hover:bg-blue-50 transition">
+                        <i class="fas fa-calendar-check mr-2"></i> Ajukan Penjadwalan
+                    </button>
+                </form>
+                <p class="text-xs text-blue-100 mt-4 flex items-center">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    Admin akan menghubungi Anda untuk konfirmasi via WhatsApp.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-custom">
+                <h3 class="font-bold text-lg mb-4 text-gray-900">Kontak Darurat</h3>
+                <div class="space-y-3">
+                    @if($clinic->nomor_telepon)
+                    <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-green-600 mr-3"></i>
+                            <span class="font-semibold text-gray-800">Informasi</span>
+                        </div>
+                        <span class="text-green-600 font-bold">{{ $clinic->nomor_telepon }}</span>
+                    </div>
+                    @endif
+                    @if($clinic->email)
+                    <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-blue-600 mr-3"></i>
+                            <span class="font-semibold text-gray-800">Email</span>
+                        </div>
+                        <span class="text-blue-600 font-bold">{{ $clinic->email }}</span>
+                    </div>
+                    @endif
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-custom">
+                <h3 class="font-bold text-lg mb-4 text-gray-900">Lokasi Klinik</h3>
+                <p class="text-gray-700">{{ $address ?: 'Alamat belum tersedia' }}</p>
+                <div class="bg-gray-50 border border-gray-100 rounded-xl h-52 mt-4 flex items-center justify-center text-gray-400">
+                    <i class="fas fa-map-marked-alt text-4xl mb-2"></i>
+                </div>
+            </div>
+        </aside>
+    </div>
+</main>
+
+@endsection
+@extends('layouts.app')
+
+@section('content')
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 <main class="container mx-auto px-4 sm:px-6 pt-24 pb-32 max-w-7xl">
@@ -72,121 +315,6 @@
                 </div>
 
                 <hr class="border-gray-200" />
-
-                <!-- Layanan Unggulan -->
-                <div>
-                    <h3 class="font-bold text-xl mb-4 text-gray-800 flex items-center">
-                        <i class="fas fa-check-circle text-green-600 mr-2"></i>Layanan Unggulan
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="flex items-start space-x-3 p-4 bg-green-50 rounded-lg">
-                            <i class="fas fa-stethoscope text-green-600 mt-1"></i>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-1">Konsultasi Umum</h4>
-                                <p class="text-sm text-gray-600">Pelayanan konsultasi dokter umum untuk keluhan kesehatan</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-3 p-4 bg-blue-50 rounded-lg">
-                            <i class="fas fa-vial text-blue-600 mt-1"></i>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-1">Laboratorium</h4>
-                                <p class="text-sm text-gray-600">Pemeriksaan darah dan urine dengan hasil akurat</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-3 p-4 bg-purple-50 rounded-lg">
-                            <i class="fas fa-pills text-purple-600 mt-1"></i>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-1">Apotek</h4>
-                                <p class="text-sm text-gray-600">Ketersediaan obat lengkap dengan resep dokter</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-3 p-4 bg-pink-50 rounded-lg">
-                            <i class="fas fa-ambulance text-pink-600 mt-1"></i>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-1">IGD 24 Jam</h4>
-                                <p class="text-sm text-gray-600">Pelayanan gawat darurat selama 24 jam</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <hr class="border-gray-200" />
-
-                <!-- Informasi Dokter -->
-                <div>
-                    <h3 class="font-bold text-xl mb-4 text-gray-800 flex items-center">
-                        <i class="fas fa-user-md text-blue-600 mr-2"></i>Dokter yang Praktik
-                    </h3>
-                    <div class="space-y-4">
-                        <!-- Dokter 1 -->
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
-                            <div class="flex items-center space-x-4">
-                                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-user-md text-blue-600 text-2xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-gray-800">dr. Swisniawati Hidayat, MARS</h4>
-                                    <p class="text-sm text-gray-600">Dokter Umum</p>
-                                    <p class="text-xs text-gray-500">10 tahun pengalaman</p>
-                                </div>
-                            </div>
-                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-                                Buat Janji
-                            </button>
-                        </div>
-
-                        <!-- Dokter 2 -->
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
-                            <div class="flex items-center space-x-4">
-                                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-user-md text-green-600 text-2xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-gray-800">Kartika Elkim</h4>
-                                    <p class="text-sm text-gray-600">Dokter Umum</p>
-                                    <p class="text-xs text-gray-500">8 tahun pengalaman</p>
-                                </div>
-                            </div>
-                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-                                Buat Janji
-                            </button>
-                        </div>
-
-                        <!-- Dokter 3 -->
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
-                            <div class="flex items-center space-x-4">
-                                <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-user-md text-purple-600 text-2xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-gray-800">Teguh Kesuma Wijaya</h4>
-                                    <p class="text-sm text-gray-600">Dokter Umum</p>
-                                    <p class="text-xs text-gray-500">12 tahun pengalaman</p>
-                                </div>
-                            </div>
-                            <button class="bg-gray-400 text-white px-4 py-2 rounded-lg cursor-not-allowed">
-                                Tidak Tersedia
-                            </button>
-                        </div>
-
-                        <!-- Dokter 4 -->
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
-                            <div class="flex items-center space-x-4">
-                                <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-user-md text-pink-600 text-2xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-gray-800">Christine</h4>
-                                    <p class="text-sm text-gray-600">Dokter Umum</p>
-                                    <p class="text-xs text-gray-500">6 tahun pengalaman</p>
-                                </div>
-                            </div>
-                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-                                Buat Janji
-                            </button>
-                        </div>
-                    </div>
-                </div>
 
                 <hr class="border-gray-200" />
 
@@ -277,33 +405,6 @@
 
             </div>
 
-            <!-- FAQ Section -->
-            <div class="bg-white p-6 md:p-8 rounded-xl shadow-xl">
-                <h3 class="font-bold text-xl mb-4 text-gray-800 flex items-center">
-                    <i class="fas fa-question-circle text-purple-600 mr-2"></i>Pertanyaan yang Sering Diajukan
-                </h3>
-                <div class="space-y-4">
-                    <div class="border border-gray-200 rounded-lg p-4">
-                        <h4 class="font-semibold text-gray-800 mb-2 flex items-center">
-                            <i class="fas fa-question text-blue-600 mr-2"></i>Apakah klinik menerima BPJS?
-                        </h4>
-                        <p class="text-gray-600 text-sm">Ya, Klinik Sarana Medika Baru menerima pasien BPJS. Pastikan Anda membawa kartu BPJS yang masih aktif dan surat rujukan jika diperlukan.</p>
-                    </div>
-                    <div class="border border-gray-200 rounded-lg p-4">
-                        <h4 class="font-semibold text-gray-800 mb-2 flex items-center">
-                            <i class="fas fa-question text-blue-600 mr-2"></i>Berapa biaya konsultasi umum?
-                        </h4>
-                        <p class="text-gray-600 text-sm">Biaya konsultasi umum mulai dari Rp 50.000. Biaya dapat bervariasi tergantung kompleksitas pemeriksaan dan waktu kunjungan.</p>
-                    </div>
-                    <div class="border border-gray-200 rounded-lg p-4">
-                        <h4 class="font-semibold text-gray-800 mb-2 flex items-center">
-                            <i class="fas fa-question text-blue-600 mr-2"></i>Apakah perlu membuat janji terlebih dahulu?
-                        </h4>
-                        <p class="text-gray-600 text-sm">Tidak wajib, namun disarankan untuk membuat janji terlebih dahulu untuk menghindari antrian panjang, terutama pada jam sibuk.</p>
-                    </div>
-                </div>
-            </div>
-
         </section>
 
         <!-- Sidebar -->
@@ -317,10 +418,9 @@
                         <span class="text-blue-100 text-sm">Biaya Konsultasi Umum</span>
                         <span class="text-2xl font-bold">Rp 50.000</span>
                     </div>
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-blue-100">Durasi Rata-rata</span>
-                        <span class="font-semibold">15-30 Menit</span>
-                    </div>
+                    <p class="text-sm text-blue-100 leading-relaxed">
+                        Pilih jadwal pertemuan dokter yang sesuai, kemudian konfirmasi melalui WhatsApp.
+                    </p>
                 </div>
 
                 <div class="space-y-4 pt-2">
@@ -335,18 +435,23 @@
 
                     <div>
                         <label class="block text-sm font-semibold mb-2">Pilih Tanggal</label>
-                        <input type="date" class="w-full px-4 py-2.5 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white" />
+                        <div class="relative">
+                            <input type="date" class="w-full px-4 py-2.5 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white appearance-none" />
+                            <i class="fas fa-calendar-alt absolute right-4 top-1/2 -translate-y-1/2 text-blue-200 pointer-events-none"></i>
+                        </div>
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-semibold mb-2">Pilih Waktu</label>
-                        <select class="w-full px-4 py-2.5 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
-                            <option>08:00 - 08:30</option>
-                            <option>09:00 - 09:30</option>
-                            <option>10:00 - 10:30</option>
-                            <option>14:00 - 14:30</option>
-                            <option>15:00 - 15:30</option>
-                            <option>16:00 - 16:30</option>
+                        <label class="block text-sm font-semibold mb-2">Pilih Jam Pertemuan</label>
+                        <select class="w-full px-4 py-2.5 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white bg-white">
+                            <option selected disabled>Pilih slot</option>
+                            <option>08:00</option>
+                            <option>09:00</option>
+                            <option>10:00</option>
+                            <option>11:00</option>
+                            <option>14:00</option>
+                            <option>15:00</option>
+                            <option>16:00</option>
                         </select>
                     </div>
 
@@ -367,13 +472,6 @@
             <div class="bg-white p-6 rounded-xl shadow-lg">
                 <h3 class="font-bold text-lg mb-4 text-gray-800">Kontak Darurat</h3>
                 <div class="space-y-3">
-                    <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
-                        <div class="flex items-center">
-                            <i class="fas fa-ambulance text-red-600 mr-3"></i>
-                            <span class="font-semibold text-gray-800">IGD 24 Jam</span>
-                        </div>
-                        <span class="text-red-600 font-bold">08129941262</span>
-                    </div>
                     <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
                         <div class="flex items-center">
                             <i class="fas fa-phone text-green-600 mr-3"></i>

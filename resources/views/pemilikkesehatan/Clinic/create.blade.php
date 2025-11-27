@@ -76,6 +76,45 @@
                                 @enderror
                             </div>
 
+                        <div class="form-group">
+                            <label>Fasilitas (Opsional)</label>
+                            <div id="fasilitasContainer">
+                                @if(old('fasilitas'))
+                                    @foreach(old('fasilitas') as $fasilitas)
+                                        <div class="input-group mb-2 fasilitas-item">
+                                            <input type="text" name="fasilitas[]" class="form-control" value="{{ $fasilitas }}" placeholder="Contoh: Ruang Tunggu Nyaman">
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-danger btn-remove-fasilitas" style="display: {{ $loop->first && count(old('fasilitas')) == 1 ? 'none' : 'block' }};">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="input-group mb-2 fasilitas-item">
+                                        <input type="text" name="fasilitas[]" class="form-control" placeholder="Contoh: Ruang Tunggu Nyaman">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-danger btn-remove-fasilitas" style="display: none;">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-success mt-2" id="btnTambahFasilitas">
+                                <i class="fas fa-plus"></i> Tambah Fasilitas
+                            </button>
+                            <small class="form-text text-muted d-block mt-2">
+                                Gunakan fasilitas untuk menonjolkan keunggulan klinik (contoh: Parkir luas, Ruang laktasi, Laboratorium internal).
+                            </small>
+                            @error('fasilitas')
+                                <small class="text-danger d-block">{{ $message }}</small>
+                            @enderror
+                            @error('fasilitas.*')
+                                <small class="text-danger d-block">{{ $message }}</small>
+                            @enderror
+                        </div>
+
                             <div class="form-group">
                                 <label>Motto</label>
                                 <input type="text" name="motto" class="form-control" value="{{ old('motto') }}" placeholder="Contoh: MELAYANI DENGAN SENANG HATI">
@@ -272,6 +311,45 @@ document.addEventListener('DOMContentLoaded', function() {
             reader.readAsDataURL(file);
         }
     });
+    
+    // Fasilitas dynamic inputs
+    const fasilitasContainer = document.getElementById('fasilitasContainer');
+    const btnTambahFasilitas = document.getElementById('btnTambahFasilitas');
+
+    function updateRemoveFasilitasButtons() {
+        const items = fasilitasContainer.querySelectorAll('.fasilitas-item');
+        items.forEach((item, index) => {
+            const btnRemove = item.querySelector('.btn-remove-fasilitas');
+            btnRemove.style.display = items.length > 1 ? 'block' : 'none';
+        });
+    }
+
+    btnTambahFasilitas.addEventListener('click', function() {
+        const newItem = document.createElement('div');
+        newItem.className = 'input-group mb-2 fasilitas-item';
+        newItem.innerHTML = `
+            <input type="text" name="fasilitas[]" class="form-control" placeholder="Contoh: Parkir Luas">
+            <div class="input-group-append">
+                <button type="button" class="btn btn-danger btn-remove-fasilitas">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+        fasilitasContainer.appendChild(newItem);
+        updateRemoveFasilitasButtons();
+    });
+
+    fasilitasContainer.addEventListener('click', function(e) {
+        if (e.target.closest('.btn-remove-fasilitas')) {
+            const item = e.target.closest('.fasilitas-item');
+            if (fasilitasContainer.children.length > 1) {
+                item.remove();
+                updateRemoveFasilitasButtons();
+            }
+        }
+    });
+
+    updateRemoveFasilitasButtons();
 });
 </script>
 @endsection

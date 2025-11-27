@@ -64,62 +64,46 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Hari Operasional <span class="text-danger">*</span></label>
-                                        <div class="row">
-                                            @foreach(['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu'] as $hari)
-                                            <div class="col-6 col-md-3 mb-2">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="hari[]" value="{{ $hari }}" id="hari_{{ $hari }}" 
-                                                        {{ in_array($hari, old('hari', [])) ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="hari_{{ $hari }}">{{ ucfirst($hari) }}</label>
-                                                </div>
+                            <div class="col-12">
+                                <div class="p-4 rounded-2xl shadow-sm mt-2" style="background: linear-gradient(135deg, #3065ff 0%, #5de0b1 100%);">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4 mb-md-0">
+                                            <label class="text-white font-weight-bold">Pilih Tanggal Pertemuan <span class="text-danger">*</span></label>
+                                            <div class="position-relative">
+                                                <input type="date" id="tanggalPertemuan" name="tanggal_pertemuan" class="form-control" style="border-radius: 12px;"
+                                                    value="{{ old('tanggal_pertemuan') }}">
+                                                <i class="fas fa-calendar-alt position-absolute" style="right: 16px; top: 50%; transform: translateY(-50%); color: #7ea8ff;"></i>
                                             </div>
-                                            @endforeach
+                                            <small class="text-white d-block mt-2">
+                                                Hari klinik akan mengikuti tanggal yang dipilih.
+                                            </small>
+                                            <div class="mt-3">
+                                                <span class="badge badge-pill px-3 py-2" id="hariLabel" style="background: rgba(255,255,255,0.2); color: #fff;">
+                                                    Belum memilih tanggal
+                                                </span>
+                                            </div>
+                                            <input type="hidden" name="hari[]" id="hariValue" value="{{ old('hari.0') }}">
                                         </div>
-                                        @error('hari')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Jam Mulai <span class="text-danger">*</span></label>
-                                        <input type="time" name="jam_mulai" class="form-control" value="{{ old('jam_mulai') }}" required>
-                                        @error('jam_mulai')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Jam Selesai <span class="text-danger">*</span></label>
-                                        <input type="time" name="jam_selesai" class="form-control" value="{{ old('jam_selesai') }}" required>
-                                        @error('jam_selesai')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
+                                        <div class="col-md-6">
+                                            <label class="text-white font-weight-bold">Pilih Jam Pertemuan <span class="text-danger">*</span></label>
+                                            <select id="slotSelect" class="form-control" style="border-radius: 12px;">
+                                                <option value="">Pilih slot waktu</option>
+                                                @foreach(['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'] as $slot)
+                                                    <option value="{{ $slot }}">{{ $slot }}</option>
+                                                @endforeach
+                                            </select>
+                                            <small class="text-white d-block mt-2">
+                                                Slot disiapkan dalam interval 30 menit, sama seperti kartu layanan di halaman Healthy.
+                                            </small>
+                                            <input type="hidden" name="jam_mulai" id="jamMulaiValue" value="{{ old('jam_mulai') }}">
+                                            <input type="hidden" name="jam_selesai" id="jamSelesaiValue" value="{{ old('jam_selesai') }}">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Durasi Konsultasi (menit)</label>
-                                        <input type="number" name="durasi_konsultasi" class="form-control" value="{{ old('durasi_konsultasi', 30) }}" min="15" max="120">
-                                        <small class="text-muted">Default: 30 menit</small>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Kuota per Hari</label>
-                                        <input type="number" name="kuota_per_hari" class="form-control" value="{{ old('kuota_per_hari', 20) }}" min="1" max="100">
-                                        <small class="text-muted">Default: 20 pasien</small>
-                                    </div>
-                                </div>
-                            </div>
+                            <input type="hidden" name="durasi_konsultasi" value="30">
+                            <input type="hidden" name="kuota_per_hari" value="20">
                         </div>
                         <div class="card-footer" style="background: white; border-radius: 0 0 20px 20px;">
                             <div class="d-flex justify-content-end">
@@ -139,20 +123,84 @@
 </div>
 
 <script>
-// Auto select clinic when doctor is selected
-document.getElementById('doctor_id').addEventListener('change', function() {
-    const doctorId = this.value;
-    if (doctorId) {
-        // Get doctor's clinic from option text or make AJAX call
-        const option = this.options[this.selectedIndex];
-        const clinicName = option.text.split(' - ')[1];
-        const clinicSelect = document.getElementById('clinic_id');
-        for (let i = 0; i < clinicSelect.options.length; i++) {
-            if (clinicSelect.options[i].text === clinicName) {
-                clinicSelect.value = clinicSelect.options[i].value;
-                break;
+document.addEventListener('DOMContentLoaded', function () {
+    // Auto select clinic based on doctor
+    const doctorSelect = document.getElementById('doctor_id');
+    const clinicSelect = document.getElementById('clinic_id');
+
+    doctorSelect.addEventListener('change', function() {
+        const doctorId = this.value;
+        if (doctorId) {
+            const option = this.options[this.selectedIndex];
+            const clinicName = option.text.split(' - ')[1];
+            for (let i = 0; i < clinicSelect.options.length; i++) {
+                if (clinicSelect.options[i].text === clinicName) {
+                    clinicSelect.value = clinicSelect.options[i].value;
+                    break;
+                }
             }
         }
+    });
+
+    // Mapping hari
+    const dayMap = ['minggu','senin','selasa','rabu','kamis','jumat','sabtu'];
+    const dayLabelMap = {
+        minggu: 'Minggu',
+        senin: 'Senin',
+        selasa: 'Selasa',
+        rabu: 'Rabu',
+        kamis: 'Kamis',
+        jumat: 'Jumat',
+        sabtu: 'Sabtu'
+    };
+
+    const tanggalInput = document.getElementById('tanggalPertemuan');
+    const hariValueInput = document.getElementById('hariValue');
+    const hariLabel = document.getElementById('hariLabel');
+
+    tanggalInput.addEventListener('change', function () {
+        if (!this.value) {
+            hariValueInput.value = '';
+            hariLabel.textContent = 'Belum memilih tanggal';
+            return;
+        }
+        const date = new Date(this.value + 'T00:00:00');
+        const daySlug = dayMap[date.getDay()];
+        hariValueInput.value = daySlug;
+        hariLabel.textContent = dayLabelMap[daySlug] || daySlug;
+    });
+    if (hariValueInput.value) {
+        const display = dayLabelMap[hariValueInput.value] || hariValueInput.value;
+        hariLabel.textContent = display;
+    } else if (tanggalInput.value) {
+        tanggalInput.dispatchEvent(new Event('change'));
+    }
+
+    // Slot waktu
+    const slotSelect = document.getElementById('slotSelect');
+    const jamMulaiInput = document.getElementById('jamMulaiValue');
+    const jamSelesaiInput = document.getElementById('jamSelesaiValue');
+
+    const addMinutesToTime = (time, minutes = 30) => {
+        const [hour, minute] = time.split(':').map(Number);
+        const date = new Date();
+        date.setHours(hour);
+        date.setMinutes(minute + minutes);
+        return date.toTimeString().slice(0, 5);
+    };
+
+    slotSelect.addEventListener('change', function () {
+        if (!this.value) {
+            jamMulaiInput.value = '';
+            jamSelesaiInput.value = '';
+            return;
+        }
+        jamMulaiInput.value = this.value;
+        jamSelesaiInput.value = addMinutesToTime(this.value, 30);
+    });
+    if (jamMulaiInput.value) {
+        slotSelect.value = jamMulaiInput.value;
+        jamSelesaiInput.value = addMinutesToTime(jamMulaiInput.value, 30);
     }
 });
 </script>
