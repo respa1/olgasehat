@@ -134,10 +134,23 @@
 
                     <div class="md:col-span-2">
                         <label class="block text-sm font-semibold text-slate-700 mb-1">Link Grup / Kontak (WhatsApp / IG)</label>
-                        <input name="link" 
-                               class="w-full rounded-lg border border-slate-300 p-3 focus:border-sky-500 focus:ring-sky-500" 
-                               placeholder="https://wa.me/.. atau @akuninstagram" 
+                        <input name="link"
+                               class="w-full rounded-lg border border-slate-300 p-3 focus:border-sky-500 focus:ring-sky-500"
+                               placeholder="https://wa.me/.. atau @akuninstagram"
                                value="{{ old('link', $activity->link_kontak) }}">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold text-slate-700 mb-1">
+                            <i class="fas fa-phone-alt mr-2 text-sky-600"></i>Kontak & Informasi Lainnya (Opsional)
+                        </label>
+                        <input name="link_kontak_2"
+                               class="w-full rounded-lg border border-slate-300 p-3 focus:border-sky-500 focus:ring-sky-500"
+                               placeholder="https://wa.me/.. atau @akuninstagram atau link lainnya"
+                               value="{{ old('link_kontak_2', $activity->link_kontak_2) }}">
+                        <p class="text-xs text-gray-500 mt-1">
+                            <i class="fas fa-info-circle mr-1"></i>Link kontak tambahan (Instagram, WhatsApp personal, dll.)
+                        </p>
                     </div>
 
                     <div class="md:col-span-2">

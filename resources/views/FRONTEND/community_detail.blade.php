@@ -158,7 +158,7 @@
             </div>
 
             <!-- Contact Section -->
-            @if($activity->link_kontak || ($activity->link_kontak_2 ?? null))
+            @if($activity->link_kontak_2 ?? null)
             <div class="contact-box rounded-2xl shadow-xl p-6 md:p-8 mb-6">
                 <div class="flex items-center space-x-3 mb-4">
                     <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
@@ -167,24 +167,13 @@
                     <h3 class="text-xl font-bold text-white">Kontak & Informasi</h3>
                 </div>
                 <div class="space-y-3">
-                    @if($activity->link_kontak)
                     <div>
-                        <p class="text-sm text-white/80 mb-1">Link Grup WhatsApp:</p>
-                        <a href="{{ $activity->link_kontak }}" target="_blank" class="inline-flex items-center space-x-2 text-white hover:text-blue-100 transition font-medium text-lg break-all max-w-full">
-                            <i class="fab fa-whatsapp flex-shrink-0"></i>
-                            <span class="break-all">{{ $activity->link_kontak }}</span>
-                        </a>
-                    </div>
-                    @endif
-                    @if($activity->link_kontak_2 ?? null)
-                    <div class="pt-3 border-t border-white/20">
-                        <p class="text-sm text-white/80 mb-1">Kontak Lainnya:</p>
+                        <p class="text-sm text-white/80 mb-1">Kontak & Informasi Lainnya:</p>
                         <a href="{{ $activity->link_kontak_2 }}" target="_blank" class="inline-flex items-center space-x-2 text-white hover:text-blue-100 transition font-medium text-lg break-all max-w-full">
                             <i class="fas fa-external-link-alt flex-shrink-0"></i>
                             <span class="break-all">{{ $activity->link_kontak_2 }}</span>
                         </a>
                     </div>
-                    @endif
                 </div>
             </div>
             @endif
