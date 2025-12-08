@@ -18,6 +18,14 @@ class AboutUsController extends Controller
         return view('BACKEND.Extra.AboutUs.create');
     }
 
+    public function showPublic()
+    {
+        $about = AboutUs::latest()->first();
+        $videoEmbedUrl = $this->getYoutubeEmbedUrl($about?->link_youtube);
+
+        return view('FRONTEND.tentang', compact('about', 'videoEmbedUrl'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -65,6 +73,27 @@ class AboutUsController extends Controller
         $aboutUs->delete();
 
         return redirect()->route('about-us.index')->with('success', 'About Us berhasil dihapus.');
+    }
+
+    protected function getYoutubeEmbedUrl(?string $url): ?string
+    {
+        if (!$url) {
+            return null;
+        }
+
+        if (str_contains($url, 'embed')) {
+            return $url;
+        }
+
+        if (preg_match('/youtu\.be\/([^\?\&]+)/', $url, $matches)) {
+            return 'https://www.youtube.com/embed/' . $matches[1];
+        }
+
+        if (preg_match('/v=([^\&]+)/', $url, $matches)) {
+            return 'https://www.youtube.com/embed/' . $matches[1];
+        }
+
+        return $url;
     }
 }
 
