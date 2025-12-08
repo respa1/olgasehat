@@ -106,6 +106,8 @@ class HealthManagerController extends Controller
             'jam_tutup' => 'nullable',
             'jenis_layanan' => 'required|array|min:1',
             'jenis_layanan.*' => 'required|string|max:255',
+            'fasilitas' => 'nullable|array',
+            'fasilitas.*' => 'nullable|string|max:255',
             'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'galeri_foto' => 'nullable|array|max:10',
             'galeri_foto.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -122,6 +124,11 @@ class HealthManagerController extends Controller
             $data['layanan_tersedia'] = array_values($jenisLayanan); // Re-index array
         }
         
+        if ($request->has('fasilitas')) {
+            $fasilitas = array_filter(array_map('trim', $request->fasilitas));
+            $data['fasilitas'] = array_values($fasilitas);
+        }
+
         // Hapus jenis_layanan dari data karena tidak ada di database
         unset($data['jenis_layanan']);
 
@@ -191,6 +198,8 @@ class HealthManagerController extends Controller
             'jam_tutup' => 'nullable',
             'jenis_layanan' => 'required|array|min:1',
             'jenis_layanan.*' => 'required|string|max:255',
+            'fasilitas' => 'nullable|array',
+            'fasilitas.*' => 'nullable|string|max:255',
             'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'galeri_foto' => 'nullable|array|max:10',
             'galeri_foto.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -205,6 +214,11 @@ class HealthManagerController extends Controller
             $data['layanan_tersedia'] = array_values($jenisLayanan); // Re-index array
         }
         
+        if ($request->has('fasilitas')) {
+            $fasilitas = array_filter(array_map('trim', $request->fasilitas));
+            $data['fasilitas'] = array_values($fasilitas);
+        }
+
         // Hapus jenis_layanan dari data karena tidak ada di database
         unset($data['jenis_layanan']);
 

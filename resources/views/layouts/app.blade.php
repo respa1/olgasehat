@@ -228,6 +228,14 @@
                   <span data-translate>Kelola Fasilitas</span>
                   <i class="fas fa-home"></i>
                 </a>
+                <a href="/pemiliklapangan/komunitas" class="dropdown-item">
+                  <span data-translate>Komunitas</span>
+                  <i class="fas fa-users"></i>
+                </a>
+                <a href="/pemiliklapangan/membership" class="dropdown-item">
+                  <span data-translate>Membership</span>
+                  <i class="fas fa-crown"></i>
+                </a>
                 <a href="/pemiliklapangan/pengaturan" class="dropdown-item">
                   <span data-translate>Pengaturan Pemilik</span>
                   <i class="fas fa-cog"></i>
@@ -237,6 +245,14 @@
                   <span data-translate>Kelola Layanan</span>
                   <i class="fas fa-stethoscope"></i>
                 </a>
+                <a href="/pengelolakesehatan/komunitas" class="dropdown-item">
+                  <span data-translate>Komunitas</span>
+                  <i class="fas fa-users"></i>
+                </a>
+                <a href="/pengelolakesehatan/membership" class="dropdown-item">
+                  <span data-translate>Membership</span>
+                  <i class="fas fa-crown"></i>
+                </a>
                 <a href="/pengelolakesehatan/pengaturan" class="dropdown-item">
                   <span data-translate>Pengaturan Klinik</span>
                   <i class="fas fa-cog"></i>
@@ -245,6 +261,14 @@
                 <a href="{{ route('admin') }}" class="dropdown-item">
                   <span data-translate>Backoffice Admin</span>
                   <i class="fas fa-lock"></i>
+                </a>
+                <a href="/admin/komunitas" class="dropdown-item">
+                  <span data-translate>Kelola Komunitas</span>
+                  <i class="fas fa-users"></i>
+                </a>
+                <a href="/admin/membership" class="dropdown-item">
+                  <span data-translate>Kelola Membership</span>
+                  <i class="fas fa-crown"></i>
                 </a>
                 <a href="{{ route('admin.users.list') }}" class="dropdown-item">
                   <span data-translate>Kelola Pengguna</span>
@@ -692,7 +716,7 @@
       const languages = [
         {code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩'},
         {code: 'ban', name: 'Basa Bali', flag: '🏝️'},
-        {code: 'jw', name: 'Basa Jawa', flag: '☕'},
+        {code: 'jw', name: 'Basa Jawa', flag: '☕'}, // Google Translate pakai 'jw' bukan 'jv'
         {code: 'en', name: 'English', flag: '🇬🇧'},
         {code: 'es', name: 'Español', flag: '🇪🇸'},
         {code: 'fr', name: 'Français', flag: '🇫🇷'},
@@ -712,51 +736,312 @@
         {code: 'tr', name: 'Türkçe', flag: '🇹🇷'}
       ];
 
-      // ... (rest of language translation code from frontend.blade.php - too long to include here, but will be the same)
-      // Note: I'll include a simplified version that works for both guest and user
+      // Parallel translate untuk lebih cepat (5 requests sekaligus)
+      async function translateBatch(texts, targetLang) {
+        const promises = texts.map(text => translateText(text, targetLang));
+        return Promise.all(promises);
+      }
+
+      // Batch translate multiple texts sekaligus dengan parallel processing (LEBIH CEPAT)
+      async function batchTranslateTexts(texts, targetLang) {
+        const uniqueTexts = [...new Set(texts.filter(t => t && t.trim().length >= 2))];
+        const translatedMap = new Map();
+
+        // Translate dalam batch parallel (5 teks sekaligus untuk lebih cepat)
+        const batchSize = 5;
+        for (let i = 0; i < uniqueTexts.length; i += batchSize) {
+          const batch = uniqueTexts.slice(i, i + batchSize);
+          const translatedBatch = await translateBatch(batch, targetLang);
+
+          batch.forEach((text, index) => {
+            translatedMap.set(text, translatedBatch[index]);
+          });
+
+          // Delay minimal hanya di akhir setiap batch
+          if (i + batchSize < uniqueTexts.length) {
+            await new Promise(resolve => setTimeout(resolve, 10)); // Delay minimal
+          }
+        }
+
+        return translatedMap;
+      }
 
       function fetchLanguages() {
         populateLanguageDropdown(languages);
         populateLanguageDropdownMobile(languages);
-        
+
+        // Load saved language from localStorage dan auto-translate
         const savedLang = localStorage.getItem('selectedLanguage') || 'id';
         const savedLangObj = languages.find(l => l.code === savedLang);
         if (savedLangObj) {
           currentLanguage.textContent = savedLangObj.code.toUpperCase();
           currentLanguageMobile.textContent = savedLangObj.code.toUpperCase();
+
+          // Auto-translate saat page load jika bukan bahasa Indonesia
+          if (savedLang !== 'id') {
+            // Translate segera setelah DOM ready
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
+              translatePage(savedLang);
+            } else {
+              document.addEventListener('DOMContentLoaded', () => {
+                translatePage(savedLang);
+              });
+            }
+          }
         }
       }
 
       function populateLanguageDropdown(languages) {
-        if (!languageDropdown) return;
         languageDropdown.innerHTML = '';
         languages.forEach(lang => {
           const li = document.createElement('li');
-          li.className = 'px-3 xl:px-4 py-2 text-sm xl:text-base hover:bg-gray-100 cursor-pointer flex items-center space-x-2';
+          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center space-x-2';
           li.innerHTML = `<span>${lang.flag || '🌐'}</span><span>${lang.name} (${lang.code.toUpperCase()})</span>`;
           li.addEventListener('click', () => {
             currentLanguage.textContent = lang.code.toUpperCase();
             languageDropdown.classList.add('hidden');
-            // Language change functionality can be added here
+            changeLanguage(lang.code);
           });
           languageDropdown.appendChild(li);
         });
       }
 
       function populateLanguageDropdownMobile(languages) {
-        if (!languageDropdownMobile) return;
         languageDropdownMobile.innerHTML = '';
         languages.forEach(lang => {
           const li = document.createElement('li');
-          li.className = 'px-3 sm:px-4 py-2 text-sm sm:text-base hover:bg-gray-100 cursor-pointer flex items-center space-x-2';
+          li.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center space-x-2';
           li.innerHTML = `<span>${lang.flag || '🌐'}</span><span>${lang.name} (${lang.code.toUpperCase()})</span>`;
           li.addEventListener('click', () => {
             currentLanguageMobile.textContent = lang.code.toUpperCase();
             languageDropdownMobile.classList.add('hidden');
-            // Language change functionality can be added here
+            changeLanguage(lang.code);
           });
           languageDropdownMobile.appendChild(li);
         });
+      }
+
+      // Translation cache untuk menghindari translate ulang
+      const translationCache = new Map();
+
+      // Translate text menggunakan multiple API dengan cache
+      async function translateText(text, targetLang) {
+        if (targetLang === 'id') return text;
+        if (!text || text.trim().length === 0) return text;
+
+        const cacheKey = `${text}|${targetLang}`;
+        if (translationCache.has(cacheKey)) {
+          return translationCache.get(cacheKey);
+        }
+
+        if (/^[\d\s\W]+$/.test(text) || text.trim().length < 2) {
+          return text;
+        }
+
+        try {
+          const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=id&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`);
+          const data = await response.json();
+          if (data && data[0] && data[0][0] && data[0][0][0]) {
+            const translated = data[0][0][0];
+            translationCache.set(cacheKey, translated);
+            return translated;
+          }
+        } catch (error) {
+          console.log('Google Translate failed, trying MyMemory API');
+        }
+        try {
+          const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=id|${targetLang}`);
+          const data = await response.json();
+          if (data.responseData && data.responseData.translatedText) {
+            const translated = data.responseData.translatedText;
+            translationCache.set(cacheKey, translated);
+            return translated;
+          }
+        } catch (error) {
+          console.error('Translation API error:', error);
+        }
+        return text;
+      }
+
+      // Get all text nodes di halaman (otomatis, tanpa perlu data-translate)
+      function getAllTextNodes(element = document.body) {
+        const textNodes = [];
+        const walker = document.createTreeWalker(
+          element,
+          NodeFilter.SHOW_TEXT,
+          {
+            acceptNode: function(node) {
+              const parent = node.parentElement;
+              if (!parent) return NodeFilter.FILTER_REJECT;
+
+              const tagName = parent.tagName.toLowerCase();
+              if (['script', 'style', 'noscript', 'meta', 'link'].includes(tagName)) {
+                return NodeFilter.FILTER_REJECT;
+              }
+
+              const style = window.getComputedStyle(parent);
+              if (style.display === 'none' || style.visibility === 'hidden') {
+                return NodeFilter.FILTER_REJECT;
+              }
+
+              if (parent.classList.contains('no-translate') || parent.hasAttribute('data-no-translate')) {
+                return NodeFilter.FILTER_REJECT;
+              }
+
+              const text = node.textContent.trim();
+              if (!text || text.length < 2 || /^[\d\s\W]+$/.test(text)) {
+                return NodeFilter.FILTER_REJECT;
+              }
+
+              if (/^[\d.]+$/.test(text) || /^(https?|www\.)/i.test(text)) {
+                return NodeFilter.FILTER_REJECT;
+              }
+
+              return NodeFilter.FILTER_ACCEPT;
+            }
+          }
+        );
+
+        let node;
+        while (node = walker.nextNode()) {
+          const text = node.textContent.trim();
+          if (text && text.length >= 2) {
+            textNodes.push({
+              node: node,
+              text: text,
+              original: text
+            });
+          }
+        }
+
+        return textNodes;
+      }
+
+      async function changeLanguage(langCode) {
+        localStorage.setItem('selectedLanguage', langCode);
+        const langObj = languages.find(l => l.code === langCode);
+        if (langObj) {
+          currentLanguage.textContent = langObj.code.toUpperCase();
+          currentLanguageMobile.textContent = langObj.code.toUpperCase();
+        }
+        if (langCode === 'id') {
+          document.querySelectorAll('[data-translated]').forEach(el => {
+            el.removeAttribute('data-translated');
+          });
+          location.reload();
+          return;
+        }
+        Swal.fire({
+          title: 'Mengubah Bahasa...',
+          text: 'Mohon tunggu sebentar',
+          allowOutsideClick: false,
+          showConfirmButton: false,
+          willOpen: () => { Swal.showLoading(); }
+        });
+        try {
+          // Get all text nodes automatically
+          const textNodes = getAllTextNodes();
+          if (textNodes.length === 0) {
+            Swal.close();
+            return;
+          }
+
+          textNodes.forEach(item => {
+            if (!item.node.parentElement.hasAttribute('data-translated')) {
+              item.node.parentElement.setAttribute('data-original-text', item.text);
+              item.node.parentElement.setAttribute('data-translated', 'true');
+            }
+          });
+
+          const uniqueTexts = [...new Set(textNodes.map(item => item.text))];
+          let translatedCount = 0;
+          const totalTexts = uniqueTexts.length;
+
+          const updateProgress = () => {
+            const progress = Math.round((translatedCount / totalTexts) * 100);
+            Swal.update({ text: `Menerjemahkan ${translatedCount}/${totalTexts} teks... ${progress}%` });
+          };
+
+          // Batch translate dengan parallel processing (lebih cepat)
+          const uniqueTextsList = uniqueTexts.filter(t => t && t.trim().length >= 2);
+          const translatedMap = await batchTranslateTexts(uniqueTextsList, langCode);
+
+          // Update progress setelah selesai
+          translatedCount = uniqueTextsList.length;
+          updateProgress();
+
+          textNodes.forEach(item => {
+            const translated = translatedMap.get(item.text);
+            if (translated && translated !== item.text) {
+              item.node.textContent = item.node.textContent.replace(item.text, translated);
+            }
+          });
+
+          Swal.close();
+          Swal.fire({
+            icon: 'success',
+            title: 'Bahasa Berhasil Diubah',
+            text: `Semua halaman telah diterjemahkan ke ${langObj ? langObj.name : langCode.toUpperCase()}`,
+            confirmButtonText: 'OK',
+            timer: 2000,
+            timerProgressBar: true
+          });
+        } catch (error) {
+          console.error('Language change error:', error);
+          Swal.close();
+          Swal.fire({
+            icon: 'error',
+            title: 'Terjadi Kesalahan',
+            text: 'Gagal mengubah bahasa. Silakan coba lagi.',
+            confirmButtonText: 'OK'
+          });
+        }
+      }
+
+      async function translatePage(langCode) {
+        if (langCode === 'id') return;
+        try {
+          // Tunggu DOM siap
+          if (document.readyState === 'loading') {
+            await new Promise(resolve => {
+              if (document.readyState === 'complete') {
+                resolve();
+              } else {
+                document.addEventListener('DOMContentLoaded', resolve);
+              }
+            });
+          }
+
+          // Tunggu sebentar untuk memastikan konten dinamis sudah ter-load
+          await new Promise(resolve => setTimeout(resolve, 300));
+
+          const textNodes = getAllTextNodes();
+          if (textNodes.length === 0) return;
+
+          textNodes.forEach(item => {
+            if (!item.node.parentElement.hasAttribute('data-translated')) {
+              item.node.parentElement.setAttribute('data-original-text', item.text);
+              item.node.parentElement.setAttribute('data-translated', 'true');
+            }
+          });
+
+          const uniqueTexts = [...new Set(textNodes.map(item => item.text))];
+          const uniqueTextsList = uniqueTexts.filter(t => t && t.trim().length >= 2);
+
+          // Batch translate dengan parallel processing (lebih cepat)
+          const translatedMap = await batchTranslateTexts(uniqueTextsList, langCode);
+
+          textNodes.forEach(item => {
+            const translated = translatedMap.get(item.text);
+            if (translated && translated !== item.text) {
+              item.node.textContent = item.node.textContent.replace(item.text, translated);
+            }
+          });
+
+          console.log(`Auto-translated ${uniqueTextsList.length} unique texts to ${langCode}`);
+        } catch (error) {
+          console.error('Auto translate error:', error);
+        }
       }
 
       // Toggle desktop language dropdown

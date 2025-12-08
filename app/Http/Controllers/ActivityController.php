@@ -38,6 +38,7 @@ class ActivityController extends Controller
         $data->harga = $request->biaya === 'berbayar' ? $request->harga : null;
         $data->deskripsi = $request->deskripsi;
         $data->link_kontak = $request->link;
+        $data->link_kontak_2 = $request->link_kontak_2;
         $data->jenis = $request->jenis;
         $data->status = 'pending'; // Status pending untuk verifikasi
         $data->user_id = Auth::id();
@@ -69,6 +70,7 @@ class ActivityController extends Controller
             'harga' => 'nullable|integer|min:0|required_if:biaya_bergabung,berbayar',
             'deskripsi' => 'required|string',
             'link_kontak' => 'nullable|string|max:500',
+            'link_kontak_2' => 'nullable|string|max:500',
             'jenis' => 'nullable|in:komunitas,event', // Tambahkan jenis untuk support event
         ]);
 
@@ -86,6 +88,7 @@ class ActivityController extends Controller
         $data->harga = $request->biaya_bergabung === 'berbayar' ? $request->harga : null;
         $data->deskripsi = $request->deskripsi;
         $data->link_kontak = $request->link_kontak;
+        $data->link_kontak_2 = $request->link_kontak_2;
         $data->jenis = $jenis;
         $data->status = 'pending'; // Status pending untuk verifikasi
         $data->pemilik_id = Auth::id();
@@ -400,6 +403,7 @@ class ActivityController extends Controller
             'harga' => 'nullable|integer|min:0|required_if:biaya,berbayar',
             'deskripsi' => 'required|string',
             'link' => 'nullable|string|max:500',
+            'link_kontak_2' => 'nullable|string|max:500',
             'jenis' => 'required|in:komunitas,membership,event',
         ]);
 
@@ -411,6 +415,7 @@ class ActivityController extends Controller
         $activity->harga = $request->biaya === 'berbayar' ? $request->harga : null;
         $activity->deskripsi = $request->deskripsi;
         $activity->link_kontak = $request->link;
+        $activity->link_kontak_2 = $request->link_kontak_2;
         $activity->jenis = $request->jenis;
         
         // Jika status sudah approved, set kembali ke pending untuk verifikasi ulang

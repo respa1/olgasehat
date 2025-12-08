@@ -73,6 +73,8 @@ class ClinicController extends Controller
             'hari_operasional' => 'nullable|array',
             'jam_buka' => 'nullable',
             'jam_tutup' => 'nullable',
+            'fasilitas' => 'nullable|array',
+            'fasilitas.*' => 'nullable|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_utama' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -80,6 +82,11 @@ class ClinicController extends Controller
         $data = $request->all();
         $data['slug'] = Str::slug($request->nama);
         $data['status'] = 'pending';
+
+        if ($request->has('fasilitas')) {
+            $fasilitas = array_filter(array_map('trim', $request->fasilitas));
+            $data['fasilitas'] = array_values($fasilitas);
+        }
 
         // Handle upload logo
         if ($request->hasFile('logo')) {
@@ -139,6 +146,8 @@ class ClinicController extends Controller
             'hari_operasional' => 'nullable|array',
             'jam_buka' => 'nullable',
             'jam_tutup' => 'nullable',
+            'fasilitas' => 'nullable|array',
+            'fasilitas.*' => 'nullable|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'foto_utama' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -146,6 +155,11 @@ class ClinicController extends Controller
         $clinic = Clinic::findOrFail($id);
         $data = $request->all();
         $data['slug'] = Str::slug($request->nama);
+
+        if ($request->has('fasilitas')) {
+            $fasilitas = array_filter(array_map('trim', $request->fasilitas));
+            $data['fasilitas'] = array_values($fasilitas);
+        }
 
         // Handle upload logo
         if ($request->hasFile('logo')) {

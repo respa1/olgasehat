@@ -13,6 +13,7 @@ use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\Frontend\HealthFrontendController;
 
 // ======================================================
 // PUBLIC ROUTES (No Authentication Required)
@@ -60,14 +61,14 @@ Route::get('/login-pemilik', fn() => view('FRONTEND.login_pemilik'));
 Route::get('/payment', fn() => view('FRONTEND.payment'));
 Route::get('/success', fn() => view('FRONTEND.success'));
 Route::get('/venue', [App\Http\Controllers\VenueFrontendController::class, 'index'])->name('frontend.venue');
-Route::get('/healthy', fn() => view('FRONTEND.healthy'));
+Route::get('/healthy', [HealthFrontendController::class, 'index'])->name('frontend.healthy');
 Route::get('/venue-detail/{id}', [App\Http\Controllers\VenueFrontendController::class, 'show'])->name('frontend.venue.detail');
 Route::get('/venue-detail/{id}/slots', [App\Http\Controllers\VenueFrontendController::class, 'getSlots'])->name('frontend.venue.slots');
 Route::get('/venue/search', [App\Http\Controllers\VenueFrontendController::class, 'search'])->name('frontend.venue.search');
 Route::get('/venue/categories', [App\Http\Controllers\VenueFrontendController::class, 'getCategories'])->name('frontend.venue.categories');
 Route::get('/venue/filter', [App\Http\Controllers\VenueFrontendController::class, 'filter'])->name('frontend.venue.filter');
 Route::get('/klinik', fn() => view('FRONTEND.klinik'));
-Route::get('/service-detail', fn() => view('FRONTEND.service_detail'))->name('frontend.service.detail');
+Route::get('/service-detail/{service}', [HealthFrontendController::class, 'serviceDetail'])->name('frontend.service.detail');
 Route::get('/venue-management', fn() => view('FRONTEND.venue_management'))->name('venue.management');
 Route::get('/health-management', fn() => view('FRONTEND.health_management'))->name('health.management');
 
@@ -237,6 +238,11 @@ Route::middleware(['auth', 'role:pengelolakesehatan'])->group(function () {
         Route::get('/booking', [App\Http\Controllers\Health\HealthManagerBookingController::class, 'index'])->name('bookings.index');
         Route::get('/booking/{id}', [App\Http\Controllers\Health\HealthManagerBookingController::class, 'show'])->name('bookings.show');
         Route::post('/booking/{id}/update-status', [App\Http\Controllers\Health\HealthManagerBookingController::class, 'updateStatus'])->name('bookings.update-status');
+
+        // Community & Membership
+        Route::get('/pengelolakesehatan/komunitas', fn() => view('pemilikkesehatan.pemilikkesehatan_buat_komunitas'))->name('pengelola.komunitas');
+        Route::post('/pengelolakesehatan/komunitas', [App\Http\Controllers\ActivityController::class, 'storeFromPengelola'])->name('activities.store.pengelola');
+        Route::get('/pengelolakesehatan/membership', fn() => view('pemilikkesehatan.pemilikkesehatan_buat_membership'))->name('pengelola.membership');
     });
     
     Route::prefix('keuangan')->group(function () {
@@ -425,6 +431,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/about/{id}/edit', [AboutUsController::class, 'edit'])->name('about-us.edit');
         Route::put('/about/{id}', [AboutUsController::class, 'update'])->name('about-us.update');
         Route::delete('/about/{id}', [AboutUsController::class, 'destroy'])->name('about-us.destroy');
+
+        // Community & Membership
+        Route::get('/admin/komunitas', fn() => view('BACKEND.admin_buat_komunitas'))->name('admin.komunitas');
+        Route::post('/admin/komunitas', [App\Http\Controllers\ActivityController::class, 'storeFromAdmin'])->name('activities.store.admin');
+        Route::get('/admin/membership', fn() => view('BACKEND.admin_buat_membership'))->name('admin.membership');
 
         // PAPAN JADWAL
 

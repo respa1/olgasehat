@@ -49,7 +49,7 @@ class HealthManagerScheduleController extends Controller
     {
         $user = Auth::user();
         $clinicIds = Clinic::where('user_id', $user->id)->pluck('id');
-        
+
         $request->validate([
             'doctor_id' => 'required|exists:doctors,id',
             'clinic_id' => 'required|exists:clinics,id',
@@ -57,15 +57,14 @@ class HealthManagerScheduleController extends Controller
             'hari.*' => 'required|in:senin,selasa,rabu,kamis,jumat,sabtu,minggu',
             'jam_mulai' => 'required',
             'jam_selesai' => 'required|after:jam_mulai',
-            'durasi_konsultasi' => 'nullable|integer|min:15|max:120',
-            'kuota_per_hari' => 'nullable|integer|min:1|max:100',
+            'durasi_konsultasi' => 'required|integer|min:15|max:120',
         ]);
 
         // Pastikan dokter dan klinik milik user
         $doctor = Doctor::whereIn('clinic_id', $clinicIds)
             ->where('id', $request->doctor_id)
             ->firstOrFail();
-        
+
         $clinic = Clinic::where('user_id', $user->id)
             ->where('id', $request->clinic_id)
             ->firstOrFail();
@@ -73,34 +72,48 @@ class HealthManagerScheduleController extends Controller
         $created = 0;
         $errors = [];
 
+        // Generate time slots based on duration
+        $startTime = strtotime($request->jam_mulai);
+        $endTime = strtotime($request->jam_selesai);
+        $durationMinutes = $request->durasi_konsultasi;
+        $slots = [];
+
+        while ($startTime < $endTime) {
+            $slots[] = date('H:i', $startTime);
+            $startTime = strtotime("+$durationMinutes minutes", $startTime);
+        }
+
         // Loop untuk setiap hari yang dipilih
         foreach ($request->hari as $hari) {
-            // Cek duplikasi
-            $existing = DoctorSchedule::where('doctor_id', $request->doctor_id)
-                ->where('clinic_id', $request->clinic_id)
-                ->where('hari', $hari)
-                ->where('jam_mulai', $request->jam_mulai)
-                ->first();
+            foreach ($slots as $slotTime) {
+                // Cek duplikasi
+                $existing = DoctorSchedule::where('doctor_id', $request->doctor_id)
+                    ->where('clinic_id', $request->clinic_id)
+                    ->where('hari', $hari)
+                    ->where('jam_mulai', $slotTime)
+                    ->first();
 
-            if ($existing) {
-                $errors[] = "Jadwal untuk hari " . ucfirst($hari) . " sudah ada di waktu yang sama.";
-                continue;
+                if ($existing) {
+                    $errors[] = "Jadwal untuk hari " . ucfirst($hari) . " jam " . $slotTime . " sudah ada.";
+                    continue;
+                }
+
+                $slotEndTime = date('H:i', strtotime("+$durationMinutes minutes", strtotime($slotTime)));
+
+                DoctorSchedule::create([
+                    'doctor_id' => $request->doctor_id,
+                    'clinic_id' => $request->clinic_id,
+                    'hari' => $hari,
+                    'jam_mulai' => $slotTime,
+                    'jam_selesai' => $slotEndTime,
+                    'durasi_konsultasi' => $request->durasi_konsultasi,
+                ]);
+                $created++;
             }
-
-            DoctorSchedule::create([
-                'doctor_id' => $request->doctor_id,
-                'clinic_id' => $request->clinic_id,
-                'hari' => $hari,
-                'jam_mulai' => $request->jam_mulai,
-                'jam_selesai' => $request->jam_selesai,
-                'durasi_konsultasi' => $request->durasi_konsultasi ?? 30,
-                'kuota_per_hari' => $request->kuota_per_hari ?? 20,
-            ]);
-            $created++;
         }
 
         if ($created > 0) {
-            $message = $created . ' jadwal dokter berhasil ditambahkan.';
+            $message = $created . ' slot jadwal dokter berhasil ditambahkan.';
             if (!empty($errors)) {
                 $message .= ' ' . implode(' ', $errors);
             }

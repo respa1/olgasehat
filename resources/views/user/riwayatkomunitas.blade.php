@@ -337,11 +337,17 @@
                         
                         {{-- Tombol Aksi --}}
                         <div class="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
-                            <a href="{{ route('community.detail', $activity->id) }}" 
+                            <a href="{{ route('community.detail', $activity->id) }}"
                                class="text-sm font-semibold text-orange-500 hover:text-orange-700 transition duration-150 ease-in-out">
-                                Lihat Detail 
+                                Lihat Detail
                                 <i class="fas fa-arrow-right ml-1"></i>
                             </a>
+                            @if($activity->link_kontak)
+                            <a href="{{ $activity->link_kontak }}" target="_blank"
+                               class="bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-green-700 transition duration-150">
+                                <i class="fab fa-whatsapp mr-1"></i> Lihat Grup WhatsApp
+                            </a>
+                            @endif
                         </div>
                     </div>
                     @endif

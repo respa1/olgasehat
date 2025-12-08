@@ -2,6 +2,10 @@
 
 @section('content')
 
+@php
+    $featuredClinics = $featuredClinics ?? collect();
+@endphp
+
 <section class="bg-[url('assets/blue-banner.png')] bg-no-repeat text-white relative overflow-hidden h-[350px] flex items-center justify-center" style="background-size: 1910px 350px;">
     <div class="absolute inset-0 bg-blue-900 bg-opacity-30"></div>
     <div class="container mx-auto px-6 text-center w-full relative z-10">
@@ -36,19 +40,18 @@
           </div>
         </div>
         
-        <!-- Category Dropdown - Kategori Layanan -->
+        <!-- Category Dropdown - Jenis Layanan -->
         <div class="relative flex-1 min-w-0">
           <div class="relative">
             <select
               id="serviceCategory"
-              name="kategori"
+              name="jenis_layanan"
               class="w-full border border-gray-300 rounded-lg px-4 pl-10 pr-10 py-3 text-gray-700 focus:outline-none focus:border-gray-400 transition-all duration-150 bg-white appearance-none cursor-pointer"
             >
-              <option value="all" selected>Kategori Layanan</option>
-              <option value="Fisioterapi & Cedera">Fisioterapi & Cedera</option>
-              <option value="Medical Check-Up">Medical Check-Up</option>
-              <option value="Dokter Spesialis">Dokter Spesialis</option>
-              <option value="Nutrisi & Gizi">Nutrisi & Gizi</option>
+              <option value="all" selected>Jenis Layanan</option>
+              @foreach($serviceCategories ?? [] as $category)
+                <option value="{{ $category }}">{{ $category }}</option>
+              @endforeach
             </select>
             <i class="fas fa-chevron-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm pointer-events-none"></i>
             <i class="fas fa-heartbeat absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
@@ -813,175 +816,114 @@ function resetBMI() {
 
 </script>
 
-<section class="container mx-auto px-6 py-16">
-    <!-- Header Section -->
+<section id="mitra" class="container mx-auto px-6 py-16">
     <div class="text-center mb-12">
+        <p class="text-sm font-semibold tracking-[0.4em] text-green-500 mb-3">Klinik Mitra</p>
         <h1 class="font-bold text-3xl md:text-4xl text-gray-900 mb-4">
             Klinik Mitra Pilihan
         </h1>
         <p class="text-lg text-gray-600">
-            Paling Banyak Dikunjungi
+            {{ $featuredClinics->isEmpty() ? 'Klinik mitra akan segera hadir.' : 'Pilihan klinik terpercaya dari pengelola kesehatan Olga Sehat.' }}
         </p>
     </div>
 
-    <!-- Divider -->
     <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-green-500 mx-auto mb-12 rounded-full"></div>
 
-    <!-- Klinik Cards Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-        
-        <!-- Klinik 1 -->
-        <div class="group">
-            <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                <div class="relative">
-                    <img 
-                        src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
-                        alt="Klinik Sarana Medika Baru"
-                        class="w-full h-48 object-cover"
-                    />
-                </div>
-                
-                <div class="p-5 space-y-3">
-                    <div>
-                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1">Klinik Umum</p>
-                        <h3 class="font-bold text-lg text-gray-900 leading-tight line-clamp-2 min-h-[48px]">
-                            Klinik Sarana Medika Baru
-                        </h3>
-                    </div>
-                    <p class="text-sm text-gray-600 flex items-center">
-                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-2"></i>
-                        Kabupaten Tangerang
-                    </p>
-                    <div class="flex items-center justify-between pt-3 border-t border-gray-100 text-xs sm:text-sm">
-                        <span class="text-green-600 font-semibold flex items-center">
-                            <i class="fas fa-clock mr-2 text-xs"></i>
-                            Buka 24 Jam
-                        </span>
-                        <a href="{{ route('frontend.service.detail') }}" class="text-blue-600 hover:text-blue-700 font-semibold flex items-center whitespace-nowrap">
-                            Lihat Detail
-                            <i class="fas fa-chevron-right ml-1 text-xs"></i>
-                        </a>
-                    </div>
-                </div>
-            </article>
-        </div>
+        @forelse($featuredClinics as $clinic)
+            @php
+                $primaryService = $clinic->services->first();
+                $clinicImage = $clinic->logo
+                    ? asset('fotoklinik/' . $clinic->logo)
+                    : asset('assets/klnk.png');
+                $priceLabel = $primaryService
+                    ? ($primaryService->tipe_harga === 'gratis'
+                        ? 'Gratis'
+                        : 'Rp ' . number_format($primaryService->harga, 0, ',', '.'))
+                    : 'Hubungi Klinik';
+            @endphp
+            <div class="group">
+                @if($primaryService)
+                    <a href="{{ route('frontend.service.detail', $primaryService->id) }}" class="block">
+                        <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer">
+                            <div class="relative">
+                                <img
+                                    src="{{ $clinicImage }}"
+                                    alt="{{ $clinic->nama }}"
+                                    class="w-full h-48 object-cover"
+                                />
+                            </div>
 
-        <!-- Klinik 2 -->
-        <div class="group">
-            <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                <div class="relative">
-                    <img 
-                        src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
-                        alt="Klinik Tri Medika"
-                        class="w-full h-48 object-cover"
-                    />
-                </div>
-                
-                <div class="p-5 space-y-3">
-                    <div>
-                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1">Klinik Umum</p>
-                        <h3 class="font-bold text-lg text-gray-900 leading-tight line-clamp-2 min-h-[48px]">
-                            Klinik Tri Medika
-                        </h3>
-                    </div>
-                    <p class="text-sm text-gray-600 flex items-center">
-                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-2"></i>
-                        Kabupaten Karawang
-                    </p>
-                    <div class="flex items-center justify-between pt-3 border-t border-gray-100 text-xs sm:text-sm">
-                        <span class="text-green-600 font-semibold flex items-center">
-                            <i class="fas fa-clock mr-2 text-xs"></i>
-                            Buka Hari Ini
-                        </span>
-                        <a href="{{ route('frontend.service.detail') }}" class="text-blue-600 hover:text-blue-700 font-semibold flex items-center whitespace-nowrap">
-                            Lihat Detail
-                            <i class="fas fa-chevron-right ml-1 text-xs"></i>
-                        </a>
-                    </div>
-                </div>
-            </article>
-        </div>
+                            <div class="p-5 space-y-3">
+                                <div>
+                                    <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1">{{ ucfirst($clinic->tipe) }}</p>
+                                    <h3 class="font-bold text-lg text-gray-900 leading-tight line-clamp-2 min-h-[48px]">
+                                        {{ $clinic->nama }}
+                                    </h3>
+                                </div>
+                                <p class="text-sm text-gray-600 flex items-center">
+                                    <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-2"></i>
+                                    {{ $clinic->kota ?? 'Lokasi belum diisi' }}
+                                </p>
+                                <div class="flex items-center justify-between pt-3 border-t border-gray-100 text-xs sm:text-sm">
+                                    <span class="text-green-600 font-semibold flex items-center">
+                                        <i class="fas fa-money-bill-wave mr-2 text-xs"></i>
+                                        {{ $priceLabel }}
+                                    </span>
+                                    <span class="text-blue-600 font-semibold flex items-center whitespace-nowrap">
+                                        Lihat Detail
+                                        <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </article>
+                    </a>
+                @else
+                    <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="relative">
+                            <img
+                                src="{{ $clinicImage }}"
+                                alt="{{ $clinic->nama }}"
+                                class="w-full h-48 object-cover"
+                            />
+                        </div>
 
-        <!-- Klinik 3 -->
-        <div class="group">
-            <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                <div class="relative">
-                    <img 
-                        src="https://images.unsplash.com/photo-1551076805-e1869033e561?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
-                        alt="Klinik Sumber Urip Medika II"
-                        class="w-full h-48 object-cover"
-                    />
-                </div>
-                
-                <div class="p-5 space-y-3">
-                    <div>
-                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1">Klinik Umum</p>
-                        <h3 class="font-bold text-lg text-gray-900 leading-tight line-clamp-2 min-h-[48px]">
-                            Klinik Sumber Urip Medika II
-                        </h3>
-                    </div>
-                    <p class="text-sm text-gray-600 flex items-center">
-                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-2"></i>
-                        Kabupaten Tangerang
-                    </p>
-                    <div class="flex items-center justify-between pt-3 border-t border-gray-100 text-xs sm:text-sm">
-                        <span class="text-green-600 font-semibold flex items-center">
-                            <i class="fas fa-clock mr-2 text-xs"></i>
-                            Buka 07.00 - 21.00
-                        </span>
-                        <a href="{{ route('frontend.service.detail') }}" class="text-blue-600 hover:text-blue-700 font-semibold flex items-center whitespace-nowrap">
-                            Lihat Detail
-                            <i class="fas fa-chevron-right ml-1 text-xs"></i>
-                        </a>
-                    </div>
-                </div>
-            </article>
-        </div>
-
-        <!-- Klinik 4 -->
-        <div class="group">
-            <article class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                <div class="relative">
-                    <img 
-                        src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
-                        alt="TPMD dr. Siti Aminah"
-                        class="w-full h-48 object-cover"
-                    />
-                </div>
-                
-                <div class="p-5 space-y-3">
-                    <div>
-                        <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1">Klinik Umum</p>
-                        <h3 class="font-bold text-lg text-gray-900 leading-tight line-clamp-2 min-h-[48px]">
-                            TPMD dr. Siti Aminah
-                        </h3>
-                    </div>
-                    <p class="text-sm text-gray-600 flex items-center">
-                        <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-2"></i>
-                        Kabupaten Situbondo
-                    </p>
-                    <div class="flex items-center justify-between pt-3 border-t border-gray-100 text-xs sm:text-sm">
-                        <span class="text-orange-500 font-semibold flex items-center">
-                            <i class="fas fa-clock mr-2 text-xs"></i>
-                            Tutup Sementara
-                        </span>
-                        <a href="{{ route('frontend.service.detail') }}" class="text-blue-600 hover:text-blue-700 font-semibold flex items-center whitespace-nowrap">
-                            Lihat Detail
-                            <i class="fas fa-chevron-right ml-1 text-xs"></i>
-                        </a>
-                    </div>
-                </div>
-            </article>
-        </div>
-
+                        <div class="p-5 space-y-3">
+                            <div>
+                                <p class="text-xs text-gray-500 font-semibold uppercase tracking-wide mb-1">{{ ucfirst($clinic->tipe) }}</p>
+                                <h3 class="font-bold text-lg text-gray-900 leading-tight line-clamp-2 min-h-[48px]">
+                                    {{ $clinic->nama }}
+                                </h3>
+                            </div>
+                            <p class="text-sm text-gray-600 flex items-center">
+                                <i class="fas fa-map-marker-alt text-blue-500 text-xs mr-2"></i>
+                                {{ $clinic->kota ?? 'Lokasi belum diisi' }}
+                            </p>
+                            <div class="flex items-center justify-between pt-3 border-t border-gray-100 text-xs sm:text-sm">
+                                <span class="text-green-600 font-semibold flex items-center">
+                                    <i class="fas fa-money-bill-wave mr-2 text-xs"></i>
+                                    {{ $priceLabel }}
+                                </span>
+                                <span class="text-gray-400 flex items-center whitespace-nowrap">
+                                    Jadwal belum ada
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+                @endif
+            </div>
+        @empty
+            <div class="col-span-1 sm:col-span-2 lg:col-span-4 text-center text-gray-500">
+                Belum ada klinik yang ditampilkan.
+            </div>
+        @endforelse
     </div>
 
-    <!-- CTA Section -->
     <div class="text-center mt-12">
-        <button class="bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+        <a href="{{ route('frontend.healthy') }}#mitra" class="inline-flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
             Lihat Semua Klinik Lainnya
             <i class="fas fa-arrow-right ml-2"></i>
-        </button>
+        </a>
     </div>
 </section>
 
