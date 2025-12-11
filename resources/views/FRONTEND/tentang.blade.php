@@ -77,7 +77,7 @@
             Tentang Kami
         </h2>
         <p class="text-gray-700 text-base md:text-lg leading-relaxed mb-6" data-translate>
-            OlgaSehat adalah perusahaan teknologi yang memiliki misi meningkatkan tingkat partisipasi olahraga di seluruh Indonesia, yang dimana misi tersebut dipercaya dapat memberikan dampak yang positif terhadap olahraga Indonesia.
+            {!! nl2br(e($about->title ?? 'OlgaSehat adalah perusahaan teknologi yang memiliki misi meningkatkan tingkat partisipasi olahraga di seluruh Indonesia, yang dimana misi tersebut dipercaya dapat memberikan dampak yang positif terhadap olahraga Indonesia.')) !!}
         </p>
     </div>
 <!-- OlgaSehat Story Section -->
@@ -86,13 +86,7 @@
             Cerita OlgaSehat
         </h2>
         <p class="text-gray-700 text-base md:text-lg leading-relaxed mb-4" data-translate>
-            OlgaSehat berawal dari platform sederhana untuk membantu orang menemukan teman berolahraga, kemudian berkembang menjadi ekosistem digital untuk gaya hidup sehat. Kami menawarkan berbagai fitur seperti menemukan teman berolahraga, rekomendasi aktivitas sehat, dan tantangan komunitas.
-        </p>
-        <p class="text-gray-700 text-base md:text-lg leading-relaxed mb-4" data-translate>
-            Sejak 2025, OlgaSehat berkomitmen untuk terus berinovasi guna memberikan layanan yang lebih lengkap, praktis, dan menyenangkan. Kami menghubungkan pengguna dengan berbagai aktivitas sehat, mulai dari olahraga harian hingga komunitas kebugaran dan acara kesehatan.
-        </p>
-        <p class="text-gray-700 text-base md:text-lg leading-relaxed" data-translate>
-            OlgaSehat bertujuan menjadi teman yang dekat, membantu, dan menginspirasi untuk hidup yang lebih sehat dan bahagia.
+            {!! nl2br(e($about->content ?? 'OlgaSehat berawal dari platform sederhana untuk membantu orang menemukan teman berolahraga, kemudian berkembang menjadi ekosistem digital untuk gaya hidup sehat. Kami menawarkan berbagai fitur seperti menemukan teman berolahraga, rekomendasi aktivitas sehat, dan tantangan komunitas.')) !!}
         </p>
     </div>
 </section>
@@ -100,22 +94,20 @@
 <!-- Video Section -->
 <section class="bg-white py-8 md:py-10" data-aos="fade-up">
     <div class="container mx-auto px-6 max-w-4xl">
-        
-       
-    <div class="max-w-md">
-    <a href="https://youtu.be/EpXJbOcrp5A" target="_blank">
-        <div class="relative aspect-video rounded-xl shadow-xl overflow-hidden">
-            <iframe 
-                class="absolute top-0 left-0 w-full h-full" 
-                src="https://www.youtube.com/embed/EpXJbOcrp5A" 
-                title="Olga Sehat Video" 
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-            </iframe>
+        <div class="max-w-md">
+            <a href="{{ $about->link_youtube ?? 'https://youtu.be/EpXJbOcrp5A' }}" target="_blank">
+                <div class="relative aspect-video rounded-xl shadow-xl overflow-hidden">
+                    <iframe 
+                        class="absolute top-0 left-0 w-full h-full" 
+                        src="{{ $videoEmbedUrl ?? 'https://www.youtube.com/embed/EpXJbOcrp5A' }}" 
+                        title="Olga Sehat Video" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </a>
         </div>
-    </a>
-</div>
 
     </div>
 </section>
